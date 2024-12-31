@@ -1,4 +1,4 @@
-package com.napzak.market
+package com.napzak.market.presentation.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.napzak.market.ui.theme.NapzakMarketTheme
+import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.napzak.market.ui.theme
+package com.napzak.market.core.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

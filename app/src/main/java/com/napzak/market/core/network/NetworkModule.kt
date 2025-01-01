@@ -25,6 +25,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideJson(): Json = Json {
+        ignoreUnknownKeys = true
+        prettyPrint = true
+    }
+
+    @Provides
+    @Singleton
     fun provideJsonConverter(json: Json): Converter.Factory =
         json.asConverterFactory(APPLICATION_JSON.toMediaType())
 

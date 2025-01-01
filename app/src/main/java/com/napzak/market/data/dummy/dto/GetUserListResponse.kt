@@ -1,7 +1,9 @@
 package com.napzak.market.data.dummy.dto
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class GetUserListResponse(
     @SerialName("page")
     val page: Int?,
@@ -16,6 +18,7 @@ data class GetUserListResponse(
     @SerialName("support")
     val support: Support?
 ) {
+    @Serializable
     data class UserData(
         @SerialName("id")
         val id: Int?,
@@ -28,6 +31,8 @@ data class GetUserListResponse(
         @SerialName("avatar")
         val profileImage: String?,
     )
+
+    @Serializable
     data class Support(
         @SerialName("url")
         val url: String?,

@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +23,6 @@ class DummyViewModel @Inject constructor(
     fun fetchDummyUsers() = viewModelScope.launch {
         dummyRepository.fetchDummyUserList(page = 1)
             .onSuccess { userList ->
-                Timber.tag("TESTINGPROJECT").d("reached")
                 if (userList.isNotEmpty()) {
                     updateDummyUiState(UiState.Success(userList))
                 } else {

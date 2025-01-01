@@ -29,6 +29,7 @@ composeNavigation = "2.8.5"
 hilt = "2.48.1"
 hiltManager = "1.2.0"
 
+coil = "2.7.0"
 lottie = "6.6.1"
 timber = "5.0.1"
 
@@ -89,9 +90,10 @@ hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testi
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltManager" }
 
-## lottie
-lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
-timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+## miscellaneous
+coil-compose = {group = "io.coil-kt", name="coil-compose", version.ref="coil"}
+lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 process-phoenix = { group = "com.jakewharton", name = "process-phoenix", version.ref = "phoenix" }
 
 

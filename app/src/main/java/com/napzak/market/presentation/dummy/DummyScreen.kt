@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.napzak.market.core.common.util.UiState
+import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.dummy.model.DummyUser
 import com.napzak.market.presentation.dummy.component.DummyUserItem
 import com.napzak.market.presentation.dummy.state.DummyUiState

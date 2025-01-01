@@ -1,4 +1,4 @@
-package com.napzak.market.core.common.util
+package com.napzak.market.core.common.state
 
 sealed interface UiState<out T> {
     data object Empty : UiState<Nothing>

@@ -2,7 +2,7 @@ package com.napzak.market.presentation.dummy
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.napzak.market.core.common.util.UiState
+import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.dummy.model.DummyUser
 import com.napzak.market.domain.dummy.repository.DummyRepository
 import com.napzak.market.presentation.dummy.state.DummyUiState

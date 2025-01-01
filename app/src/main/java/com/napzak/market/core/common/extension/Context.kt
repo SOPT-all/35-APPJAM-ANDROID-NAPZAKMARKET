@@ -1,7 +1,6 @@
 package com.napzak.market.core.common.extension
 
 import android.content.Context
-import android.os.Message
 import android.widget.Toast
 
 fun Context.showToast(message: String) {

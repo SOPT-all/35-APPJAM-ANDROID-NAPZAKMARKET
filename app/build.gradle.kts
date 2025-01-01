@@ -109,6 +109,7 @@ dependencies {
     implementation(libs.retrofit2.kotlinx.serialization.converter)
 
     // Miscellaneous libraries
+    implementation(libs.coil.compose)
     implementation(libs.lottie.compose)
     implementation(libs.timber)
     implementation(libs.process.phoenix)

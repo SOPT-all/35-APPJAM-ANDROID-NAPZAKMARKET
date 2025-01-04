@@ -15,6 +15,7 @@ val Pink = Color(0xFFFF195E)
 // Gray Scale & Gradient
 val White = Color(0xFFFFFFFF)
 val White0 = Color(0x00FFFFFF)
+val White20 = Color(0x33FFFFFF)
 val Gray50 = Color(0xFFFAFAFA)
 val Gray100 = Color(0xFFF4F4F4)
 val Gray200 = Color(0xFFE9E9E9)
@@ -41,6 +42,7 @@ data class NapzakMarketColors (
     // Gray Scale & Gradient
     val white: Color,
     val white0: Color,
+    val white20: Color,
     val gray50: Color,
     val gray100: Color,
     val gray200: Color,
@@ -67,6 +69,7 @@ val defaultNapzakMarketColors = NapzakMarketColors(
     // Gray Scale & Gradient
     white = White,
     white0 = White0,
+    white20 = White20,
     gray50 = Gray50,
     gray100 = Gray100,
     gray200 = Gray200,

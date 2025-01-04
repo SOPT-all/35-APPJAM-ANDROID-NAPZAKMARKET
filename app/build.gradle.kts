@@ -20,8 +20,8 @@ android {
 
     defaultConfig {
         applicationId = "com.napzak.market"
-        minSdk =  libs.versions.minSdk.get().toInt()
-        targetSdk =  libs.versions.targetSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = libs.versions.versionCode.get().toInt()
         versionName = libs.versions.versionName.get()
 
@@ -29,14 +29,13 @@ android {
     }
 
     buildTypes {
-        /* TODO: 서버 통신 구현할 때 주석 해제
-           debug {
+        debug {
             buildConfigField(
                 "String",
-                "BASE_URL",
+                "TEST_BASE_URL",
                 properties.getProperty("test.base.url")
             )
-        }*/
+        }
 
         release {
             isMinifyEnabled = false
@@ -110,6 +109,7 @@ dependencies {
     implementation(libs.retrofit2.kotlinx.serialization.converter)
 
     // Miscellaneous libraries
+    implementation(libs.coil.compose)
     implementation(libs.lottie.compose)
     implementation(libs.timber)
     implementation(libs.process.phoenix)

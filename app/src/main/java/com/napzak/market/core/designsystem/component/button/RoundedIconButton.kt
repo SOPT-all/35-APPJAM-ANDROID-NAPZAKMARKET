@@ -10,7 +10,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
@@ -38,6 +40,8 @@ fun RoundedIconButton(
     colors: CustomButtonColors = CustomButtonColors(),
     innerPadding: PaddingValues = PaddingValues(8.dp),
 ) {
+    val shape = remember { CircleShape }
+
     CompositionLocalProvider(
         value = LocalContentColor provides colors.contentColor(),
         content = {
@@ -45,19 +49,24 @@ fun RoundedIconButton(
                 imageVector = icon,
                 contentDescription = null,
                 modifier = modifier
+                    .clip(shape)
+                    .background(color = colors.containerColor())
+                    .border(
+                        width = 1.dp,
+                        color = colors.borderColor(),
+                        shape = shape
+                    )
                     .clickable(
                         role = Role.Button,
                         onClick = onClick
                     )
-                    .background(color = colors.containerColor(), shape = CircleShape)
-                    .border(width = 1.dp, color = colors.borderColor(), shape = CircleShape)
                     .padding(innerPadding),
             )
         }
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun RoundedIconButtonPreview() {
     NapzakMarketTheme {

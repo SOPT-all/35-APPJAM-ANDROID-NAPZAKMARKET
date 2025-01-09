@@ -2,6 +2,7 @@ package com.napzak.market.core.designsystem.component.chip
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,18 +54,20 @@ fun BasicChip(
     innerPaddingValues: PaddingValues,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
+    onClick: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
+            .clip(shape)
             .background(
                 color = chipColors.containerColor(),
-                shape = shape
             )
             .border(
                 width = borderWidth,
                 color = chipColors.borderColor(),
                 shape = shape
             )
+            .clickable { onClick() }
             .padding(innerPaddingValues),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -113,7 +117,7 @@ private fun BasicChipPreview() {
                     modifier = Modifier.size(18.dp)
                 )
             },
-            innerPaddingValues  = PaddingValues(
+            innerPaddingValues = PaddingValues(
                 horizontal = 12.dp,
                 vertical = 7.dp
             ),

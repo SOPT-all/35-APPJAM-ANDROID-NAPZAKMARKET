@@ -5,7 +5,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -28,9 +27,9 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 @Composable
 fun RemovableChip(
     text: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = NapzakMarketTheme.typography.bodyBold14,
-    iconColor: Color = NapzakMarketTheme.colors.gray500,
     chipColors: CustomChipColors = CustomChipColors(),
 ) {
     BasicChip(
@@ -49,6 +48,9 @@ fun RemovableChip(
                 contentDescription = null
             )
         },
+        modifier = modifier,
+        onClick = onClick,
+
     )
 }
 
@@ -56,6 +58,6 @@ fun RemovableChip(
 @Composable
 private fun RemovableChipPreview() {
     NapzakMarketTheme {
-        RemovableChip(text = "실바니안")
+        RemovableChip(text = "실바니안", onClick = {})
     }
 }

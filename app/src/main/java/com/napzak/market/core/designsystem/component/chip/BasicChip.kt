@@ -38,8 +38,6 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  * @param textStyle [text]의 글꼴
  * @param leadingIcon 왼쪽에 표시할 아이콘
  * @param trailingIcon 오른쪽에 표시할 아이콘
- * @param leadingIconColor [leadingIcon]의 색상
- * @param trailingIconColor [trailingIcon]의 색상
  * @param innerPaddingValues 내부 패딩값
  */
 

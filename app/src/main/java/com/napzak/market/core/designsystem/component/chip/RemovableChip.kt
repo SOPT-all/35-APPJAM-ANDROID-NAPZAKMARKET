@@ -18,9 +18,9 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  * 삭제 가능한 칩을 나타내는 컴포넌트
  *
  * @param text 칩에 표시할 텍스트
+ * @param onClick 칩을 클릭할 때 실행할 콜백
  * @param modifier 수정자
  * @param textStyle [text]의 글꼴
- * @param iconColor 아이콘의 색상
  * @param chipColors 칩의 색상과 테두리 색상을 정의하는 CustomChipColors 객체
  */
 

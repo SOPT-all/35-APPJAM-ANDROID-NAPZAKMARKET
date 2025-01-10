@@ -25,7 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
-import com.napzak.market.core.designsystem.theme.Black
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**

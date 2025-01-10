@@ -1,10 +1,9 @@
 package com.napzak.market.presentation.main
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.ImageVector
+import com.napzak.market.R
 import com.napzak.market.core.common.navigation.MainTabRoute
 import com.napzak.market.core.common.navigation.Route
 import com.napzak.market.presentation.dummy.navigation.Dummy
@@ -12,19 +11,40 @@ import com.napzak.market.presentation.dummy.navigation.Dummy
 
 // TODO: 구현 시작 시 수정
 enum class MainTab(
-    val icon: ImageVector,
-    val contentDescription: String,
+    @DrawableRes val selectedIcon: Int,
+    @DrawableRes val unselectedIcon: Int,
+    @StringRes val contentDescription: Int,
     val route: MainTabRoute,
 ) {
-    DUMMY(
-        icon = Icons.Filled.Home,
-        contentDescription = "더미1",
-        route = Dummy,
+    HOME(
+        selectedIcon = R.drawable.ic_home_select_28,
+        unselectedIcon = R.drawable.ic_home_unselect_28,
+        contentDescription = R.string.main_bottom_bar_home,
+        route = Dummy, // TODO: Home 루트로 변경
     ),
-    DUMMY2(
-        icon = Icons.Filled.Search,
-        contentDescription = "더미2",
-        route = Dummy,
+    SEARCH(
+        selectedIcon = R.drawable.ic_look_select_28,
+        unselectedIcon = R.drawable.ic_look_unselect_28,
+        contentDescription = R.string.main_bottom_bar_search,
+        route = Dummy, // TODO: Search 루트로 변경
+    ),
+    REGISTER(
+        selectedIcon = R.drawable.ic_register_select_28,
+        unselectedIcon = R.drawable.ic_register_unselect_28,
+        contentDescription = R.string.main_bottom_bar_register,
+        route = Dummy, // TODO: Register 루트로 변경
+    ),
+    CHAT(
+        selectedIcon = R.drawable.ic_chat_select_28,
+        unselectedIcon = R.drawable.ic_chat_unselect_28,
+        contentDescription = R.string.main_bottom_bar_chat,
+        route = Dummy, // TODO: Chat 루트로 변경
+    ),
+    MY(
+        selectedIcon = R.drawable.ic_my_select_28,
+        unselectedIcon = R.drawable.ic_my_unselect_28,
+        contentDescription = R.string.main_bottom_bar_my,
+        route = Dummy, // TODO: My 루트로 변경
     );
 
     companion object {

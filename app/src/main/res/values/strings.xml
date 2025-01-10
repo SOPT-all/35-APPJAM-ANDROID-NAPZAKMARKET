@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">NapzakMarket</string>
+
+    <!-- MainScreen Bottom Bar -->
+    <string name="main_bottom_bar_home">홈</string>
+    <string name="main_bottom_bar_search">탐색</string>
+    <string name="main_bottom_bar_register">등록</string>
+    <string name="main_bottom_bar_chat">채팅</string>
+    <string name="main_bottom_bar_my">마이</string>
 </resources>

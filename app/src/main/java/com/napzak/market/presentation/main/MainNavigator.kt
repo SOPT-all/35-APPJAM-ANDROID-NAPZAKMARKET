@@ -38,8 +38,11 @@ class MainNavigator(
         }
 
         when (tab) {
-            MainTab.DUMMY -> navController.navigateToDummy(navOptions)
-            MainTab.DUMMY2 -> {}
+            MainTab.HOME -> navController.navigateToDummy(navOptions)
+            MainTab.CHAT -> {/*TODO: 채팅화면 연결*/}
+            MainTab.SEARCH -> {/*TODO: 탐색화면 연결*/}
+            MainTab.REGISTER ->  {/*TODO: 등록화면 연결*/}
+            MainTab.MY ->  {/*TODO: 마이페이지 화면 연결*/}
         }
     }
 

@@ -50,10 +50,12 @@ fun GenreChipButtonGroup(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 stickyHeader {
-                    RoundedIconButton(
-                        icon = ImageVector.vectorResource(id = R.drawable.ic_reset_18),
-                        onClick = onResetClick
-                    )
+                    if(genreList.isNotEmpty()) {
+                        RoundedIconButton(
+                            icon = ImageVector.vectorResource(id = R.drawable.ic_reset_18),
+                            onClick = onResetClick
+                        )
+                    }
                 }
 
                 itemsIndexed(items = genreList, key = { _, genre -> genre }) { index, genre ->

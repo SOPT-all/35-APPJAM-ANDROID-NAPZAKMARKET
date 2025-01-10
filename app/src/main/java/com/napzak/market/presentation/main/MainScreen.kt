@@ -2,7 +2,7 @@ package com.napzak.market.presentation.main
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.main.component.MainBottomBar
+import com.napzak.market.presentation.main.component.RegisterNavigationButtonGroup
+import com.napzak.market.presentation.main.type.MainTab
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
@@ -23,17 +25,26 @@ fun MainScreen(
                 isVisible = navigator.showBottomBar(),
                 tabs = MainTab.entries.toImmutableList(),
                 currentTab = navigator.currentTab,
-                onTabSelected = navigator::navigate
+                onTabSelected = navigator::navigate,
             )
         },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        Column(
-            modifier = Modifier.fillMaxSize()
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
         ) {
             MainNavHost(
                 navigator = navigator,
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier
+            )
+
+            RegisterNavigationButtonGroup(
+                onSellRegisterClick = {/*TODO: 판매 등록 화면 연결*/},
+                onBuyRegisterClick = {/*TODO: 구매 등록 화면 연결*/},
+                onDismissRequest = { navigator.navigate(MainTab.REGISTER) },
+                visibility = navigator.registerTabVisibility,
             )
         }
     }

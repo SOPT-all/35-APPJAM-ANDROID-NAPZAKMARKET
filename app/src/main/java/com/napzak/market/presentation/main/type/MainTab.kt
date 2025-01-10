@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.main
+package com.napzak.market.presentation.main.type
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.Icon
@@ -31,7 +32,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
-import com.napzak.market.presentation.main.MainTab
+import com.napzak.market.presentation.main.type.MainTab
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -56,13 +57,13 @@ fun MainBottomBar(
         enter = fadeIn() + slideIn { IntOffset(0, 0) },
         exit = fadeOut() + slideOut { IntOffset(0, 0) }
     ) {
-
         Surface(
             color = White,
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .navigationBarsPadding()
                     .padding(horizontal = 5.dp)
                     .defaultMinSize(minHeight = 72.dp)  //피그마상 바텀바 높이로 고정
                     .selectableGroup(),

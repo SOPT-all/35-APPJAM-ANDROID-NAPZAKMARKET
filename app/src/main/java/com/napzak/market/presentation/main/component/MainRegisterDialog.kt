@@ -6,7 +6,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -34,13 +33,21 @@ import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.presentation.main.type.RegisterTab
 
+/**
+ * 바텀바의 등록 버튼을 눌렀을 때 나타나는 버튼 그룹입니다.
+ *
+ * @param visibility 버튼 그룹의 화면 표시 여부입니다.
+ * @param onSellRegisterClick 팔아요 등록을 눌렀을 때 호출되는 콜백입니다.
+ * @param onBuyRegisterClick 구매 등록을 눌렀을 때 호출되는 콜백입니다.
+ * @param onDismissRequest 버튼 그룹을 닫을 때 호출되는 콜백입니다.
+ */
+
 @Composable
-fun BoxScope.RegisterNavigationButtonGroup(
+fun BoxScope.MainRegisterDialog(
     visibility: Boolean,
     onSellRegisterClick: () -> Unit,
     onBuyRegisterClick: () -> Unit,
     onDismissRequest: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     AnimatedVisibility(
         visible = visibility,
@@ -49,10 +56,10 @@ fun BoxScope.RegisterNavigationButtonGroup(
         exit = fadeOut()
     ) {
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .background(color = NapzakMarketTheme.colors.black70)
-                .clickable { onDismissRequest() },
+                .noRippleClickable( onDismissRequest ),
         )
     }
 
@@ -62,35 +69,46 @@ fun BoxScope.RegisterNavigationButtonGroup(
         enter = slideInVertically { fullHeight -> fullHeight },
         exit = slideOutVertically { fullHeight -> fullHeight }
     ) {
-        Column(
-            modifier = Modifier
-                .padding(bottom = 14.dp)
-                .width(160.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .background(color = NapzakMarketTheme.colors.white)
-                .padding(vertical = 15.dp),
-            verticalArrangement = Arrangement.spacedBy(15.dp),
-        ) {
-            RegisterTab.entries.forEachIndexed { index, tab ->
-                val onClick = when (tab) {
-                    RegisterTab.SELL -> onSellRegisterClick
-                    RegisterTab.BUY -> onBuyRegisterClick
-                }
+        MainRegisterDialog(
+            onSellRegisterClick = onSellRegisterClick,
+            onBuyRegisterClick = onBuyRegisterClick,
+        )
+    }
+}
 
-                RegisterNavigationButton(
-                    image = ImageVector.vectorResource(tab.iconRes),
-                    label = stringResource(tab.titleRes),
-                    onClick = onClick,
-                    modifier = Modifier.padding(horizontal = 26.dp)
+@Composable
+fun MainRegisterDialog(
+    onSellRegisterClick: () -> Unit,
+    onBuyRegisterClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .padding(bottom = 14.dp)
+            .width(160.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .background(color = NapzakMarketTheme.colors.white)
+            .padding(vertical = 15.dp),
+        verticalArrangement = Arrangement.spacedBy(15.dp),
+    ) {
+        RegisterTab.entries.forEachIndexed { index, tab ->
+            val onClick = when (tab) {
+                RegisterTab.SELL -> onSellRegisterClick
+                RegisterTab.BUY -> onBuyRegisterClick
+            }
+
+            RegisterNavigationButton(
+                image = ImageVector.vectorResource(tab.iconRes),
+                label = stringResource(tab.titleRes),
+                onClick = onClick,
+                modifier = Modifier.padding(horizontal = 26.dp)
+            )
+
+            if (index != RegisterTab.entries.lastIndex) {
+                HorizontalDivider(
+                    thickness = Dp.Hairline,
+                    color = NapzakMarketTheme.colors.gray200,
+                    modifier = Modifier.padding(horizontal = 22.5.dp)
                 )
-
-                if (index != RegisterTab.entries.lastIndex) {
-                    HorizontalDivider(
-                        thickness = Dp.Hairline,
-                        color = NapzakMarketTheme.colors.gray200,
-                        modifier = Modifier.padding(horizontal = 22.5.dp)
-                    )
-                }
             }
         }
     }
@@ -126,7 +144,7 @@ private fun RegisterNavigationButton(
 private fun RegisterNavigationButtonGroupPreview() {
     NapzakMarketTheme {
         Box {
-            RegisterNavigationButtonGroup(
+            MainRegisterDialog(
                 onSellRegisterClick = {},
                 onBuyRegisterClick = {},
                 onDismissRequest = {},

@@ -21,10 +21,10 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
-    private var registerTabVisibilityState by mutableStateOf(false)
+    private var registerDialogVisibilityState by mutableStateOf(false)
 
-    val registerTabVisibility: Boolean
-        get() = this.registerTabVisibilityState
+    val registerDialogVisibility: Boolean
+        get() = this.registerDialogVisibilityState
 
     val startDestination = Dummy
 
@@ -49,7 +49,7 @@ class MainNavigator(
             MainTab.HOME -> navController.navigateToDummy(navOptions)
             MainTab.SEARCH -> {/*TODO: 검색화면 연결*/}
             MainTab.REGISTER ->  {
-                this.registerTabVisibilityState = !this.registerTabVisibilityState
+                this.registerDialogVisibilityState = !this.registerDialogVisibilityState
             }
             MainTab.CHAT -> {/*TODO: 채팅화면 연결*/}
             MainTab.MY ->  {/*TODO: 마이페이지 화면 연결*/}

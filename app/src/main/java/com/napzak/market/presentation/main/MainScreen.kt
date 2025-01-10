@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.main.component.MainBottomBar
-import com.napzak.market.presentation.main.component.RegisterNavigationButtonGroup
+import com.napzak.market.presentation.main.component.MainRegisterDialog
 import com.napzak.market.presentation.main.type.MainTab
 import kotlinx.collections.immutable.toImmutableList
 
@@ -40,11 +40,11 @@ fun MainScreen(
                 modifier = Modifier
             )
 
-            RegisterNavigationButtonGroup(
+            MainRegisterDialog(
                 onSellRegisterClick = {/*TODO: 판매 등록 화면 연결*/},
                 onBuyRegisterClick = {/*TODO: 구매 등록 화면 연결*/},
                 onDismissRequest = { navigator.navigate(MainTab.REGISTER) },
-                visibility = navigator.registerTabVisibility,
+                visibility = navigator.registerDialogVisibility,
             )
         }
     }

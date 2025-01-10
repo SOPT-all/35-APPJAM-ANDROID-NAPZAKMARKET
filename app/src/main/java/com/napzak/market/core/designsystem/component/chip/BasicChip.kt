@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
+import com.napzak.market.core.designsystem.theme.Black
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**
@@ -36,8 +37,8 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  * @param borderWidth 테두리의 두께
  * @param shape 칩의 모양
  * @param textStyle [text]의 글꼴
- * @param leadingIcon 왼쪽에 표시할 아이콘
- * @param trailingIcon 오른쪽에 표시할 아이콘
+ * @param leadingIcon 왼쪽에 표시할 아이콘, null이면 표시되지 않음
+ * @param trailingIcon 오른쪽에 표시할 아이콘, null이면 표시되지 않음
  * @param innerPaddingValues 내부 패딩값
  */
 
@@ -60,10 +61,12 @@ fun BasicChip(
             .background(
                 color = chipColors.containerColor(),
             )
-            .border(
-                width = borderWidth,
-                color = chipColors.borderColor(),
-                shape = shape
+            .then(  // border가 0이 아닐 때만 border를 적용
+                Modifier.border(
+                    width = borderWidth,
+                    color = chipColors.borderColor(),
+                    shape = shape
+                ).takeIf { borderWidth > 0.dp } ?: Modifier
             )
             .clickable { onClick() }
             .padding(innerPaddingValues),

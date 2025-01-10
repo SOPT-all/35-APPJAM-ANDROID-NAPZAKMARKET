@@ -7,6 +7,8 @@
     <string name="main_bottom_bar_register">등록</string>
     <string name="main_bottom_bar_chat">채팅</string>
     <string name="main_bottom_bar_my">마이</string>
+    <string name="main_bottom_bar_register_sell">팔아요 등록</string>
+    <string name="main_bottom_bar_register_buy">구해요 등록</string>
 
     <!-- Napzak Item-->
     <string name="napzak_item_sell">팔아요</string>

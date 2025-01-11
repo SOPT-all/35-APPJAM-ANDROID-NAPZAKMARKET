@@ -45,7 +45,7 @@ fun RemovableChip(
         trailingIcon = {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_close_18),
-                contentDescription = null
+                contentDescription = text
             )
         },
         modifier = modifier,

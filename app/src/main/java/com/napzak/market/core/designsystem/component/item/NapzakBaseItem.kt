@@ -118,10 +118,11 @@ private fun ItemImageGroup(
         if (imgUrl.isNotBlank()) {
             AsyncImage(
                 model = ImageRequest.Builder(context).data(imgUrl).build(),
-                contentDescription = null,
+                contentDescription = stringResource(R.string.napzak_item_content_description),
                 modifier = Modifier.matchParentSize()
             )
         } else {
+            // TODO: 잘 동작하는지 확인차 넣어둔 코드. 추후 삭제될 예정
             Box(
                 modifier = Modifier
                     .matchParentSize()
@@ -138,7 +139,7 @@ private fun ItemImageGroup(
                 imageVector = ImageVector.vectorResource(
                     if (isLiked) R.drawable.ic_heart_select_24 else R.drawable.ic_heart_unselect_24
                 ),
-                contentDescription = null,
+                contentDescription = stringResource(R.string.napzak_item_content_description),
                 tint = Color.Unspecified,
                 modifier = Modifier
                     .noRippleClickable(onLikeClick)

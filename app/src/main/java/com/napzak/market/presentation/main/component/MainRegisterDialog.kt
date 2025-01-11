@@ -59,7 +59,7 @@ fun BoxScope.MainRegisterDialog(
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = NapzakMarketTheme.colors.black70)
-                .noRippleClickable( onDismissRequest ),
+                .noRippleClickable(onDismissRequest),
         )
     }
 

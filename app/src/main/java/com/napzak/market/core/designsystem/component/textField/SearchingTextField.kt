@@ -28,6 +28,17 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 
+
+/**
+ * 검색창 컴포넌트
+ *
+ * @param placeholder 검색어가 입력되지 않았을 때 보여지는 텍스트
+ * @param value 사용자가 입력한 검색어 텍스트
+ * @param onTextChange 사용자가 텍스트 입력 시 실행할 콜백
+ * @param onSearchButtonClick 검색 아이콘 클릭 시 실행할 콜백
+ * @param modifier 수정자
+ */
+
 @Composable
 fun SearchingTextField(
     placeholder: String,

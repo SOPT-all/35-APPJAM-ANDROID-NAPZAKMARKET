@@ -4,4 +4,5 @@
     <!-- Icon Description -->
     <string name="x_circle_button">x 버튼 아이콘</string>
     <string name="search_button">검색 아이콘</string>
+    <string name="down_chevron_button">아래 방향 화살표 아이콘</string>
 </resources>

@@ -1,8 +1,11 @@
 package com.napzak.market.core.designsystem.component.topbar
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
@@ -17,15 +20,20 @@ import com.napzak.market.R
 @Composable
 fun CloseTopBar(
     title: String,
-    onCloseClick: () -> Unit
+    onCloseClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    textStyle: TextStyle = NapzakMarketTheme.typography.titleSemi18,
+    backgroundColor: Color = NapzakMarketTheme.colors.white,
+    contentColor: Color = NapzakMarketTheme.colors.black
 ) {
     CommonTopBar(
         title = title,
         navigationIcon = ImageVector.vectorResource(R.drawable.ic_close_24),
         onNavigationClick = onCloseClick,
-        textStyle = NapzakMarketTheme.typography.titleSemi18,
-        backgroundColor = NapzakMarketTheme.colors.white,
-        contentColor = NapzakMarketTheme.colors.black
+        modifier = modifier,
+        textStyle = textStyle,
+        backgroundColor = backgroundColor,
+        contentColor = contentColor
     )
 }
 

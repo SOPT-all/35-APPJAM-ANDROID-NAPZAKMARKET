@@ -9,7 +9,10 @@ import com.napzak.market.R
 
 
 /**
- * 특정 화면에 사용할 TopBar 변형
+ * 특정 화면에서 사용할 수 있는 TopBar 컴포넌트의 변형 버전.
+ *
+ * @param title TopBar에 표시될 제목 텍스트
+ * @param onCloseClick 닫기 아이콘 클릭 시 실행될 동작
  */
 @Composable
 fun CloseTopBar(

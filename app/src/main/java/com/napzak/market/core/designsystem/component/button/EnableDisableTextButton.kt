@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,12 +26,14 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 fun EnableDisableTextButton(
     text: String,
     isEnabled: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     CommonButton(
         text = text,
         onClick = { if (isEnabled) onClick() },
         isEnabled = isEnabled,
+        modifier = modifier,
         width = 335.dp,
         height = 52.dp,
         shape = RoundedCornerShape(12.dp),
@@ -52,13 +55,15 @@ fun EnableDisableTextButtonPreview() {
             EnableDisableTextButton(
                 text = "선택 완료! 시작하기",
                 isEnabled = true,
-                onClick = { /* Preview Action */ }
+                onClick = { /* Preview Action */ },
+                modifier = Modifier.height(52.dp).width(335.dp)
             )
             Spacer(modifier = Modifier.height(16.dp))
             EnableDisableTextButton(
                 text = "선택 완료! 시작하기",
                 isEnabled = false,
-                onClick = { /* Preview Action */ }
+                onClick = { /* Preview Action */ },
+                modifier = Modifier.height(52.dp).width(335.dp)
             )
         }
     }

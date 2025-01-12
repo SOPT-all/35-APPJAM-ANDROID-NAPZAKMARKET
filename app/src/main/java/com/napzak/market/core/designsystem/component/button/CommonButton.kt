@@ -40,8 +40,8 @@ fun CommonButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    width: Dp,
-    height: Dp,
+    width: Dp? = null,
+    height: Dp? = null,
     shape: RoundedCornerShape,
     textStyle: TextStyle,
     isEnabled: Boolean = true,
@@ -50,9 +50,7 @@ fun CommonButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
-            .width(width)
-            .height(height),
+        modifier = modifier,
         shape = shape,
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isEnabled) backgroundColor else NapzakMarketTheme.colors.gray400,
@@ -68,12 +66,3 @@ fun CommonButton(
         )
     }
 }
-
-
-
-
-
-
-
-
-

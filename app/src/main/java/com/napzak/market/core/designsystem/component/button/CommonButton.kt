@@ -44,15 +44,13 @@ fun CommonButton(
         shape = shape,
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isEnabled) backgroundColor else NapzakMarketTheme.colors.gray400,
-            contentColor = contentColor
+            contentColor = if (isEnabled) contentColor else NapzakMarketTheme.colors.white
         ),
         enabled = isEnabled
     ) {
         Text(
             text = text,
-            style = textStyle.copy(
-                color = if (isEnabled) contentColor else NapzakMarketTheme.colors.white
-            )
+            style = textStyle
         )
     }
 }

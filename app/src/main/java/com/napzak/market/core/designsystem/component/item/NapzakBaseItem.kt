@@ -81,6 +81,7 @@ fun NapzakBaseItem(
             color = NapzakMarketTheme.colors.gray900,
             modifier = Modifier.padding(top = 6.dp)
         )
+
         SingleLineText(
             text = title,
             style = NapzakMarketTheme.typography.bodyMedium14,

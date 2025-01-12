@@ -38,7 +38,7 @@ fun CommonTopBar(
 ) {
     Box(
         modifier = modifier
-            .width(375.dp)
+            .fillMaxWidth()
             .height(54.dp)
             .background(backgroundColor)
             .padding(horizontal = 13.dp),

@@ -10,9 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.napzak.market.R
 
 /**
  * 공통 TopBar 컴포넌트
@@ -50,7 +52,7 @@ fun CommonTopBar(
             ) {
                 Icon(
                     imageVector = navigationIcon,
-                    contentDescription = "Navigation Icon",
+                    contentDescription = stringResource(id = R.string.navigation_icon_description),
                     tint = contentColor
                 )
             }
@@ -64,5 +66,3 @@ fun CommonTopBar(
         )
     }
 }
-
-

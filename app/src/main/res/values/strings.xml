@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NapzakMarket</string>
+    <string name="navigation_icon_description">네비게이션 아이콘</string>
 </resources>

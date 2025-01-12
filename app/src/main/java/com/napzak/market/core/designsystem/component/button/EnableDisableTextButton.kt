@@ -10,6 +10,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
@@ -28,6 +30,10 @@ fun EnableDisableTextButton(
     isEnabled: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    shape: RoundedCornerShape = RoundedCornerShape(12.dp),
+    textStyle: TextStyle = NapzakMarketTheme.typography.bodyBold16,
+    backgroundColor: Color = NapzakMarketTheme.colors.purple30,
+    contentColor: Color = NapzakMarketTheme.colors.white
 ) {
     CommonButton(
         text = text,
@@ -36,10 +42,10 @@ fun EnableDisableTextButton(
         modifier = modifier,
         width = 335.dp,
         height = 52.dp,
-        shape = RoundedCornerShape(12.dp),
-        textStyle = NapzakMarketTheme.typography.bodyBold16,
-        backgroundColor = NapzakMarketTheme.colors.purple30,
-        contentColor = NapzakMarketTheme.colors.white
+        shape = shape,
+        textStyle = textStyle,
+        backgroundColor = backgroundColor,
+        contentColor = contentColor,
     )
 }
 

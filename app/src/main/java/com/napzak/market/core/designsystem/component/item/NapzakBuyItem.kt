@@ -67,13 +67,33 @@ fun NapzakBuyItem(
     )
 }
 
-
 @Preview(showBackground = true)
+@Composable
+private fun MyNapzakBuyItemHorizontalPreview() {
+    NapzakMarketTheme {
+        NapzakBuyItem(
+            title = "딸기 마이멜로디 마스코트 인형",
+            genre = "산리오",
+            price = "35,000원",
+            imgUrl = "",
+            isLiked = false,
+            isMyItem = true,
+            isOfferPossible = true,
+            createdTime = "1시간 전",
+            onItemClick = {},
+            onLikeClick = {},
+            modifier = Modifier.width(150.dp)
+        )
+    }
+}
+
+
+@Preview(showBackground = true, widthDp = 360)
 @Composable
 private fun MyNapzakBuyItemHorizontalListPreview() {
     NapzakMarketTheme {
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(horizontal = 20.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -96,12 +116,12 @@ private fun MyNapzakBuyItemHorizontalListPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 360)
 @Composable
 private fun MyNapzakBuyItemListPreview() {
     NapzakMarketTheme {
         LazyVerticalGrid(
-            columns = GridCells.FixedSize(150.dp),
+            columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally),
             verticalArrangement = Arrangement.spacedBy(20.dp),
             contentPadding = PaddingValues(20.dp),
@@ -118,7 +138,6 @@ private fun MyNapzakBuyItemListPreview() {
                     createdTime = "1시간 전",
                     onItemClick = {},
                     onLikeClick = {},
-                    modifier = Modifier.width(150.dp)
                 )
             }
         }

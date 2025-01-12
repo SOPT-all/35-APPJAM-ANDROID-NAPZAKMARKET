@@ -1,8 +1,11 @@
 package com.napzak.market.core.designsystem.component.topbar
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.napzak.market.R
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
@@ -10,15 +13,20 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 @Composable
 fun BackTopBar(
     title: String,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    textStyle: TextStyle = NapzakMarketTheme.typography.titleSemi18,
+    backgroundColor: Color = NapzakMarketTheme.colors.white,
+    contentColor: Color = NapzakMarketTheme.colors.black
 ) {
     CommonTopBar(
         title = title,
         navigationIcon = ImageVector.vectorResource(R.drawable.ic_back_24),
         onNavigationClick = onBackClick,
-        textStyle = NapzakMarketTheme.typography.titleSemi18,
-        backgroundColor = NapzakMarketTheme.colors.white,
-        contentColor = NapzakMarketTheme.colors.black
+        modifier = modifier,
+        textStyle = textStyle,
+        backgroundColor = backgroundColor,
+        contentColor = contentColor
     )
 }
 

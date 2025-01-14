@@ -50,14 +50,7 @@ fun ChatInfoSectionSell(
                         NapzakMarketTheme.colors.gray300,
                         shape = RoundedCornerShape(4.dp),
                     ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "",
-                    color = NapzakMarketTheme.colors.gray500,
-                )
-            }
-
+            )
             Spacer(modifier = Modifier.width(14.dp))
 
             Column(

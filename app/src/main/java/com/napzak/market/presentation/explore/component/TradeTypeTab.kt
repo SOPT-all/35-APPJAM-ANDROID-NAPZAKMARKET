@@ -58,7 +58,7 @@ fun TradeTypeTab(
 }
 
 @Composable
-fun TradeTypeTabItem(
+private fun TradeTypeTabItem(
     tradeType: String,
     isSelected: Boolean,
     onTradeTypeClick: () -> Unit,

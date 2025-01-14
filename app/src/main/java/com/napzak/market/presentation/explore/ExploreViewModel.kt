@@ -17,7 +17,7 @@ class ExploreViewModel : ViewModel() {
         updateLoadState(
             loadState = UiState.Success(
                 ExploreProductInformation(
-                    listOf(
+                    productList = listOf(
                         ProductItem(
                             productId = 201,
                             genreName = "짱구",

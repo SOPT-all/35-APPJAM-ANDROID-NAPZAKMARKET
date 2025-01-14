@@ -42,7 +42,7 @@ fun EnableDisableTextButton(
 ){
     CommonButton(
         text = text,
-        onClick = { if (isEnabled) onClick() },
+        onClick = onClick,
         isEnabled = isEnabled,
         modifier = modifier,
         shape = shape,

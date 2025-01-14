@@ -10,7 +10,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.napzak.market.R
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
-//TODO: 주석 넣기
+/**
+ * 뒤로 가기 버튼과 타이틀을 포함한 상단 바 컴포넌트.
+ *
+ * @param title TopBar에 표시될 제목
+ * @param onBackClick 뒤로 가기 버튼 클릭 시 수행할 동작.
+ * @param textStyle 제목 텍스트 스타일
+ * @param backgroundColor TopBar의 배경색
+ * @param contentColor 제목 텍스트 색상
+ * @param modifier TopBar에 적용할 Modifier
+ */
 
 @Composable
 fun BackTopBar(

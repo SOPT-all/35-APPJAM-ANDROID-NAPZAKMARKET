@@ -111,7 +111,7 @@ fun SearchBox(
 
 @Preview
 @Composable
-fun SearchBoxPreview(modifier: Modifier = Modifier) {
+private fun SearchBoxPreview(modifier: Modifier = Modifier) {
     var searchTerm by remember {mutableStateOf("")}
     SearchBox(
         placeholder = "어떤 아이템을 찾고 계신가요?",

@@ -90,7 +90,7 @@ private fun generateChipText(type: SelectableChipType, genreList: List<String>):
 
 @Preview
 @Composable
-fun Chip_Genre_Preview(modifier: Modifier = Modifier) {
+private fun Chip_Genre_Preview(modifier: Modifier = Modifier) {
     SelectableChip(
         isSelected = false,
         modifier = modifier,
@@ -102,7 +102,7 @@ fun Chip_Genre_Preview(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun Chip_Genre_Selected_Preview(modifier: Modifier = Modifier) {
+private fun Chip_Genre_Selected_Preview(modifier: Modifier = Modifier) {
     SelectableChip(
         isSelected = true,
         modifier = modifier,
@@ -114,7 +114,7 @@ fun Chip_Genre_Selected_Preview(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun Chip_Sold_Out_Preview(modifier: Modifier = Modifier) {
+private fun Chip_Sold_Out_Preview(modifier: Modifier = Modifier) {
     SelectableChip(
         isSelected = false,
         modifier = modifier,
@@ -125,7 +125,7 @@ fun Chip_Sold_Out_Preview(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun Chip_Sold_Out_Selected_Preview(modifier: Modifier = Modifier) {
+private fun Chip_Sold_Out_Selected_Preview(modifier: Modifier = Modifier) {
     SelectableChip(
         isSelected = true,
         modifier = modifier,

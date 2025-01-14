@@ -5,11 +5,16 @@ import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.presentation.explore.state.ExploreProductInformation
 import com.napzak.market.presentation.explore.state.ExploreUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
-class ExploreViewModel : ViewModel() {
+@HiltViewModel
+class ExploreViewModel @Inject constructor(
+    /* TODO: Repository 연결 */
+) : ViewModel() {
     private val _uiState = MutableStateFlow(ExploreUiState())
     val uiState = _uiState.asStateFlow()
 

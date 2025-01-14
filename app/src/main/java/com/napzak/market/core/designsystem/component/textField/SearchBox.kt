@@ -42,8 +42,8 @@ import com.napzak.market.core.common.extension.noRippleClickable
 @Composable
 fun SearchBox(
     placeholder: String,
-    readOnly: Boolean,
     modifier: Modifier = Modifier,
+    readOnly: Boolean = false,
     searchTerm: String = "",
     onTextChange: (String) -> Unit = {},
     onSearchButtonClick: () -> Unit = {},

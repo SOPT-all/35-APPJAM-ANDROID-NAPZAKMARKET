@@ -1,5 +1,6 @@
 package com.napzak.market.presentation.onboarding
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
@@ -71,6 +72,12 @@ private fun OnboardingScreen(
     onSkipButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    BackHandler(
+        enabled = searchValue.isNotBlank()
+    ) {
+        onTextFieldChange("")
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()

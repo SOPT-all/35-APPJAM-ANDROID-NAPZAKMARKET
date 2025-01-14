@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">NapzakMarket</string>
+    <string name="navigation_icon_description">네비게이션 아이콘</string>
+
+    <!-- Icon Description -->
+    <string name="x_circle_button">x 버튼 아이콘</string>
+    <string name="search_button">검색 아이콘</string>
+    <string name="down_chevron_button">아래 방향 화살표 아이콘</string>
+
+    <!-- Component -->
+    <string name="selectablechip_genre_counting">%s 외 %d</string>
 
     <!-- MainScreen Bottom Bar -->
     <string name="main_bottom_bar_home">홈</string>

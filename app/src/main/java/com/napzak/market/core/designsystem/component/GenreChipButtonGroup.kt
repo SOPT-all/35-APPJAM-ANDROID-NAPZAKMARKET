@@ -1,5 +1,11 @@
 package com.napzak.market.core.designsystem.component
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.Arrangement
@@ -45,30 +51,46 @@ fun GenreChipButtonGroup(
     CompositionLocalProvider(
         value = LocalOverscrollConfiguration provides null,
         content = {
-            LazyRow(
-                modifier = modifier.fillMaxWidth(),
-                contentPadding = contentPaddingValues,
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                stickyHeader {
-                    if(genreList.isNotEmpty()) {
-                        RoundedIconButton(
-                            icon = ImageVector.vectorResource(id = R.drawable.ic_reset_18),
-                            onClick = onResetClick
-                        )
-                    }
-                }
+            AnimatedContent(
+                targetState = genreList.isNotEmpty(),
+                transitionSpec = {
+                    (fadeIn(animationSpec = tween(220, delayMillis = 200)) +
+                            scaleIn(
+                                initialScale = 0.92f,
+                                animationSpec = tween(220, delayMillis = 200)
+                            ))
+                        .togetherWith(fadeOut(animationSpec = tween(90)))
+                },
+                label = "GenreChip"
+            ) { hasGenre ->
+                if (hasGenre) {
+                    LazyRow(
+                        modifier = modifier.fillMaxWidth(),
+                        contentPadding = contentPaddingValues,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        stickyHeader {
+                            RoundedIconButton(
+                                icon = ImageVector.vectorResource(id = R.drawable.ic_reset_18),
+                                onClick = onResetClick
+                            )
 
-                itemsIndexed(items = genreList, key = { _, genre -> genre }) { index, genre ->
-                    RemovableChip(
-                        text = genre.genreName,
-                        onClick = { onGenreClick(genre) },
-                        modifier = Modifier.animateItem(
-                            fadeInSpec = null,
-                            fadeOutSpec = null
-                        )
-                    )
+                        }
+
+                        itemsIndexed(
+                            items = genreList,
+                            key = { _, genre -> genre }) { index, genre ->
+                            RemovableChip(
+                                text = genre.genreName,
+                                onClick = { onGenreClick(genre) },
+                                modifier = Modifier.animateItem(
+                                    fadeInSpec = null,
+                                    fadeOutSpec = null
+                                )
+                            )
+                        }
+                    }
                 }
             }
         }

@@ -36,7 +36,9 @@ fun ChatScreen(chatType: ChatType) {
         ) {
             BackTopBar(
                 title = "납작한 외계인",
-                onBackClick = { /* 뒤로가기 액션 */ },
+                onBackClick = {
+                    //TODO: 뒤로가기 액션 구현 필요
+                },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = NapzakMarketTheme.typography.titleSemi18,
                 backgroundColor = NapzakMarketTheme.colors.white,
@@ -92,7 +94,9 @@ fun ChatScreen(chatType: ChatType) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(
-                    onClick = { /* 파일 첨부 */ },
+                    onClick = {
+                    // TODO: 파일 첨부 기능 구현
+                    },
                     modifier = Modifier
                         .size(40.dp)
                         .background(

@@ -41,7 +41,7 @@ fun OnboardingGenreItem(
     Column(
         modifier = modifier
             .noRippleClickable(onItemClick),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
             modifier = Modifier
@@ -54,14 +54,14 @@ fun OnboardingGenreItem(
                 AsyncImage(
                     model = ImageRequest.Builder(context).data(imgUrl),
                     contentDescription = null,
-                    clipToBounds = true
+                    clipToBounds = true,
                 )
             }
             if(isSelected) {
                 Image(
                     imageVector = ImageVector.vectorResource(id = com.napzak.market.R.drawable.ic_checkbox_select_16),
                     contentDescription = null,
-                    modifier = Modifier.padding(10.dp).align(Alignment.TopEnd)
+                    modifier = Modifier.padding(10.dp).align(Alignment.TopEnd),
                 )
             }
         }
@@ -70,7 +70,7 @@ fun OnboardingGenreItem(
             text = genreName,
             style = NapzakMarketTheme.typography.bodySemi16,
             color = itemColor,
-            modifier = Modifier.padding(top = 6.dp)
+            modifier = Modifier.padding(top = 6.dp),
         )
     }
 }

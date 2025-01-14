@@ -45,7 +45,7 @@ fun SearchBox(
     searchTerm: String,
     onTextChange: (String) -> Unit,
     onSearchButtonClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -54,10 +54,10 @@ fun SearchBox(
             .fillMaxWidth()
             .background(
                 color = NapzakMarketTheme.colors.gray100,
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
             )
             .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         BasicTextField(
             value = searchTerm,
@@ -81,7 +81,7 @@ fun SearchBox(
                     Text(
                         text = placeholder,
                         style = NapzakMarketTheme.typography.bodySemi14,
-                        color = NapzakMarketTheme.colors.gray400
+                        color = NapzakMarketTheme.colors.gray400,
                     )
                 }
                 innerTextField()
@@ -95,7 +95,7 @@ fun SearchBox(
                 tint = Color.Unspecified,
                 modifier = Modifier.noRippleClickable {
                     onTextChange("")
-                }
+                },
             )
             Spacer(Modifier.width(4.dp))
         }
@@ -107,7 +107,7 @@ fun SearchBox(
             modifier = Modifier.noRippleClickable {
                 focusManager.clearFocus()
                 onSearchButtonClick()
-            }
+            },
         )
     }
 }

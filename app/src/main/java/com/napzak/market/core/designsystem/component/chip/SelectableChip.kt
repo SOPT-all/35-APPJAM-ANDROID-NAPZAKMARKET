@@ -50,19 +50,19 @@ fun SelectableChip(
             .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(100.dp))
             .background(color = backgroundColor, shape = RoundedCornerShape(100.dp))
             .padding(horizontal = 14.dp, vertical = 8.dp)
-            .noRippleClickable(onClick)
+            .noRippleClickable(onClick),
     ) {
         Text(
             text = generateChipText(type, genreList),
             style = NapzakMarketTheme.typography.capSemi12,
-            color = textColor
+            color = textColor,
         )
         if (type == SelectableChipType.GENRE) {
             Spacer(Modifier.width(2.dp))
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_down_chevron_16px),
                 contentDescription = stringResource(id = R.string.down_chevron_button),
-                tint = iconTintColor
+                tint = iconTintColor,
             )
         }
     }

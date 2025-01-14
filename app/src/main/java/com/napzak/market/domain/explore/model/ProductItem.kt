@@ -10,5 +10,5 @@ data class ProductItem(
     val isLiked: Boolean,
     val tradeType: String,
     val tradeStatus: String,
-    val isPriceNegotiable: Boolean = false /* 팔아요 item에서만 사용 */
+    val isPriceNegotiable: Boolean = false, /* 팔아요 item에서만 사용 */
 )

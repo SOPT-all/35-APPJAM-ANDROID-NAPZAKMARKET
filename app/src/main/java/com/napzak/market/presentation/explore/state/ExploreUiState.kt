@@ -15,5 +15,5 @@ data class ExploreUiState(
 )
 
 data class ExploreProductInformation(
-    val productList: List<ProductItem>
+    val productList: List<ProductItem>,
 )

@@ -163,7 +163,12 @@ fun ExploreSuccessScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, top = 16.dp, end = 20.dp, bottom = 20.dp),
+                .padding(
+                    start = 20.dp,
+                    top = 16.dp,
+                    end = 20.dp,
+                    bottom = 20.dp
+                ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(

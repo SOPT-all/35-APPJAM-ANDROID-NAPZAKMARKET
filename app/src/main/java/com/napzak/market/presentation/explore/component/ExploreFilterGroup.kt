@@ -74,6 +74,6 @@ private fun FilterGroupPreview(modifier: Modifier = Modifier) {
         onGenreListClick = { /* 장르 검색 bottomSheet 연결 */ },
         onSoldOutClick = { /* 품절제외 클릭 */ },
         onUnopenClick = { /* 미개봉 클릭 */ },
-        modifier = modifier
+        modifier = modifier,
     )
 }

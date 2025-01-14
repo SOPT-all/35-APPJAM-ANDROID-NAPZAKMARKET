@@ -1,5 +1,6 @@
 package com.napzak.market.core.designsystem.component.textField
 
+import android.R.attr.value
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,7 +33,7 @@ import com.napzak.market.core.common.extension.noRippleClickable
  * 검색창 컴포넌트
  *
  * @param placeholder 검색어가 입력되지 않았을 때 보여지는 텍스트
- * @param value 사용자가 입력한 검색어 텍스트
+ * @param searchTerm 사용자가 입력한 검색어 텍스트
  * @param onTextChange 사용자가 텍스트 입력 시 실행할 콜백
  * @param onSearchButtonClick 검색 아이콘 클릭 시 실행할 콜백
  * @param modifier 수정자
@@ -41,7 +42,7 @@ import com.napzak.market.core.common.extension.noRippleClickable
 @Composable
 fun SearchBox(
     placeholder: String,
-    value: String,
+    searchTerm: String,
     onTextChange: (String) -> Unit,
     onSearchButtonClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -59,7 +60,7 @@ fun SearchBox(
         verticalAlignment = Alignment.CenterVertically
     ) {
         BasicTextField(
-            value = value,
+            value = searchTerm,
             onValueChange = {
                 onTextChange(it)
             },
@@ -76,7 +77,7 @@ fun SearchBox(
                 }
             ),
             decorationBox = { innerTextField ->
-                if (value.isEmpty()) {
+                if (searchTerm.isEmpty()) {
                     Text(
                         text = placeholder,
                         style = NapzakMarketTheme.typography.bodySemi14,
@@ -87,7 +88,7 @@ fun SearchBox(
             }
         )
 
-        if (value.isNotEmpty()) {
+        if (searchTerm.isNotEmpty()) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_x_circle_16px),
                 contentDescription = stringResource(id = R.string.x_circle_button),
@@ -114,11 +115,11 @@ fun SearchBox(
 @Preview
 @Composable
 fun SearchBoxPreview(modifier: Modifier = Modifier) {
-    var value by remember {mutableStateOf("")}
+    var searchTerm by remember {mutableStateOf("")}
     SearchBox(
         placeholder = "어떤 아이템을 찾고 계신가요?",
-        value = value,
-        onTextChange = { value = it },
+        searchTerm = searchTerm,
+        onTextChange = { searchTerm = it },
         onSearchButtonClick = { },
         modifier = modifier
     )

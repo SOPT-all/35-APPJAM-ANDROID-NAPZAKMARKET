@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,8 +20,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -30,6 +27,7 @@ import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
+import com.napzak.market.core.designsystem.component.text.SingleLineText
 import com.napzak.market.core.designsystem.theme.Gray500
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
@@ -181,22 +179,4 @@ private fun PriceGroup(
             color = NapzakMarketTheme.colors.gray900,
         )
     }
-}
-
-@Composable
-private fun SingleLineText(
-    text: String,
-    style: TextStyle,
-    color: Color,
-    modifier: Modifier = Modifier,
-    overflow: TextOverflow = TextOverflow.Ellipsis
-) {
-    Text(
-        text = text,
-        style = style,
-        color = color,
-        modifier = modifier,
-        maxLines = 1,
-        overflow = overflow
-    )
 }

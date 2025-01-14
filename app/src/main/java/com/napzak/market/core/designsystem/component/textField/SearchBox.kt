@@ -89,7 +89,7 @@ fun SearchBox(
 
         if (searchTerm.isNotEmpty()) {
             Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_x_circle_16px),
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_x_circle_16),
                 contentDescription = stringResource(id = R.string.x_circle_button),
                 tint = Color.Unspecified,
                 modifier = Modifier.noRippleClickable {
@@ -100,7 +100,7 @@ fun SearchBox(
         }
 
         Icon(
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_search_24px),
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_search_24),
             contentDescription = stringResource(id = R.string.search_button),
             tint = Color.Unspecified,
             modifier = Modifier.noRippleClickable {

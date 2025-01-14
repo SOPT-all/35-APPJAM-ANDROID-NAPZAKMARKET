@@ -60,7 +60,7 @@ fun SelectableChip(
         if (selectableChipType == SelectableChipType.GENRE) {
             Spacer(Modifier.width(2.dp))
             Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_down_chevron_16px),
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_down_chevron_16),
                 contentDescription = stringResource(id = R.string.down_chevron_button),
                 tint = iconTintColor,
             )

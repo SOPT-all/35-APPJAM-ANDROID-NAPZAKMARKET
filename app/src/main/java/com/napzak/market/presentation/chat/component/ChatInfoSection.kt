@@ -14,13 +14,28 @@ import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
+/**
+ * 채팅 화면의 정보 섹션 컴포넌트.
+ *
+ * 제목, 설명, 가격 정보를 표시하며, 필요에 따라 가격 레이블을 추가로 표시할 수 있습니다.
+ * 상단과 하단에 구분선이 포함됩니다.
+ *
+ * @param title 정보 섹션에 표시될 제목
+ * @param description 정보 섹션에 표시될 설명
+ * @param price 정보 섹션에 표시될 가격
+ * @param modifier 컴포넌트에 적용할 Modifier
+ * @param priceLabel 가격 앞에 표시될 레이블
+ * @param titleColor 제목 텍스트의 색상
+ *
+ * @Composable
+ */
 @Composable
 fun ChatInfoSection(
     title: String,
     description: String,
     price: String,
-    priceLabel: String? = null,
     modifier: Modifier = Modifier,
+    priceLabel: String? = null,
     titleColor: Color = NapzakMarketTheme.colors.purple30,
 ) {
     Column(

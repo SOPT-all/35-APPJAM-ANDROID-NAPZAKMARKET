@@ -88,6 +88,24 @@ class ExploreViewModel : ViewModel() {
         getExploreProductInformation()
     }
 
+    fun changeSoldOut() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                isOnSale = !uiState.value.isOnSale
+            )
+        }
+        getExploreProductInformation()
+    }
+
+    fun changeUnopen() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                isUnopened = !uiState.value.isUnopened
+            )
+        }
+        getExploreProductInformation()
+    }
+
     private fun updateLoadState(loadState: UiState<ExploreProductInformation>) =
         _uiState.update { currentState ->
             currentState.copy(

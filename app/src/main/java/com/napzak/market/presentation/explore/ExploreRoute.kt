@@ -1,5 +1,6 @@
 package com.napzak.market.presentation.explore
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,8 @@ import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.presentation.explore.state.ExploreUiState
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.presentation.explore.component.ExploreFilterGroup
 import com.napzak.market.presentation.explore.component.TradeTypeTab
 import com.napzak.market.presentation.explore.type.TradeType
 
@@ -39,7 +42,10 @@ fun ExploreRoute(
         modifier = modifier,
         uiState = uiState,
         onSearchBoxClick = onSearchBoxClick,
-        onTradeTypeClick = { viewModel.changeTradeType(it) }
+        onTradeTypeClick = { viewModel.changeTradeType(it) },
+        onGenreListClick = { /* 장르 검색 bottomSheet */ },
+        onSoldOutClick = { viewModel.changeSoldOut() },
+        onUnopenClick = { viewModel.changeUnopen() },
     )
 }
 
@@ -49,6 +55,9 @@ fun ExploreScreen(
     uiState: ExploreUiState,
     onSearchBoxClick: () -> Unit,
     onTradeTypeClick: (String) -> Unit,
+    onGenreListClick: () -> Unit,
+    onSoldOutClick: () -> Unit,
+    onUnopenClick: () -> Unit,
 ) {
     when (uiState.loadState) {
         is UiState.Loading -> {
@@ -71,6 +80,9 @@ fun ExploreScreen(
                     productList = uiState.loadState.data.productList,
                     onSearchBoxClick = onSearchBoxClick,
                     onTradeTypeClick = onTradeTypeClick,
+                    onGenreListClick = onGenreListClick,
+                    onSoldOutClick = onSoldOutClick,
+                    onUnopenClick = onUnopenClick,
                 )
             }
         }
@@ -87,10 +99,15 @@ fun ExploreSuccessScreen(
     productList: List<ProductItem>,
     onSearchBoxClick: () -> Unit,
     onTradeTypeClick: (String) -> Unit,
+    onGenreListClick: () -> Unit,
+    onSoldOutClick: () -> Unit,
+    onUnopenClick: () -> Unit,
 ) {
     Column(
-        modifier = modifier.fillMaxSize()
-            .padding(top = 40.dp )
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = NapzakMarketTheme.colors.white)
+            .padding(top = 40.dp)
     ) {
         SearchBox(
             placeholder = stringResource(id = R.string.explore_search_box_placeholder),
@@ -106,6 +123,17 @@ fun ExploreSuccessScreen(
             selectedTab = tradeType,
             onTradeTypeClick = onTradeTypeClick,
         )
+
+        ExploreFilterGroup(
+            tradeType = tradeType,
+            genreList = genreList,
+            isOnSale = isOnSale,
+            isUnopened = isUnopened,
+            onGenreListClick = onGenreListClick,
+            onSoldOutClick = onSoldOutClick,
+            onUnopenClick = onUnopenClick,
+        )
+
     }
 }
 
@@ -119,6 +147,9 @@ private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
         isUnopened = false,
         productList = emptyList(),
         onSearchBoxClick = { /* 검색화면으로 이동 */ },
-        onTradeTypeClick = { /* 팔아요/구해요 탭 변경 */ }
+        onTradeTypeClick = { /* 팔아요/구해요 탭 변경 */ },
+        onGenreListClick = { },
+        onSoldOutClick = { },
+        onUnopenClick = { },
     )
 }

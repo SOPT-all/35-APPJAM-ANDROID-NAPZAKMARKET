@@ -14,7 +14,6 @@ class ExploreViewModel : ViewModel() {
     val uiState = _uiState.asStateFlow()
 
     fun getExploreProductInformation() {
-        TODO("추후 서버 통신 연결")
         updateLoadState(
             loadState = UiState.Success(
                 ExploreProductInformation(
@@ -78,6 +77,15 @@ class ExploreViewModel : ViewModel() {
                 )
             )
         )
+    }
+
+    fun changeTradeType(newTradeType: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                tradeType = newTradeType
+            )
+        }
+        getExploreProductInformation()
     }
 
     private fun updateLoadState(loadState: UiState<ExploreProductInformation>) =

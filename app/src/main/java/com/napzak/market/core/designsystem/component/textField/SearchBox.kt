@@ -28,7 +28,6 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 
-
 /**
  * 검색창 컴포넌트
  *
@@ -40,14 +39,13 @@ import com.napzak.market.core.common.extension.noRippleClickable
  */
 
 @Composable
-fun SearchingTextField(
+fun SearchBox(
     placeholder: String,
     value: String,
     onTextChange: (String) -> Unit,
     onSearchButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var searchText by remember { mutableStateOf(value) }
     val focusManager = LocalFocusManager.current
 
     Row(
@@ -61,10 +59,9 @@ fun SearchingTextField(
         verticalAlignment = Alignment.CenterVertically
     ) {
         BasicTextField(
-            value = searchText,
+            value = value,
             onValueChange = {
-                searchText = it
-                onTextChange(searchText)
+                onTextChange(it)
             },
             modifier = Modifier.weight(1f),
             textStyle = NapzakMarketTheme.typography.bodySemi14,
@@ -79,7 +76,7 @@ fun SearchingTextField(
                 }
             ),
             decorationBox = { innerTextField ->
-                if (searchText.isEmpty()) {
+                if (value.isEmpty()) {
                     Text(
                         text = placeholder,
                         style = NapzakMarketTheme.typography.bodySemi14,
@@ -90,14 +87,13 @@ fun SearchingTextField(
             }
         )
 
-        if (searchText.isNotEmpty()) {
+        if (value.isNotEmpty()) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_x_circle_16px),
                 contentDescription = stringResource(id = R.string.x_circle_button),
                 tint = Color.Unspecified,
                 modifier = Modifier.noRippleClickable {
-                    searchText = ""
-                    onTextChange(searchText)
+                    onTextChange("")
                 }
             )
             Spacer(Modifier.width(4.dp))
@@ -117,11 +113,12 @@ fun SearchingTextField(
 
 @Preview
 @Composable
-fun SearchingTextFieldPreview(modifier: Modifier = Modifier) {
-    SearchingTextField(
+fun SearchBoxPreview(modifier: Modifier = Modifier) {
+    var value by remember {mutableStateOf("")}
+    SearchBox(
         placeholder = "어떤 아이템을 찾고 계신가요?",
-        value = "",
-        onTextChange = { },
+        value = value,
+        onTextChange = { value = it },
         onSearchButtonClick = { },
         modifier = modifier
     )

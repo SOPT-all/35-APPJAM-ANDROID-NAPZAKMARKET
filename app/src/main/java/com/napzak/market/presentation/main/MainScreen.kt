@@ -13,6 +13,7 @@ import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.main.component.MainBottomBar
 import com.napzak.market.presentation.main.component.MainRegisterDialog
 import com.napzak.market.presentation.main.type.MainTab
+import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
@@ -72,5 +73,6 @@ private fun MainNavHost(
         startDestination = navigator.startDestination
     ) {
         dummyGraph(modifier = modifier)
+        onboardingGraph(modifier = modifier)
     }
 }

@@ -6,7 +6,7 @@ import com.napzak.market.presentation.explore.type.TradeType
 
 data class ExploreUiState(
     val loadState: UiState<ExploreProductInformation> = UiState.Loading,
-    val tradeType: String = TradeType.SELL.label,
+    val tradeType: String = TradeType.SELL.name,
     val genreList: List<String> = emptyList(),
     val isOnSale: Boolean = false,
     val isUnopened: Boolean = false,

@@ -2,7 +2,16 @@ package com.napzak.market.presentation.chat.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
@@ -15,29 +24,45 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
+import com.napzak.market.core.common.util.NoRippleInteractionSource
 import com.napzak.market.core.designsystem.component.topbar.BackTopBar
-import com.napzak.market.presentation.chat.component.ChatInfoSectionBuy
-import com.napzak.market.presentation.chat.component.ChatInfoSectionSell
+import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.presentation.chat.component.ChatInfoSection
 import com.napzak.market.presentation.chat.type.ChatType
 
+/**
+ * 채팅 화면 상단 정보 섹션 컴포넌트.
+ *
+ * 제목, 설명, 가격 정보를 표시하며, 필요 시 가격 레이블을 추가로 표시할 수 있습니다.
+ *
+ * @param title 정보 섹션에 표시될 제목
+ * @param description 정보 섹션에 표시될 설명
+ * @param price 정보 섹션에 표시될 가격
+ * @param modifier 컴포넌트에 적용할 Modifier
+ * @param priceLabel 가격 앞에 표시될 레이블 (선택 사항)
+ * @param titleColor 제목 텍스트의 색상
+ *
+ */
+
 @Composable
-fun ChatScreen(chatType: ChatType) {
-    NapzakMarketTheme {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(NapzakMarketTheme.colors.white),
-        ) {
+fun ChatScreen(
+    chatType: ChatType,
+    title: String,
+    description: String,
+    price: String,
+) {
+    Box(modifier = Modifier.fillMaxSize().background(NapzakMarketTheme.colors.white)) {
+        Column(modifier = Modifier.fillMaxSize()) {
             BackTopBar(
-                title = "납작한 외계인",
+                title = title,
                 onBackClick = {
-                    //TODO: 뒤로가기 액션 구현 필요
+                    // TODO: 뒤로가기 액션 구현 필요
                 },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = NapzakMarketTheme.typography.titleSemi18,
@@ -45,24 +70,16 @@ fun ChatScreen(chatType: ChatType) {
                 contentColor = NapzakMarketTheme.colors.gray900,
             )
 
-            when (chatType) {
-                ChatType.BUY -> {
-                    ChatInfoSectionBuy(
-                        title = "구해요",
-                        description = "양스타 토모에 히요리 이츠누이 함께",
-                        priceLabel = "가격제시",
-                        price = "100,000원대",
-                    )
-                }
-
-                ChatType.SELL -> {
-                    ChatInfoSectionSell(
-                        title = "팔아요",
-                        description = "딸기 마이멜로디 마스코트 인형",
-                        price = "35,000원",
-                    )
-                }
-            }
+            ChatInfoSection(
+                title = when (chatType) {
+                    ChatType.BUY -> stringResource(id = R.string.chat_buy_title)
+                    ChatType.SELL -> stringResource(id = R.string.chat_sell_title)
+                },
+                description = description,
+                price = price,
+                priceLabel = if (chatType == ChatType.BUY) stringResource(id = R.string.chat_price_label) else null,
+                titleColor = if (chatType == ChatType.BUY) NapzakMarketTheme.colors.gray900 else NapzakMarketTheme.colors.purple30
+            )
 
             Box(
                 modifier = Modifier
@@ -73,11 +90,8 @@ fun ChatScreen(chatType: ChatType) {
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(
-                        painter = painterResource(id = R.drawable.img_chat_background),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.img_chat_background),
                         contentDescription = stringResource(id = R.string.chat_background_image_description),
-                        modifier = Modifier
-                            .width(225.dp)
-                            .aspectRatio(1.0f),
                     )
                 }
             }
@@ -95,18 +109,19 @@ fun ChatScreen(chatType: ChatType) {
             ) {
                 IconButton(
                     onClick = {
-                    // TODO: 파일 첨부 기능 구현
+                        // TODO: 파일 첨부 기능 구현
                     },
                     modifier = Modifier
                         .size(40.dp)
                         .background(
                             color = NapzakMarketTheme.colors.gray100,
                             shape = CircleShape,
-                        )
+                        ),
+                    interactionSource = NoRippleInteractionSource
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_add_13),
-                        contentDescription = stringResource(id = R.string.icon_chat_description_file_attach),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_add_13),
+                        contentDescription = stringResource(id = R.string.chat_description_file_attach),
                         tint = NapzakMarketTheme.colors.gray600,
                     )
                 }
@@ -145,15 +160,24 @@ fun ChatScreen(chatType: ChatType) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ChatScreenBuyPreview() {
-    ChatScreen(chatType = ChatType.BUY)
-}
+    @Preview(showBackground = true)
+    @Composable
+    fun ChatScreenBuyPreview() {
+        ChatScreen(
+            chatType = ChatType.BUY,
+            title = "납작한 외계인",
+            description = "양스타 토모에 히요리 이츠누이 함께",
+            price = "100,000원대"
+        )
+    }
 
-@Preview(showBackground = true)
-@Composable
-fun ChatScreenSellPreview() {
-    ChatScreen(chatType = ChatType.SELL)
-}
-
+    @Preview(showBackground = true)
+    @Composable
+    fun ChatScreenSellPreview() {
+        ChatScreen(
+            chatType = ChatType.SELL,
+            title = "납작한 외계인",
+            description = "딸기 마이멜로디 마스코트 인형",
+            price = "35,000원"
+        )
+    }

@@ -12,10 +12,12 @@ import kotlinx.serialization.Serializable
 fun NavController.navigateToOnboarding(navOptions: NavOptions? = null) = navigate(Onboarding, navOptions)
 
 fun NavGraphBuilder.onboardingGraph(
+    navigateToHome: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     composable<Onboarding> {
         OnboardingRoute(
+            navigateToHome = navigateToHome,
             modifier = modifier,
         )
     }

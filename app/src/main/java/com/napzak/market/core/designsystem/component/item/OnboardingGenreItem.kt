@@ -63,7 +63,9 @@ fun OnboardingGenreItem(
                 Image(
                     imageVector = ImageVector.vectorResource(id = com.napzak.market.R.drawable.ic_checkbox_select_16),
                     contentDescription = null,
-                    modifier = Modifier.padding(10.dp).align(Alignment.TopEnd),
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .align(Alignment.TopEnd),
                 )
             }
         }

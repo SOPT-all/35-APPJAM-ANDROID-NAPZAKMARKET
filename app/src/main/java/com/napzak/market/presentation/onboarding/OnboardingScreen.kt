@@ -39,6 +39,7 @@ import com.napzak.market.presentation.onboarding.state.OnboardingUiState
 
 @Composable
 fun OnboardingRoute(
+    navigateToHome: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
@@ -50,8 +51,8 @@ fun OnboardingRoute(
         searchValue = searchValue,
         onResetClick = viewModel::clearSelectedGenre,
         onGenreClick = viewModel::selectGenre,
-        onCompleteButtonClick = {},
-        onSkipButtonClick = {},
+        onCompleteButtonClick = navigateToHome,
+        onSkipButtonClick = navigateToHome,
         onTextFieldChange = viewModel::changeSearchText,
         onSearchButtonClick = {},
         modifier = modifier,
@@ -115,7 +116,7 @@ private fun OnboardingScreen(
         }
 
         OnboardingBottomBar(
-            isButtonEnabled = true,
+            isButtonEnabled = uiState.selectedGenreList.isNotEmpty(),
             onCompleteClick = onCompleteButtonClick,
             onSkipClick = onSkipButtonClick,
             modifier = Modifier.fillMaxWidth(),

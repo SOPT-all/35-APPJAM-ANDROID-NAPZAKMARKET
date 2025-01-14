@@ -1,12 +1,16 @@
 package com.napzak.market.presentation.onboarding.component
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,6 +29,19 @@ fun OnboardingBottomBar(
     onSkipClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val colors = NapzakMarketTheme.colors
+    val contentColor by animateColorAsState(
+        targetValue = if (isButtonEnabled) colors.white else colors.white,
+        animationSpec = tween(durationMillis = 500),
+        label = "contentColor"
+    )
+
+    val containerColor by animateColorAsState(
+        targetValue = if (isButtonEnabled) colors.purple30 else colors.gray400,
+        animationSpec = tween(durationMillis = 500),
+        label = "containerColor"
+    )
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -33,6 +50,10 @@ fun OnboardingBottomBar(
             text = stringResource(R.string.onboarding_bottom_bar_complete),
             isEnabled = isButtonEnabled,
             onClick = onCompleteClick,
+            buttonColors = ButtonDefaults.buttonColors(
+                containerColor = containerColor,
+                contentColor = contentColor,
+            ),
             modifier = Modifier
                 .background(NapzakMarketTheme.colors.white)
                 .fillMaxWidth()

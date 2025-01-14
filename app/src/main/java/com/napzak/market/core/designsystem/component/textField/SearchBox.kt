@@ -1,6 +1,5 @@
 package com.napzak.market.core.designsystem.component.textField
 
-import android.R.attr.value
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

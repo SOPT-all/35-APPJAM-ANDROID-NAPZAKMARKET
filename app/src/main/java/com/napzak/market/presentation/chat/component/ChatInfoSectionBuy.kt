@@ -92,7 +92,7 @@ fun ChatInfoSectionBuy(
                             containerColor = NapzakMarketTheme.colors.purple10,
                         ),
                         shape = RoundedCornerShape(4.dp),
-                        innerPadding = PaddingValues(horizontal = 5.dp, vertical = 3.dp)
+                        innerPadding = PaddingValues(horizontal = 5.dp, vertical = 3.dp),
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(

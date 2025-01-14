@@ -2,7 +2,9 @@ package com.napzak.market.presentation.explore.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,6 +44,9 @@ fun TradeTypeTab(
             onTradeTypeClick = { onTradeTypeClick(TradeType.SELL.name) },
             modifier = Modifier.weight(1f),
         )
+
+        Spacer(Modifier.width(15.dp))
+
         TradeTypeTabItem(
             tradeType = TradeType.BUY.label,
             isSelected = selectedTab == TradeType.BUY.name,

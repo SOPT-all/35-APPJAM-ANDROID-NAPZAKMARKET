@@ -85,7 +85,7 @@ class ExploreViewModel @Inject constructor(
         )
     }
 
-    fun changeTradeType(newTradeType: String) {
+    fun updateTradeType(newTradeType: String) {
         _uiState.update { currentState ->
             currentState.copy(
                 tradeType = newTradeType
@@ -94,7 +94,7 @@ class ExploreViewModel @Inject constructor(
         getExploreProductInformation()
     }
 
-    fun changeSoldOut() {
+    fun updateSoldOut() {
         _uiState.update { currentState ->
             currentState.copy(
                 isOnSale = !uiState.value.isOnSale
@@ -103,7 +103,7 @@ class ExploreViewModel @Inject constructor(
         getExploreProductInformation()
     }
 
-    fun changeUnopen() {
+    fun updateUnopen() {
         _uiState.update { currentState ->
             currentState.copy(
                 isUnopened = !uiState.value.isUnopened
@@ -112,7 +112,7 @@ class ExploreViewModel @Inject constructor(
         getExploreProductInformation()
     }
 
-    fun changeItemLikeButton(productId: Int) {
+    fun updateItemLikeButton(productId: Int) {
         /* TODO: 좋아요 API 연결 및 기능 연결 */
     }
 

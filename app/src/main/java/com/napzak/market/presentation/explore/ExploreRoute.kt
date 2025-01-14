@@ -54,13 +54,13 @@ fun ExploreRoute(
         modifier = modifier,
         uiState = uiState,
         onSearchBoxClick = onSearchBoxClick,
-        onTradeTypeClick = { viewModel.changeTradeType(it) },
+        onTradeTypeClick = { viewModel.updateTradeType(it) },
         onGenreListClick = { /* TODO: 장르 검색 bottomSheet */ },
-        onSoldOutClick = { viewModel.changeSoldOut() },
-        onUnopenClick = { viewModel.changeUnopen() },
+        onSoldOutClick = { viewModel.updateSoldOut() },
+        onUnopenClick = { viewModel.updateUnopen() },
         onSortButtonClick = { /* TODO: 정렬 bottomSheet */ },
         onItemClick = { navigateToProductDetail() },
-        onLikeClick = { viewModel.changeItemLikeButton(it) },
+        onLikeClick = { viewModel.updateItemLikeButton(it) },
     )
 }
 

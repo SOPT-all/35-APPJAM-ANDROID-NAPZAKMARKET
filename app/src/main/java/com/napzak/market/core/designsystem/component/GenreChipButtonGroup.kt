@@ -3,8 +3,8 @@ package com.napzak.market.core.designsystem.component
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -53,14 +54,7 @@ fun GenreChipButtonGroup(
         content = {
             AnimatedContent(
                 targetState = genreList.isNotEmpty(),
-                transitionSpec = {
-                    (fadeIn(animationSpec = tween(220, delayMillis = 200)) +
-                            scaleIn(
-                                initialScale = 0.92f,
-                                animationSpec = tween(220, delayMillis = 200)
-                            ))
-                        .togetherWith(fadeOut(animationSpec = tween(90)))
-                },
+                transitionSpec = { slideInVertically { fullHeight -> -fullHeight } togetherWith slideOutVertically { fullHeight -> -fullHeight } },
                 label = "GenreChip"
             ) { hasGenre ->
                 if (hasGenre) {
@@ -75,18 +69,15 @@ fun GenreChipButtonGroup(
                                 icon = ImageVector.vectorResource(id = R.drawable.ic_reset_18),
                                 onClick = onResetClick
                             )
-
                         }
 
-                        itemsIndexed(
-                            items = genreList,
-                            key = { _, genre -> genre }) { index, genre ->
+                        items(genreList, key = { it.genreId }) {genre ->
                             RemovableChip(
                                 text = genre.genreName,
                                 onClick = { onGenreClick(genre) },
                                 modifier = Modifier.animateItem(
-                                    fadeInSpec = null,
-                                    fadeOutSpec = null
+                                    fadeInSpec = tween(200),
+                                    fadeOutSpec = tween(200)
                                 )
                             )
                         }

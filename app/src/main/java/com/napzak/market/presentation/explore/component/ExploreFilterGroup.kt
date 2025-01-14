@@ -55,7 +55,7 @@ fun ExploreFilterGroup(
             SelectableChip(
                 isSelected = isUnopened,
                 modifier = modifier,
-                selectableChipType = SelectableChipType.UN_OPEN,
+                selectableChipType = SelectableChipType.UNOPEN,
                 onClick = onUnopenClick,
                 genreList = genreList
             )

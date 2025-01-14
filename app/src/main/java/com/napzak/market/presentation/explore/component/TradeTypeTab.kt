@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.common.extension.noRippleClickable
@@ -28,11 +29,11 @@ fun TradeTypeTab(
         modifier = modifier
             .drawBehind {
                 val strokeWidth = 2.dp.toPx()
-                val y = size.height - 1
+                val strokeHeightPoint = size.height - 1
                 drawLine(
                     color = borderColor,
-                    start = androidx.compose.ui.geometry.Offset(0f, y),
-                    end = androidx.compose.ui.geometry.Offset(size.width, y),
+                    start = Offset(0f, strokeHeightPoint),
+                    end = Offset(size.width, strokeHeightPoint),
                     strokeWidth = strokeWidth,
                 )
             }
@@ -70,11 +71,11 @@ fun TradeTypeTabItem(
         modifier = modifier
             .drawBehind {
                 val strokeWidth = 2.dp.toPx()
-                val y = size.height - 1
+                val strokeHeightPoint = size.height - 1
                 drawLine(
                     color = borderColor,
-                    start = androidx.compose.ui.geometry.Offset(0f, y),
-                    end = androidx.compose.ui.geometry.Offset(size.width, y),
+                    start = Offset(0f, strokeHeightPoint),
+                    end = Offset(size.width, strokeHeightPoint),
                     strokeWidth = strokeWidth,
                 )
             }

@@ -1,7 +1,10 @@
 package com.napzak.market.presentation.main
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
@@ -10,6 +13,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.napzak.market.presentation.dummy.navigation.Dummy
 import com.napzak.market.presentation.dummy.navigation.navigateToDummy
+import com.napzak.market.presentation.explore.navigation.navigateToExplore
+import com.napzak.market.presentation.main.type.MainTab
 
 class MainNavigator(
     val navController: NavHostController,
@@ -17,6 +22,10 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
+    private var registerDialogVisibilityState by mutableStateOf(false)
+
+    val registerDialogVisibility: Boolean
+        get() = this.registerDialogVisibilityState
 
     val startDestination = Dummy
 
@@ -38,8 +47,13 @@ class MainNavigator(
         }
 
         when (tab) {
-            MainTab.DUMMY -> navController.navigateToDummy(navOptions)
-            MainTab.DUMMY2 -> {}
+            MainTab.HOME -> navController.navigateToDummy(navOptions)
+            MainTab.SEARCH -> navController.navigateToExplore(navOptions)
+            MainTab.REGISTER ->  {
+                this.registerDialogVisibilityState = !this.registerDialogVisibilityState
+            }
+            MainTab.CHAT -> {/*TODO: 채팅화면 연결*/}
+            MainTab.MY ->  {/*TODO: 마이페이지 화면 연결*/}
         }
     }
 

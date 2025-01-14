@@ -32,6 +32,7 @@ import com.napzak.market.core.common.extension.noRippleClickable
  * 검색창 컴포넌트
  *
  * @param placeholder 검색어가 입력되지 않았을 때 보여지는 텍스트
+ * @param readOnly BasicTextField 활성화 여부
  * @param searchTerm 사용자가 입력한 검색어 텍스트
  * @param onTextChange 사용자가 텍스트 입력 시 실행할 콜백
  * @param onSearchButtonClick 검색 아이콘 클릭 시 실행할 콜백
@@ -41,10 +42,11 @@ import com.napzak.market.core.common.extension.noRippleClickable
 @Composable
 fun SearchBox(
     placeholder: String,
-    searchTerm: String,
-    onTextChange: (String) -> Unit,
-    onSearchButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
+    readOnly: Boolean = false,
+    searchTerm: String = "",
+    onTextChange: (String) -> Unit = {},
+    onSearchButtonClick: () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -62,6 +64,7 @@ fun SearchBox(
             value = searchTerm,
             onValueChange = onTextChange,
             modifier = Modifier.weight(1f),
+            readOnly = readOnly,
             textStyle = NapzakMarketTheme.typography.bodySemi14,
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -82,7 +85,7 @@ fun SearchBox(
                     )
                 }
                 innerTextField()
-            }
+            },
         )
 
         if (searchTerm.isNotEmpty()) {
@@ -115,6 +118,7 @@ private fun SearchBoxPreview(modifier: Modifier = Modifier) {
     var searchTerm by remember {mutableStateOf("")}
     SearchBox(
         placeholder = "어떤 아이템을 찾고 계신가요?",
+        readOnly = false,
         searchTerm = searchTerm,
         onTextChange = { searchTerm = it },
         onSearchButtonClick = { },

@@ -24,4 +24,9 @@
     <string name="napzak_item_sell">팔아요</string>
     <string name="napzak_item_buy">구해요</string>
     <string name="napzak_item_suggest">가격제시</string>
+
+    <!-- ExploreScreen -->
+    <string name="explore_search_box_placeholder">어떤 아이템을 찾고 계신가요?</string>
+    <string name="explore_product">상품 </string>
+    <string name="explore_product_count">%d개</string>
 </resources>

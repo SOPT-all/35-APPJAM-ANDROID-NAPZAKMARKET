@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.napzak.market.presentation.dummy.navigation.Dummy
 import com.napzak.market.presentation.dummy.navigation.navigateToDummy
+import com.napzak.market.presentation.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.main.type.MainTab
 
 class MainNavigator(
@@ -47,7 +48,7 @@ class MainNavigator(
 
         when (tab) {
             MainTab.HOME -> navController.navigateToDummy(navOptions)
-            MainTab.SEARCH -> {/*TODO: 검색화면 연결*/}
+            MainTab.SEARCH -> navController.navigateToExplore(navOptions)
             MainTab.REGISTER ->  {
                 this.registerDialogVisibilityState = !this.registerDialogVisibilityState
             }

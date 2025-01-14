@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
+import com.napzak.market.presentation.explore.navigation.exploreGraph
 import com.napzak.market.presentation.main.component.MainBottomBar
 import com.napzak.market.presentation.main.component.MainRegisterDialog
 import com.napzak.market.presentation.main.type.MainTab
@@ -72,5 +73,6 @@ private fun MainNavHost(
         startDestination = navigator.startDestination
     ) {
         dummyGraph(modifier = modifier)
+        exploreGraph(modifier = modifier)
     }
 }

@@ -3,7 +3,6 @@ package com.napzak.market.core.designsystem.component.topbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,6 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.napzak.market.R
+import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.designsystem.component.noRippleEffect
 
 /**
  * 공통 TopBar 컴포넌트
@@ -44,17 +45,16 @@ fun CommonTopBar(
             .padding(horizontal = 13.dp),
         contentAlignment = Alignment.Center
     ) {
-        if (navigationIcon != null && onNavigationClick != null) {
-            IconButton(
-                onClick = onNavigationClick,
-                modifier = Modifier.align(Alignment.CenterStart)
-            ) {
-                Icon(
-                    imageVector = navigationIcon,
-                    contentDescription = stringResource(id = R.string.navigation_icon_description),
-                    tint = contentColor
-                )
-            }
+        if (navigationIcon != null) {
+            Icon(
+                imageVector = navigationIcon,
+                contentDescription = stringResource(id = R.string.navigation_icon_description),
+                tint = contentColor,
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .noRippleClickable {
+                        onNavigationClick?.invoke() }
+            )
         }
         Text(
             text = title,

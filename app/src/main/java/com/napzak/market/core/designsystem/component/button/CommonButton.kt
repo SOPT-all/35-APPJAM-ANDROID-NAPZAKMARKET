@@ -1,5 +1,6 @@
 package com.napzak.market.core.designsystem.component.button
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
@@ -7,9 +8,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
+import com.napzak.market.core.common.util.NoRippleInteractionSource
 
 /**
  * 기본 텍스트 버튼 컴포넌트
@@ -44,11 +46,13 @@ fun CommonButton(
             containerColor = if (isEnabled) backgroundColor else NapzakMarketTheme.colors.gray400,
             contentColor = if (isEnabled) contentColor else NapzakMarketTheme.colors.white
         ),
-        enabled = isEnabled
-    ) {
-        Text(
-            text = text,
-            style = textStyle
-        )
-    }
+        enabled = isEnabled,
+        interactionSource = NoRippleInteractionSource,
+        content = {
+            Text(
+                text = text,
+                style = textStyle
+            )
+        }
+    )
 }

@@ -25,7 +25,7 @@ import com.napzak.market.core.common.extension.noRippleClickable
  * 선택가능한 chip 컴포넌트
  *
  * @param isSelected chip의 선택 여부를 나타내는 값
- * @param type chip의 타입을 나타내는 값
+ * @param selectableChipType chip의 타입을 나타내는 값
  * @param onClick chip 선택시 실행되는 콜백
  * @param modifier 수정자
  * @param genreList chip 타입이 GENRE일 경우 선택된 장르의 텍스트 리스트
@@ -34,7 +34,7 @@ import com.napzak.market.core.common.extension.noRippleClickable
 @Composable
 fun SelectableChip(
     isSelected: Boolean,
-    type: SelectableChipType,
+    selectableChipType: SelectableChipType,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     genreList: List<String> = emptyList(),
@@ -53,11 +53,11 @@ fun SelectableChip(
             .noRippleClickable(onClick),
     ) {
         Text(
-            text = generateChipText(type, genreList),
+            text = generateChipText(selectableChipType, genreList),
             style = NapzakMarketTheme.typography.capSemi12,
             color = textColor,
         )
-        if (type == SelectableChipType.GENRE) {
+        if (selectableChipType == SelectableChipType.GENRE) {
             Spacer(Modifier.width(2.dp))
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_down_chevron_16px),
@@ -89,7 +89,7 @@ fun Chip_Genre_Preview(modifier: Modifier = Modifier) {
     SelectableChip(
         isSelected = false,
         modifier = modifier,
-        type = SelectableChipType.GENRE,
+        selectableChipType = SelectableChipType.GENRE,
         onClick = { },
         genreList = emptyList()
     )
@@ -101,7 +101,7 @@ fun Chip_Genre_Selected_Preview(modifier: Modifier = Modifier) {
     SelectableChip(
         isSelected = true,
         modifier = modifier,
-        type = SelectableChipType.GENRE,
+        selectableChipType = SelectableChipType.GENRE,
         onClick = { },
         genreList = listOf("마이멜로디", "")
     )
@@ -113,7 +113,7 @@ fun Chip_Sold_Out_Preview(modifier: Modifier = Modifier) {
     SelectableChip(
         isSelected = false,
         modifier = modifier,
-        type = SelectableChipType.SOLD_OUT,
+        selectableChipType = SelectableChipType.SOLD_OUT,
         onClick = { },
     )
 }
@@ -124,7 +124,7 @@ fun Chip_Sold_Out_Selected_Preview(modifier: Modifier = Modifier) {
     SelectableChip(
         isSelected = true,
         modifier = modifier,
-        type = SelectableChipType.SOLD_OUT,
+        selectableChipType = SelectableChipType.SOLD_OUT,
         onClick = { },
     )
 }

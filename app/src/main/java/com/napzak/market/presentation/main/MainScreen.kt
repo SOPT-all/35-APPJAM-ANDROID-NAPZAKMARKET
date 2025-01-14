@@ -5,6 +5,7 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -35,12 +36,11 @@ fun MainScreen(
     ) { innerPadding ->
         Box(
             modifier = Modifier
-                .padding(innerPadding)
                 .fillMaxSize()
         ) {
             MainNavHost(
                 navigator = navigator,
-                modifier = Modifier
+                modifier = Modifier.padding(innerPadding)
             )
 
             MainRegisterDialog(
@@ -77,7 +77,7 @@ private fun MainNavHost(
         dummyGraph(modifier = modifier)
         exploreGraph(modifier = modifier)
         onboardingGraph(
-            modifier = modifier,
+            modifier = Modifier.systemBarsPadding(),
             navigateToHome = navigator.navController::navigateToDummy
         )
     }

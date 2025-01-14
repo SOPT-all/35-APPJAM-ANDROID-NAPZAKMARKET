@@ -19,18 +19,18 @@ fun PreparingScreen() {
         Box(
             modifier = Modifier
                 .fillMaxSize(),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.img_chat_ready),
                     contentDescription = stringResource(id = R.string.chat_ready_image_description),
                     modifier = Modifier
                         .width(162.dp)
-                        .height(128.dp)
+                        .height(128.dp),
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -38,7 +38,7 @@ fun PreparingScreen() {
                 Text(
                     text = "준비중이에요",
                     style = NapzakMarketTheme.typography.titleSemi20,
-                    color = NapzakMarketTheme.colors.gray800
+                    color = NapzakMarketTheme.colors.gray800,
                 )
 
                 Spacer(modifier = Modifier.height(6.dp))
@@ -46,7 +46,7 @@ fun PreparingScreen() {
                 Text(
                     text = "조금만 기다려주세요!",
                     style = NapzakMarketTheme.typography.bodyMedium14,
-                    color = NapzakMarketTheme.colors.gray600
+                    color = NapzakMarketTheme.colors.gray600,
                 )
             }
         }

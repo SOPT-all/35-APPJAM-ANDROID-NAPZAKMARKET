@@ -31,30 +31,30 @@ fun ChatInfoSectionSell(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(color = NapzakMarketTheme.colors.white)
+            .background(color = NapzakMarketTheme.colors.white),
     ) {
         Divider(
             color = NapzakMarketTheme.colors.gray100,
-            thickness = 1.dp
+            thickness = 1.dp,
         )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 14.dp)
+                .padding(horizontal = 20.dp, vertical = 14.dp),
         ) {
             Box(
                 modifier = Modifier
                     .size(50.dp)
                     .background(
                         NapzakMarketTheme.colors.gray300,
-                        shape = RoundedCornerShape(4.dp)
+                        shape = RoundedCornerShape(4.dp),
                     ),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "",
-                    color = NapzakMarketTheme.colors.gray500
+                    color = NapzakMarketTheme.colors.gray500,
                 )
             }
 
@@ -91,7 +91,7 @@ fun ChatInfoSectionSell(
 
         Divider(
             color = NapzakMarketTheme.colors.gray100,
-            thickness = 1.dp
+            thickness = 1.dp,
         )
     }
 }

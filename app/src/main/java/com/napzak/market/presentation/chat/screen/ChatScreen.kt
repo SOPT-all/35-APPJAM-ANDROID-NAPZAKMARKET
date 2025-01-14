@@ -32,7 +32,7 @@ fun ChatScreen(chatType: ChatType) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(NapzakMarketTheme.colors.white)
+                .background(NapzakMarketTheme.colors.white),
         ) {
             BackTopBar(
                 title = "납작한 외계인",
@@ -40,7 +40,7 @@ fun ChatScreen(chatType: ChatType) {
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = NapzakMarketTheme.typography.titleSemi18,
                 backgroundColor = NapzakMarketTheme.colors.white,
-                contentColor = NapzakMarketTheme.colors.gray900
+                contentColor = NapzakMarketTheme.colors.gray900,
             )
 
             when (chatType) {
@@ -49,7 +49,7 @@ fun ChatScreen(chatType: ChatType) {
                         title = "구해요",
                         description = "양스타 토모에 히요리 이츠누이 함께",
                         priceLabel = "가격제시",
-                        price = "100,000원대"
+                        price = "100,000원대",
                     )
                 }
 
@@ -57,7 +57,7 @@ fun ChatScreen(chatType: ChatType) {
                     ChatInfoSectionSell(
                         title = "팔아요",
                         description = "딸기 마이멜로디 마스코트 인형",
-                        price = "35,000원"
+                        price = "35,000원",
                     )
                 }
             }
@@ -67,7 +67,7 @@ fun ChatScreen(chatType: ChatType) {
                     .fillMaxWidth()
                     .weight(1f)
                     .background(color = NapzakMarketTheme.colors.gray50),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(
@@ -82,14 +82,14 @@ fun ChatScreen(chatType: ChatType) {
 
             Divider(
                 color = NapzakMarketTheme.colors.gray100,
-                thickness = 1.dp
+                thickness = 1.dp,
             )
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(
                     onClick = { /* 파일 첨부 */ },
@@ -97,13 +97,13 @@ fun ChatScreen(chatType: ChatType) {
                         .size(40.dp)
                         .background(
                             color = NapzakMarketTheme.colors.gray100,
-                            shape = CircleShape
+                            shape = CircleShape,
                         )
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_add_13),
                         contentDescription = stringResource(id = R.string.icon_description_file_attach),
-                        tint = NapzakMarketTheme.colors.gray600
+                        tint = NapzakMarketTheme.colors.gray600,
                     )
                 }
 
@@ -116,7 +116,7 @@ fun ChatScreen(chatType: ChatType) {
                         Text(
                             text = "메시지를 입력하세요.",
                             color = NapzakMarketTheme.colors.gray400,
-                            style = NapzakMarketTheme.typography.bodyMedium14
+                            style = NapzakMarketTheme.typography.bodyMedium14,
                         )
                     },
                     modifier = Modifier
@@ -124,7 +124,7 @@ fun ChatScreen(chatType: ChatType) {
                         .height(48.dp)
                         .background(
                             color = NapzakMarketTheme.colors.gray100,
-                            shape = RoundedCornerShape(24.dp)
+                            shape = RoundedCornerShape(24.dp),
                         ),
                     shape = RoundedCornerShape(24.dp),
                     colors = TextFieldDefaults.colors(
@@ -132,7 +132,7 @@ fun ChatScreen(chatType: ChatType) {
                         unfocusedContainerColor = NapzakMarketTheme.colors.gray100,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = NapzakMarketTheme.colors.purple30
+                        cursorColor = NapzakMarketTheme.colors.purple30,
                     ),
                     singleLine = true
                 )

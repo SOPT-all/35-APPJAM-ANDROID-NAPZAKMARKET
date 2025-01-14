@@ -48,9 +48,6 @@ fun CenteredTextTopBar(
     )
 }
 
-
-
-
 @Preview(showBackground = true, widthDp = 375, heightDp = 54)
 @Composable
 fun PreviewMyPageTopBar() {

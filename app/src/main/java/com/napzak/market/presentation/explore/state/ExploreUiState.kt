@@ -2,6 +2,7 @@ package com.napzak.market.presentation.explore.state
 
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.explore.model.ProductItem
+import com.napzak.market.presentation.explore.type.SortType
 import com.napzak.market.presentation.explore.type.TradeType
 
 data class ExploreUiState(
@@ -10,6 +11,7 @@ data class ExploreUiState(
     val genreList: List<String> = emptyList(),
     val isOnSale: Boolean = false,
     val isUnopened: Boolean = false,
+    val sortType: String = SortType.RECENT.name,
 )
 
 data class ExploreProductInformation(

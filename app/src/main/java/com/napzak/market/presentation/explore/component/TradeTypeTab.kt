@@ -33,7 +33,7 @@ fun TradeTypeTab(
                     color = borderColor,
                     start = androidx.compose.ui.geometry.Offset(0f, y),
                     end = androidx.compose.ui.geometry.Offset(size.width, y),
-                    strokeWidth = strokeWidth
+                    strokeWidth = strokeWidth,
                 )
             }
             .padding(horizontal = 20.dp),
@@ -75,7 +75,7 @@ fun TradeTypeTabItem(
                     color = borderColor,
                     start = androidx.compose.ui.geometry.Offset(0f, y),
                     end = androidx.compose.ui.geometry.Offset(size.width, y),
-                    strokeWidth = strokeWidth
+                    strokeWidth = strokeWidth,
                 )
             }
             .noRippleClickable { onTradeTypeClick() }

@@ -29,14 +29,14 @@ fun ExploreFilterGroup(
     Row(
         modifier = modifier.fillMaxWidth()
             .background(color = NapzakMarketTheme.colors.gray50)
-            .padding(horizontal = 20.dp, vertical = 10.dp)
+            .padding(horizontal = 20.dp, vertical = 10.dp),
     ) {
         SelectableChip(
             isSelected = genreList.isNotEmpty(),
             modifier = modifier,
             selectableChipType = SelectableChipType.GENRE,
             onClick = onGenreListClick,
-            genreList = genreList
+            genreList = genreList,
         )
 
         Spacer(Modifier.width(6.dp))
@@ -46,7 +46,7 @@ fun ExploreFilterGroup(
             modifier = modifier,
             selectableChipType = SelectableChipType.SOLD_OUT,
             onClick = onSoldOutClick,
-            genreList = genreList
+            genreList = genreList,
         )
 
         if (tradeType == TradeType.SELL.name) {
@@ -57,7 +57,7 @@ fun ExploreFilterGroup(
                 modifier = modifier,
                 selectableChipType = SelectableChipType.UNOPEN,
                 onClick = onUnopenClick,
-                genreList = genreList
+                genreList = genreList,
             )
         }
     }

@@ -42,7 +42,7 @@ fun ExploreRoute(
     onSearchBoxClick: () -> Unit,
     navigateToProductDetail: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ExploreViewModel = viewModel()
+    viewModel: ExploreViewModel = viewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -133,7 +133,7 @@ fun ExploreSuccessScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = NapzakMarketTheme.colors.white)
-            .padding(top = 40.dp)
+            .padding(top = 40.dp),
     ) {
         SearchBox(
             placeholder = stringResource(id = R.string.explore_search_box_placeholder),
@@ -169,7 +169,7 @@ fun ExploreSuccessScreen(
             Text(
                 text = stringResource(id = R.string.explore_product),
                 style = NapzakMarketTheme.typography.bodySemi14,
-                color = NapzakMarketTheme.colors.gray900
+                color = NapzakMarketTheme.colors.gray900,
             )
 
             Spacer(Modifier.width(4.dp))
@@ -177,7 +177,7 @@ fun ExploreSuccessScreen(
             Text(
                 text = stringResource(id = R.string.explore_product_count, productList.size),
                 style = NapzakMarketTheme.typography.bodySemi14,
-                color = NapzakMarketTheme.colors.purple30
+                color = NapzakMarketTheme.colors.purple30,
             )
 
             Spacer(Modifier.weight(1f))
@@ -189,12 +189,12 @@ fun ExploreSuccessScreen(
                 Text(
                     text = getSortLabel(sortType),
                     style = NapzakMarketTheme.typography.capMedium12,
-                    color = NapzakMarketTheme.colors.gray600
+                    color = NapzakMarketTheme.colors.gray600,
                 )
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_down_chevron_16),
                     contentDescription = stringResource(R.string.down_chevron_button),
-                    tint = NapzakMarketTheme.colors.gray500
+                    tint = NapzakMarketTheme.colors.gray500,
                 )
             }
         }

@@ -29,19 +29,17 @@ fun EnableDisableTextButton(
     text: String,
     isEnabled: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
     shape: RoundedCornerShape = RoundedCornerShape(12.dp),
     textStyle: TextStyle = NapzakMarketTheme.typography.bodyBold16,
     backgroundColor: Color = NapzakMarketTheme.colors.purple30,
-    contentColor: Color = NapzakMarketTheme.colors.white
+    contentColor: Color = NapzakMarketTheme.colors.white,
+    modifier: Modifier = Modifier
 ) {
     CommonButton(
         text = text,
         onClick = { if (isEnabled) onClick() },
         isEnabled = isEnabled,
         modifier = modifier,
-        width = 335.dp,
-        height = 52.dp,
         shape = shape,
         textStyle = textStyle,
         backgroundColor = backgroundColor,

@@ -14,7 +14,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
-import com.napzak.market.core.designsystem.component.noRippleEffect
 
 /**
  * 공통 TopBar 컴포넌트

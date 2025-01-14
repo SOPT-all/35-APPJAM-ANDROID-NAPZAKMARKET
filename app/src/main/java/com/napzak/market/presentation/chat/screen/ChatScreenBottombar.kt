@@ -1,60 +1,62 @@
 package com.napzak.market.presentation.chat.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.R
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
+
+/**
+ * 채팅 화면 하단 바를 표시하는 컴포넌트.
+ *
+ * 준비 중 상태를 나타내는 아이콘과 텍스트를 포함합니다.
+ *
+ */
 
 @Composable
-fun PreparingScreen() {
+fun ChatScreenBottomBar() {
     NapzakMarketTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center,
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.img_chat_ready),
-                    contentDescription = stringResource(id = R.string.chat_ready_image_description),
-                    modifier = Modifier
-                        .width(162.dp)
-                        .height(128.dp),
-                )
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.img_chat_ready),
+                contentDescription = stringResource(R.string.loading_ready_image_description),
+                tint = Color.Unspecified
+            )
 
-                Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-                Text(
-                    text = "준비중이에요",
-                    style = NapzakMarketTheme.typography.titleSemi20,
-                    color = NapzakMarketTheme.colors.gray800,
-                )
+            Text(
+                text = stringResource(id = R.string.loading_title_description),
+                style = NapzakMarketTheme.typography.titleSemi20,
+                color = NapzakMarketTheme.colors.gray800,
+            )
 
-                Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
-                Text(
-                    text = "조금만 기다려주세요!",
-                    style = NapzakMarketTheme.typography.bodyMedium14,
-                    color = NapzakMarketTheme.colors.gray600,
-                )
-            }
+            Text(
+                text = stringResource(id = R.string.loading_subtitle_description),
+                style = NapzakMarketTheme.typography.bodyMedium14,
+                color = NapzakMarketTheme.colors.gray600,
+            )
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreparingScreenPreview() {
-    PreparingScreen()
+fun ChatScreenBottomBarPreview() {
+    ChatScreenBottomBar()
 }

@@ -1,5 +1,6 @@
 package com.napzak.market.presentation.explore.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -27,8 +28,8 @@ fun ProductListSection(
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(20.dp),
             modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(20.dp),
-            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             items(productList) { productItem ->
                 NapzakSellItem(
@@ -49,8 +50,8 @@ fun ProductListSection(
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(20.dp),
             modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(20.dp),
-            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             items(productList) { productItem ->
                 NapzakBuyItem(

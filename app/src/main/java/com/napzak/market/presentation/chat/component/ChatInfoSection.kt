@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.napzak.market.R
 import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
@@ -27,7 +29,6 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  * @param priceLabel 가격 앞에 표시될 레이블
  * @param titleColor 제목 텍스트의 색상
  *
- * @Composable
  */
 @Composable
 fun ChatInfoSection(
@@ -35,7 +36,7 @@ fun ChatInfoSection(
     description: String,
     price: String,
     modifier: Modifier = Modifier,
-    priceLabel: String? = null,
+    showPriceLabel: Boolean = false,
     titleColor: Color = NapzakMarketTheme.colors.purple30,
 ) {
     Column(
@@ -86,9 +87,9 @@ fun ChatInfoSection(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    if (priceLabel != null) {
+                    if (showPriceLabel) { // Boolean 값 체크
                         TextChip(
-                            text = priceLabel,
+                            text = stringResource(id = R.string.chat_price_label),
                             textStyle = NapzakMarketTheme.typography.capSemi12,
                             chipColors = CustomChipColors(
                                 contentColor = NapzakMarketTheme.colors.purple30,

@@ -60,9 +60,7 @@ fun SearchBox(
     ) {
         BasicTextField(
             value = searchTerm,
-            onValueChange = {
-                onTextChange(it)
-            },
+            onValueChange = onTextChange,
             modifier = Modifier.weight(1f),
             textStyle = NapzakMarketTheme.typography.bodySemi14,
             singleLine = true,

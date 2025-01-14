@@ -133,7 +133,7 @@ fun ExploreSuccessScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = NapzakMarketTheme.colors.white)
-            .padding(vertical = 40.dp)
+            .padding(top = 40.dp)
     ) {
         SearchBox(
             placeholder = stringResource(id = R.string.explore_search_box_placeholder),
@@ -206,6 +206,7 @@ fun ExploreSuccessScreen(
             onLikeClick = onLikeClick,
         )
 
+        Spacer(Modifier.height(20.dp))
     }
 }
 

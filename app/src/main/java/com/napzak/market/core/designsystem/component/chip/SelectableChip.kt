@@ -71,17 +71,22 @@ fun SelectableChip(
 /**
  * SelectableChip의 텍스트를 생성하는 함수
  */
-
-private fun generateChipText(type: SelectableChipType, genreList: List<String>): String = when (type) {
-    SelectableChipType.GENRE -> {
-        when {
-            genreList.isEmpty() -> type.label
-            genreList.size == 1 -> genreList[0]
-            else -> "${genreList[0]} 외 ${genreList.size - 1}"
+@Composable
+private fun generateChipText(type: SelectableChipType, genreList: List<String>): String =
+    when (type) {
+        SelectableChipType.GENRE -> {
+            when {
+                genreList.isEmpty() -> type.label
+                genreList.size == 1 -> genreList[0]
+                else -> stringResource(
+                    id = R.string.selectablechip_genre_counting,
+                    genreList[0],
+                    genreList.size - 1
+                )
+            }
         }
+        else -> type.label
     }
-    else -> type.label
-}
 
 @Preview
 @Composable

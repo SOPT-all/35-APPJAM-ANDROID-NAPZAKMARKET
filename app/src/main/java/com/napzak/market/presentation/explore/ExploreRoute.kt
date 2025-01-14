@@ -35,7 +35,6 @@ import com.napzak.market.presentation.explore.component.ProductListSection
 import com.napzak.market.presentation.explore.component.TradeTypeTab
 import com.napzak.market.presentation.explore.type.SortType
 import com.napzak.market.presentation.explore.type.TradeType
-import com.napzak.market.presentation.explore.type.getSortLabel
 
 @Composable
 fun ExploreRoute(
@@ -192,7 +191,7 @@ fun ExploreSuccessScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = getSortLabel(sortType),
+                    text = SortType.getSortLabel(sortType),
                     style = NapzakMarketTheme.typography.capMedium12,
                     color = NapzakMarketTheme.colors.gray600,
                 )

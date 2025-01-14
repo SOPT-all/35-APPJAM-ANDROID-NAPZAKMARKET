@@ -40,6 +40,7 @@ import com.napzak.market.presentation.explore.type.getSortLabel
 @Composable
 fun ExploreRoute(
     onSearchBoxClick: () -> Unit,
+    navigateToProductDetail: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ExploreViewModel = viewModel()
 ) {
@@ -57,7 +58,9 @@ fun ExploreRoute(
         onGenreListClick = { /* 장르 검색 bottomSheet */ },
         onSoldOutClick = { viewModel.changeSoldOut() },
         onUnopenClick = { viewModel.changeUnopen() },
-        onSortButtonClick = { /* 정렬 bottomSheet */ }
+        onSortButtonClick = { /* 정렬 bottomSheet */ },
+        onItemClick = { navigateToProductDetail() },
+        onLikeClick = { viewModel.changeItemLikeButton(it) },
     )
 }
 
@@ -71,6 +74,8 @@ fun ExploreScreen(
     onSoldOutClick: () -> Unit,
     onUnopenClick: () -> Unit,
     onSortButtonClick: () -> Unit,
+    onItemClick: (Int) -> Unit,
+    onLikeClick: (Int) -> Unit,
 ) {
     when (uiState.loadState) {
         is UiState.Loading -> {
@@ -98,6 +103,8 @@ fun ExploreScreen(
                     onSoldOutClick = onSoldOutClick,
                     onUnopenClick = onUnopenClick,
                     onSortButtonClick = onSortButtonClick,
+                    onItemClick = onItemClick,
+                    onLikeClick = onLikeClick,
                 )
             }
         }
@@ -119,6 +126,8 @@ fun ExploreSuccessScreen(
     onSoldOutClick: () -> Unit,
     onUnopenClick: () -> Unit,
     onSortButtonClick: () -> Unit,
+    onItemClick: (Int) -> Unit,
+    onLikeClick: (Int) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -192,7 +201,9 @@ fun ExploreSuccessScreen(
 
         ProductListSection(
             tradeType = tradeType,
-            productList = productList
+            productList = productList,
+            onItemClick = onItemClick,
+            onLikeClick = onLikeClick,
         )
 
     }
@@ -214,5 +225,7 @@ private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
         onSoldOutClick = { },
         onUnopenClick = { },
         onSortButtonClick = { },
+        onItemClick = { },
+        onLikeClick = { },
     )
 }

@@ -18,6 +18,7 @@ fun NavGraphBuilder.exploreGraph(
         ExploreRoute(
             modifier = modifier,
             onSearchBoxClick = { },
+            navigateToProductDetail = { },
         )
     }
 }

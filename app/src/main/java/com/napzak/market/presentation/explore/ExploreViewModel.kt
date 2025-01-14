@@ -22,7 +22,7 @@ class ExploreViewModel : ViewModel() {
                             productId = 201,
                             genreName = "짱구",
                             productName = "피규어",
-                            photo = "http://example.com/photo3.jpg",
+                            photo = "",
                             price = 120000,
                             uploadTime = "3일",
                             isLiked = true,
@@ -30,10 +30,10 @@ class ExploreViewModel : ViewModel() {
                             tradeStatus = "BEFORE_TRADE",
                         ),
                         ProductItem(
-                            productId = 201,
+                            productId = 202,
                             genreName = "짱구",
                             productName = "피규어",
-                            photo = "http://example.com/photo3.jpg",
+                            photo = "",
                             price = 120000,
                             uploadTime = "3일",
                             isLiked = true,
@@ -41,10 +41,10 @@ class ExploreViewModel : ViewModel() {
                             tradeStatus = "BEFORE_TRADE",
                         ),
                         ProductItem(
-                            productId = 201,
+                            productId = 203,
                             genreName = "짱구",
                             productName = "피규어",
-                            photo = "http://example.com/photo3.jpg",
+                            photo = "",
                             price = 120000,
                             uploadTime = "3일",
                             isLiked = true,
@@ -52,10 +52,10 @@ class ExploreViewModel : ViewModel() {
                             tradeStatus = "BEFORE_TRADE",
                         ),
                         ProductItem(
-                            productId = 201,
+                            productId = 204,
                             genreName = "짱구",
                             productName = "피규어",
-                            photo = "http://example.com/photo3.jpg",
+                            photo = "",
                             price = 120000,
                             uploadTime = "3일",
                             isLiked = true,
@@ -63,10 +63,10 @@ class ExploreViewModel : ViewModel() {
                             tradeStatus = "BEFORE_TRADE",
                         ),
                         ProductItem(
-                            productId = 201,
+                            productId = 205,
                             genreName = "짱구",
                             productName = "피규어",
-                            photo = "http://example.com/photo3.jpg",
+                            photo = "",
                             price = 120000,
                             uploadTime = "3일",
                             isLiked = true,
@@ -104,6 +104,10 @@ class ExploreViewModel : ViewModel() {
             )
         }
         getExploreProductInformation()
+    }
+
+    fun changeItemLikeButton(productId: Int) {
+        /* 좋아요 API 연결 및 기능 연결 */
     }
 
     private fun updateLoadState(loadState: UiState<ExploreProductInformation>) =

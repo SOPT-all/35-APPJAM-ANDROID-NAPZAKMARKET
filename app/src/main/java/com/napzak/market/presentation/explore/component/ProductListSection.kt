@@ -18,6 +18,8 @@ import com.napzak.market.presentation.explore.type.TradeType
 fun ProductListSection(
     tradeType: String,
     productList: List<ProductItem>,
+    onItemClick: (Int) -> Unit,
+    onLikeClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (tradeType == TradeType.SELL.name) {
@@ -37,8 +39,8 @@ fun ProductListSection(
                     isLiked = productItem.isLiked,
                     isMyItem = false,
                     createdTime = productItem.uploadTime,
-                    onItemClick = { },
-                    onLikeClick = { },
+                    onItemClick = { onItemClick(productItem.productId) },
+                    onLikeClick = { onLikeClick(productItem.productId) },
                 )
             }
         }
@@ -60,8 +62,8 @@ fun ProductListSection(
                     isMyItem = false,
                     isOfferPossible = productItem.isPriceNegotiable,
                     createdTime = productItem.uploadTime,
-                    onItemClick = { },
-                    onLikeClick = { },
+                    onItemClick = { onItemClick(productItem.productId) },
+                    onLikeClick = { onLikeClick(productItem.productId) },
                 )
             }
         }
@@ -78,7 +80,7 @@ private fun ProductListSectionPreview(modifier: Modifier = Modifier) {
                 productId = 201,
                 genreName = "짱구",
                 productName = "피규어",
-                photo = "http://example.com/photo3.jpg",
+                photo = "",
                 price = 120000,
                 uploadTime = "3일",
                 isLiked = true,
@@ -89,7 +91,7 @@ private fun ProductListSectionPreview(modifier: Modifier = Modifier) {
                 productId = 201,
                 genreName = "짱구",
                 productName = "피규어",
-                photo = "http://example.com/photo3.jpg",
+                photo = "",
                 price = 120000,
                 uploadTime = "3일",
                 isLiked = false,
@@ -97,6 +99,8 @@ private fun ProductListSectionPreview(modifier: Modifier = Modifier) {
                 tradeStatus = "BEFORE_TRADE",
             ),
         ),
+        onItemClick = { },
+        onLikeClick = { },
         modifier = modifier,
     )
 }

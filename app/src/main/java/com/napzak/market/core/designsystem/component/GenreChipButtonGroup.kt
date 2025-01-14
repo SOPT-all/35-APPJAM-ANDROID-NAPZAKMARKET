@@ -20,6 +20,8 @@ import com.napzak.market.R
 import com.napzak.market.core.designsystem.component.button.RoundedIconButton
 import com.napzak.market.core.designsystem.component.chip.RemovableChip
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.domain.genre.model.Genre
+import com.napzak.market.presentation.onboarding.state.OnboardingUiState
 
 /**
  * 장르 리스트와 리셋 버튼을 포함하는 그룹 컴포넌트
@@ -34,9 +36,9 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GenreChipButtonGroup(
-    genreList: List<String>,
+    genreList: List<Genre>,
     onResetClick: () -> Unit,
-    onGenreClick: (Int) -> Unit,
+    onGenreClick: (Genre) -> Unit,
     modifier: Modifier = Modifier,
     contentPaddingValues: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -60,8 +62,8 @@ fun GenreChipButtonGroup(
 
                 itemsIndexed(items = genreList, key = { _, genre -> genre }) { index, genre ->
                     RemovableChip(
-                        text = genre,
-                        onClick = { onGenreClick(index) },
+                        text = genre.genreName,
+                        onClick = { onGenreClick(genre) },
                         modifier = Modifier.animateItem(
                             fadeInSpec = null,
                             fadeOutSpec = null
@@ -78,7 +80,7 @@ fun GenreChipButtonGroup(
 private fun GenreChipButtonGroupPreview() {
     NapzakMarketTheme {
         GenreChipButtonGroup(
-            genreList = listOf("실바니안", "산리오", "슈가슈가룬", "캐릭캐릭체인지"),
+            genreList = OnboardingUiState.initialGenreList.data,
             modifier = Modifier.padding(start = 20.dp),
             contentPaddingValues = PaddingValues(end = 20.dp),
             onResetClick = { },

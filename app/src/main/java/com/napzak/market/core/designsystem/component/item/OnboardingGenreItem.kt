@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,9 +53,10 @@ fun OnboardingGenreItem(
         ) {
             if(imgUrl.isNotBlank()) {
                 AsyncImage(
-                    model = ImageRequest.Builder(context).data(imgUrl),
+                    model = ImageRequest.Builder(context).data(imgUrl).build(),
                     contentDescription = null,
                     clipToBounds = true,
+                    contentScale = ContentScale.Crop
                 )
             }
             if(isSelected) {

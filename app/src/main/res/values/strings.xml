@@ -10,7 +10,13 @@
     <!-- Component -->
     <string name="selectablechip_genre_counting">%s 외 %d</string>
 
-    <!-- MainScreen Bottom Bar -->
+    <!-- Napzak Item-->
+    <string name="napzak_item_content_description">매물</string>"
+    <string name="napzak_item_sell">팔아요</string>
+    <string name="napzak_item_buy">구해요</string>
+    <string name="napzak_item_suggest">가격제시</string>
+
+    <!-- MainScreen-->
     <string name="main_bottom_bar_home">홈</string>
     <string name="main_bottom_bar_search">탐색</string>
     <string name="main_bottom_bar_register">등록</string>
@@ -19,9 +25,7 @@
     <string name="main_bottom_bar_register_sell">팔아요 등록</string>
     <string name="main_bottom_bar_register_buy">구해요 등록</string>
 
-    <!-- Napzak Item-->
-    <string name="napzak_item_content_description">매물</string>"
-    <string name="napzak_item_sell">팔아요</string>
-    <string name="napzak_item_buy">구해요</string>
-    <string name="napzak_item_suggest">가격제시</string>
+    <!--Onboarding Screen-->
+    <string name="onboarding_top_title">좋아하는 장르를 골라보세요!\n취향에 딱 맞는 상품을 찾아드릴게요</string>
+    <string name="onboarding_top_choice">최대 4개 선택</string>
 </resources>

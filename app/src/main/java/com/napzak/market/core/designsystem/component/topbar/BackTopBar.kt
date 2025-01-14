@@ -10,14 +10,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.napzak.market.R
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
+//TODO: 주석 넣기
+
 @Composable
 fun BackTopBar(
     title: String,
     onBackClick: () -> Unit,
-    modifier: Modifier = Modifier,
     textStyle: TextStyle = NapzakMarketTheme.typography.titleSemi18,
     backgroundColor: Color = NapzakMarketTheme.colors.white,
-    contentColor: Color = NapzakMarketTheme.colors.black
+    contentColor: Color = NapzakMarketTheme.colors.black,
+    modifier: Modifier = Modifier
 ) {
     CommonTopBar(
         title = title,

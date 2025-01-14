@@ -29,14 +29,12 @@ import androidx.compose.ui.unit.Dp
 fun CommonButton(
     text: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    width: Dp? = null,
-    height: Dp? = null,
+    backgroundColor: Color,
+    contentColor: Color,
     shape: RoundedCornerShape,
     textStyle: TextStyle,
+    modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
-    backgroundColor: Color,
-    contentColor: Color
 ) {
     Button(
         onClick = onClick,

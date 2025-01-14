@@ -11,19 +11,19 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  * 텍스트가 중앙에 위치한 TopBar 컴포넌트
  *
  * @param title TopBar에 표시될 제목
- * @param modifier TopBar에 적용할 Modifier
  * @param textStyle 제목 텍스트 스타일
  * @param backgroundColor TopBar의 배경색
  * @param contentColor 제목 텍스트 색상
+ * @param modifier TopBar에 적용할 Modifier
  */
 
 @Composable
 fun CenteredTextTopBar(
     title: String,
-    modifier: Modifier = Modifier,
     textStyle: TextStyle = NapzakMarketTheme.typography.titleBold18,
     backgroundColor: Color = NapzakMarketTheme.colors.white,
-    contentColor: Color = NapzakMarketTheme.colors.black
+    contentColor: Color = NapzakMarketTheme.colors.black,
+    modifier: Modifier = Modifier
 )  {
     CommonTopBar(
         title = title,

@@ -20,7 +20,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -84,7 +83,7 @@ private fun OnboardingScreen(
             onSearchButtonClick = onSearchButtonClick,
             modifier = Modifier
                 .padding(horizontal = 20.dp)
-                .padding(top = 32.dp)
+                .padding(top = 32.dp),
         )
 
         GenreChipButtonGroup(
@@ -93,12 +92,10 @@ private fun OnboardingScreen(
             onResetClick = onResetClick,
             contentPaddingValues = PaddingValues(horizontal = 20.dp),
             modifier = Modifier
-                .padding(top = 16.dp)
+                .padding(top = 16.dp),
         )
 
-        Box(
-            modifier = Modifier.weight(1f)
-        ) {
+        Box(modifier = Modifier.weight(1f)) {
             when (uiState.genreList) {
                 is UiState.Loading -> {}
                 is UiState.Empty -> {}
@@ -118,8 +115,7 @@ private fun OnboardingScreen(
             isButtonEnabled = true,
             onCompleteClick = onCompleteButtonClick,
             onSkipClick = onSkipButtonClick,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
@@ -167,7 +163,7 @@ private fun BoxScope.SuccessScreen(
                 modifier = Modifier.align(Alignment.BottomCenter),
                 brushColors = listOf(
                     Color.Transparent,
-                    NapzakMarketTheme.colors.white
+                    NapzakMarketTheme.colors.white,
                 ),
             )
         }

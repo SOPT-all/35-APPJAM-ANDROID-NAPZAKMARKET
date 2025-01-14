@@ -43,7 +43,7 @@ fun CommonButton(
         content = {
             Text(
                 text = text,
-                style = textStyle
+                style = textStyle,
             )
         }
     )

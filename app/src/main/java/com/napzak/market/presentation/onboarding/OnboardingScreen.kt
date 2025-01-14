@@ -146,7 +146,7 @@ private fun BoxScope.SuccessScreen(
                 columns = GridCells.Fixed(3),
                 contentPadding = PaddingValues(
                     top = 30.dp,
-                    bottom = 54.dp
+                    bottom = 54.dp,
                 ),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 horizontalArrangement = Arrangement.spacedBy(19.dp, Alignment.CenterHorizontally),

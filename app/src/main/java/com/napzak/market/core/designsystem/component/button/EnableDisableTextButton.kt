@@ -41,7 +41,7 @@ fun EnableDisableTextButton(
         disabledContainerColor = NapzakMarketTheme.colors.gray400,
         disabledContentColor = NapzakMarketTheme.colors.white,
     )
-){
+) {
     CommonButton(
         text = text,
         onClick = onClick,
@@ -50,7 +50,7 @@ fun EnableDisableTextButton(
         shape = shape,
         textStyle = textStyle,
         contentPadding = contentPadding,
-        buttonColors = buttonColors
+        buttonColors = buttonColors,
     )
 }
 

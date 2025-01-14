@@ -33,17 +33,17 @@ fun OnboardingBottomBar(
     val contentColor by animateColorAsState(
         targetValue = if (isButtonEnabled) colors.white else colors.white,
         animationSpec = tween(durationMillis = 500),
-        label = "contentColor"
+        label = "contentColor",
     )
 
     val containerColor by animateColorAsState(
         targetValue = if (isButtonEnabled) colors.purple30 else colors.gray400,
         animationSpec = tween(durationMillis = 500),
-        label = "containerColor"
+        label = "containerColor",
     )
 
     Column(
-        modifier = modifier,
+        modifier = modifier.background(NapzakMarketTheme.colors.white),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         EnableDisableTextButton(
@@ -55,7 +55,6 @@ fun OnboardingBottomBar(
                 contentColor = contentColor,
             ),
             modifier = Modifier
-                .background(NapzakMarketTheme.colors.white)
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
         )
@@ -64,7 +63,6 @@ fun OnboardingBottomBar(
             style = NapzakMarketTheme.typography.bodySemi16.copy(color = NapzakMarketTheme.colors.gray500),
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .background(NapzakMarketTheme.colors.white)
                 .fillMaxWidth()
                 .noRippleClickable(onSkipClick)
                 .padding(vertical = 15.dp),

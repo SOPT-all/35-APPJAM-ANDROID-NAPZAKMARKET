@@ -2,7 +2,6 @@ package com.napzak.market.core.designsystem.component
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -54,8 +52,11 @@ fun GenreChipButtonGroup(
         content = {
             AnimatedContent(
                 targetState = genreList.isNotEmpty(),
-                transitionSpec = { slideInVertically { fullHeight -> -fullHeight } togetherWith slideOutVertically { fullHeight -> -fullHeight } },
-                label = "GenreChip"
+                transitionSpec = {
+                    slideInVertically { fullHeight -> -fullHeight }togetherWith
+                            slideOutVertically { fullHeight -> -fullHeight }
+                },
+                label = "GenreChip",
             ) { hasGenre ->
                 if (hasGenre) {
                     LazyRow(
@@ -67,17 +68,17 @@ fun GenreChipButtonGroup(
                         stickyHeader {
                             RoundedIconButton(
                                 icon = ImageVector.vectorResource(id = R.drawable.ic_reset_18),
-                                onClick = onResetClick
+                                onClick = onResetClick,
                             )
                         }
 
-                        items(genreList, key = { it.genreId }) {genre ->
+                        items(genreList, key = { it.genreId }) { genre ->
                             RemovableChip(
                                 text = genre.genreName,
                                 onClick = { onGenreClick(genre) },
                                 modifier = Modifier.animateItem(
                                     fadeInSpec = tween(200),
-                                    fadeOutSpec = tween(200)
+                                    fadeOutSpec = tween(200),
                                 )
                             )
                         }

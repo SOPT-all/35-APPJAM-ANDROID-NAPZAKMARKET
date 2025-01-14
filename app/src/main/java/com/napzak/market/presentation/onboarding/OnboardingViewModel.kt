@@ -26,30 +26,31 @@ class OnboardingViewModel @Inject constructor(
         MutableStateFlow(OnboardingUiState())
     val uiState = _uiState.asStateFlow()
 
-    @OptIn(FlowPreview::class)
     fun changeSearchText(newValue: String) = viewModelScope.launch {
-        with(_searchValue) {
-            update { newValue }
-            debounce(500L)
-                .collectLatest { debounced ->
-                    getGenreList(debounced)
-                }
-        }
+        updateSearchValue(newValue)
+        debounceSearch()
     }
+
+    private fun updateSearchValue(newValue: String) = _searchValue.update { newValue }
+
+    @OptIn(FlowPreview::class)
+    private suspend fun debounceSearch() = _searchValue.debounce(DEBOUNCE_DELAY)
+        .collectLatest { debounced ->
+            getGenreList(debounced)
+        }
 
     // TODO: 서버 통신으로 대체
     private fun getGenreList(searchTerm: String) {
         _uiState.update { currentState ->
             currentState.copy(
-                genreList = UiState.Success(if (searchTerm.isEmpty()) {
-                    OnboardingUiState.initialGenreList.data
-                } else {
-                    OnboardingUiState.initialGenreList.data.filter {
-                        it.genreName.contains(
-                            searchTerm
-                        )
+                genreList = UiState.Success(
+                    if (searchTerm.isEmpty()) {
+                        OnboardingUiState.initialGenreList.data
+                    } else {
+                        OnboardingUiState.initialGenreList.data.filter {
+                            it.genreName.contains(searchTerm)
+                        }
                     }
-                }
                 )
             )
         }
@@ -80,16 +81,14 @@ class OnboardingViewModel @Inject constructor(
     private fun addSelectedGenre(genre: Genre) {
         _uiState.update { currentState ->
             currentState.copy(
-                selectedGenreList = if (_uiState.value.selectedGenreList.isEmpty()) {
-                    listOf(genre)
-                } else {
-                    currentState.selectedGenreList.toMutableList() + genre
-                }
+                selectedGenreList = currentState.selectedGenreList + genre
+
             )
         }
     }
 
     companion object {
         private const val MAX_CHOICE = 4
+        private const val DEBOUNCE_DELAY = 500L
     }
 }

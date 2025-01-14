@@ -72,13 +72,13 @@ private fun MainNavHost(
             ExitTransition.None
         },
         navController = navigator.navController,
-        startDestination = navigator.startDestination
+        startDestination = navigator.startDestination,
     ) {
         dummyGraph(modifier = modifier)
         exploreGraph(modifier = modifier)
         onboardingGraph(
             modifier = Modifier.systemBarsPadding(),
-            navigateToHome = navigator.navController::navigateToDummy
+            navigateToHome = navigator.navController::navigateToDummy,
         )
     }
 }

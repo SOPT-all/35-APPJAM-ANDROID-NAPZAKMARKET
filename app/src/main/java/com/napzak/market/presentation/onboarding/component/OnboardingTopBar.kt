@@ -14,9 +14,8 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 @Composable
 fun OnboardingTopBar(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.padding(top = 60.dp)
-    ) {
+
+    Column(modifier = modifier.padding(top = 60.dp)) {
         Text(
             text = stringResource(R.string.onboarding_top_title),
             style = NapzakMarketTheme.typography.titleBold22.copy(color = NapzakMarketTheme.colors.gray900),

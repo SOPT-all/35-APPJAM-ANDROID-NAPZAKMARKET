@@ -47,7 +47,7 @@ fun ChatInfoSectionSell(
                 modifier = Modifier
                     .size(50.dp)
                     .background(
-                        NapzakMarketTheme.colors.gray300,
+                        color = NapzakMarketTheme.colors.gray300,
                         shape = RoundedCornerShape(4.dp),
                     ),
             )

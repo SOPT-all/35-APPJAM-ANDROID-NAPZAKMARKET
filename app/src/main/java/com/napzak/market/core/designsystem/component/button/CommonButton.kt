@@ -1,14 +1,11 @@
 package com.napzak.market.core.designsystem.component.button
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import com.napzak.market.core.common.util.NoRippleInteractionSource
 
@@ -20,8 +17,6 @@ import com.napzak.market.core.common.util.NoRippleInteractionSource
  * @param shape 버튼의 모서리 모양
  * @param textStyle 버튼 텍스트의 스타일
  * @param isEnabled 버튼 활성화 여부
- * @param backgroundColor 버튼의 배경색
- * @param contentColor 버튼 텍스트 색상
  */
 
 @Composable

@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,9 +33,13 @@ fun EnableDisableTextButton(
     modifier: Modifier = Modifier,
     shape: RoundedCornerShape = RoundedCornerShape(12.dp),
     textStyle: TextStyle = NapzakMarketTheme.typography.bodyBold16,
-    backgroundColor: Color = NapzakMarketTheme.colors.purple30,
-    contentColor: Color = NapzakMarketTheme.colors.white,
-) {
+    buttonColors: ButtonColors = ButtonDefaults.buttonColors(
+        containerColor = NapzakMarketTheme.colors.purple30,
+        contentColor = NapzakMarketTheme.colors.white,
+        disabledContainerColor = NapzakMarketTheme.colors.gray400,
+        disabledContentColor = NapzakMarketTheme.colors.white,
+    )
+){
     CommonButton(
         text = text,
         onClick = { if (isEnabled) onClick() },
@@ -43,12 +47,7 @@ fun EnableDisableTextButton(
         modifier = modifier,
         shape = shape,
         textStyle = textStyle,
-        buttonColors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor,
-            contentColor = contentColor,
-            disabledContainerColor = NapzakMarketTheme.colors.gray400,
-            disabledContentColor = NapzakMarketTheme.colors.white
-        )
+        buttonColors = buttonColors
     )
 }
 
@@ -65,14 +64,18 @@ fun EnableDisableTextButtonPreview() {
                 text = "선택 완료! 시작하기",
                 isEnabled = true,
                 onClick = { /* Preview Action */ },
-                modifier = Modifier.height(52.dp).width(335.dp)
+                modifier = Modifier
+                    .height(52.dp)
+                    .width(335.dp),
             )
             Spacer(modifier = Modifier.height(16.dp))
             EnableDisableTextButton(
                 text = "선택 완료! 시작하기",
                 isEnabled = false,
                 onClick = { /* Preview Action */ },
-                modifier = Modifier.height(52.dp).width(335.dp)
+                modifier = Modifier
+                    .height(52.dp)
+                    .width(335.dp),
             )
         }
     }

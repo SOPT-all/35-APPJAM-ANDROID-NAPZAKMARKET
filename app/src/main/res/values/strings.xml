@@ -28,7 +28,5 @@
     <!-- ChatScreen-->
     <string name="chat_ready_image_description">준비중 상태를 나타내는 캐릭터</string>
     <string name="chat_background_image_description">채팅 화면 배경 캐릭터</string>
-    <string name="icon_description_file_attach">파일 첨부 아이콘</string>
-
-
+    <string name="icon_description_file_attach">채팅창 파일 첨부 아이콘</string>
 </resources>

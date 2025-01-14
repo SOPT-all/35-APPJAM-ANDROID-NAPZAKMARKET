@@ -23,7 +23,7 @@ enum class MainTab(
         contentDescription = R.string.main_bottom_bar_home,
         route = Dummy, // TODO: Home 루트로 변경
     ),
-    SEARCH(
+    EXPLORE(
         selectedIcon = R.drawable.ic_look_select_28,
         unselectedIcon = R.drawable.ic_look_unselect_28,
         contentDescription = R.string.main_bottom_bar_search,

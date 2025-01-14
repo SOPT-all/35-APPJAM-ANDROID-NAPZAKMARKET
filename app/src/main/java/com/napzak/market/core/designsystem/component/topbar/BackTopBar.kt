@@ -25,10 +25,10 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 fun BackTopBar(
     title: String,
     onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
     textStyle: TextStyle = NapzakMarketTheme.typography.titleSemi18,
     backgroundColor: Color = NapzakMarketTheme.colors.white,
     contentColor: Color = NapzakMarketTheme.colors.black,
-    modifier: Modifier = Modifier
 ) {
     CommonTopBar(
         title = title,

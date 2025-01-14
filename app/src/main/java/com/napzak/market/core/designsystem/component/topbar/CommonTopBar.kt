@@ -32,9 +32,9 @@ fun CommonTopBar(
     textStyle: TextStyle,
     backgroundColor: Color,
     contentColor: Color,
+    modifier: Modifier = Modifier,
     navigationIcon: ImageVector? = null,
     onNavigationClick: (() -> Unit)? = null,
-    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier

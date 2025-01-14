@@ -21,10 +21,10 @@ import com.napzak.market.R
 fun CloseTopBar(
     title: String,
     onCloseClick: () -> Unit,
+    modifier: Modifier = Modifier,
     textStyle: TextStyle = NapzakMarketTheme.typography.titleSemi18,
     backgroundColor: Color = NapzakMarketTheme.colors.white,
     contentColor: Color = NapzakMarketTheme.colors.black,
-    modifier: Modifier = Modifier
 ) {
     CommonTopBar(
         title = title,

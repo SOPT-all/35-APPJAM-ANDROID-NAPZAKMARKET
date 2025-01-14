@@ -20,10 +20,10 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 @Composable
 fun CenteredTextTopBar(
     title: String,
+    modifier: Modifier = Modifier,
     textStyle: TextStyle = NapzakMarketTheme.typography.titleBold18,
     backgroundColor: Color = NapzakMarketTheme.colors.white,
     contentColor: Color = NapzakMarketTheme.colors.black,
-    modifier: Modifier = Modifier
 )  {
     CommonTopBar(
         title = title,

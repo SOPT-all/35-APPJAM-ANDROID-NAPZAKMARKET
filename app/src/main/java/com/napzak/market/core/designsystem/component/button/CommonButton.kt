@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Color
@@ -27,8 +28,7 @@ import com.napzak.market.core.common.util.NoRippleInteractionSource
 fun CommonButton(
     text: String,
     onClick: () -> Unit,
-    backgroundColor: Color,
-    contentColor: Color,
+    buttonColors: ButtonColors,
     shape: RoundedCornerShape,
     textStyle: TextStyle,
     modifier: Modifier = Modifier,
@@ -38,10 +38,7 @@ fun CommonButton(
         onClick = onClick,
         modifier = modifier,
         shape = shape,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = if (isEnabled) backgroundColor else NapzakMarketTheme.colors.gray400,
-            contentColor = if (isEnabled) contentColor else NapzakMarketTheme.colors.white
-        ),
+        colors = buttonColors,
         enabled = isEnabled,
         interactionSource = NoRippleInteractionSource,
         content = {

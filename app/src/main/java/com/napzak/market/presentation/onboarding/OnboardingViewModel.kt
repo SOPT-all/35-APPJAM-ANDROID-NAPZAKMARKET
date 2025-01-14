@@ -37,6 +37,7 @@ class OnboardingViewModel @Inject constructor(
         }
     }
 
+    // TODO: 서버 통신으로 대체
     private fun getGenreList(searchTerm: String) {
         _uiState.update { currentState ->
             currentState.copy(
@@ -53,7 +54,6 @@ class OnboardingViewModel @Inject constructor(
             )
         }
     }
-
 
     fun selectGenre(genre: Genre) {
         if (_uiState.value.selectedGenreList.map { it.genreId }.contains(genre.genreId)) {

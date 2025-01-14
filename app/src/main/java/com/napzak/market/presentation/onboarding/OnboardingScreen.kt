@@ -73,10 +73,10 @@ private fun OnboardingScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(NapzakMarketTheme.colors.white)
+            .background(NapzakMarketTheme.colors.white),
     ) {
         OnboardingTopBar(
-            modifier = Modifier.padding(horizontal = 20.dp)
+            modifier = Modifier.padding(horizontal = 20.dp),
         )
 
         SearchBox(

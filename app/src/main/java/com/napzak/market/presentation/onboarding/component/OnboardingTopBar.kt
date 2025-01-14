@@ -20,13 +20,12 @@ fun OnboardingTopBar(modifier: Modifier = Modifier) {
         Text(
             text = stringResource(R.string.onboarding_top_title),
             style = NapzakMarketTheme.typography.titleBold22.copy(color = NapzakMarketTheme.colors.gray900),
-
-            )
+        )
 
         Text(
             text = stringResource(R.string.onboarding_top_choice),
             style = NapzakMarketTheme.typography.bodySemi14.copy(color = NapzakMarketTheme.colors.gray500),
-            modifier = Modifier.padding(top = 12.dp)
+            modifier = Modifier.padding(top = 12.dp),
         )
     }
 }

@@ -21,9 +21,8 @@ fun GradientBox(
             .height(32.dp)
             .background(
                 brush = Brush.verticalGradient(
-                    colors = brushColors
+                    colors = brushColors,
                 )
-            )
-
+            ),
     )
 }

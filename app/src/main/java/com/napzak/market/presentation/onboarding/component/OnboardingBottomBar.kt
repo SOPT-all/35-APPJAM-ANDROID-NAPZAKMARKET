@@ -58,13 +58,13 @@ private fun OnboardingBottomBarPreview() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(NapzakMarketTheme.colors.gray900)
+                .background(NapzakMarketTheme.colors.gray900),
         ) {
             OnboardingBottomBar(
                 isButtonEnabled = true,
                 onCompleteClick = {},
                 onSkipClick = {},
-                modifier = Modifier
+                modifier = Modifier,
             )
         }
     }

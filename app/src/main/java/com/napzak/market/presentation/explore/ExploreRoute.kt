@@ -54,19 +54,18 @@ fun ExploreRoute(
         modifier = modifier,
         uiState = uiState,
         onSearchBoxClick = onSearchBoxClick,
-        onTradeTypeClick = { viewModel.updateTradeType(it) },
+        onTradeTypeClick = { viewModel::updateTradeType },
         onGenreListClick = { /* TODO: 장르 검색 bottomSheet */ },
         onSoldOutClick = { viewModel.updateSoldOut() },
         onUnopenClick = { viewModel.updateUnopen() },
         onSortButtonClick = { /* TODO: 정렬 bottomSheet */ },
         onItemClick = { navigateToProductDetail() },
-        onLikeClick = { viewModel.updateItemLikeButton(it) },
+        onLikeClick = { viewModel::updateItemLikeButton },
     )
 }
 
 @Composable
 fun ExploreScreen(
-    modifier: Modifier = Modifier,
     uiState: ExploreUiState,
     onSearchBoxClick: () -> Unit,
     onTradeTypeClick: (String) -> Unit,
@@ -76,6 +75,7 @@ fun ExploreScreen(
     onSortButtonClick: () -> Unit,
     onItemClick: (Int) -> Unit,
     onLikeClick: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     when (uiState.loadState) {
         is UiState.Loading -> {
@@ -140,7 +140,7 @@ fun ExploreSuccessScreen(
             readOnly = true,
             modifier = Modifier
                 .padding(horizontal = 20.dp)
-                .noRippleClickable { onSearchBoxClick() },
+                .noRippleClickable(onSearchBoxClick),
         )
 
         Spacer(Modifier.height(8.dp))
@@ -188,7 +188,7 @@ fun ExploreSuccessScreen(
             Spacer(Modifier.weight(1f))
 
             Row(
-                modifier = Modifier.noRippleClickable { onSortButtonClick() },
+                modifier = Modifier.noRippleClickable(onSortButtonClick),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(

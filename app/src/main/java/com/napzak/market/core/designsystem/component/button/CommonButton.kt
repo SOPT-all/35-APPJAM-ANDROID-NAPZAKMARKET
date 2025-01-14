@@ -16,8 +16,6 @@ import com.napzak.market.core.common.util.NoRippleInteractionSource
  *
  * @param text 버튼에 표시될 텍스트
  * @param onClick 버튼 클릭 시 수행할 동작
- * @param width 버튼의 너비
- * @param height 버튼의 높이
  * @param shape 버튼의 모서리 모양
  * @param textStyle 버튼 텍스트의 스타일
  * @param isEnabled 버튼 활성화 여부

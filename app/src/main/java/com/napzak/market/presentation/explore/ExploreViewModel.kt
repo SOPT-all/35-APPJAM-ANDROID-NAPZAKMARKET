@@ -14,6 +14,7 @@ class ExploreViewModel : ViewModel() {
     val uiState = _uiState.asStateFlow()
 
     fun getExploreProductInformation() {
+        /* TODO: 리스트 조회 API 연결 */
         updateLoadState(
             loadState = UiState.Success(
                 ExploreProductInformation(
@@ -107,7 +108,7 @@ class ExploreViewModel : ViewModel() {
     }
 
     fun changeItemLikeButton(productId: Int) {
-        /* 좋아요 API 연결 및 기능 연결 */
+        /* TODO: 좋아요 API 연결 및 기능 연결 */
     }
 
     private fun updateLoadState(loadState: UiState<ExploreProductInformation>) =

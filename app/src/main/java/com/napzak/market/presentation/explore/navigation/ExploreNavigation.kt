@@ -17,8 +17,8 @@ fun NavGraphBuilder.exploreGraph(
     composable<Explore> {
         ExploreRoute(
             modifier = modifier,
-            onSearchBoxClick = { },
-            navigateToProductDetail = { },
+            onSearchBoxClick = { /* TODO: 검색화면으로 이동 */ },
+            navigateToProductDetail = { /* TODO: 상세페이지로 이동 */ },
         )
     }
 }

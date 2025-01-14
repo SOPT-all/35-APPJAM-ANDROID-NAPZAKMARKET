@@ -28,4 +28,7 @@
     <!--Onboarding Screen-->
     <string name="onboarding_top_title">좋아하는 장르를 골라보세요!\n취향에 딱 맞는 상품을 찾아드릴게요</string>
     <string name="onboarding_top_choice">최대 4개 선택</string>
+    <string name="onboarding_bottom_bar_complete">선택 완료! 시작하기</string>
+    <string name="onboarding_bottom_bar_skip">나중에 설정할래요</string>
+    <string name="onboarding_text_field_placeholder">원하는 장르를 직접 입력해 검색해보세요.</string>"
 </resources>

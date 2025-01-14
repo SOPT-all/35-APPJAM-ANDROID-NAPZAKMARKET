@@ -37,17 +37,12 @@ import com.napzak.market.presentation.chat.component.ChatInfoSection
 import com.napzak.market.presentation.chat.type.ChatType
 
 /**
- * 채팅 화면 상단 정보 섹션 컴포넌트.
+ * 채팅 화면 컴포넌트.
  *
- * 제목, 설명, 가격 정보를 표시하며, 필요 시 가격 레이블을 추가로 표시할 수 있습니다.
- *
- * @param title 정보 섹션에 표시될 제목
- * @param description 정보 섹션에 표시될 설명
- * @param price 정보 섹션에 표시될 가격
- * @param modifier 컴포넌트에 적용할 Modifier
- * @param priceLabel 가격 앞에 표시될 레이블 (선택 사항)
- * @param titleColor 제목 텍스트의 색상
- *
+ * @param chatType 채팅의 유형 (구매 또는 판매)
+ * @param title 채팅 화면 상단에 표시될 제목
+ * @param description 채팅 화면 상단에 표시될 설명
+ * @param price 채팅 화면 상단에 표시될 가격 정보
  */
 
 @Composable

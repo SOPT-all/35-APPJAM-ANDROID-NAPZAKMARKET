@@ -102,7 +102,7 @@ fun ChatScreen(chatType: ChatType) {
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_add_13),
-                        contentDescription = stringResource(id = R.string.icon_description_file_attach),
+                        contentDescription = stringResource(id = R.string.icon_chat_description_file_attach),
                         tint = NapzakMarketTheme.colors.gray600,
                     )
                 }

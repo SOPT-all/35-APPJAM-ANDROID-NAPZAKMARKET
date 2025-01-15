@@ -60,11 +60,13 @@ fun SearchBox(
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+
         BasicTextField(
             value = searchTerm,
             onValueChange = onTextChange,
             modifier = Modifier.weight(1f),
             readOnly = readOnly,
+            enabled = !readOnly,
             textStyle = NapzakMarketTheme.typography.bodySemi14,
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -88,7 +90,7 @@ fun SearchBox(
             },
         )
 
-        if (searchTerm.isNotEmpty()) {
+        if (searchTerm.isNotEmpty() && !readOnly) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_x_circle_16),
                 contentDescription = stringResource(id = R.string.x_circle_button),

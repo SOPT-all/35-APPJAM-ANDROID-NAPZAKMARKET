@@ -70,7 +70,7 @@ fun ExploreRoute(
         onUnopenClick = { viewModel.updateUnopen() },
         onSortButtonClick = { /* TODO: 정렬 bottomSheet */ },
         onItemClick = { navigatorToProductDetail() },
-        onLikeClick = { viewModel::updateItemLikeButton },
+        onLikeClick = viewModel::updateItemLikeButton,
     )
 }
 

@@ -19,18 +19,11 @@ fun SearchGenreListSection(
         modifier = modifier.padding(horizontal = 20.dp)
     ) {
         itemsIndexed(genreList) { index, genreItem ->
-            if (index == genreList.size-1) {
-                SearchGenreItem(
-                    genreName = genreItem.genreName,
-                    onGenreItemClick = { onGenreItemClick(genreItem)},
-                    isLastItem = true,
-                )
-            } else {
-                SearchGenreItem(
-                    genreName = genreItem.genreName,
-                    onGenreItemClick = { onGenreItemClick(genreItem)},
-                )
-            }
+            SearchGenreItem(
+                genreName = genreItem.genreName,
+                onGenreItemClick = { onGenreItemClick(genreItem) },
+                isLastItem = index == genreList.size - 1,
+            )
         }
     }
 }

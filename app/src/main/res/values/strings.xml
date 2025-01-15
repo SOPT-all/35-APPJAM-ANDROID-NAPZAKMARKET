@@ -7,6 +7,7 @@
     <string name="search_button">검색 아이콘</string>
     <string name="down_chevron_button">아래 방향 화살표 아이콘</string>
     <string name="left_chevron_button">왼쪽 방향 화살표 아이콘</string>
+    <string name="check_button">체크 아이콘</string>
 
     <!-- Component -->
     <string name="selectablechip_genre_counting">%s 외 %d</string>

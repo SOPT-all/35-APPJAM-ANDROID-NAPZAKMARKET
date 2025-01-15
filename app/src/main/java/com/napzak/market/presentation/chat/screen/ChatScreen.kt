@@ -24,7 +24,6 @@ import androidx.compose.ui.res.vectorResource
 
 @Composable
 fun ChatScreen() {
-    NapzakMarketTheme {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -53,7 +52,6 @@ fun ChatScreen() {
             )
         }
     }
-}
 
 @Preview(showBackground = true)
 @Composable

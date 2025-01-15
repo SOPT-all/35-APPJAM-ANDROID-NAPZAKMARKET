@@ -32,6 +32,8 @@ import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.component.textField.SearchBox
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.search.component.SearchGenreListSection
+import com.napzak.market.R.string.left_chevron_button
+import com.napzak.market.R.string.explore_search_box_placeholder
 
 @Composable
 fun SearchRoute(
@@ -130,12 +132,12 @@ fun SearchSuccessScreen(
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_back_24),
-                    contentDescription = stringResource(R.string.left_chevron_button),
+                    contentDescription = stringResource(left_chevron_button),
                     tint = Color.Unspecified,
                 )
             }
             SearchBox(
-                placeholder = stringResource(R.string.explore_search_box_placeholder),
+                placeholder = stringResource(explore_search_box_placeholder),
                 searchTerm = searchTerm,
                 onTextChange = onTextChange,
                 onSearchButtonClick = onSearchButtonClick,

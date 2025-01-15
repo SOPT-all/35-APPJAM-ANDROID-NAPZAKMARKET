@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,12 +35,21 @@ import com.napzak.market.presentation.search.component.SearchGenreListSection
 
 @Composable
 fun SearchRoute(
+    initSearchTerm: String?,
     navigateToExplore: (String?, Long?) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val searchTerm by viewModel.searchTerm.collectAsStateWithLifecycle()
+
+    LaunchedEffect(true) {
+        if (initSearchTerm != null) {
+            viewModel.changeSearchText(initSearchTerm)
+        } else {
+            viewModel.getGenreList("")
+        }
+    }
 
     SearchScreen(
         modifier = modifier,
@@ -105,7 +115,7 @@ fun SearchSuccessScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = NapzakMarketTheme.colors.white)
-            .padding(top = 38.dp)
+            .padding(top = 40.dp)
     ) {
         Row(
             modifier = Modifier.padding(end = 20.dp),

@@ -8,6 +8,7 @@ import com.napzak.market.core.common.navigation.MainTabRoute
 import com.napzak.market.core.common.navigation.Route
 import com.napzak.market.presentation.dummy.navigation.Dummy
 import com.napzak.market.presentation.explore.navigation.Explore
+import com.napzak.market.presentation.home.navigation.Home
 
 
 // TODO: 구현 시작 시 수정
@@ -21,7 +22,7 @@ enum class MainTab(
         selectedIcon = R.drawable.ic_home_select_28,
         unselectedIcon = R.drawable.ic_home_unselect_28,
         contentDescription = R.string.main_bottom_bar_home,
-        route = Dummy, // TODO: Home 루트로 변경
+        route = Home, // TODO: Home 루트로 변경
     ),
     EXPLORE(
         selectedIcon = R.drawable.ic_look_select_28,

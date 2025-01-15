@@ -11,8 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
-import com.napzak.market.presentation.dummy.navigation.navigateToDummy
 import com.napzak.market.presentation.explore.navigation.exploreGraph
+import com.napzak.market.presentation.home.navigation.homeGraph
+import com.napzak.market.presentation.home.navigation.navigateToHome
 import com.napzak.market.presentation.main.component.MainBottomBar
 import com.napzak.market.presentation.main.component.MainRegisterDialog
 import com.napzak.market.presentation.main.type.MainTab
@@ -32,15 +33,12 @@ fun MainScreen(
                 onTabSelected = navigator::navigate,
             )
         },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
+        Box(modifier = Modifier.fillMaxSize()) {
             MainNavHost(
                 navigator = navigator,
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
 
             MainRegisterDialog(
@@ -75,10 +73,11 @@ private fun MainNavHost(
         startDestination = navigator.startDestination,
     ) {
         dummyGraph(modifier = modifier)
-        exploreGraph(modifier = modifier)
         onboardingGraph(
             modifier = Modifier.systemBarsPadding(),
-            navigateToHome = navigator.navController::navigateToDummy,
+            navigateToHome = navigator.navController::navigateToHome,
         )
+        homeGraph(modifier = modifier)
+        exploreGraph(modifier = modifier)
     }
 }

@@ -1,5 +1,6 @@
 package com.napzak.market.presentation.search
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,8 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,14 +39,14 @@ fun SearchRoute(
     viewModel: SearchViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val searchTerm by remember { mutableStateOf("") }
+    val searchTerm by viewModel.searchTerm.collectAsStateWithLifecycle()
 
     SearchScreen(
         modifier = modifier,
         uiState = uiState,
         searchTerm = searchTerm,
         onBackButtonClick = { navigateToExplore(null, null) },
-        onTextChange = { viewModel },
+        onTextChange = viewModel::changeSearchText,
         onSearchButtonClick = { navigateToExplore(uiState.searchTerm, null) },
         onGenreItemClick = { genreItem ->
             navigateToExplore(genreItem.genreName, genreItem.genreId)
@@ -96,6 +95,12 @@ fun SearchSuccessScreen(
     onGenreItemClick: (Genre) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    BackHandler(
+        enabled = searchTerm.isNotBlank()
+    ) {
+        onTextChange("")
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()

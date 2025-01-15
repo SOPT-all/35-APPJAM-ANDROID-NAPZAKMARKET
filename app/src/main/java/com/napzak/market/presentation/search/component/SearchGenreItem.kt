@@ -35,13 +35,11 @@ fun SearchGenreItem(
             .background(NapzakMarketTheme.colors.white)
             .noRippleClickable(onGenreItemClick)
             .drawBehind {
-                val strokeWidth = 1.dp.toPx()
-                val strokeHeightPoint = size.height - 1
                 drawLine(
                     color = borderColor,
-                    start = Offset(0f, strokeHeightPoint),
-                    end = Offset(size.width, strokeHeightPoint),
-                    strokeWidth = strokeWidth,
+                    start = Offset(0f, size.height - 1),
+                    end = Offset(size.width, size.height - 1),
+                    strokeWidth = 1.dp.toPx(),
                 )
             }
             .padding(vertical = 20.dp),

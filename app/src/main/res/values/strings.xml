@@ -29,4 +29,13 @@
     <string name="explore_search_box_placeholder">어떤 아이템을 찾고 계신가요?</string>
     <string name="explore_product">상품 </string>
     <string name="explore_product_count">%d개</string>
+
+    <!-- MypageScreen -->
+    <string name="menu_history">판매/구매 내역</string>
+    <string name="menu_genre">관심 장르</string>
+    <string name="menu_favorite">찜한 상품</string>
+    <string name="menu_recent">최근 본 상품</string>
+    <string name="mypage_title">마이페이지</string>
+    <string name="view_my_market">내 마켓 보기</string>
+    <string name="profile_image_description">프로필 이미지</string>
 </resources>

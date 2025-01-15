@@ -22,12 +22,13 @@ import androidx.compose.ui.unit.dp
 import com.napzak.market.R
 import com.napzak.market.core.designsystem.component.indicator.PageIndicator
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 
 @Composable
 fun HomeBannerPager(
-    @DrawableRes bannerImages: List<Int>,
+    @DrawableRes bannerImages: ImmutableList<Int>,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current

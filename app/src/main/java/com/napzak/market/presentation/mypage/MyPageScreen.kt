@@ -150,14 +150,14 @@ fun MyPageScreen(
                             },
                     ) {
                         Icon(
-                            imageVector = ImageVector.vectorResource(id = menuType.iconResId),
-                            contentDescription = stringResource(id = menuType.titleResId),
+                            imageVector = ImageVector.vectorResource(id = menuType.iconResourceId),
+                            contentDescription = stringResource(id = menuType.titleResourceId),
                             modifier = Modifier.size(54.dp),
                             tint = Color.Unspecified,
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = stringResource(id = menuType.titleResId),
+                            text = stringResource(id = menuType.titleResourceId),
                             style = NapzakMarketTheme.typography.bodyMedium14,
                             color = NapzakMarketTheme.colors.gray700,
                         )

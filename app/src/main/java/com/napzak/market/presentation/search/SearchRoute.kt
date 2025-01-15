@@ -45,7 +45,8 @@ fun SearchRoute(
 
     LaunchedEffect(true) {
         if (initSearchTerm != null) {
-            viewModel.changeSearchText(initSearchTerm)
+            viewModel.updateSearchValue(initSearchTerm)
+            viewModel.getGenreList(initSearchTerm)
         } else {
             viewModel.getGenreList("")
         }

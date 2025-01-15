@@ -111,7 +111,7 @@ class SearchViewModel @Inject constructor(
         debounceSearch()
     }
 
-    private fun updateSearchValue(newValue: String) = _searchTerm.update { newValue }
+    fun updateSearchValue(newValue: String) = _searchTerm.update { newValue }
 
     @OptIn(FlowPreview::class)
     private suspend fun debounceSearch() = _searchTerm.debounce(DEBOUNCE_DELAY)

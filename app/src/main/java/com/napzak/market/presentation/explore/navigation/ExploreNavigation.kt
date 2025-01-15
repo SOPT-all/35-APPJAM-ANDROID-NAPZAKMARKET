@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 fun NavController.navigateToExplore(
     searchTerm: String?,
     genreId: Long?,
-    navOptions: NavOptions? = null
+    navOptions: NavOptions? = null,
 ) = navigate(Explore(searchTerm, genreId), navOptions)
 
 fun NavGraphBuilder.exploreGraph(

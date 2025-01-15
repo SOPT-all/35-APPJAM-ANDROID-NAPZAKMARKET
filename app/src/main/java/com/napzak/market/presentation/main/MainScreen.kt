@@ -80,7 +80,7 @@ private fun MainNavHost(
         dummyGraph(modifier = modifier)
         exploreGraph(
             modifier = modifier,
-            navigateToSearch = navigator.navController::navigateToSearch
+            navigateToSearch = navigator.navController::navigateToSearch,
         )
         onboardingGraph(
             modifier = Modifier.systemBarsPadding(),

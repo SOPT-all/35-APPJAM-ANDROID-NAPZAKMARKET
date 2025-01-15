@@ -51,7 +51,7 @@ class MainNavigator(
             MainTab.EXPLORE -> navController.navigateToExplore(
                 searchTerm = null,
                 genreId = null,
-                navOptions = navOptions
+                navOptions = navOptions,
             )
             MainTab.REGISTER ->  {
                 this.registerDialogVisibilityState = !this.registerDialogVisibilityState

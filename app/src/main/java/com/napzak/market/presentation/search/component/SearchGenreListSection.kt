@@ -13,7 +13,7 @@ import com.napzak.market.domain.genre.model.Genre
 fun SearchGenreListSection(
     genreList: List<Genre>,
     onGenreItemClick: (Genre) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier.padding(horizontal = 20.dp)

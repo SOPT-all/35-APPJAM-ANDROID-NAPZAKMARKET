@@ -2,6 +2,7 @@ package com.napzak.market.core.designsystem.component.button
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -31,6 +32,7 @@ fun EnableDisableTextButton(
     isEnabled: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(vertical = 15.dp),
     shape: RoundedCornerShape = RoundedCornerShape(12.dp),
     textStyle: TextStyle = NapzakMarketTheme.typography.bodyBold16,
     buttonColors: ButtonColors = ButtonDefaults.buttonColors(
@@ -39,7 +41,7 @@ fun EnableDisableTextButton(
         disabledContainerColor = NapzakMarketTheme.colors.gray400,
         disabledContentColor = NapzakMarketTheme.colors.white,
     )
-){
+) {
     CommonButton(
         text = text,
         onClick = onClick,
@@ -47,7 +49,8 @@ fun EnableDisableTextButton(
         modifier = modifier,
         shape = shape,
         textStyle = textStyle,
-        buttonColors = buttonColors
+        contentPadding = contentPadding,
+        buttonColors = buttonColors,
     )
 }
 

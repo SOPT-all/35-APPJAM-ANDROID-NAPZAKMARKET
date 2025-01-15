@@ -1,6 +1,5 @@
 package com.napzak.market.presentation.home
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
@@ -10,84 +9,40 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.napzak.market.R
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.component.topbar.NapzakLogoTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
-import com.napzak.market.domain.explore.model.ProductItem
-import com.napzak.market.presentation.explore.type.TradeType
 import com.napzak.market.presentation.home.component.HomeBannerPager
 import com.napzak.market.presentation.home.component.HomeMostSearchedItemGroup
-import com.napzak.market.presentation.home.component.HomePopularItemGroup
 import com.napzak.market.presentation.home.component.HomeRecommendationItemGroup
-import kotlinx.collections.immutable.ImmutableList
+import com.napzak.market.presentation.home.state.HomeUiState
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun HomeRoute(
     modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        with(viewModel) {
+            getBannerImages()
+            getRecommendedItems()
+            getPopularItems()
+            getMostSearchedItems()
+        }
+    }
+
     HomeScreen(
-        bannerImages = listOf<Int>(
-            R.drawable.img_banner_home1,
-            R.drawable.img_banner_home2,
-        ).toImmutableList(),
-        recommendedItems = mutableListOf<ProductItem>().apply {
-            repeat(4) {
-                this.add(
-                    ProductItem(
-                        productId = it,
-                        productName = "딸기 마이멜로디 마스코트 인형",
-                        genreName = "산리오",
-                        price = 35000,
-                        uploadTime = "1시간전",
-                        photo = "",
-                        isLiked = false,
-                        tradeType = TradeType.SELL.name,
-                        tradeStatus = "판매중",
-                        isPriceNegotiable = false,
-                    )
-                )
-            }
-        }.toImmutableList(),
-        popularItems = mutableListOf<ProductItem>().apply {
-            repeat(4) {
-                this.add(
-                    ProductItem(
-                        productId = it,
-                        productName = "딸기 마이멜로디 마스코트 인형",
-                        genreName = "산리오",
-                        price = 35000,
-                        uploadTime = "1시간전",
-                        photo = "",
-                        isLiked = false,
-                        tradeType = TradeType.SELL.name,
-                        tradeStatus = "판매중",
-                        isPriceNegotiable = false,
-                    )
-                )
-            }
-        }.toImmutableList(),
-        mostSearchedItems = mutableListOf<ProductItem>().apply {
-            repeat(4) {
-                this.add(
-                    ProductItem(
-                        productId = it,
-                        productName = "딸기 마이멜로디 마스코트 인형",
-                        genreName = "산리오",
-                        price = 35000,
-                        uploadTime = "1시간전",
-                        photo = "",
-                        isLiked = false,
-                        tradeType = TradeType.SELL.name,
-                        tradeStatus = "판매중",
-                        isPriceNegotiable = false,
-                    )
-                )
-            }
-        }.toImmutableList(),
+        uiState = uiState,
         onLikeClick = {},
         onItemClick = {},
         modifier = modifier,
@@ -96,16 +51,12 @@ fun HomeRoute(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(
-    @DrawableRes bannerImages: List<Int>,
-    recommendedItems: ImmutableList<ProductItem>,
-    popularItems: ImmutableList<ProductItem>,
-    mostSearchedItems: ImmutableList<ProductItem>,
+private fun HomeScreen(
+    uiState: HomeUiState,
     onLikeClick: (Int) -> Unit,
     onItemClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     CompositionLocalProvider(
         value = LocalOverscrollConfiguration provides null,
     ) {
@@ -119,106 +70,90 @@ fun HomeScreen(
             }
 
             item {
-                HomeBannerPager(
-                    bannerImages = bannerImages,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(360f / 230f),
+                HomeUiStateGroup(
+                    uiState = uiState.bannerImages,
+                    success = { uiState ->
+                        HomeBannerPager(
+                            bannerImages = uiState.toImmutableList(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(360f / 230f),
+                        )
+                    }
                 )
 
-                HomeRecommendationItemGroup(
-                    recommendedItems = recommendedItems,
-                    onLikeClick = onLikeClick,
-                    onItemClick = onItemClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 43.dp),
+                HomeUiStateGroup(
+                    uiState = uiState.recommendedItems,
+                    success = { uiState ->
+                        HomeRecommendationItemGroup(
+                            recommendedItems = uiState.toImmutableList(),
+                            onLikeClick = onLikeClick,
+                            onItemClick = onItemClick,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 43.dp),
+                        )
+                    }
                 )
 
-                HomePopularItemGroup(
-                    popularItems = popularItems,
-                    onLikeClick = onLikeClick,
-                    onItemClick = onItemClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 50.dp),
+                HomeUiStateGroup(
+                    uiState = uiState.popularItems,
+                    success = { uiState ->
+                        HomeRecommendationItemGroup(
+                            recommendedItems = uiState.toImmutableList(),
+                            onLikeClick = onLikeClick,
+                            onItemClick = onItemClick,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 43.dp),
+                        )
+                    }
                 )
 
-                HomeMostSearchedItemGroup(
-                    searchedItems = mostSearchedItems,
-                    onLikeClick = onLikeClick,
-                    onItemClick = onItemClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 37.dp, bottom = 40.dp),
+                HomeUiStateGroup(
+                    uiState = uiState.searchItems,
+                    success = { uiState ->
+                        HomeMostSearchedItemGroup(
+                            searchedItems = uiState.toImmutableList(),
+                            onLikeClick = onLikeClick,
+                            onItemClick = onItemClick,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 43.dp),
+                        )
+                    }
                 )
             }
         }
     }
 }
 
+@Composable
+private fun <T> HomeUiStateGroup(
+    uiState: UiState<T>,
+    success: @Composable (T) -> Unit,
+) {
+    when (uiState) {
+        is UiState.Loading -> {}
+        is UiState.Empty -> {}
+        is UiState.Failure -> {}
+        is UiState.Success -> {
+            success(uiState.data)
+        }
+    }
+}
+
+
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
     HomeScreen(
-        bannerImages = listOf<Int>(
-            R.drawable.img_banner_home1,
-            R.drawable.img_banner_home2,
-        ).toImmutableList(),
-        recommendedItems = mutableListOf<ProductItem>().apply {
-            repeat(4) {
-                this.add(
-                    ProductItem(
-                        productId = it,
-                        productName = "딸기 마이멜로디 마스코트 인형",
-                        genreName = "산리오",
-                        price = 35000,
-                        uploadTime = "1시간전",
-                        photo = "",
-                        isLiked = false,
-                        tradeType = TradeType.SELL.name,
-                        tradeStatus = "판매중",
-                        isPriceNegotiable = false,
-                    )
-                )
-            }
-        }.toImmutableList(),
-        popularItems = mutableListOf<ProductItem>().apply {
-            repeat(4) {
-                this.add(
-                    ProductItem(
-                        productId = it,
-                        productName = "딸기 마이멜로디 마스코트 인형",
-                        genreName = "산리오",
-                        price = 35000,
-                        uploadTime = "1시간전",
-                        photo = "",
-                        isLiked = false,
-                        tradeType = TradeType.SELL.name,
-                        tradeStatus = "판매중",
-                        isPriceNegotiable = false,
-                    )
-                )
-            }
-        }.toImmutableList(),
-        mostSearchedItems = mutableListOf<ProductItem>().apply {
-            repeat(4) {
-                this.add(
-                    ProductItem(
-                        productId = it,
-                        productName = "딸기 마이멜로디 마스코트 인형",
-                        genreName = "산리오",
-                        price = 35000,
-                        uploadTime = "1시간전",
-                        photo = "",
-                        isLiked = false,
-                        tradeType = TradeType.SELL.name,
-                        tradeStatus = "판매중",
-                        isPriceNegotiable = false,
-                    )
-                )
-            }
-        }.toImmutableList(),
+        uiState = HomeUiState(
+            recommendedItems = HomeUiState.dummyData,
+            popularItems = HomeUiState.dummyData,
+            searchItems = HomeUiState.dummyData,
+            bannerImages = HomeUiState.dummyBanner
+        ),
         onLikeClick = {},
         onItemClick = {},
     )

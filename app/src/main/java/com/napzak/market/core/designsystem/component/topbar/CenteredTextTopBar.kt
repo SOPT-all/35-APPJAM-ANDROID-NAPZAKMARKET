@@ -1,10 +1,15 @@
 package com.napzak.market.core.designsystem.component.topbar
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**
@@ -24,6 +29,7 @@ fun CenteredTextTopBar(
     textStyle: TextStyle = NapzakMarketTheme.typography.titleBold18,
     backgroundColor: Color = NapzakMarketTheme.colors.white,
     contentColor: Color = NapzakMarketTheme.colors.black,
+    borderColor: Color = NapzakMarketTheme.colors.gray100
 )  {
     CommonTopBar(
         title = title,
@@ -33,6 +39,12 @@ fun CenteredTextTopBar(
         textStyle = textStyle,
         backgroundColor = backgroundColor,
         contentColor = contentColor
+    )
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(1.dp)
+            .background(borderColor)
     )
 }
 

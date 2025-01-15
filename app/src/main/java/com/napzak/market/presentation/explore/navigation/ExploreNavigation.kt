@@ -5,23 +5,36 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.napzak.market.core.common.navigation.MainTabRoute
 import com.napzak.market.presentation.explore.ExploreRoute
 import kotlinx.serialization.Serializable
 
-fun NavController.navigateToExplore(navOptions: NavOptions? = null) = navigate(Explore, navOptions)
+fun NavController.navigateToExplore(
+    searchTerm: String?,
+    genreId: Long?,
+    navOptions: NavOptions? = null
+) = navigate(Explore(searchTerm, genreId), navOptions)
 
 fun NavGraphBuilder.exploreGraph(
-    modifier: Modifier = Modifier
+    navigateToSearch: (String?) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    composable<Explore> {
+    composable<Explore> { backStackEntry ->
+        val explore: Explore = backStackEntry.toRoute()
+
         ExploreRoute(
+            searchTerm = explore.searchTerm,
+            genreId = explore.genreId,
             modifier = modifier,
-            navigatorToSearch = { /* TODO: 검색화면으로 이동 */ },
+            navigatorToSearch = navigateToSearch,
             navigatorToProductDetail = { /* TODO: 상세페이지로 이동 */ },
         )
     }
 }
 
 @Serializable
-data object Explore : MainTabRoute
+data class Explore(
+    val searchTerm: String? = null,
+    val genreId: Long? = null,
+) : MainTabRoute

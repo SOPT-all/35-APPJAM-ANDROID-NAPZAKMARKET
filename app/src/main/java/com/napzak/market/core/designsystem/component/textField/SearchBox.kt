@@ -90,7 +90,7 @@ fun SearchBox(
             },
         )
 
-        if (searchTerm.isNotEmpty()) {
+        if (searchTerm.isNotEmpty() && !readOnly) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_x_circle_16),
                 contentDescription = stringResource(id = R.string.x_circle_button),

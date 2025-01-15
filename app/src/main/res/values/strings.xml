@@ -36,4 +36,9 @@
     <string name="loading_ready_image_description">준비중 상태를 나타내는 캐릭터</string>
     <string name="loading_title_description">준비중 상태의 타이틀 텍스트</string>
     <string name="loading_subtitle_description">준비중 상태의 서브타이틀 텍스트</string>
+
+    <!-- ExploreScreen -->
+    <string name="explore_search_box_placeholder">어떤 아이템을 찾고 계신가요?</string>
+    <string name="explore_product">상품 </string>
+    <string name="explore_product_count">%d개</string>
 </resources>

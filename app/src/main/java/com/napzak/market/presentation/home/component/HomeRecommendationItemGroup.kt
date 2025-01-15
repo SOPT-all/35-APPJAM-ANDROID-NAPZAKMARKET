@@ -44,7 +44,7 @@ fun HomeRecommendationItemGroup(
     val textModifier = Modifier.padding(top = 2.dp)
 
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         Row(
             verticalAlignment = Alignment.Top,
@@ -76,7 +76,7 @@ fun HomeRecommendationItemGroup(
         Text(
             text = stringResource(R.string.home_recommendation_body1),
             style = NapzakMarketTheme.typography.bodySemi14.copy(
-                color = NapzakMarketTheme.colors.gray500
+                color = NapzakMarketTheme.colors.gray500,
             ),
             modifier = textModifier
                 .padding(top = 4.dp)

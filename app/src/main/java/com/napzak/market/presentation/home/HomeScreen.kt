@@ -62,8 +62,8 @@ private fun HomeScreen(
     ) {
         LazyColumn(
             modifier = modifier.background(
-                color = NapzakMarketTheme.colors.white
-            )
+                color = NapzakMarketTheme.colors.white,
+            ),
         ) {
             stickyHeader {
                 NapzakLogoTopBar()
@@ -79,7 +79,7 @@ private fun HomeScreen(
                                 .fillMaxWidth()
                                 .aspectRatio(360f / 230f),
                         )
-                    }
+                    },
                 )
 
                 HomeUiStateGroup(
@@ -93,7 +93,7 @@ private fun HomeScreen(
                                 .fillMaxWidth()
                                 .padding(top = 43.dp),
                         )
-                    }
+                    },
                 )
 
                 HomeUiStateGroup(
@@ -107,7 +107,7 @@ private fun HomeScreen(
                                 .fillMaxWidth()
                                 .padding(top = 43.dp),
                         )
-                    }
+                    },
                 )
 
                 HomeUiStateGroup(

@@ -44,12 +44,12 @@ fun HomeMostSearchedItemGroup(
     }
 
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.spacedBy(11.dp)
+            horizontalArrangement = Arrangement.spacedBy(11.dp),
         ) {
             Column(
                 modifier = Modifier
@@ -58,14 +58,14 @@ fun HomeMostSearchedItemGroup(
                 Text(
                     text = stringResource(R.string.home_search_title1),
                     style = NapzakMarketTheme.typography.titleSemi18.copy(
-                        color = NapzakMarketTheme.colors.gray900
+                        color = NapzakMarketTheme.colors.gray900,
                     ),
                 )
 
                 Text(
                     text = stringResource(R.string.home_search_body1),
                     style = NapzakMarketTheme.typography.bodySemi14.copy(
-                        color = NapzakMarketTheme.colors.gray500
+                        color = NapzakMarketTheme.colors.gray500,
                     ),
                     modifier = Modifier.padding(top = 4.dp),
                 )

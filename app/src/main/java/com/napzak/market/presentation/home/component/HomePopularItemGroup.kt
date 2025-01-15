@@ -48,16 +48,16 @@ fun HomePopularItemGroup(
     Column(
         modifier = modifier
             .background(color = NapzakMarketTheme.colors.gray50)
-            .padding(top = 26.dp, bottom = 40.dp)
+            .padding(top = 26.dp, bottom = 40.dp),
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Image(
                 painter = painterResource(R.drawable.img_home_popular),
                 contentDescription = null,
                 modifier = Modifier
-                    .align(Alignment.TopStart)
+                    .align(Alignment.TopStart),
             )
 
             Column(
@@ -70,14 +70,14 @@ fun HomePopularItemGroup(
                 Text(
                     text = stringResource(R.string.home_popular_title1),
                     style = NapzakMarketTheme.typography.titleSemi18.copy(
-                        color = NapzakMarketTheme.colors.gray900
+                        color = NapzakMarketTheme.colors.gray900,
                     ),
                 )
 
                 Text(
                     text = stringResource(R.string.home_popular_body1),
                     style = NapzakMarketTheme.typography.bodySemi14.copy(
-                        color = NapzakMarketTheme.colors.gray500
+                        color = NapzakMarketTheme.colors.gray500,
                     ),
                     modifier = Modifier.padding(top = 4.dp),
                 )
@@ -90,7 +90,7 @@ fun HomePopularItemGroup(
                     .fillMaxWidth()
                     .padding(top = 20.dp)
                     .padding(horizontal = 20.dp),
-                horizontalArrangement = Arrangement.spacedBy(20.dp)
+                horizontalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 rowItems.forEach { item ->
                     HomeItemMapper(

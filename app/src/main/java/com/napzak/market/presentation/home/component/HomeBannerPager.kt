@@ -31,7 +31,6 @@ fun HomeBannerPager(
     @DrawableRes bannerImages: ImmutableList<Int>,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
     val pagerState = rememberPagerState(
         initialPage = BANNER_INITIAL_PAGE,
         pageCount = { Int.MAX_VALUE },
@@ -48,11 +47,11 @@ fun HomeBannerPager(
     }
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         HorizontalPager(
             state = pagerState,
-            modifier = modifier
+            modifier = modifier,
         ) { page ->
             val currentBanner =
                 if (bannerImages.isNotEmpty()) bannerImages[page % bannerImages.size]
@@ -78,7 +77,7 @@ fun HomeBannerPager(
         PageIndicator(
             imageCount = bannerImages.size,
             pagerState = pagerState,
-            modifier = Modifier.padding(top = 10.dp)
+            modifier = Modifier.padding(top = 10.dp),
         )
     }
 }

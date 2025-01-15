@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
@@ -30,7 +29,7 @@ import com.napzak.market.presentation.mypage.type.MyPageMenuType
 @Composable
 fun MyPageScreen(
     onMyMarketClick: () -> Unit,
-    viewModel: MyPageViewModel = viewModel(),
+    viewModel: MyPageViewModel = androidx.hilt.navigation.compose.hiltViewModel(),
 ) {
 
     val uiState = viewModel.uiState.collectAsState().value

@@ -1,5 +1,6 @@
 package com.napzak.market.core.designsystem.component.button
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -7,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
 import com.napzak.market.core.common.util.NoRippleInteractionSource
 
 /**
@@ -24,6 +26,7 @@ fun CommonButton(
     text: String,
     onClick: () -> Unit,
     buttonColors: ButtonColors,
+    contentPadding: PaddingValues,
     shape: RoundedCornerShape,
     textStyle: TextStyle,
     modifier: Modifier = Modifier,
@@ -35,11 +38,12 @@ fun CommonButton(
         shape = shape,
         colors = buttonColors,
         enabled = isEnabled,
+        contentPadding = contentPadding,
         interactionSource = NoRippleInteractionSource,
         content = {
             Text(
                 text = text,
-                style = textStyle
+                style = textStyle,
             )
         }
     )

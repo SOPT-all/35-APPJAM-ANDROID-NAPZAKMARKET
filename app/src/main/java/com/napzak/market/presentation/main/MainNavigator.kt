@@ -11,10 +11,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.napzak.market.presentation.dummy.navigation.Dummy
 import com.napzak.market.presentation.dummy.navigation.navigateToDummy
 import com.napzak.market.presentation.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.main.type.MainTab
+import com.napzak.market.presentation.onboarding.navigation.Onboarding
 
 class MainNavigator(
     val navController: NavHostController,
@@ -27,7 +27,7 @@ class MainNavigator(
     val registerDialogVisibility: Boolean
         get() = this.registerDialogVisibilityState
 
-    val startDestination = Dummy
+    val startDestination = Onboarding
 
     val currentTab: MainTab?
         @Composable get() = MainTab.find { tab ->
@@ -48,7 +48,11 @@ class MainNavigator(
 
         when (tab) {
             MainTab.HOME -> navController.navigateToDummy(navOptions)
-            MainTab.SEARCH -> navController.navigateToExplore(navOptions)
+            MainTab.EXPLORE -> navController.navigateToExplore(
+                searchTerm = null,
+                genreId = null,
+                navOptions = navOptions,
+            )
             MainTab.REGISTER ->  {
                 this.registerDialogVisibilityState = !this.registerDialogVisibilityState
             }

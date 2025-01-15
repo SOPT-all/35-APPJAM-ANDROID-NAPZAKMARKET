@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,16 +53,19 @@ fun OnboardingGenreItem(
         ) {
             if(imgUrl.isNotBlank()) {
                 AsyncImage(
-                    model = ImageRequest.Builder(context).data(imgUrl),
-                    contentDescription = null,
+                    model = ImageRequest.Builder(context).data(imgUrl).build(),
+                    contentDescription = genreName,
                     clipToBounds = true,
+                    contentScale = ContentScale.Crop
                 )
             }
             if(isSelected) {
                 Image(
                     imageVector = ImageVector.vectorResource(id = com.napzak.market.R.drawable.ic_checkbox_select_16),
-                    contentDescription = null,
-                    modifier = Modifier.padding(10.dp).align(Alignment.TopEnd),
+                    contentDescription = genreName,
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .align(Alignment.TopEnd),
                 )
             }
         }

@@ -6,6 +6,7 @@
     <string name="x_circle_button">x 버튼 아이콘</string>
     <string name="search_button">검색 아이콘</string>
     <string name="down_chevron_button">아래 방향 화살표 아이콘</string>
+    <string name="left_chevron_button">왼쪽 방향 화살표 아이콘</string>
 
     <!-- Component -->
     <string name="selectablechip_genre_counting">%s 외 %d</string>
@@ -25,6 +26,18 @@
     <string name="napzak_item_buy">구해요</string>
     <string name="napzak_item_suggest">가격제시</string>
 
+    <!-- ChatScreen-->
+    <string name="chat_background_image_description">채팅 화면 배경 캐릭터</string>
+    <string name="chat_description_file_attach">채팅창 파일 첨부 아이콘</string>
+    <string name="chat_buy_title">구해요</string>
+    <string name="chat_sell_title">팔아요</string>
+    <string name="chat_price_label">가격제시</string>
+
+    <!-- LoadingScreen -->
+    <string name="loading_ready_image_description">준비중 상태를 나타내는 캐릭터</string>
+    <string name="loading_title_description">준비중 상태의 타이틀 텍스트</string>
+    <string name="loading_subtitle_description">준비중 상태의 서브타이틀 텍스트</string>
+
     <!-- ExploreScreen -->
     <string name="explore_search_box_placeholder">어떤 아이템을 찾고 계신가요?</string>
     <string name="explore_product">상품 </string>
@@ -36,4 +49,14 @@
     <string name="regi_price_won">원</string>
     <string name="regi_price_range">,000원대</string>
 
+
+    <!-- SearchScreen -->
+    <string name="search_genre">장르</string>
+
+    <!--Onboarding Screen-->
+    <string name="onboarding_top_title">좋아하는 장르를 골라보세요!\n취향에 딱 맞는 상품을 찾아드릴게요</string>
+    <string name="onboarding_top_choice">최대 4개 선택</string>
+    <string name="onboarding_bottom_bar_complete">선택 완료! 시작하기</string>
+    <string name="onboarding_bottom_bar_skip">나중에 설정할래요</string>
+    <string name="onboarding_text_field_placeholder">원하는 장르를 직접 입력해 검색해보세요.</string>"
 </resources>

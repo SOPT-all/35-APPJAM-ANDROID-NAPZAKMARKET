@@ -20,6 +20,7 @@ import com.napzak.market.core.designsystem.component.chip.type.SelectableChipTyp
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.domain.genre.model.Genre
 
 /**
  * 선택가능한 chip 컴포넌트
@@ -37,7 +38,7 @@ fun SelectableChip(
     selectableChipType: SelectableChipType,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    genreList: List<String> = emptyList(),
+    genreList: List<Genre> = emptyList(),
 ) {
     val colors = NapzakMarketTheme.colors
     val backgroundColor = if (isSelected) colors.gray900 else colors.white
@@ -72,12 +73,12 @@ fun SelectableChip(
  * SelectableChip의 텍스트를 생성하는 함수
  */
 @Composable
-private fun generateChipText(type: SelectableChipType, genreList: List<String>): String =
+private fun generateChipText(type: SelectableChipType, genreList: List<Genre>): String =
     when (type) {
         SelectableChipType.GENRE -> {
             when {
                 genreList.isEmpty() -> type.label
-                genreList.size == 1 -> genreList[0]
+                genreList.size == 1 -> genreList[0].genreName
                 else -> stringResource(
                     id = R.string.selectablechip_genre_counting,
                     genreList[0],
@@ -108,7 +109,7 @@ private fun Chip_Genre_Selected_Preview(modifier: Modifier = Modifier) {
         modifier = modifier,
         selectableChipType = SelectableChipType.GENRE,
         onClick = { },
-        genreList = listOf("마이멜로디", "")
+        genreList = listOf(Genre(genreId = 1, genreName = "마이멜로디"))
     )
 }
 

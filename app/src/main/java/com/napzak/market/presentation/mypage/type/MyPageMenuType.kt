@@ -4,7 +4,7 @@ import com.napzak.market.R
 
 enum class MyPageMenuType(
     val titleResId: Int,
-    val iconResId: Int
+    val iconResId: Int,
 ) {
     HISTORY(R.string.menu_history, R.drawable.ic_my_history_54),
     GENRE(R.string.menu_genre, R.drawable.ic_my_genre_54),

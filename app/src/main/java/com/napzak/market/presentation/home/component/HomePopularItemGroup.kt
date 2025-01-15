@@ -1,6 +1,7 @@
 package com.napzak.market.presentation.home.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,7 +45,11 @@ fun HomePopularItemGroup(
         }
     }
 
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier
+            .background(color = NapzakMarketTheme.colors.gray50)
+            .padding(top = 26.dp, bottom = 40.dp)
+    ) {
         Box(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -53,7 +58,6 @@ fun HomePopularItemGroup(
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.TopStart)
-                    .padding(top = 26.dp)
             )
 
             Column(

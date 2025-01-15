@@ -20,11 +20,9 @@ class MyPageViewModel @Inject constructor() : ViewModel() {
 
     private fun loadMyPageData() {
         viewModelScope.launch {
-            val profileImageUrl = "https://example.com/profile_image.png"
-            val nickname = "납자기님"
             _uiState.value = MyPageUiState(
-                profileImageUrl = profileImageUrl,
-                nickname = nickname,
+                profileImageUrl = "https://example.com/profile_image.png",
+                nickname = "납자기님"
             )
         }
     }

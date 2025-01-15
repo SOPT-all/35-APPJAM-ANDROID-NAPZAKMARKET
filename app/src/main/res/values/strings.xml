@@ -25,6 +25,14 @@
     <string name="napzak_item_buy">구해요</string>
     <string name="napzak_item_suggest">가격제시</string>
 
+    <!-- Home Screen -->
+    <string name="home_recommendation_title1">납자기님을 위한 맞춤</string>
+    <string name="home_recommendation_title2">PICK!</string>
+    <string name="home_recommendation_body1">납자기님의 취향에 딱 맞는 아이템들을 모아봤어요.</string>
+    <string name="home_popular_title1">지금 가장 많이 찜한 납작템</string>
+    <string name="home_popular_body1">놓치면 아쉬운 인기 아이템들을 구경해볼까요?</string>
+
+
     <!-- ChatScreen-->
     <string name="chat_background_image_description">채팅 화면 배경 캐릭터</string>
     <string name="chat_description_file_attach">채팅창 파일 첨부 아이콘</string>

@@ -1,6 +1,7 @@
 package com.napzak.market.presentation.explore
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -16,6 +18,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -30,15 +33,20 @@ import com.napzak.market.presentation.explore.state.ExploreUiState
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.component.ExploreFilterGroup
 import com.napzak.market.presentation.explore.component.ProductListSection
 import com.napzak.market.presentation.explore.component.TradeTypeTab
+import com.napzak.market.presentation.explore.type.ExploreScreenType
 import com.napzak.market.presentation.explore.type.SortType
 import com.napzak.market.presentation.explore.type.TradeType
+import timber.log.Timber
 
 @Composable
 fun ExploreRoute(
-    navigatorToSearch: () -> Unit,
+    searchTerm: String?,
+    genreId: Long?,
+    navigatorToSearch: (String?) -> Unit,
     navigatorToProductDetail: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ExploreViewModel = hiltViewModel(),
@@ -46,14 +54,18 @@ fun ExploreRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
+        if (searchTerm != null || genreId != null) {
+            viewModel.initExploreScreenState(searchTerm, genreId)
+        }
         viewModel.getExploreProductInformation()
     }
 
     ExploreScreen(
         modifier = modifier,
         uiState = uiState,
+        onBackButtonClick = navigatorToSearch,
         onSearchBoxClick = navigatorToSearch,
-        onTradeTypeClick = { viewModel::updateTradeType },
+        onTradeTypeClick = viewModel::updateTradeType,
         onGenreListClick = { /* TODO: 장르 검색 bottomSheet */ },
         onSoldOutClick = { viewModel.updateSoldOut() },
         onUnopenClick = { viewModel.updateUnopen() },
@@ -66,7 +78,8 @@ fun ExploreRoute(
 @Composable
 fun ExploreScreen(
     uiState: ExploreUiState,
-    onSearchBoxClick: () -> Unit,
+    onBackButtonClick: (String?) -> Unit,
+    onSearchBoxClick: (String?) -> Unit,
     onTradeTypeClick: (String) -> Unit,
     onGenreListClick: () -> Unit,
     onSoldOutClick: () -> Unit,
@@ -90,12 +103,15 @@ fun ExploreScreen(
             with(uiState.loadState.data) {
                 ExploreSuccessScreen(
                     modifier = modifier,
+                    exploreScreenType = uiState.exploreScreenType,
+                    initSearchTerm = uiState.initSearchTerm,
                     tradeType = uiState.tradeType,
                     genreList = uiState.genreList,
                     isOnSale = uiState.isOnSale,
                     isUnopened = uiState.isUnopened,
                     productList = uiState.loadState.data.productList,
                     sortType = uiState.sortType,
+                    onBackButtonClick = onBackButtonClick,
                     onSearchBoxClick = onSearchBoxClick,
                     onTradeTypeClick = onTradeTypeClick,
                     onGenreListClick = onGenreListClick,
@@ -113,13 +129,16 @@ fun ExploreScreen(
 @Composable
 fun ExploreSuccessScreen(
     modifier: Modifier = Modifier,
+    exploreScreenType: String,
+    initSearchTerm: String?,
     tradeType: String,
-    genreList: List<String>,
+    genreList: List<Genre>,
     isOnSale: Boolean,
     isUnopened: Boolean,
     productList: List<ProductItem>,
     sortType: String,
-    onSearchBoxClick: () -> Unit,
+    onBackButtonClick: (String) -> Unit,
+    onSearchBoxClick: (String?) -> Unit,
     onTradeTypeClick: (String) -> Unit,
     onGenreListClick: () -> Unit,
     onSoldOutClick: () -> Unit,
@@ -134,13 +153,74 @@ fun ExploreSuccessScreen(
             .background(color = NapzakMarketTheme.colors.white)
             .padding(top = 40.dp),
     ) {
-        SearchBox(
-            placeholder = stringResource(id = R.string.explore_search_box_placeholder),
-            readOnly = true,
-            modifier = Modifier
-                .padding(horizontal = 20.dp)
-                .noRippleClickable(onSearchBoxClick),
-        )
+        when (exploreScreenType) {
+            ExploreScreenType.BASIC.name -> {
+                Box(
+                ) {
+                    SearchBox(
+                        placeholder = stringResource(id = R.string.explore_search_box_placeholder),
+                        readOnly = true,
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp)
+                            .noRippleClickable { onSearchBoxClick(null) }
+                    )
+                }
+
+            }
+
+            ExploreScreenType.WORD_SEARCH_RESULT.name -> {
+                Row(
+                    modifier = Modifier.padding(end = 20.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .noRippleClickable { onBackButtonClick(initSearchTerm.toString()) },
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_back_24),
+                            contentDescription = stringResource(R.string.left_chevron_button),
+                            tint = Color.Unspecified,
+                        )
+                    }
+                    SearchBox(
+                        placeholder = stringResource(R.string.explore_search_box_placeholder),
+                        readOnly = true,
+                        searchTerm = initSearchTerm.toString(),
+                        modifier = Modifier
+                            .noRippleClickable { onSearchBoxClick(initSearchTerm) },
+                    )
+                }
+            }
+
+            ExploreScreenType.GENRE_SEARCH_RESULT.name -> {
+                Row(
+                    modifier = Modifier.padding(end = 20.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .noRippleClickable { onBackButtonClick(genreList[0].genreName) },
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_back_24),
+                            contentDescription = stringResource(R.string.left_chevron_button),
+                            tint = Color.Unspecified,
+                        )
+                    }
+                    SearchBox(
+                        placeholder = stringResource(R.string.explore_search_box_placeholder),
+                        readOnly = true,
+                        modifier = Modifier
+                            .noRippleClickable { onSearchBoxClick(genreList[0].genreName) },
+                    )
+                }
+            }
+        }
 
         Spacer(Modifier.height(8.dp))
 
@@ -219,11 +299,14 @@ fun ExploreSuccessScreen(
 private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
     ExploreSuccessScreen(
         tradeType = TradeType.SELL.name,
+        exploreScreenType = ExploreScreenType.BASIC.name,
+        initSearchTerm = "",
         genreList = emptyList(),
         isOnSale = false,
         isUnopened = false,
         productList = emptyList(),
         sortType = SortType.RECENT.name,
+        onBackButtonClick = { },
         onSearchBoxClick = { },
         onTradeTypeClick = { },
         onGenreListClick = { },

@@ -3,8 +3,10 @@ package com.napzak.market.presentation.explore
 import androidx.lifecycle.ViewModel
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.explore.model.ProductItem
+import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.state.ExploreProductInformation
 import com.napzak.market.presentation.explore.state.ExploreUiState
+import com.napzak.market.presentation.explore.type.ExploreScreenType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,6 +19,22 @@ class ExploreViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ExploreUiState())
     val uiState = _uiState.asStateFlow()
+
+    fun initExploreScreenState(searchTerm: String?, genreId: Long?) {
+        _uiState.update { currentState ->
+            if (genreId != null) { /* 장르 선택 검색인 경우 */
+                currentState.copy(
+                    exploreScreenType = ExploreScreenType.GENRE_SEARCH_RESULT.name,
+                    genreList = listOf(Genre(genreId = genreId, genreName = searchTerm.toString()))
+                )
+            } else { /* 일반 검색인 경우 */
+                currentState.copy(
+                    exploreScreenType = ExploreScreenType.WORD_SEARCH_RESULT.name,
+                    initSearchTerm = searchTerm
+                )
+            }
+        }
+    }
 
     fun getExploreProductInformation() {
         /* TODO: 리스트 조회 API 연결 */

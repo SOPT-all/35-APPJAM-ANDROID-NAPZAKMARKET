@@ -54,7 +54,7 @@ fun OnboardingGenreItem(
             if(imgUrl.isNotBlank()) {
                 AsyncImage(
                     model = ImageRequest.Builder(context).data(imgUrl).build(),
-                    contentDescription = null,
+                    contentDescription = genreName,
                     clipToBounds = true,
                     contentScale = ContentScale.Crop
                 )
@@ -62,7 +62,7 @@ fun OnboardingGenreItem(
             if(isSelected) {
                 Image(
                     imageVector = ImageVector.vectorResource(id = com.napzak.market.R.drawable.ic_checkbox_select_16),
-                    contentDescription = null,
+                    contentDescription = genreName,
                     modifier = Modifier
                         .padding(10.dp)
                         .align(Alignment.TopEnd),

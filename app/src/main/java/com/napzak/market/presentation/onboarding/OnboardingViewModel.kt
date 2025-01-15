@@ -19,8 +19,8 @@ import javax.inject.Inject
 class OnboardingViewModel @Inject constructor(
 
 ) : ViewModel() {
-    private val _searchValue: MutableStateFlow<String> = MutableStateFlow("")
-    val searchValue = _searchValue.asStateFlow()
+    private val _searchTerm: MutableStateFlow<String> = MutableStateFlow("")
+    val searchTerm = _searchTerm.asStateFlow()
 
     private val _uiState: MutableStateFlow<OnboardingUiState> =
         MutableStateFlow(OnboardingUiState())
@@ -31,10 +31,10 @@ class OnboardingViewModel @Inject constructor(
         debounceSearch()
     }
 
-    private fun updateSearchValue(newValue: String) = _searchValue.update { newValue }
+    private fun updateSearchValue(newValue: String) = _searchTerm.update { newValue }
 
     @OptIn(FlowPreview::class)
-    private suspend fun debounceSearch() = _searchValue.debounce(DEBOUNCE_DELAY)
+    private suspend fun debounceSearch() = _searchTerm.debounce(DEBOUNCE_DELAY)
         .collectLatest { debounced ->
             getGenreList(debounced)
         }

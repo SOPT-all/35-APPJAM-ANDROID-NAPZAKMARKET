@@ -45,11 +45,11 @@ fun OnboardingRoute(
     viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val searchValue by viewModel.searchValue.collectAsStateWithLifecycle()
+    val searchTerm by viewModel.searchTerm.collectAsStateWithLifecycle()
 
     OnboardingScreen(
         uiState = uiState,
-        searchValue = searchValue,
+        searchTerm = searchTerm,
         onResetClick = viewModel::clearSelectedGenre,
         onGenreClick = viewModel::selectGenre,
         onCompleteButtonClick = navigateToHome,
@@ -63,7 +63,7 @@ fun OnboardingRoute(
 @Composable
 private fun OnboardingScreen(
     uiState: OnboardingUiState,
-    searchValue: String,
+    searchTerm: String,
     onSearchButtonClick: () -> Unit,
     onTextFieldChange: (String) -> Unit,
     onGenreClick: (Genre) -> Unit,
@@ -73,7 +73,7 @@ private fun OnboardingScreen(
     modifier: Modifier = Modifier,
 ) {
     BackHandler(
-        enabled = searchValue.isNotBlank()
+        enabled = searchTerm.isNotBlank()
     ) {
         onTextFieldChange("")
     }
@@ -89,7 +89,7 @@ private fun OnboardingScreen(
 
         SearchBox(
             placeholder = stringResource(R.string.onboarding_text_field_placeholder),
-            searchTerm = searchValue,
+            searchTerm = searchTerm,
             onTextChange = onTextFieldChange,
             onSearchButtonClick = onSearchButtonClick,
             modifier = Modifier
@@ -187,7 +187,7 @@ private fun OnboardingScreenPreview() {
     NapzakMarketTheme {
         OnboardingScreen(
             uiState = OnboardingUiState(),
-            searchValue = "",
+            searchTerm = "",
             onGenreClick = {},
             onCompleteButtonClick = {},
             onSkipButtonClick = {},

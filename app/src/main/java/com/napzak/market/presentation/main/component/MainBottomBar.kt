@@ -5,6 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
@@ -59,6 +60,10 @@ fun MainBottomBar(
     ) {
         Surface(
             color = White,
+            border = BorderStroke(
+                width = 1.dp,
+                color = NapzakMarketTheme.colors.gray200
+            ),
         ) {
             Row(
                 modifier = Modifier

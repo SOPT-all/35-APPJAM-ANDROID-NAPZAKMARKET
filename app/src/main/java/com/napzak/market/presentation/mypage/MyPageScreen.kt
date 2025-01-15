@@ -147,7 +147,7 @@ fun MyPageScreen(
                                         // TODO: 최근 본 상품 화면으로 이동
                                     }
                                 }
-                            }
+                            },
                     ) {
                         Icon(
                             imageVector = ImageVector.vectorResource(id = menuType.iconResId),

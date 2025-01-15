@@ -55,21 +55,19 @@ fun MyPageScreen(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(164.dp)
-                    .padding(horizontal = 20.dp),
+                    .padding(horizontal = 20.dp, vertical = 20.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(containerColor = NapzakMarketTheme.colors.white),
                 border = BorderStroke(1.dp, NapzakMarketTheme.colors.gray200),
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
                         .padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Box(
@@ -109,10 +107,8 @@ fun MyPageScreen(
                         buttonColors = ButtonDefaults.buttonColors(containerColor = NapzakMarketTheme.colors.purple30),
                         shape = RoundedCornerShape(12.dp),
                         textStyle = NapzakMarketTheme.typography.bodyBold16,
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                     )
-                    Spacer(modifier = Modifier.height(20.dp))
                 }
             }
 

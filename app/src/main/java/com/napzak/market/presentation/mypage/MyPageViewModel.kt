@@ -1,0 +1,28 @@
+package com.napzak.market.presentation.mypage
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.napzak.market.presentation.mypage.state.MyPageUiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+
+class MyPageViewModel : ViewModel() {
+    private val _uiState = MutableStateFlow(MyPageUiState())
+    val uiState: StateFlow<MyPageUiState> = _uiState
+
+    init {
+        loadMyPageData()
+    }
+
+    private fun loadMyPageData() {
+        viewModelScope.launch {
+            val profileImageUrl = "https://example.com/profile_image.png"
+            val nickname = "납자기님"
+            _uiState.value = MyPageUiState(
+                profileImageUrl = profileImageUrl,
+                nickname = nickname,
+            )
+        }
+    }
+}

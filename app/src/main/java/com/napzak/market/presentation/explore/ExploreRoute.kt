@@ -163,7 +163,6 @@ fun ExploreSuccessScreen(
                             .noRippleClickable { onSearchBoxClick(null) },
                     )
                 }
-
             }
 
             ExploreScreenType.WORD_SEARCH_RESULT.name -> {

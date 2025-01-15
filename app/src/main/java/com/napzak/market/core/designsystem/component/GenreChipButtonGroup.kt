@@ -1,5 +1,10 @@
 package com.napzak.market.core.designsystem.component
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.Arrangement
@@ -7,7 +12,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -20,6 +25,8 @@ import com.napzak.market.R
 import com.napzak.market.core.designsystem.component.button.RoundedIconButton
 import com.napzak.market.core.designsystem.component.chip.RemovableChip
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.domain.genre.model.Genre
+import com.napzak.market.presentation.onboarding.state.OnboardingUiState
 
 /**
  * 장르 리스트와 리셋 버튼을 포함하는 그룹 컴포넌트
@@ -34,39 +41,48 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GenreChipButtonGroup(
-    genreList: List<String>,
+    genreList: List<Genre>,
     onResetClick: () -> Unit,
-    onGenreClick: (Int) -> Unit,
+    onGenreClick: (Genre) -> Unit,
     modifier: Modifier = Modifier,
     contentPaddingValues: PaddingValues = PaddingValues(0.dp),
 ) {
     CompositionLocalProvider(
         value = LocalOverscrollConfiguration provides null,
         content = {
-            LazyRow(
-                modifier = modifier.fillMaxWidth(),
-                contentPadding = contentPaddingValues,
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                stickyHeader {
-                    if(genreList.isNotEmpty()) {
-                        RoundedIconButton(
-                            icon = ImageVector.vectorResource(id = R.drawable.ic_reset_18),
-                            onClick = onResetClick
-                        )
-                    }
-                }
+            AnimatedContent(
+                targetState = genreList.isNotEmpty(),
+                transitionSpec = {
+                    slideInVertically { fullHeight -> -fullHeight }togetherWith
+                            slideOutVertically { fullHeight -> -fullHeight }
+                },
+                label = "GenreChip",
+            ) { hasGenre ->
+                if (hasGenre) {
+                    LazyRow(
+                        modifier = modifier.fillMaxWidth(),
+                        contentPadding = contentPaddingValues,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        stickyHeader {
+                            RoundedIconButton(
+                                icon = ImageVector.vectorResource(id = R.drawable.ic_reset_18),
+                                onClick = onResetClick,
+                            )
+                        }
 
-                itemsIndexed(items = genreList, key = { _, genre -> genre }) { index, genre ->
-                    RemovableChip(
-                        text = genre,
-                        onClick = { onGenreClick(index) },
-                        modifier = Modifier.animateItem(
-                            fadeInSpec = null,
-                            fadeOutSpec = null
-                        )
-                    )
+                        items(genreList, key = { it.genreId }) { genre ->
+                            RemovableChip(
+                                text = genre.genreName,
+                                onClick = { onGenreClick(genre) },
+                                modifier = Modifier.animateItem(
+                                    fadeInSpec = tween(200),
+                                    fadeOutSpec = tween(200),
+                                )
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -78,7 +94,7 @@ fun GenreChipButtonGroup(
 private fun GenreChipButtonGroupPreview() {
     NapzakMarketTheme {
         GenreChipButtonGroup(
-            genreList = listOf("실바니안", "산리오", "슈가슈가룬", "캐릭캐릭체인지"),
+            genreList = OnboardingUiState.initialGenreList.data,
             modifier = Modifier.padding(start = 20.dp),
             contentPaddingValues = PaddingValues(end = 20.dp),
             onResetClick = { },

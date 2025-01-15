@@ -5,15 +5,18 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
+import com.napzak.market.presentation.dummy.navigation.navigateToDummy
 import com.napzak.market.presentation.explore.navigation.exploreGraph
 import com.napzak.market.presentation.main.component.MainBottomBar
 import com.napzak.market.presentation.main.component.MainRegisterDialog
 import com.napzak.market.presentation.main.type.MainTab
+import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
@@ -33,17 +36,16 @@ fun MainScreen(
     ) { innerPadding ->
         Box(
             modifier = Modifier
-                .padding(innerPadding)
                 .fillMaxSize()
         ) {
             MainNavHost(
                 navigator = navigator,
-                modifier = Modifier
+                modifier = Modifier.padding(innerPadding)
             )
 
             MainRegisterDialog(
-                onSellRegisterClick = {/*TODO: 판매 등록 화면 연결*/},
-                onBuyRegisterClick = {/*TODO: 구매 등록 화면 연결*/},
+                onSellRegisterClick = {/*TODO: 판매 등록 화면 연결*/ },
+                onBuyRegisterClick = {/*TODO: 구매 등록 화면 연결*/ },
                 onDismissRequest = { navigator.navigate(MainTab.REGISTER) },
                 visibility = navigator.registerDialogVisibility,
             )
@@ -70,9 +72,13 @@ private fun MainNavHost(
             ExitTransition.None
         },
         navController = navigator.navController,
-        startDestination = navigator.startDestination
+        startDestination = navigator.startDestination,
     ) {
         dummyGraph(modifier = modifier)
         exploreGraph(modifier = modifier)
+        onboardingGraph(
+            modifier = Modifier.systemBarsPadding(),
+            navigateToHome = navigator.navController::navigateToDummy,
+        )
     }
 }

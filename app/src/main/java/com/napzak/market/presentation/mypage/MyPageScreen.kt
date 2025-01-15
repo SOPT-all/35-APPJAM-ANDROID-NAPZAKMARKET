@@ -25,6 +25,8 @@ import com.napzak.market.R
 import com.napzak.market.core.designsystem.component.button.CommonButton
 import com.napzak.market.core.designsystem.component.topbar.CenteredTextTopBar
 import com.napzak.market.presentation.mypage.type.MyPageMenuType
+import com.napzak.market.R.string.profile_image_description
+import com.napzak.market.R.string.view_my_market
 
 @Composable
 fun MyPageScreen(
@@ -83,7 +85,7 @@ fun MyPageScreen(
                                     .placeholder(R.drawable.ic_profile_basic_60)
                                     .error(R.drawable.ic_profile_basic_60)
                                     .build(),
-                                contentDescription = stringResource(id = R.string.profile_image_description),
+                                contentDescription = stringResource(id = profile_image_description),
                                 modifier = Modifier.size(60.dp),
                             )
                         }
@@ -98,7 +100,7 @@ fun MyPageScreen(
                     }
                     Spacer(modifier = Modifier.height(20.dp))
                     CommonButton(
-                        text = stringResource(id = R.string.view_my_market),
+                        text = stringResource(id = view_my_market),
                         onClick = {
                             onMyMarketClick()
                         },

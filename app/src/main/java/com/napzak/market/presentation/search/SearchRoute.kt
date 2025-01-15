@@ -38,7 +38,7 @@ import com.napzak.market.R.string.explore_search_box_placeholder
 @Composable
 fun SearchRoute(
     initSearchTerm: String?,
-    navigateToExplore: (String?, Long?) -> Unit,
+    onExploreNavigate: (String?, Long?) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
 ) {
@@ -58,11 +58,11 @@ fun SearchRoute(
         modifier = modifier,
         uiState = uiState,
         searchTerm = searchTerm,
-        onBackButtonClick = { navigateToExplore(null, null) },
+        onBackButtonClick = { onExploreNavigate(null, null) },
         onTextChange = viewModel::changeSearchText,
-        onSearchButtonClick = { navigateToExplore(searchTerm, null) },
+        onSearchButtonClick = { onExploreNavigate(searchTerm, null) },
         onGenreItemClick = { genreItem ->
-            navigateToExplore(genreItem.genreName, genreItem.genreId)
+            onExploreNavigate(genreItem.genreName, genreItem.genreId)
         },
     )
 

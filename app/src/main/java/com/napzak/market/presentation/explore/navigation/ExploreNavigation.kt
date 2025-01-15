@@ -17,7 +17,7 @@ fun NavController.navigateToExplore(
 ) = navigate(Explore(searchTerm, genreId), navOptions)
 
 fun NavGraphBuilder.exploreGraph(
-    navigateToSearch: (String?) -> Unit,
+    onSearchNavigate: (String?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     composable<Explore> { backStackEntry ->
@@ -27,8 +27,8 @@ fun NavGraphBuilder.exploreGraph(
             searchTerm = explore.searchTerm,
             genreId = explore.genreId,
             modifier = modifier,
-            navigatorToSearch = navigateToSearch,
-            navigatorToProductDetail = { /* TODO: 상세페이지로 이동 */ },
+            onSearchNavigate = onSearchNavigate,
+            onProductDetailNavigate = { /* TODO: 상세페이지로 이동 */ },
         )
     }
 }

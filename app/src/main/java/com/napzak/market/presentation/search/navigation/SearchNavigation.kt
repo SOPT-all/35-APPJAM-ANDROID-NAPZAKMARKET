@@ -14,7 +14,7 @@ fun NavController.navigateToSearch(searchTerm: String? = null, navOptions: NavOp
     navigate(Search(searchTerm), navOptions)
 
 fun NavGraphBuilder.searchGraph(
-    navigateToExplore: (String?, Long?) -> Unit,
+    onExploreNavigate: (String?, Long?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     composable<Search> { backStackEntry ->
@@ -22,7 +22,7 @@ fun NavGraphBuilder.searchGraph(
 
         SearchRoute(
             initSearchTerm = search.searchTerm,
-            navigateToExplore = navigateToExplore,
+            onExploreNavigate = onExploreNavigate,
             modifier = modifier,
         )
     }

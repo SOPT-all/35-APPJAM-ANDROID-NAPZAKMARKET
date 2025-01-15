@@ -45,8 +45,8 @@ import com.napzak.market.presentation.explore.type.TradeType
 fun ExploreRoute(
     searchTerm: String?,
     genreId: Long?,
-    navigatorToSearch: (String?) -> Unit,
-    navigatorToProductDetail: () -> Unit,
+    onSearchNavigate: (String?) -> Unit,
+    onProductDetailNavigate: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ExploreViewModel = hiltViewModel(),
 ) {
@@ -62,14 +62,14 @@ fun ExploreRoute(
     ExploreScreen(
         modifier = modifier,
         uiState = uiState,
-        onBackButtonClick = navigatorToSearch,
-        onSearchBoxClick = navigatorToSearch,
+        onBackButtonClick = onSearchNavigate,
+        onSearchBoxClick = onSearchNavigate,
         onTradeTypeClick = viewModel::updateTradeType,
         onGenreListClick = { /* TODO: 장르 검색 bottomSheet */ },
         onSoldOutClick = { viewModel.updateSoldOut() },
         onUnopenClick = { viewModel.updateUnopen() },
         onSortButtonClick = { /* TODO: 정렬 bottomSheet */ },
-        onItemClick = { navigatorToProductDetail() },
+        onItemClick = { onProductDetailNavigate() },
         onLikeClick = viewModel::updateItemLikeButton,
     )
 }

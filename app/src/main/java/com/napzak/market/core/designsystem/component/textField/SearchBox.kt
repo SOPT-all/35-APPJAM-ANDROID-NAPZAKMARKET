@@ -65,6 +65,7 @@ fun SearchBox(
             onValueChange = onTextChange,
             modifier = Modifier.weight(1f),
             readOnly = readOnly,
+            enabled = !readOnly,
             textStyle = NapzakMarketTheme.typography.bodySemi14,
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(

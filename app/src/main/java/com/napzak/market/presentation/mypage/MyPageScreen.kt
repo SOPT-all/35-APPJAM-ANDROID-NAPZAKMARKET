@@ -42,9 +42,9 @@ fun MyPageScreen(
     ) {
         CenteredTextTopBar(
             title = stringResource(id = R.string.mypage_title),
-            textStyle = NapzakMarketTheme.typography.titleBold20,
+            textStyle = NapzakMarketTheme.typography.titleBold18,
             backgroundColor = NapzakMarketTheme.colors.white,
-            contentColor = NapzakMarketTheme.colors.black,
+            contentColor = NapzakMarketTheme.colors.gray900,
         )
         Column(
             modifier = Modifier
@@ -98,7 +98,7 @@ fun MyPageScreen(
                         Text(
                             text = uiState.nickname,
                             style = NapzakMarketTheme.typography.titleBold20,
-                            color = NapzakMarketTheme.colors.black,
+                            color = NapzakMarketTheme.colors.gray900,
                         )
                     }
                     Spacer(modifier = Modifier.height(20.dp))
@@ -123,7 +123,7 @@ fun MyPageScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
+                    .padding(horizontal = 30.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 MyPageMenuType.entries.forEach { menuType ->
@@ -154,7 +154,7 @@ fun MyPageScreen(
                         Icon(
                             imageVector = ImageVector.vectorResource(id = menuType.iconResId),
                             contentDescription = stringResource(id = menuType.titleResId),
-                            modifier = Modifier.size(50.dp),
+                            modifier = Modifier.size(54.dp),
                             tint = Color.Unspecified,
                         )
                         Spacer(modifier = Modifier.height(8.dp))

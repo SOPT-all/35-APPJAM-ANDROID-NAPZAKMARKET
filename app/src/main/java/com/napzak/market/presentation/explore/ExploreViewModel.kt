@@ -7,6 +7,7 @@ import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.state.ExploreProductInformation
 import com.napzak.market.presentation.explore.state.ExploreUiState
 import com.napzak.market.presentation.explore.type.ExploreScreenType
+import com.napzak.market.presentation.explore.type.SortType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -106,7 +107,8 @@ class ExploreViewModel @Inject constructor(
     fun updateTradeType(newTradeType: String) {
         _uiState.update { currentState ->
             currentState.copy(
-                tradeType = newTradeType
+                tradeType = newTradeType,
+                sortType = SortType.RECENT.name
             )
         }
         getExploreProductInformation()

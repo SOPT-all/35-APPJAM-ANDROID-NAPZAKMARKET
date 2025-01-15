@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.napzak.market.core.common.state.UiState
@@ -41,7 +42,7 @@ fun ExploreRoute(
     navigatorToSearch: () -> Unit,
     navigatorToProductDetail: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ExploreViewModel = viewModel(),
+    viewModel: ExploreViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 

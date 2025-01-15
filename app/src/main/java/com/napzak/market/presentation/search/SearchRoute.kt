@@ -1,0 +1,149 @@
+package com.napzak.market.presentation.search
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.napzak.market.core.common.state.UiState
+import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.presentation.search.state.SearchUiState
+import com.napzak.market.R
+import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.designsystem.component.textField.SearchBox
+import com.napzak.market.presentation.search.component.SearchGenreListSection
+
+@Composable
+fun SearchRoute(
+    navigateToExplore: (String?) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = hiltViewModel(),
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val searchTerm by remember { mutableStateOf("") }
+
+
+    SearchScreen(
+        modifier = modifier,
+        uiState = uiState,
+        searchTerm = searchTerm,
+        onBackButtonClick = { navigateToExplore(null) },
+        onTextChange = { viewModel },
+        onSearchButtonClick = { navigateToExplore(uiState.searchTerm) },
+        onGenreItemClick = { navigateToExplore(it) }
+    )
+
+}
+
+@Composable
+fun SearchScreen(
+    uiState: SearchUiState,
+    searchTerm: String,
+    onBackButtonClick: () -> Unit,
+    onTextChange: (String) -> Unit,
+    onSearchButtonClick: () -> Unit,
+    onGenreItemClick: (String) -> Unit, //타입 장르로 변경
+    modifier: Modifier = Modifier,
+) {
+    when (uiState.loadState) {
+        is UiState.Loading -> {}
+        is UiState.Empty -> {}
+        is UiState.Failure -> {}
+        is UiState.Success -> {
+            with(uiState.loadState.data) {
+                SearchSuccessScreen(
+                    modifier = modifier,
+                    searchTerm = searchTerm,
+                    genreList = uiState.loadState.data.genreList,
+                    onBackButtonClick = onBackButtonClick,
+                    onTextChange = onTextChange,
+                    onSearchButtonClick = onSearchButtonClick,
+                    onGenreItemClick = onGenreItemClick,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SearchSuccessScreen(
+    searchTerm: String,
+    genreList: List<String>,
+    onBackButtonClick: () -> Unit,
+    onTextChange: (String) -> Unit,
+    onSearchButtonClick: () -> Unit,
+    onGenreItemClick: (String) -> Unit, //타입 장르로 변경
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = NapzakMarketTheme.colors.white)
+            .padding(top = 38.dp)
+    ) {
+        Row(
+            modifier = Modifier.padding(end = 20.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .noRippleClickable(onBackButtonClick),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_back_24),
+                    contentDescription = stringResource(R.string.left_chevron_button),
+                    tint = Color.Unspecified,
+                )
+            }
+            SearchBox(
+                placeholder = stringResource(R.string.explore_search_box_placeholder),
+                searchTerm = searchTerm,
+                onTextChange = onTextChange,
+                onSearchButtonClick = onSearchButtonClick,
+            )
+        }
+
+        Spacer(Modifier.height(20.dp))
+
+        SearchGenreListSection(
+            genreList = genreList,
+            onGenreItemClick = onGenreItemClick,
+        )
+
+    }
+}
+
+@Preview
+@Composable
+private fun SearchSuccessScreenPreview(modifier: Modifier = Modifier) {
+    SearchSuccessScreen(
+        searchTerm = "",
+        genreList = emptyList(),
+        onBackButtonClick = { },
+        onTextChange = { },
+        onSearchButtonClick = { },
+        onGenreItemClick = { },
+        modifier = modifier
+    )
+}

@@ -13,10 +13,13 @@ import androidx.navigation.compose.NavHost
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.dummy.navigation.navigateToDummy
 import com.napzak.market.presentation.explore.navigation.exploreGraph
+import com.napzak.market.presentation.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.main.component.MainBottomBar
 import com.napzak.market.presentation.main.component.MainRegisterDialog
 import com.napzak.market.presentation.main.type.MainTab
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
+import com.napzak.market.presentation.search.navigation.navigateToSearch
+import com.napzak.market.presentation.search.navigation.searchGraph
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
@@ -75,10 +78,17 @@ private fun MainNavHost(
         startDestination = navigator.startDestination,
     ) {
         dummyGraph(modifier = modifier)
-        exploreGraph(modifier = modifier)
+        exploreGraph(
+            modifier = modifier,
+            onSearchNavigate = navigator.navController::navigateToSearch,
+        )
         onboardingGraph(
             modifier = Modifier.systemBarsPadding(),
             navigateToHome = navigator.navController::navigateToDummy,
+        )
+        searchGraph(
+            modifier = modifier,
+            onExploreNavigate = navigator.navController::navigateToExplore,
         )
     }
 }

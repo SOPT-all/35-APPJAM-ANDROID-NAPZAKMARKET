@@ -39,10 +39,14 @@ import com.napzak.market.presentation.chat.type.ChatType
 /**
  * 채팅 화면 컴포넌트.
  *
+ * 구매 또는 판매 채팅 유형에 따라 제목, 설명, 가격 정보를 표시합니다.
+ * 필요에 따라 가격 레이블을 추가로 표시할 수 있습니다.
+ *
  * @param chatType 채팅의 유형 (구매 또는 판매)
- * @param title 채팅 화면 상단에 표시될 제목
- * @param description 채팅 화면 상단에 표시될 설명
- * @param price 채팅 화면 상단에 표시될 가격 정보
+ * @param title 채팅 화면 상단에 표시될 제목 텍스트
+ * @param description 채팅 화면 상단에 표시될 설명 텍스트
+ * @param price 채팅 화면 상단에 표시될 가격 정보 텍스트
+ * @param showPriceLabel 가격 앞에 레이블을 표시할지 여부 (true: 레이블 표시, false: 레이블 숨김)
  */
 
 @Composable

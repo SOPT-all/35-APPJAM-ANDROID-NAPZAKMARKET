@@ -50,8 +50,6 @@ fun MyPageScreen(
                 .fillMaxWidth()
                 .background(NapzakMarketTheme.colors.gray50),
         ) {
-            Spacer(modifier = Modifier.height(20.dp))
-
             Card(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -34,9 +34,12 @@ import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.domain.genre.model.Genre
+import com.napzak.market.presentation.explore.component.ExploreBottomSheetScreen
 import com.napzak.market.presentation.explore.component.ExploreFilterGroup
 import com.napzak.market.presentation.explore.component.ProductListSection
 import com.napzak.market.presentation.explore.component.TradeTypeTab
+import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
+import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
 import com.napzak.market.presentation.explore.type.ExploreScreenType
 import com.napzak.market.presentation.explore.type.SortType
 import com.napzak.market.presentation.explore.type.TradeType
@@ -51,6 +54,7 @@ fun ExploreRoute(
     viewModel: ExploreViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val bottomSheetState by viewModel.bottomSheetState.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         if (searchTerm != null || genreId != null) {
@@ -62,21 +66,28 @@ fun ExploreRoute(
     ExploreScreen(
         modifier = modifier,
         uiState = uiState,
+        bottomSheetState = bottomSheetState,
         onBackButtonClick = onSearchNavigate,
         onSearchBoxClick = onSearchNavigate,
         onTradeTypeClick = viewModel::updateTradeType,
-        onGenreListClick = { /* TODO: 장르 검색 bottomSheet */ },
+        onGenreListClick = { viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.GENRE_SEARCHING) },
         onSoldOutClick = { viewModel.updateSoldOut() },
         onUnopenClick = { viewModel.updateUnopen() },
-        onSortButtonClick = { /* TODO: 정렬 bottomSheet */ },
+        onSortButtonClick = { viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.SORT) },
         onItemClick = { onProductDetailNavigate() },
         onLikeClick = viewModel::updateItemLikeButton,
+        onDismissRequest = { viewModel.updateBottomSheetVisibility(it) },
+        onSortItemClick = {
+            viewModel.updateSortType(it)
+            viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.SORT)
+        }
     )
 }
 
 @Composable
 fun ExploreScreen(
     uiState: ExploreUiState,
+    bottomSheetState: ExploreBottomSheetState,
     onBackButtonClick: (String?) -> Unit,
     onSearchBoxClick: (String?) -> Unit,
     onTradeTypeClick: (String) -> Unit,
@@ -86,6 +97,8 @@ fun ExploreScreen(
     onSortButtonClick: () -> Unit,
     onItemClick: (Int) -> Unit,
     onLikeClick: (Int) -> Unit,
+    onDismissRequest: (ExploreBottomSheetType) -> Unit,
+    onSortItemClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (uiState.loadState) {
@@ -102,6 +115,7 @@ fun ExploreScreen(
             with(uiState) {
                 ExploreSuccessScreen(
                     modifier = modifier,
+                    bottomSheetState = bottomSheetState,
                     exploreScreenType = exploreScreenType,
                     initSearchTerm = initSearchTerm,
                     tradeType = tradeType,
@@ -119,6 +133,8 @@ fun ExploreScreen(
                     onSortButtonClick = onSortButtonClick,
                     onItemClick = onItemClick,
                     onLikeClick = onLikeClick,
+                    onDismissRequest = onDismissRequest,
+                    onSortItemClick = onSortItemClick,
                 )
             }
         }
@@ -128,6 +144,7 @@ fun ExploreScreen(
 @Composable
 fun ExploreSuccessScreen(
     modifier: Modifier = Modifier,
+    bottomSheetState: ExploreBottomSheetState,
     exploreScreenType: String,
     initSearchTerm: String?,
     tradeType: String,
@@ -145,6 +162,8 @@ fun ExploreSuccessScreen(
     onSortButtonClick: () -> Unit,
     onItemClick: (Int) -> Unit,
     onLikeClick: (Int) -> Unit,
+    onDismissRequest: (ExploreBottomSheetType) -> Unit,
+    onSortItemClick: (String) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -289,12 +308,23 @@ fun ExploreSuccessScreen(
 
         Spacer(Modifier.height(20.dp))
     }
+
+    ExploreBottomSheetScreen(
+        bottomSheetState = bottomSheetState,
+        sortType = sortType,
+        onDismissRequest = onDismissRequest,
+        onSortItemClick = onSortItemClick,
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
     ExploreSuccessScreen(
+        bottomSheetState = ExploreBottomSheetState(
+            isSortBottomSheetVisible = false,
+            isGenreSearchingBottomSheetVisible = false
+        ),
         tradeType = TradeType.SELL.name,
         exploreScreenType = ExploreScreenType.BASIC.name,
         initSearchTerm = "",
@@ -312,5 +342,7 @@ private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
         onSortButtonClick = { },
         onItemClick = { },
         onLikeClick = { },
+        onDismissRequest = { },
+        onSortItemClick = { },
     )
 }

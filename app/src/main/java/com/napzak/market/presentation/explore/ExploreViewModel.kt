@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.domain.genre.model.Genre
+import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.state.ExploreProductInformation
 import com.napzak.market.presentation.explore.state.ExploreUiState
+import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
 import com.napzak.market.presentation.explore.type.ExploreScreenType
 import com.napzak.market.presentation.explore.type.SortType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -20,6 +23,10 @@ class ExploreViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ExploreUiState())
     val uiState = _uiState.asStateFlow()
+
+    private val _bottomSheetState: MutableStateFlow<ExploreBottomSheetState> =
+        MutableStateFlow(ExploreBottomSheetState())
+    val bottomSheetState: StateFlow<ExploreBottomSheetState> = _bottomSheetState.asStateFlow()
 
     fun initExploreScreenState(searchTerm: String?, genreId: Long?) {
         _uiState.update { currentState ->
@@ -132,8 +139,33 @@ class ExploreViewModel @Inject constructor(
         getExploreProductInformation()
     }
 
+    fun updateSortType(newSortType: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                sortType = newSortType
+            )
+        }
+        getExploreProductInformation()
+    }
+
     fun updateItemLikeButton(productId: Int) {
         /* TODO: 좋아요 API 연결 및 기능 연결 */
+    }
+
+    fun updateBottomSheetVisibility(type: ExploreBottomSheetType) {
+        when (type) {
+            ExploreBottomSheetType.SORT -> {
+                _bottomSheetState.update {
+                    it.copy(isSortBottomSheetVisible = !_bottomSheetState.value.isSortBottomSheetVisible)
+                }
+            }
+
+            ExploreBottomSheetType.GENRE_SEARCHING -> {
+                _bottomSheetState.update {
+                    it.copy(isGenreSearchingBottomSheetVisible = !_bottomSheetState.value.isGenreSearchingBottomSheetVisible)
+                }
+            }
+        }
     }
 
     private fun updateLoadState(loadState: UiState<ExploreProductInformation>) =

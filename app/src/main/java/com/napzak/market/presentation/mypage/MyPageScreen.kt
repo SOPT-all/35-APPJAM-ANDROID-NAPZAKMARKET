@@ -29,7 +29,7 @@ import com.napzak.market.presentation.mypage.type.MyPageMenuType
 
 @Composable
 fun MyPageScreen(
-
+    onMyMarketClick: () -> Unit,
     viewModel: MyPageViewModel = viewModel(),
 ) {
 
@@ -105,7 +105,7 @@ fun MyPageScreen(
                     CommonButton(
                         text = stringResource(id = R.string.view_my_market),
                         onClick = {
-                            //TODO: 내 마켓보기 구현 필요
+                            onMyMarketClick()
                         },
                         buttonColors = ButtonDefaults.buttonColors(containerColor = NapzakMarketTheme.colors.purple30),
                         shape = RoundedCornerShape(12.dp),
@@ -177,6 +177,9 @@ fun MyPageScreen(
 fun MyPageScreenPreview() {
     NapzakMarketTheme {
         MyPageScreen(
+            onMyMarketClick = {
+                println("Navigating to 'My Market' screen")
+            }
         )
     }
 }

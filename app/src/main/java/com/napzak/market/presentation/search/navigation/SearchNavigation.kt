@@ -23,7 +23,7 @@ fun NavGraphBuilder.searchGraph(
         SearchRoute(
             initSearchTerm = search.searchTerm,
             navigateToExplore = navigateToExplore,
-            modifier = modifier
+            modifier = modifier,
         )
     }
 }

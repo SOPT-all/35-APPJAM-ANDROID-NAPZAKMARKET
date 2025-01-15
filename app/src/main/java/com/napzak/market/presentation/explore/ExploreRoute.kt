@@ -154,14 +154,13 @@ fun ExploreSuccessScreen(
     ) {
         when (exploreScreenType) {
             ExploreScreenType.BASIC.name -> {
-                Box(
-                ) {
+                Box {
                     SearchBox(
                         placeholder = stringResource(id = R.string.explore_search_box_placeholder),
                         readOnly = true,
                         modifier = Modifier
                             .padding(horizontal = 20.dp)
-                            .noRippleClickable { onSearchBoxClick(null) }
+                            .noRippleClickable { onSearchBoxClick(null) },
                     )
                 }
 

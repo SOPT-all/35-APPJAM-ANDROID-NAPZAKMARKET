@@ -25,12 +25,12 @@ class ExploreViewModel @Inject constructor(
             if (genreId != null) { /* 장르 선택 검색인 경우 */
                 currentState.copy(
                     exploreScreenType = ExploreScreenType.GENRE_SEARCH_RESULT.name,
-                    genreList = listOf(Genre(genreId = genreId, genreName = searchTerm.toString()))
+                    genreList = listOf(Genre(genreId = genreId, genreName = searchTerm.toString())),
                 )
             } else { /* 일반 검색인 경우 */
                 currentState.copy(
                     exploreScreenType = ExploreScreenType.WORD_SEARCH_RESULT.name,
-                    initSearchTerm = searchTerm
+                    initSearchTerm = searchTerm,
                 )
             }
         }

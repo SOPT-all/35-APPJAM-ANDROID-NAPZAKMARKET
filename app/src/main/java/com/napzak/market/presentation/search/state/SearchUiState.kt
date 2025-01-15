@@ -9,5 +9,5 @@ data class SearchUiState(
 )
 
 data class RelatedGenreList(
-    val genreList: List<Genre>
+    val genreList: List<Genre>,
 )

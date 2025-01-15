@@ -60,7 +60,7 @@ fun SearchRoute(
         onSearchButtonClick = { navigateToExplore(searchTerm, null) },
         onGenreItemClick = { genreItem ->
             navigateToExplore(genreItem.genreName, genreItem.genreId)
-        }
+        },
     )
 
 }
@@ -115,7 +115,7 @@ fun SearchSuccessScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = NapzakMarketTheme.colors.white)
-            .padding(top = 40.dp)
+            .padding(top = 40.dp),
     ) {
         Row(
             modifier = Modifier.padding(end = 20.dp),
@@ -147,7 +147,6 @@ fun SearchSuccessScreen(
             genreList = genreList,
             onGenreItemClick = onGenreItemClick,
         )
-
     }
 }
 

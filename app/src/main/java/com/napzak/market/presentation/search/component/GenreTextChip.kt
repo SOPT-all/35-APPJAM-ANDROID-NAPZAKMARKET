@@ -23,7 +23,7 @@ fun GenreTextChip() {
             contentColor = NapzakMarketTheme.colors.gray600,
             containerColor = NapzakMarketTheme.colors.gray100,
         ),
-        innerPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp)
+        innerPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
     )
 }
 

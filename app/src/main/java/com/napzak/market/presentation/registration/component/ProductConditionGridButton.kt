@@ -4,10 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,23 +41,26 @@ fun ProductConditionGridButton(
     onIndexSelected: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyVerticalGrid(
+    Column(
         modifier = modifier,
-        columns = GridCells.Fixed(2),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        itemsIndexed(
-            items = conditionType,
-            key = { index, _ -> index },
-            contentType = { _, item -> item }
-        ) { index, item ->
-            ProductConditionItem(
-                modifier = Modifier
-                    .noRippleClickable { onIndexSelected(index) },
-                condition = item,
-                isSelected = selectedIndex == index
-            )
+        conditionType.chunked(2).forEach { rowItems ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                rowItems.forEachIndexed { _, item ->
+                    val index = conditionType.indexOf(item)
+                    ProductConditionItem(
+                        modifier = Modifier
+                            .weight(1f)
+                            .noRippleClickable { onIndexSelected(index) },
+                        condition = item,
+                        isSelected = selectedIndex == index
+                    )
+                }
+            }
         }
     }
 }

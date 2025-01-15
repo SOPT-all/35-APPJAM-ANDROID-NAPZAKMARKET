@@ -99,17 +99,17 @@ fun ExploreScreen(
         }
 
         is UiState.Success -> {
-            with(uiState.loadState.data) {
+            with(uiState) {
                 ExploreSuccessScreen(
                     modifier = modifier,
-                    exploreScreenType = uiState.exploreScreenType,
-                    initSearchTerm = uiState.initSearchTerm,
-                    tradeType = uiState.tradeType,
-                    genreList = uiState.genreList,
-                    isOnSale = uiState.isOnSale,
-                    isUnopened = uiState.isUnopened,
+                    exploreScreenType = exploreScreenType,
+                    initSearchTerm = initSearchTerm,
+                    tradeType = tradeType,
+                    genreList = genreList,
+                    isOnSale = isOnSale,
+                    isUnopened = isUnopened,
                     productList = uiState.loadState.data.productList,
-                    sortType = uiState.sortType,
+                    sortType = sortType,
                     onBackButtonClick = onBackButtonClick,
                     onSearchBoxClick = onSearchBoxClick,
                     onTradeTypeClick = onTradeTypeClick,

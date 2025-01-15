@@ -85,7 +85,7 @@ fun SearchScreen(
                 SearchSuccessScreen(
                     modifier = modifier,
                     searchTerm = searchTerm,
-                    genreList = uiState.loadState.data.genreList,
+                    genreList = genreList,
                     onBackButtonClick = onBackButtonClick,
                     onTextChange = onTextChange,
                     onSearchButtonClick = onSearchButtonClick,

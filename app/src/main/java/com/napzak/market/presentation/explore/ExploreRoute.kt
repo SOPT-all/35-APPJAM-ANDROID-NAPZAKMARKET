@@ -40,7 +40,6 @@ import com.napzak.market.presentation.explore.component.TradeTypeTab
 import com.napzak.market.presentation.explore.type.ExploreScreenType
 import com.napzak.market.presentation.explore.type.SortType
 import com.napzak.market.presentation.explore.type.TradeType
-import timber.log.Timber
 
 @Composable
 fun ExploreRoute(

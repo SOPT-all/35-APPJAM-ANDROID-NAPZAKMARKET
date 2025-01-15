@@ -57,7 +57,7 @@ fun SearchRoute(
         searchTerm = searchTerm,
         onBackButtonClick = { navigateToExplore(null, null) },
         onTextChange = viewModel::changeSearchText,
-        onSearchButtonClick = { navigateToExplore(uiState.searchTerm, null) },
+        onSearchButtonClick = { navigateToExplore(searchTerm, null) },
         onGenreItemClick = { genreItem ->
             navigateToExplore(genreItem.genreName, genreItem.genreId)
         }

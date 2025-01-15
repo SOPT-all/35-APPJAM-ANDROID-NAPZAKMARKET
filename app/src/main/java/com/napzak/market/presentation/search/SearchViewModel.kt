@@ -28,12 +28,79 @@ class SearchViewModel @Inject constructor(
 
     fun getGenreList(searchTerm: String) {
         /* TODO: 연관검색어 조회 API 연결 */
-        val genreList = if (searchTerm.isEmpty()) emptyList<Genre>() else emptyList()
+        val genreList = if (searchTerm.isEmpty()) {
+            emptyList<Genre>()
+        } else {
+            listOf(
+                Genre(
+                    genreId = 1,
+                    genreName = "나루토",
+                ),
+                Genre(
+                    genreId = 2,
+                    genreName = "원피스",
+                ),
+                Genre(
+                    genreId = 3,
+                    genreName = "블리치",
+                ),
+                Genre(
+                    genreId = 4,
+                    genreName = "귀멸의 칼날",
+                ),
+                Genre(
+                    genreId = 5,
+                    genreName = "주술회전",
+                ),
+                Genre(
+                    genreId = 6,
+                    genreName = "진격의 거인",
+                ),
+                Genre(
+                    genreId = 7,
+                    genreName = "데스노트",
+                ),
+                Genre(
+                    genreId = 8,
+                    genreName = "짱구는 못말려",
+                ),
+                Genre(
+                    genreId = 9,
+                    genreName = "도라에몽",
+                ),
+                Genre(
+                    genreId = 10,
+                    genreName = "강철의 연금술사",
+                ),
+                Genre(
+                    genreId = 11,
+                    genreName = "체인소맨",
+                ),
+                Genre(
+                    genreId = 12,
+                    genreName = "원펀맨",
+                ),
+                Genre(
+                    genreId = 13,
+                    genreName = "드래곤볼",
+                ),
+                Genre(
+                    genreId = 14,
+                    genreName = "명탐정 코난",
+                ),
+                Genre(
+                    genreId = 15,
+                    genreName = "슬램덩크",
+                )
+            )
+        }
 
         updateLoadState(
             loadState = UiState.Success(
                 RelatedGenreList(
-                    genreList = genreList
+                    genreList = genreList.filter {
+                        it.genreName.contains(searchTerm)
+                    }
                 )
             )
         )

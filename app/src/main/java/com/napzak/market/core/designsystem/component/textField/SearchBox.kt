@@ -60,6 +60,7 @@ fun SearchBox(
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+
         BasicTextField(
             value = searchTerm,
             onValueChange = onTextChange,

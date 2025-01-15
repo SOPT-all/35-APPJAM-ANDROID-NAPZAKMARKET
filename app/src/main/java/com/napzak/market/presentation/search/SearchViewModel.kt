@@ -2,7 +2,7 @@ package com.napzak.market.presentation.search
 
 import androidx.lifecycle.ViewModel
 import com.napzak.market.core.common.state.UiState
-import com.napzak.market.presentation.search.state.RelatedSearchTermList
+import com.napzak.market.presentation.search.state.RelatedGenreList
 import com.napzak.market.presentation.search.state.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +21,7 @@ class SearchViewModel @Inject constructor(
         /* TODO: 연관검색어 조회 API 연결 */
         updateLoadState(
             loadState = UiState.Success(
-                RelatedSearchTermList(
+                RelatedGenreList(
                     genreList = emptyList()
                 )
             )
@@ -36,7 +36,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private fun updateLoadState(loadState: UiState<RelatedSearchTermList>) =
+    private fun updateLoadState(loadState: UiState<RelatedGenreList>) =
         _uiState.update { currentState ->
             currentState.copy(
                 loadState = loadState

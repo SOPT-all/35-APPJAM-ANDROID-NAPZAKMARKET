@@ -30,26 +30,28 @@ import com.napzak.market.presentation.search.state.SearchUiState
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.component.textField.SearchBox
+import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.search.component.SearchGenreListSection
 
 @Composable
 fun SearchRoute(
-    navigateToExplore: (String?) -> Unit,
+    navigateToExplore: (String?, Long?) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val searchTerm by remember { mutableStateOf("") }
 
-
     SearchScreen(
         modifier = modifier,
         uiState = uiState,
         searchTerm = searchTerm,
-        onBackButtonClick = { navigateToExplore(null) },
+        onBackButtonClick = { navigateToExplore(null, null) },
         onTextChange = { viewModel },
-        onSearchButtonClick = { navigateToExplore(uiState.searchTerm) },
-        onGenreItemClick = { navigateToExplore(it) }
+        onSearchButtonClick = { navigateToExplore(uiState.searchTerm, null) },
+        onGenreItemClick = { genreItem ->
+            navigateToExplore(genreItem.genreName, genreItem.genreId)
+        }
     )
 
 }
@@ -61,7 +63,7 @@ fun SearchScreen(
     onBackButtonClick: () -> Unit,
     onTextChange: (String) -> Unit,
     onSearchButtonClick: () -> Unit,
-    onGenreItemClick: (String) -> Unit, //타입 장르로 변경
+    onGenreItemClick: (Genre) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (uiState.loadState) {
@@ -87,11 +89,11 @@ fun SearchScreen(
 @Composable
 fun SearchSuccessScreen(
     searchTerm: String,
-    genreList: List<String>,
+    genreList: List<Genre>,
     onBackButtonClick: () -> Unit,
     onTextChange: (String) -> Unit,
     onSearchButtonClick: () -> Unit,
-    onGenreItemClick: (String) -> Unit, //타입 장르로 변경
+    onGenreItemClick: (Genre) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(

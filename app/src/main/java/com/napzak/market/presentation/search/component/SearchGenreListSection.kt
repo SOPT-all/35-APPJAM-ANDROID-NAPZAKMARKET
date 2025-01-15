@@ -7,11 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.napzak.market.domain.genre.model.Genre
 
 @Composable
 fun SearchGenreListSection(
-    genreList: List<String>, //추후 타입 변경 필요
-    onGenreItemClick: (String) -> Unit, //타입 장르로 변경
+    genreList: List<Genre>,
+    onGenreItemClick: (Genre) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -20,13 +21,13 @@ fun SearchGenreListSection(
         itemsIndexed(genreList) { index, genreItem ->
             if (index == genreList.size-1) {
                 SearchGenreItem(
-                    genreName = genreItem,
+                    genreName = genreItem.genreName,
                     onGenreItemClick = { onGenreItemClick(genreItem)},
                     isLastItem = true,
                 )
             } else {
                 SearchGenreItem(
-                    genreName = genreItem,
+                    genreName = genreItem.genreName,
                     onGenreItemClick = { onGenreItemClick(genreItem)},
                 )
             }

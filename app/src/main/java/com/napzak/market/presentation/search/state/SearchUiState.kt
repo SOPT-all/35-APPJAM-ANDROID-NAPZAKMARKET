@@ -1,12 +1,13 @@
 package com.napzak.market.presentation.search.state
 
 import com.napzak.market.core.common.state.UiState
+import com.napzak.market.domain.genre.model.Genre
 
 data class SearchUiState(
-    val loadState: UiState<RelatedSearchTermList> = UiState.Loading,
+    val loadState: UiState<RelatedGenreList> = UiState.Loading,
     val searchTerm: String = "",
 )
 
-data class RelatedSearchTermList(
-    val genreList: List<String> //리스트로 변경
+data class RelatedGenreList(
+    val genreList: List<Genre>
 )

@@ -111,8 +111,7 @@ fun MyPageScreen(
                         shape = RoundedCornerShape(12.dp),
                         textStyle = NapzakMarketTheme.typography.bodyBold16,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(44.dp),
+                            .fillMaxWidth(),
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                 }

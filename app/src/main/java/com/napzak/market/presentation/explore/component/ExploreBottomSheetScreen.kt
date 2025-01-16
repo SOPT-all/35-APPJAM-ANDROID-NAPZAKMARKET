@@ -1,7 +1,10 @@
 package com.napzak.market.presentation.explore.component
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupProperties
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.bottomSheet.GenreSearchBottomSheet
 import com.napzak.market.presentation.explore.bottomSheet.SortBottomSheet
@@ -31,18 +34,27 @@ fun ExploreBottomSheetScreen(
         }
 
         if (isGenreSearchingBottomSheetVisible) {
-            GenreSearchBottomSheet(
-                modifier = modifier,
-                initialSelectedGenreList = selectedGenreList,
-                initialGenreList = initialGenreList,
-                genreList = genreList,
-                onDismissRequest = { onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING) },
-                onTextChange = onTextChange,
-                onButtonClick = {
-                    onGenreSelectButtonClick(it)
-                    onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING)
-                },
-            )
+            Popup(
+                alignment = Alignment.BottomCenter,
+                properties = PopupProperties(
+                    focusable = true,
+                    excludeFromSystemGesture = true,
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = true,
+                )
+            ) {
+                GenreSearchBottomSheet(
+                    initialSelectedGenreList = selectedGenreList,
+                    initialGenreList = initialGenreList,
+                    genreList = genreList,
+                    onDismissRequest = { onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING) },
+                    onTextChange = onTextChange,
+                    onButtonClick = {
+                        onGenreSelectButtonClick(it)
+                        onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING)
+                    },
+                )
+            }
         }
     }
 }

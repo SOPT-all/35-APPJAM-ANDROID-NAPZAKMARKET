@@ -26,6 +26,7 @@ import com.napzak.market.R
 import com.napzak.market.core.designsystem.component.textField.SearchBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalFocusManager
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.component.GenreChipButtonGroup
 import com.napzak.market.core.designsystem.component.button.EnableDisableTextButton
@@ -44,6 +45,7 @@ fun GenreSearchBottomSheet(
     onButtonClick: (List<Genre>) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val focusManager = LocalFocusManager.current
     var searchTerm by remember { mutableStateOf("") }
     var selectedGenreList by remember {
         mutableStateOf<List<Genre>>(
@@ -64,7 +66,10 @@ fun GenreSearchBottomSheet(
         modifier = modifier
             .fillMaxSize()
             .background(NapzakMarketTheme.colors.black70)
-            .noRippleClickable(onDismissRequest)
+            .noRippleClickable {
+                focusManager.clearFocus()
+                onDismissRequest()
+            }
     ) {
         Spacer(Modifier.weight(1f))
 
@@ -72,7 +77,7 @@ fun GenreSearchBottomSheet(
             modifier = Modifier
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                 .background(NapzakMarketTheme.colors.white)
-                .noRippleClickable{ }
+                .noRippleClickable { }
                 .padding(top = 30.dp)
         ) {
             GenreSearchNoticeSection()
@@ -111,6 +116,7 @@ fun GenreSearchBottomSheet(
                                 if (selectedGenreList.size < 4) {
                                     selectedGenreList = selectedGenreList + genreItem
                                 }
+                                focusManager.clearFocus()
                             },
                             isLastItem = index == selectedGenreList.size - 1
                         )

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip

@@ -43,7 +43,7 @@ fun GenreSearchBottomSheet(
     onDismissRequest: () -> Unit,
     onTextChange: (String) -> Unit,
     onButtonClick: (List<Genre>) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
     var searchTerm by remember { mutableStateOf("") }
@@ -69,7 +69,7 @@ fun GenreSearchBottomSheet(
             .noRippleClickable {
                 focusManager.clearFocus()
                 onDismissRequest()
-            }
+            },
     ) {
         Spacer(Modifier.weight(1f))
 
@@ -78,7 +78,7 @@ fun GenreSearchBottomSheet(
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                 .background(NapzakMarketTheme.colors.white)
                 .noRippleClickable { }
-                .padding(top = 30.dp)
+                .padding(top = 30.dp),
         ) {
             GenreSearchNoticeSection()
 
@@ -91,7 +91,7 @@ fun GenreSearchBottomSheet(
                     searchTerm = it
                     onTextChange(it)
                 },
-                modifier = Modifier.padding(horizontal = 20.dp)
+                modifier = Modifier.padding(horizontal = 20.dp),
             )
 
             Spacer(Modifier.height(10.dp))
@@ -108,7 +108,7 @@ fun GenreSearchBottomSheet(
                 ) {
                     itemsIndexed(
                         items = list,
-                        key = { _, genreItem -> genreItem.genreId }
+                        key = { _, genreItem -> genreItem.genreId },
                     ) { index, genreItem ->
                         GenreSearchItem(
                             genreName = genreItem.genreName,
@@ -118,7 +118,7 @@ fun GenreSearchBottomSheet(
                                 }
                                 focusManager.clearFocus()
                             },
-                            isLastItem = index == selectedGenreList.size - 1
+                            isLastItem = index == selectedGenreList.size - 1,
                         )
                     }
                 }
@@ -155,7 +155,7 @@ fun GenreSearchBottomSheet(
                 onClick = { onButtonClick(selectedGenreList) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(20.dp)
+                    .padding(20.dp),
             )
 
             Spacer(Modifier.height(35.dp))

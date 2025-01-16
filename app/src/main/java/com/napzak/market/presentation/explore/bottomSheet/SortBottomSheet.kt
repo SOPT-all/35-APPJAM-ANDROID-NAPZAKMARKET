@@ -42,7 +42,7 @@ fun SortBottomSheet(
             .background(NapzakMarketTheme.colors.black70)
             .noRippleClickable {
                 onDismissRequest()
-            }
+            },
     ) {
         val sortList = listOf<SortType>(
             SortType.RECENT,
@@ -59,14 +59,14 @@ fun SortBottomSheet(
                 .background(NapzakMarketTheme.colors.white)
                 .noRippleClickable { }
                 .padding(top = 20.dp)
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 20.dp),
         ) {
             sortList.forEach { sortItem ->
                 SortItem(
                     sortType = sortItem.label,
                     isSelected = sortItem.name == selectedSortType,
                     isLastItem = sortItem.name == SortType.LOW_PRICE.name,
-                    onSortItemClick = { onSortItemClick(sortItem.name) }
+                    onSortItemClick = { onSortItemClick(sortItem.name) },
                 )
             }
             Spacer(Modifier.height(20.dp))
@@ -102,7 +102,7 @@ fun SortItem(
         Text(
             text = sortType,
             style = NapzakMarketTheme.typography.titleSemi18,
-            color = if (isSelected) NapzakMarketTheme.colors.purple30 else NapzakMarketTheme.colors.gray900
+            color = if (isSelected) NapzakMarketTheme.colors.purple30 else NapzakMarketTheme.colors.gray900,
         )
         if (isSelected) {
             Spacer(Modifier.weight(1f))
@@ -110,7 +110,7 @@ fun SortItem(
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_check_24),
                 contentDescription = stringResource(check_button),
-                tint = NapzakMarketTheme.colors.purple30
+                tint = NapzakMarketTheme.colors.purple30,
             )
         }
     }

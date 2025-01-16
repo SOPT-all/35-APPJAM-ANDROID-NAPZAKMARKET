@@ -125,7 +125,7 @@ fun MyPageScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 30.dp),
+                    .padding(start = 19.dp, end = 24.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 MyPageMenuType.entries.forEach { menuType ->

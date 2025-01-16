@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.BottomSheetDefaults.DragHandle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -28,12 +27,11 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
 import com.napzak.market.core.designsystem.component.textField.SearchBox
 import androidx.compose.runtime.*
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
-import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.component.GenreChipButtonGroup
 import com.napzak.market.core.designsystem.component.button.EnableDisableTextButton
+import com.napzak.market.core.designsystem.component.item.GenreSearchItem
 import com.napzak.market.domain.genre.model.Genre
+import com.napzak.market.presentation.explore.component.GenreSearchNoticeSection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,36 +78,21 @@ fun GenreSearchBottomSheet(
             modifier = Modifier
                 .background(NapzakMarketTheme.colors.white)
         ) {
-            Column(
+            GenreSearchNoticeSection()
+
+            Spacer(Modifier.height(18.dp))
+
+            SearchBox(
+                placeholder = stringResource(R.string.genre_search_genre_example),
+                searchTerm = searchTerm,
+                onTextChange = {
+                    searchTerm = it
+                    onTextChange(it)
+                },
                 modifier = Modifier.padding(horizontal = 20.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.genre_search_select_genre),
-                    style = NapzakMarketTheme.typography.titleBold18,
-                    color = NapzakMarketTheme.colors.gray900
-                )
+            )
 
-                Spacer(Modifier.height(6.dp))
-
-                Text(
-                    text = stringResource(R.string.onboarding_top_choice),
-                    style = NapzakMarketTheme.typography.capSemi12,
-                    color = NapzakMarketTheme.colors.gray500
-                )
-
-                Spacer(Modifier.height(18.dp))
-
-                SearchBox(
-                    placeholder = stringResource(R.string.genre_search_genre_example),
-                    searchTerm = searchTerm,
-                    onTextChange = {
-                        searchTerm = it
-                        onTextChange(it)
-                    }
-                )
-
-                Spacer(Modifier.height(10.dp))
-            }
+            Spacer(Modifier.height(10.dp))
 
             Box(
                 modifier = Modifier
@@ -125,33 +108,15 @@ fun GenreSearchBottomSheet(
                         items = list,
                         key = { _, genreItem -> genreItem.genreId }
                     ) { index, genreItem ->
-                        val borderColor =
-                            if (index == selectedGenreList.size - 1) NapzakMarketTheme.colors.white else NapzakMarketTheme.colors.gray100
-
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .drawBehind {
-                                    drawLine(
-                                        color = borderColor,
-                                        start = Offset(0f, size.height - 1),
-                                        end = Offset(size.width, size.height - 1),
-                                        strokeWidth = 1.dp.toPx(),
-                                    )
+                        GenreSearchItem(
+                            genreName = genreItem.genreName,
+                            onGenreItemClick = {
+                                if (selectedGenreList.size < 4) {
+                                    selectedGenreList = selectedGenreList + genreItem
                                 }
-                                .noRippleClickable {
-                                    if (selectedGenreList.size < 4) {
-                                        selectedGenreList = selectedGenreList + genreItem
-                                    }
-                                }
-                                .padding(vertical = 20.dp)
-                        ) {
-                            Text(
-                                text = genreItem.genreName,
-                                style = NapzakMarketTheme.typography.bodySemi14,
-                                color = NapzakMarketTheme.colors.gray800
-                            )
-                        }
+                            },
+                            isLastItem = index == selectedGenreList.size - 1
+                        )
                     }
                 }
 

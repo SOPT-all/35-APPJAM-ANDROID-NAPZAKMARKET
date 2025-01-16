@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.search.component
+package com.napzak.market.core.designsystem.component.item
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -18,12 +18,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.presentation.search.component.GenreTextChip
 
+/**
+ * 장르 검색 시 하단에 보여지는 장르 item 컴포넌트
+ *
+ * @param genreName 장르 이름
+ * @param onGenreItemClick 장르 item을 클릭 시 실행되는 콜백
+ * @param modifier 수정자
+ * @param isGenreChipVisible 장르 Chip 보여짐 여부
+ * @param isLastItem 리스트의 마지막 아이템인지 알려주는 값
+ */
 @Composable
-fun SearchGenreItem(
+fun GenreSearchItem(
     genreName: String,
     onGenreItemClick: () -> Unit,
     modifier: Modifier = Modifier,
+    isGenreChipVisible: Boolean = false,
     isLastItem: Boolean = false,
 ) {
     val borderColor =
@@ -45,9 +56,11 @@ fun SearchGenreItem(
             .padding(vertical = 20.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        GenreTextChip()
+        if (isGenreChipVisible) {
+            GenreTextChip()
 
-        Spacer(Modifier.width(8.dp))
+            Spacer(Modifier.width(8.dp))
+        }
 
         Text(
             text = genreName,
@@ -65,14 +78,38 @@ private fun SearchGenreItemPreview(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .background(NapzakMarketTheme.colors.white)
     ) {
-        SearchGenreItem(
+        GenreSearchItem(
             genreName = "짱구는 못말려",
             onGenreItemClick = { },
             modifier = modifier,
         )
-        SearchGenreItem(
+        GenreSearchItem(
             genreName = "짱구는 못말려",
             onGenreItemClick = { },
+            modifier = modifier,
+            isLastItem = true
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SearchGenreItemPreview2(modifier: Modifier = Modifier) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(NapzakMarketTheme.colors.white)
+    ) {
+        GenreSearchItem(
+            genreName = "짱구는 못말려",
+            isGenreChipVisible = true,
+            onGenreItemClick = { },
+            modifier = modifier,
+        )
+        GenreSearchItem(
+            genreName = "짱구는 못말려",
+            onGenreItemClick = { },
+            isGenreChipVisible = true,
             modifier = modifier,
             isLastItem = true
         )

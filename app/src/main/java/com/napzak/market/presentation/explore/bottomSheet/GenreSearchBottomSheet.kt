@@ -2,11 +2,13 @@ package com.napzak.market.presentation.explore.bottomSheet
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -70,11 +72,11 @@ fun GenreSearchBottomSheet(
                 focusManager.clearFocus()
                 onDismissRequest()
             },
+        verticalArrangement = Arrangement.Bottom,
     ) {
-        Spacer(Modifier.weight(1f))
-
         Column(
             modifier = Modifier
+                .fillMaxHeight(0.75f)
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                 .background(NapzakMarketTheme.colors.white)
                 .noRippleClickable { }
@@ -99,7 +101,7 @@ fun GenreSearchBottomSheet(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(345.dp),
+                    .weight(1f),
             ) {
                 val list = if (searchTerm.isEmpty()) initialGenreList else genreList
 
@@ -158,7 +160,7 @@ fun GenreSearchBottomSheet(
                     .padding(20.dp),
             )
 
-            Spacer(Modifier.height(35.dp))
+            Spacer(Modifier.height(20.dp))
         }
     }
 }

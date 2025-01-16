@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.napzak.market.core.common.state.UiState
@@ -325,6 +326,7 @@ fun ExploreSuccessScreen(
     }
 
     ExploreBottomSheetScreen(
+        modifier = Modifier.zIndex(1f),
         bottomSheetState = bottomSheetState,
         selectedGenreList = selectedGenreList,
         initialGenreList = initialGenreList,

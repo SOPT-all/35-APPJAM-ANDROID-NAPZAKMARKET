@@ -1,6 +1,7 @@
 package com.napzak.market.presentation.explore.component
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.bottomSheet.GenreSearchBottomSheet
 import com.napzak.market.presentation.explore.bottomSheet.SortBottomSheet
@@ -9,6 +10,7 @@ import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
 
 @Composable
 fun ExploreBottomSheetScreen(
+    modifier: Modifier = Modifier,
     bottomSheetState: ExploreBottomSheetState,
     selectedGenreList: List<Genre>,
     initialGenreList: List<Genre>,
@@ -30,6 +32,7 @@ fun ExploreBottomSheetScreen(
 
         if (isGenreSearchingBottomSheetVisible) {
             GenreSearchBottomSheet(
+                modifier = modifier,
                 initialSelectedGenreList = selectedGenreList,
                 initialGenreList = initialGenreList,
                 genreList = genreList,

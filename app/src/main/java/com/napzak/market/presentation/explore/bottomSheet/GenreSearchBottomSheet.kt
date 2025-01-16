@@ -7,8 +7,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -42,6 +46,7 @@ fun GenreSearchBottomSheet(
     onDismissRequest: () -> Unit,
     onTextChange: (String) -> Unit,
     onButtonClick: (List<Genre>) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
@@ -75,7 +80,7 @@ fun GenreSearchBottomSheet(
         }
 
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .background(NapzakMarketTheme.colors.white)
         ) {
             GenreSearchNoticeSection()
@@ -147,8 +152,8 @@ fun GenreSearchBottomSheet(
             Spacer(Modifier.height(20.dp))
 
             EnableDisableTextButton(
-                text = setButtonText(selectedGenreList),
-                isEnabled = isButtonActivate(initialSelectedGenreList, selectedGenreList),
+                text = stringResource(R.string.genre_search_apply_button),
+                isEnabled = true,
                 onClick = { onButtonClick(selectedGenreList) },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -157,26 +162,5 @@ fun GenreSearchBottomSheet(
 
             Spacer(Modifier.height(35.dp))
         }
-    }
-}
-
-private fun isButtonActivate(
-    initialSelectedGenreList: List<Genre>,
-    selectedGenreList: List<Genre>,
-): Boolean {
-    return selectedGenreList.isNotEmpty() && !((initialSelectedGenreList.size == selectedGenreList.size) && initialSelectedGenreList.containsAll(
-        selectedGenreList
-    ))
-}
-
-@Composable
-private fun setButtonText(
-    selectedGenreList: List<Genre>,
-): String {
-    return if (selectedGenreList.isEmpty()) stringResource(R.string.genre_search_apply_button) else {
-        stringResource(
-            R.string.explore_product_count,
-            selectedGenreList.size
-        ) + stringResource(R.string.genre_search_apply_button)
     }
 }

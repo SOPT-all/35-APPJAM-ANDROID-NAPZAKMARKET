@@ -32,14 +32,19 @@ import com.napzak.market.R.string.view_my_market
 
 @Composable
 fun MyPageScreen(
-    onMyMarketClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    onMyMarketNavigate: () -> Unit,
+    onHistoryNavigate: () -> Unit,
+    onGenreNavigate: () -> Unit,
+    onFavoriteNavigate: () -> Unit,
+    onRecentNavigate: () -> Unit,
     viewModel: MyPageViewModel = hiltViewModel(),
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(NapzakMarketTheme.colors.white),
     ) {
@@ -104,7 +109,7 @@ fun MyPageScreen(
                     CommonButton(
                         text = stringResource(id = view_my_market),
                         onClick = {
-                            onMyMarketClick()
+                            onMyMarketNavigate()
                         },
                         buttonColors = ButtonDefaults.buttonColors(containerColor = NapzakMarketTheme.colors.purple30),
                         shape = RoundedCornerShape(12.dp),
@@ -129,21 +134,10 @@ fun MyPageScreen(
                             .weight(1f)
                             .clickable {
                                 when (menuType) {
-                                    MyPageMenuType.HISTORY -> {
-                                        // TODO: 판매/구매 내역 화면으로 이동
-                                    }
-
-                                    MyPageMenuType.GENRE -> {
-                                        // TODO: 관심 장르 화면으로 이동
-                                    }
-
-                                    MyPageMenuType.FAVORITE -> {
-                                        // TODO: 찜한 상품 화면으로 이동
-                                    }
-
-                                    MyPageMenuType.RECENT -> {
-                                        // TODO: 최근 본 상품 화면으로 이동
-                                    }
+                                    MyPageMenuType.HISTORY -> onHistoryNavigate()
+                                    MyPageMenuType.GENRE -> onGenreNavigate()
+                                    MyPageMenuType.FAVORITE -> onFavoriteNavigate()
+                                    MyPageMenuType.RECENT -> onRecentNavigate()
                                 }
                             },
                     ) {
@@ -173,8 +167,20 @@ fun MyPageScreen(
 fun MyPageScreenPreview() {
     NapzakMarketTheme {
         MyPageScreen(
-            onMyMarketClick = {
+            onMyMarketNavigate = {
                 println("Navigating to 'My Market' screen")
+            },
+            onHistoryNavigate = {
+                println("Navigating to 'History' screen")
+            },
+            onGenreNavigate = {
+                println("Navigating to 'Genre' screen")
+            },
+            onFavoriteNavigate = {
+                println("Navigating to 'Favorite' screen")
+            },
+            onRecentNavigate = {
+                println("Navigating to 'Recent' screen")
             }
         )
     }

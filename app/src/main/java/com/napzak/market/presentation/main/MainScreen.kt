@@ -89,6 +89,5 @@ private fun MainNavHost(
             onExploreNavigate = navigator.navController::navigateToExplore,
         )
         homeGraph(modifier = modifier)
-        exploreGraph(modifier = modifier)
     }
 }

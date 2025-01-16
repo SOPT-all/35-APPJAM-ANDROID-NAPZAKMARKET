@@ -3,7 +3,6 @@ package com.napzak.market.presentation.registration.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
@@ -21,9 +20,18 @@ import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
+/**
+ * Registration genre button
+ *
+ * 클릭스 bottomSheet가 올라오는 장르 버튼
+ *
+ * @param onGenreClick
+ * @param modifier
+ */
+
 @Composable
 fun RegistrationGenreButton(
-    onButtonClick: () -> Unit,
+    onGenreClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -31,7 +39,7 @@ fun RegistrationGenreButton(
     ) {
         Row(
             modifier = Modifier
-                .noRippleClickable(onButtonClick)
+                .noRippleClickable(onGenreClick)
                 .fillMaxWidth()
                 .padding(bottom = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -62,7 +70,7 @@ fun RegistrationGenreButton(
 private fun RegistrationGenreButtonPreview() {
     NapzakMarketTheme {
         RegistrationGenreButton(
-            onButtonClick = { }
+            onGenreClick = { }
         )
     }
 }

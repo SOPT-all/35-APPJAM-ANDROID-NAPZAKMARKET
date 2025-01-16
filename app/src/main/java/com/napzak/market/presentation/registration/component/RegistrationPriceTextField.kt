@@ -63,7 +63,7 @@ fun RegistrationPriceTextField(
                     modifier = Modifier.align(Alignment.CenterEnd),
                     text = stringResource(R.string.regi_price_won),
                     style = NapzakMarketTheme.typography.bodyMedium16,
-                    color = NapzakMarketTheme.colors.gray600,
+                    color = NapzakMarketTheme.colors.gray600
                 )
             }
         }
@@ -79,7 +79,7 @@ private fun RegistrationPriceTextFieldPreview() {
             RegistrationPriceTextField(
                 price = text,
                 placeholder = "0",
-                onPriceChange = { }
+                onPriceChange = { text = it }
             )
         }
     }

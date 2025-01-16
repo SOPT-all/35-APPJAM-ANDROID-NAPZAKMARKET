@@ -46,7 +46,7 @@ fun RegistrationNumberTextField(
     val borderColor = NapzakMarketTheme.colors.gray300
 
     Row(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Box {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -73,7 +73,7 @@ fun RegistrationNumberTextField(
                     decorationBox = { innerTextField ->
                         Box(
                             modifier = Modifier
-                                .padding(end = 61.dp, bottom = 8.dp)
+                                .padding(end = 61.dp, bottom = 8.dp),
                         ) {
                             if (number.isEmpty()) {
                                 Text(
@@ -85,7 +85,7 @@ fun RegistrationNumberTextField(
                             }
                             innerTextField()
                         }
-                    }
+                    },
                 )
             }
         }

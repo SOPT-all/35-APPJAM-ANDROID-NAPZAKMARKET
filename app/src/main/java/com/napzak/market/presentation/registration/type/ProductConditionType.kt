@@ -6,5 +6,5 @@ enum class ProductConditionType(
     UNUSED(condition = "미개봉"),
     GOOD(condition = "아주 좋은 상태"),
     SOSO(condition = "약간의 사용감"),
-    USED(condition = "사용감")
+    USED(condition = "사용감"),
 }

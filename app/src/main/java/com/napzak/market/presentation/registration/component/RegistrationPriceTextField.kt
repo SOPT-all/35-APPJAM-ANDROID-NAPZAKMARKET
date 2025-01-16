@@ -66,7 +66,7 @@ fun RegistrationPriceTextField(
                     color = NapzakMarketTheme.colors.gray600,
                 )
             }
-        }
+        },
     )
 }
 

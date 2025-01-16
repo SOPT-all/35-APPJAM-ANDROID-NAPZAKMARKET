@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.napzak.market.R
+import com.napzak.market.R.string.navigation_icon_description
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
@@ -54,7 +54,7 @@ fun CommonTopBar(
             if (navigationIcon != null) {
                 Icon(
                     imageVector = navigationIcon,
-                    contentDescription = stringResource(id = R.string.navigation_icon_description),
+                    contentDescription = stringResource(navigation_icon_description),
                     tint = contentColor,
                     modifier = Modifier
                         .align(Alignment.CenterStart)

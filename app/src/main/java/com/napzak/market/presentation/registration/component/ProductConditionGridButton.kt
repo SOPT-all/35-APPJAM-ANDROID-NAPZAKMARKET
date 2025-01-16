@@ -50,7 +50,7 @@ fun ProductConditionGridButton(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                rowItems.forEachIndexed { _, item ->
+                rowItems.forEach { item ->
                     val index = conditionType.indexOf(item)
                     ProductConditionItem(
                         modifier = Modifier

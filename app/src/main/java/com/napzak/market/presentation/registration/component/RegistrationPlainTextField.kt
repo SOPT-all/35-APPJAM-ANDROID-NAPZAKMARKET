@@ -49,7 +49,7 @@ fun RegistrationPlainTextField(
         modifier = modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.End,
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         BasicTextField(
             modifier = Modifier
@@ -73,7 +73,7 @@ fun RegistrationPlainTextField(
                     )
                 }
                 innerTextField()
-            }
+            },
         )
         TextFieldCounter(
             currentLength = text.length,
@@ -83,10 +83,10 @@ fun RegistrationPlainTextField(
 }
 
 @Composable
-fun TextFieldCounter(
+private fun TextFieldCounter(
     currentLength: Int,
     maxLength: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val countColor = if (currentLength > 0) NapzakMarketTheme.colors.gray900 else NapzakMarketTheme.colors.gray400
     val annotatedString = buildAnnotatedString {

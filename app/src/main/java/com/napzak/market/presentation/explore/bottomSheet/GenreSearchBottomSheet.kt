@@ -84,7 +84,7 @@ fun GenreSearchBottomSheet(
                 modifier = Modifier.padding(horizontal = 20.dp)
             ) {
                 Text(
-                    text = stringResource(R.string.genre_searching_select_genre),
+                    text = stringResource(R.string.genre_search_select_genre),
                     style = NapzakMarketTheme.typography.titleBold18,
                     color = NapzakMarketTheme.colors.gray900
                 )
@@ -100,7 +100,7 @@ fun GenreSearchBottomSheet(
                 Spacer(Modifier.height(18.dp))
 
                 SearchBox(
-                    placeholder = stringResource(R.string.genre_searching_genre_example),
+                    placeholder = stringResource(R.string.genre_search_genre_example),
                     searchTerm = searchTerm,
                     onTextChange = {
                         searchTerm = it
@@ -182,7 +182,7 @@ fun GenreSearchBottomSheet(
             Spacer(Modifier.height(20.dp))
 
             EnableDisableTextButton(
-                text = "적용하기",
+                text = setButtonText(selectedGenreList),
                 isEnabled = isButtonActivate(initialSelectedGenreList, selectedGenreList),
                 onClick = { onButtonClick(selectedGenreList) },
                 modifier = Modifier
@@ -195,10 +195,23 @@ fun GenreSearchBottomSheet(
     }
 }
 
-private fun isButtonActivate(list1: List<Genre>, list2: List<Genre>): Boolean {
-    return list1.size == list2.size && list1.containsAll(list2)
+private fun isButtonActivate(
+    initialSelectedGenreList: List<Genre>,
+    selectedGenreList: List<Genre>,
+): Boolean {
+    return selectedGenreList.isNotEmpty() && !((initialSelectedGenreList.size == selectedGenreList.size) && initialSelectedGenreList.containsAll(
+        selectedGenreList
+    ))
 }
 
-//private fun setButtonText(isEnabled: Boolean): String {
-//    return if (isEnabled)
-//}
+@Composable
+private fun setButtonText(
+    selectedGenreList: List<Genre>,
+): String {
+    return if (selectedGenreList.isEmpty()) stringResource(R.string.genre_search_apply_button) else {
+        stringResource(
+            R.string.explore_product_count,
+            selectedGenreList.size
+        ) + stringResource(R.string.genre_search_apply_button)
+    }
+}

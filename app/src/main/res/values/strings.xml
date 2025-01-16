@@ -55,6 +55,7 @@
     <string name="onboarding_text_field_placeholder">원하는 장르를 직접 입력해 검색해보세요.</string>
 
     <!-- GenreSearch BottomSheet -->
-    <string name="genre_searching_select_genre">원하는 장르를 선택해주세요.</string>
-    <string name="genre_searching_genre_example">예) 건담, 산리오, 주술회전</string>
+    <string name="genre_search_select_genre">원하는 장르를 선택해주세요.</string>
+    <string name="genre_search_genre_example">예) 건담, 산리오, 주술회전</string>
+    <string name="genre_search_apply_button">적용하기</string>
 </resources>

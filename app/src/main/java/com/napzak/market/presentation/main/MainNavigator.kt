@@ -14,6 +14,7 @@ import androidx.navigation.navOptions
 import com.napzak.market.presentation.dummy.navigation.navigateToDummy
 import com.napzak.market.presentation.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.main.type.MainTab
+import com.napzak.market.presentation.mypage.navigation.navigateToMyPage
 import com.napzak.market.presentation.onboarding.navigation.Onboarding
 
 class MainNavigator(
@@ -57,7 +58,7 @@ class MainNavigator(
                 this.registerDialogVisibilityState = !this.registerDialogVisibilityState
             }
             MainTab.CHAT -> {/*TODO: 채팅화면 연결*/}
-            MainTab.MY ->  {/*TODO: 마이페이지 화면 연결*/}
+            MainTab.MY -> navController.navigateToMyPage(navOptions)
         }
     }
 

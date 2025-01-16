@@ -10,7 +10,7 @@ import com.napzak.market.presentation.mypage.MyPageScreen
 import kotlinx.serialization.Serializable
 
 fun NavController.navigateToMyPage(navOptions: NavOptions? = null) {
-    navigate(MyPage.route, navOptions)
+    navigate(MyPage, navOptions)
 }
 
 fun NavGraphBuilder.myPageGraph(
@@ -21,7 +21,7 @@ fun NavGraphBuilder.myPageGraph(
     onFavoriteNavigate: () -> Unit,
     onRecentNavigate: () -> Unit
 ) {
-    composable(route = MyPage.route) {
+    composable<MyPage> {
         MyPageScreen(
             modifier = modifier,
             onMyMarketNavigate = onMyMarketNavigate,
@@ -34,6 +34,4 @@ fun NavGraphBuilder.myPageGraph(
 }
 
 @Serializable
-data object MyPage : MainTabRoute {
-    const val route = "my_page"
-}
+data object MyPage : MainTabRoute

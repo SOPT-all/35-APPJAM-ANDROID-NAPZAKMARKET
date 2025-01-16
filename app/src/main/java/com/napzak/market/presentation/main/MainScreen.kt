@@ -17,6 +17,7 @@ import com.napzak.market.presentation.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.main.component.MainBottomBar
 import com.napzak.market.presentation.main.component.MainRegisterDialog
 import com.napzak.market.presentation.main.type.MainTab
+import com.napzak.market.presentation.mypage.navigation.myPageGraph
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
 import com.napzak.market.presentation.search.navigation.navigateToSearch
 import com.napzak.market.presentation.search.navigation.searchGraph
@@ -89,6 +90,14 @@ private fun MainNavHost(
         searchGraph(
             modifier = modifier,
             onExploreNavigate = navigator.navController::navigateToExplore,
+        )
+        myPageGraph(
+            modifier = modifier,
+            onMyMarketNavigate = {},
+            onHistoryNavigate = {},
+            onGenreNavigate = {},
+            onFavoriteNavigate = {},
+            onRecentNavigate = {}
         )
     }
 }

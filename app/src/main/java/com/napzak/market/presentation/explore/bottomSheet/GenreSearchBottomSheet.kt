@@ -64,17 +64,15 @@ fun GenreSearchBottomSheet(
         modifier = modifier
             .fillMaxSize()
             .background(NapzakMarketTheme.colors.black70)
+            .noRippleClickable(onDismissRequest)
     ) {
-        Box(
-            Modifier
-                .weight(1f)
-                .noRippleClickable { onDismissRequest() }
-        )
+        Spacer(Modifier.weight(1f))
 
         Column(
             modifier = Modifier
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                 .background(NapzakMarketTheme.colors.white)
+                .noRippleClickable{ }
                 .padding(top = 30.dp)
         ) {
             GenreSearchNoticeSection()

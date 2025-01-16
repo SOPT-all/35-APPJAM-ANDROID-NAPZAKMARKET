@@ -119,7 +119,7 @@ private fun HomeScreen(
                             onItemClick = onItemClick,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 43.dp),
+                                .padding(top = 43.dp, bottom = 40.dp),
                         )
                     }
                 )

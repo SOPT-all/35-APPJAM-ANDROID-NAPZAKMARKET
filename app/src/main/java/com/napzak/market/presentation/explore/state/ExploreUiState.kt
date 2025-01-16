@@ -14,6 +14,8 @@ data class ExploreUiState(
     val exploreScreenType: String = ExploreScreenType.BASIC.name,
     val initSearchTerm: String? = null,
     val tradeType: String = TradeType.SELL.name,
+    val initGenreList: List<Genre> = emptyList(),
+    val selectedGenreList: List<Genre> = emptyList(),
     val genreList: List<Genre> = emptyList(),
     val isOnSale: Boolean = false,
     val isUnopened: Boolean = false,

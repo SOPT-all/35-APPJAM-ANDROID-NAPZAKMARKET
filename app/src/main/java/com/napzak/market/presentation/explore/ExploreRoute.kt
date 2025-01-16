@@ -61,6 +61,7 @@ fun ExploreRoute(
             viewModel.initExploreScreenState(searchTerm, genreId)
         }
         viewModel.getExploreProductInformation()
+        viewModel.initGenreList()
     }
 
     ExploreScreen(
@@ -80,7 +81,9 @@ fun ExploreRoute(
         onSortItemClick = {
             viewModel.updateSortType(it)
             viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.SORT)
-        }
+        },
+        onTextChange = { viewModel.changeSearchText(it) },
+        onGenreSelectButtonClick = viewModel::updateSelectedGenreList,
     )
 }
 
@@ -99,6 +102,8 @@ fun ExploreScreen(
     onLikeClick: (Int) -> Unit,
     onDismissRequest: (ExploreBottomSheetType) -> Unit,
     onSortItemClick: (String) -> Unit,
+    onTextChange: (String) -> Unit,
+    onGenreSelectButtonClick: (List<Genre>) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (uiState.loadState) {
@@ -119,7 +124,8 @@ fun ExploreScreen(
                     exploreScreenType = exploreScreenType,
                     initSearchTerm = initSearchTerm,
                     tradeType = tradeType,
-                    genreList = genreList,
+                    selectedGenreList = selectedGenreList,
+                    genreList = initGenreList,
                     isOnSale = isOnSale,
                     isUnopened = isUnopened,
                     productList = uiState.loadState.data.productList,
@@ -135,6 +141,8 @@ fun ExploreScreen(
                     onLikeClick = onLikeClick,
                     onDismissRequest = onDismissRequest,
                     onSortItemClick = onSortItemClick,
+                    onTextChange = onTextChange,
+                    onGenreSelectButtonClick = onGenreSelectButtonClick,
                 )
             }
         }
@@ -148,6 +156,7 @@ fun ExploreSuccessScreen(
     exploreScreenType: String,
     initSearchTerm: String?,
     tradeType: String,
+    selectedGenreList: List<Genre>,
     genreList: List<Genre>,
     isOnSale: Boolean,
     isUnopened: Boolean,
@@ -164,6 +173,8 @@ fun ExploreSuccessScreen(
     onLikeClick: (Int) -> Unit,
     onDismissRequest: (ExploreBottomSheetType) -> Unit,
     onSortItemClick: (String) -> Unit,
+    onTextChange: (String) -> Unit,
+    onGenreSelectButtonClick: (List<Genre>) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -219,7 +230,7 @@ fun ExploreSuccessScreen(
                     Box(
                         modifier = Modifier
                             .size(48.dp)
-                            .noRippleClickable { onBackButtonClick(genreList[0].genreName) },
+                            .noRippleClickable { onBackButtonClick(selectedGenreList[0].genreName) },
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
@@ -232,7 +243,7 @@ fun ExploreSuccessScreen(
                         placeholder = stringResource(R.string.explore_search_box_placeholder),
                         readOnly = true,
                         modifier = Modifier
-                            .noRippleClickable { onSearchBoxClick(genreList[0].genreName) },
+                            .noRippleClickable { onSearchBoxClick(selectedGenreList[0].genreName) },
                     )
                 }
             }
@@ -247,7 +258,7 @@ fun ExploreSuccessScreen(
 
         ExploreFilterGroup(
             tradeType = tradeType,
-            genreList = genreList,
+            genreList = selectedGenreList,
             isOnSale = isOnSale,
             isUnopened = isUnopened,
             onGenreListClick = onGenreListClick,
@@ -311,9 +322,13 @@ fun ExploreSuccessScreen(
 
     ExploreBottomSheetScreen(
         bottomSheetState = bottomSheetState,
+        selectedGenreList = selectedGenreList,
+        genreList = genreList,
         sortType = sortType,
         onDismissRequest = onDismissRequest,
         onSortItemClick = onSortItemClick,
+        onTextChange = onTextChange,
+        onGenreSelectButtonClick = onGenreSelectButtonClick,
     )
 }
 
@@ -328,6 +343,7 @@ private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
         tradeType = TradeType.SELL.name,
         exploreScreenType = ExploreScreenType.BASIC.name,
         initSearchTerm = "",
+        selectedGenreList = emptyList(),
         genreList = emptyList(),
         isOnSale = false,
         isUnopened = false,
@@ -344,5 +360,7 @@ private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
         onLikeClick = { },
         onDismissRequest = { },
         onSortItemClick = { },
+        onTextChange = { },
+        onGenreSelectButtonClick = { },
     )
 }

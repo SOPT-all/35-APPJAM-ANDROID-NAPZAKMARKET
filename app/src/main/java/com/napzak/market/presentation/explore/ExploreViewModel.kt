@@ -1,6 +1,7 @@
 package com.napzak.market.presentation.explore
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.domain.genre.model.Genre
@@ -11,10 +12,14 @@ import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
 import com.napzak.market.presentation.explore.type.ExploreScreenType
 import com.napzak.market.presentation.explore.type.SortType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,12 +33,20 @@ class ExploreViewModel @Inject constructor(
         MutableStateFlow(ExploreBottomSheetState())
     val bottomSheetState: StateFlow<ExploreBottomSheetState> = _bottomSheetState.asStateFlow()
 
+    private val _searchTerm: MutableStateFlow<String> = MutableStateFlow("")
+    val searchTerm = _searchTerm.asStateFlow()
+
     fun initExploreScreenState(searchTerm: String?, genreId: Long?) {
         _uiState.update { currentState ->
             if (genreId != null) { /* 장르 선택 검색인 경우 */
                 currentState.copy(
                     exploreScreenType = ExploreScreenType.GENRE_SEARCH_RESULT.name,
-                    genreList = listOf(Genre(genreId = genreId, genreName = searchTerm.toString())),
+                    selectedGenreList = listOf(
+                        Genre(
+                            genreId = genreId,
+                            genreName = searchTerm.toString()
+                        )
+                    ),
                 )
             } else { /* 일반 검색인 경우 */
                 currentState.copy(
@@ -44,8 +57,78 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
+    fun initGenreList() {
+        /* TODO: 장르 리스트 조회 API 연결 */
+        _uiState.update { currentState ->
+            currentState.copy(
+                initGenreList = listOf(
+                    Genre(
+                        genreId = 1,
+                        genreName = "나루토",
+                    ),
+                    Genre(
+                        genreId = 2,
+                        genreName = "원피스",
+                    ),
+                    Genre(
+                        genreId = 3,
+                        genreName = "블리치",
+                    ),
+                    Genre(
+                        genreId = 4,
+                        genreName = "귀멸의 칼날",
+                    ),
+                    Genre(
+                        genreId = 5,
+                        genreName = "주술회전",
+                    ),
+                    Genre(
+                        genreId = 6,
+                        genreName = "진격의 거인",
+                    ),
+                    Genre(
+                        genreId = 7,
+                        genreName = "데스노트",
+                    ),
+                    Genre(
+                        genreId = 8,
+                        genreName = "짱구는 못말려",
+                    ),
+                    Genre(
+                        genreId = 9,
+                        genreName = "도라에몽",
+                    ),
+                    Genre(
+                        genreId = 10,
+                        genreName = "강철의 연금술사",
+                    ),
+                    Genre(
+                        genreId = 11,
+                        genreName = "체인소맨",
+                    ),
+                    Genre(
+                        genreId = 12,
+                        genreName = "원펀맨",
+                    ),
+                    Genre(
+                        genreId = 13,
+                        genreName = "드래곤볼",
+                    ),
+                    Genre(
+                        genreId = 14,
+                        genreName = "명탐정 코난",
+                    ),
+                    Genre(
+                        genreId = 15,
+                        genreName = "슬램덩크",
+                    )
+                )
+            )
+        }
+    }
+
     fun getExploreProductInformation() {
-        /* TODO: 리스트 조회 API 연결 */
+        /* TODO: 상품 리스트 조회 API 연결 */
         updateLoadState(
             loadState = UiState.Success(
                 ExploreProductInformation(
@@ -111,12 +194,51 @@ class ExploreViewModel @Inject constructor(
         )
     }
 
+    fun changeSearchText(newValue: String) = viewModelScope.launch {
+        updateSearchValue(newValue)
+        debounceSearch()
+    }
+
+    private fun updateSearchValue(newValue: String) = _searchTerm.update { newValue }
+
+    @OptIn(FlowPreview::class)
+    private suspend fun debounceSearch() = _searchTerm.debounce(DEBOUNCE_DELAY)
+        .collectLatest { debounced ->
+            getGenreList(debounced)
+        }
+
+    // TODO: 서버 통신으로 대체
+    private fun getGenreList(searchTerm: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                genreList = if (searchTerm.isEmpty()) {
+                    uiState.value.initGenreList
+                } else {
+                    uiState.value.initGenreList.filter {
+                        it.genreName.contains(searchTerm)
+                    }
+                }
+            )
+        }
+    }
+
     fun updateTradeType(newTradeType: String) {
         _uiState.update { currentState ->
             currentState.copy(
                 tradeType = newTradeType,
                 sortType = SortType.RECENT.name
             )
+        }
+        getExploreProductInformation()
+    }
+
+    fun updateSelectedGenreList(newSelectedGenreList: List<Genre>) {
+        if (_uiState.value.selectedGenreList.size <= 4) {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    selectedGenreList = newSelectedGenreList
+                )
+            }
         }
         getExploreProductInformation()
     }
@@ -174,4 +296,8 @@ class ExploreViewModel @Inject constructor(
                 loadState = loadState
             )
         }
+
+    companion object {
+        private const val DEBOUNCE_DELAY = 500L
+    }
 }

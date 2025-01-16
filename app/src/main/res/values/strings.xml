@@ -52,6 +52,14 @@
     <string name="explore_product">상품 </string>
     <string name="explore_product_count">%d개</string>
 
+    <!-- MypageScreen -->
+    <string name="menu_history">판매/구매 내역</string>
+    <string name="menu_genre">관심 장르</string>
+    <string name="menu_favorite">찜한 상품</string>
+    <string name="menu_recent">최근 본 상품</string>
+    <string name="mypage_title">마이페이지</string>
+    <string name="view_my_market">내 마켓 보기</string>
+
     <!-- SearchScreen -->
     <string name="search_genre">장르</string>
 
@@ -61,4 +69,7 @@
     <string name="onboarding_bottom_bar_complete">선택 완료! 시작하기</string>
     <string name="onboarding_bottom_bar_skip">나중에 설정할래요</string>
     <string name="onboarding_text_field_placeholder">원하는 장르를 직접 입력해 검색해보세요.</string>"
+
+    <!-- MypageScreen -->
+    <string name="profile_image_description">프로필 이미지</string>
 </resources>

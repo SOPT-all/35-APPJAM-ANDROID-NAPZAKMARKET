@@ -26,10 +26,10 @@ fun CommonButton(
     text: String,
     onClick: () -> Unit,
     buttonColors: ButtonColors,
-    contentPadding: PaddingValues,
     shape: RoundedCornerShape,
     textStyle: TextStyle,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 0.dp),
     isEnabled: Boolean = true,
 ) {
     Button(

@@ -9,6 +9,7 @@ import com.napzak.market.core.common.navigation.Route
 import com.napzak.market.presentation.dummy.navigation.Dummy
 import com.napzak.market.presentation.explore.navigation.Explore
 import com.napzak.market.presentation.home.navigation.Home
+import com.napzak.market.presentation.mypage.navigation.MyPage
 
 
 // TODO: 구현 시작 시 수정
@@ -46,7 +47,7 @@ enum class MainTab(
         selectedIcon = R.drawable.ic_my_select_28,
         unselectedIcon = R.drawable.ic_my_unselect_28,
         contentDescription = R.string.main_bottom_bar_my,
-        route = Dummy, // TODO: My 루트로 변경
+        route = MyPage,
     );
 
     companion object {

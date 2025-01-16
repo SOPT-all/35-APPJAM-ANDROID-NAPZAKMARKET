@@ -43,24 +43,24 @@ fun RegistrationGenreButton(
                 .fillMaxWidth()
                 .padding(bottom = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = stringResource(R.string.search_genre),
                 style = NapzakMarketTheme.typography.bodySemi16,
-                color = NapzakMarketTheme.colors.gray900
+                color = NapzakMarketTheme.colors.gray900,
             )
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_more_18),
                 contentDescription = null,
-                tint = NapzakMarketTheme.colors.gray400
+                tint = NapzakMarketTheme.colors.gray400,
             )
         }
         HorizontalDivider(
             modifier = Modifier
                 .align(Alignment.BottomCenter),
             color = NapzakMarketTheme.colors.gray200,
-            thickness = 1.dp
+            thickness = 1.dp,
         )
     }
 }

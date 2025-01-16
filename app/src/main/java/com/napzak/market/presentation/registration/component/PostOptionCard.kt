@@ -62,15 +62,15 @@ fun PostOptionCard(
             .fillMaxWidth()
             .background(NapzakMarketTheme.colors.white, RoundedCornerShape(12.dp))
             .border(1.dp, NapzakMarketTheme.colors.gray200, RoundedCornerShape(12.dp))
-            .padding(vertical = 10.dp, horizontal = 15.dp)
+            .padding(vertical = 10.dp, horizontal = 15.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 RegistrationCheckBox(
                     isChecked = isChecked,
@@ -80,7 +80,7 @@ fun PostOptionCard(
                 Text(
                     text = title,
                     style = NapzakMarketTheme.typography.bodySemi14,
-                    color = NapzakMarketTheme.colors.gray900
+                    color = NapzakMarketTheme.colors.gray900,
                 )
             }
             Icon(
@@ -92,17 +92,17 @@ fun PostOptionCard(
                 ),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_up_24),
                 contentDescription = null,
-                tint = NapzakMarketTheme.colors.gray400
+                tint = NapzakMarketTheme.colors.gray400,
             )
         }
         AnimatedVisibility(
             visible = isChecked,
             enter = expandVertically(
-                expandFrom = Alignment.Top
+                expandFrom = Alignment.Top,
             ),
             exit = shrinkVertically(
-                shrinkTowards = Alignment.Top
-            )
+                shrinkTowards = Alignment.Top,
+            ),
         ) {
             RegistrationPriceTextField(
                 modifier = Modifier
@@ -111,7 +111,7 @@ fun PostOptionCard(
                     .padding(vertical = 11.dp, horizontal = 15.dp),
                 price = price,
                 placeholder = placeHolder,
-                onPriceChange = onPriceChange
+                onPriceChange = onPriceChange,
             )
         }
     }

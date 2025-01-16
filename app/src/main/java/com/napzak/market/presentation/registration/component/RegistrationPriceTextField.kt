@@ -42,12 +42,12 @@ fun RegistrationPriceTextField(
         modifier = modifier.fillMaxWidth(),
         value = price,
         textStyle = NapzakMarketTheme.typography.bodyMedium14.copy(
-            color = NapzakMarketTheme.colors.gray900
+            color = NapzakMarketTheme.colors.gray900,
         ),
         onValueChange = onPriceChange,
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(
-            keyboardType = KeyboardType.NumberPassword
+            keyboardType = KeyboardType.NumberPassword,
         ),
         decorationBox = { innerTextField ->
             Box {
@@ -55,7 +55,7 @@ fun RegistrationPriceTextField(
                     Text(
                         text = placeholder,
                         style = NapzakMarketTheme.typography.bodyMedium16,
-                        color = NapzakMarketTheme.colors.gray400
+                        color = NapzakMarketTheme.colors.gray400,
                     )
                 }
                 innerTextField()
@@ -63,7 +63,7 @@ fun RegistrationPriceTextField(
                     modifier = Modifier.align(Alignment.CenterEnd),
                     text = stringResource(R.string.regi_price_won),
                     style = NapzakMarketTheme.typography.bodyMedium16,
-                    color = NapzakMarketTheme.colors.gray600
+                    color = NapzakMarketTheme.colors.gray600,
                 )
             }
         }

@@ -58,17 +58,17 @@ fun RegistrationNumberTextField(
                                 color = borderColor,
                                 start = Offset(0f, size.height),
                                 end = Offset(size.width, size.height),
-                                strokeWidth = 1.dp.toPx()
+                                strokeWidth = 1.dp.toPx(),
                             )
                         },
                     value = number,
                     textStyle = NapzakMarketTheme.typography.bodyMedium16.copy(
-                        color = NapzakMarketTheme.colors.gray900
+                        color = NapzakMarketTheme.colors.gray900,
                     ),
                     onValueChange = onNumberChange,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.NumberPassword
+                        keyboardType = KeyboardType.NumberPassword,
                     ),
                     decorationBox = { innerTextField ->
                         Box(
@@ -80,7 +80,7 @@ fun RegistrationNumberTextField(
                                     modifier = Modifier,
                                     text = placeholder,
                                     style = NapzakMarketTheme.typography.bodyMedium16,
-                                    color = NapzakMarketTheme.colors.gray400
+                                    color = NapzakMarketTheme.colors.gray400,
                                 )
                             }
                             innerTextField()

@@ -39,16 +39,16 @@ fun ProductConditionGridButton(
     conditionType: List<String>,
     selectedIndex: Int,
     onIndexSelected: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         conditionType.chunked(2).forEach { rowItems ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 rowItems.forEachIndexed { _, item ->
                     val index = conditionType.indexOf(item)
@@ -57,7 +57,7 @@ fun ProductConditionGridButton(
                             .weight(1f)
                             .noRippleClickable { onIndexSelected(index) },
                         condition = item,
-                        isSelected = selectedIndex == index
+                        isSelected = selectedIndex == index,
                     )
                 }
             }
@@ -81,12 +81,12 @@ fun ProductConditionItem(
             .background(backgroundColor, RoundedCornerShape(12.dp))
             .border(1.dp, borderColor, RoundedCornerShape(12.dp))
             .padding(vertical = 10.dp),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             text = condition,
             style = NapzakMarketTheme.typography.bodyMedium14,
-            color = textColor
+            color = textColor,
         )
     }
 }

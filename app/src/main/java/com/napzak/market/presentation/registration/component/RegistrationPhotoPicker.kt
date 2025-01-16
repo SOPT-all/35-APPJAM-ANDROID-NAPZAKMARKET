@@ -104,12 +104,12 @@ private fun PhotoRegisterButton(
             .background(NapzakMarketTheme.colors.gray100)
             .padding(vertical = 17.5.dp, horizontal = 26.dp)
             .noRippleClickable(onPhotoClick),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_photo_28),
             contentDescription = null,
-            tint = Color.Unspecified
+            tint = Color.Unspecified,
         )
         val textColor = if (imageNumber > 0) NapzakMarketTheme.colors.gray700 else NapzakMarketTheme.colors.gray500
         val imageNumberText = buildAnnotatedString {
@@ -122,7 +122,7 @@ private fun PhotoRegisterButton(
         }
         Text(
             text = imageNumberText,
-            style = NapzakMarketTheme.typography.capSemi12
+            style = NapzakMarketTheme.typography.capSemi12,
         )
     }
 }
@@ -156,7 +156,7 @@ private fun PhotoContainer(
                 .background(NapzakMarketTheme.colors.gray600)
                 .width(80.dp)
                 .aspectRatio(1f)
-                .noRippleCombineClickable { onLongPressed(index) }
+                .noRippleCombineClickable { onLongPressed(index) },
         ) {
             if (index == 0) {
                 Text(
@@ -167,7 +167,7 @@ private fun PhotoContainer(
                     text = stringResource(R.string.regi_represent_image),
                     style = NapzakMarketTheme.typography.capMedium12,
                     color = NapzakMarketTheme.colors.white,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
             }
         }
@@ -177,7 +177,7 @@ private fun PhotoContainer(
                 .noRippleClickable { onDeleteClick(index) },
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_close_circle_28),
             contentDescription = stringResource(R.string.x_circle_button),
-            tint = Color.Unspecified
+            tint = Color.Unspecified,
         )
     }
 }

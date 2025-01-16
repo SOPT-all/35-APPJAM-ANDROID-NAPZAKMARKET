@@ -39,13 +39,13 @@ fun PostPriceSelector(
 ) {
     val tabs = listOf(
         stringResource(id = R.string.regi_post_price_include),
-        stringResource(id = R.string.regi_post_price_exclude)
+        stringResource(id = R.string.regi_post_price_exclude),
     )
     Box(
         modifier = modifier
             .fillMaxWidth()
             .background(NapzakMarketTheme.colors.gray100, RoundedCornerShape(10.dp))
-            .padding(3.dp)
+            .padding(3.dp),
     ) {
         Row {
             tabs.forEachIndexed { index, tab ->
@@ -78,7 +78,7 @@ private fun PostPriceSelectorIndicator(
         text = title,
         style = NapzakMarketTheme.typography.bodySemi14,
         color = textColor,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
     )
 }
 

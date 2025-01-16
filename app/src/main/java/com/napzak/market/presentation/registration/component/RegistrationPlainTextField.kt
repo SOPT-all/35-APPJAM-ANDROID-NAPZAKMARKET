@@ -69,7 +69,7 @@ fun RegistrationPlainTextField(
                     Text(
                         text = placeholder,
                         style = NapzakMarketTheme.typography.bodyMedium14,
-                        color = NapzakMarketTheme.colors.gray400
+                        color = NapzakMarketTheme.colors.gray400,
                     )
                 }
                 innerTextField()
@@ -77,7 +77,7 @@ fun RegistrationPlainTextField(
         )
         TextFieldCounter(
             currentLength = text.length,
-            maxLength = maxLength
+            maxLength = maxLength,
         )
     }
 }
@@ -100,7 +100,7 @@ fun TextFieldCounter(
     Text(
         modifier = modifier,
         text = annotatedString,
-        style = NapzakMarketTheme.typography.capMedium12
+        style = NapzakMarketTheme.typography.capMedium12,
     )
 }
 

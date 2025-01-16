@@ -4,17 +4,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomSheetDefaults.DragHandle
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -33,18 +34,15 @@ fun SortBottomSheet(
     selectedSortType: String,
     onDismissRequest: () -> Unit,
     onSortItemClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    ModalBottomSheet(
-        onDismissRequest = onDismissRequest,
-        containerColor = NapzakMarketTheme.colors.white,
-        scrimColor = NapzakMarketTheme.colors.black70,
-        dragHandle = {
-            DragHandle(
-                color = NapzakMarketTheme.colors.gray200,
-                width = 36.dp,
-                height = 4.dp,
-            )
-        },
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(NapzakMarketTheme.colors.black70)
+            .noRippleClickable {
+                onDismissRequest()
+            }
     ) {
         val sortList = listOf<SortType>(
             SortType.RECENT,
@@ -53,9 +51,14 @@ fun SortBottomSheet(
             SortType.LOW_PRICE,
         )
 
+        Spacer(Modifier.weight(1f))
+
         Column(
             modifier = Modifier
+                .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                 .background(NapzakMarketTheme.colors.white)
+                .noRippleClickable { }
+                .padding(top = 20.dp)
                 .padding(horizontal = 20.dp)
         ) {
             sortList.forEach { sortItem ->

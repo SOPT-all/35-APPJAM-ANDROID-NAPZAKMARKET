@@ -26,11 +26,21 @@ fun ExploreBottomSheetScreen(
 ) {
     with(bottomSheetState) {
         if (isSortBottomSheetVisible) {
-            SortBottomSheet(
-                selectedSortType = sortType,
-                onDismissRequest = { onDismissRequest(ExploreBottomSheetType.SORT) },
-                onSortItemClick = onSortItemClick,
-            )
+            Popup(
+                alignment = Alignment.BottomCenter,
+                properties = PopupProperties(
+                    focusable = true,
+                    excludeFromSystemGesture = true,
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = true,
+                )
+            ) {
+                SortBottomSheet(
+                    selectedSortType = sortType,
+                    onDismissRequest = { onDismissRequest(ExploreBottomSheetType.SORT) },
+                    onSortItemClick = onSortItemClick,
+                )
+            }
         }
 
         if (isGenreSearchingBottomSheetVisible) {

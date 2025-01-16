@@ -28,12 +28,13 @@ fun ExploreBottomSheetScreen(
         if (isSortBottomSheetVisible) {
             Popup(
                 alignment = Alignment.BottomCenter,
+                onDismissRequest = { onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING) },
                 properties = PopupProperties(
                     focusable = true,
                     excludeFromSystemGesture = true,
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true,
-                )
+                ),
             ) {
                 SortBottomSheet(
                     selectedSortType = sortType,
@@ -46,12 +47,13 @@ fun ExploreBottomSheetScreen(
         if (isGenreSearchingBottomSheetVisible) {
             Popup(
                 alignment = Alignment.BottomCenter,
+                onDismissRequest = { onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING) },
                 properties = PopupProperties(
                     focusable = true,
                     excludeFromSystemGesture = true,
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true,
-                )
+                ),
             ) {
                 GenreSearchBottomSheet(
                     initialSelectedGenreList = selectedGenreList,

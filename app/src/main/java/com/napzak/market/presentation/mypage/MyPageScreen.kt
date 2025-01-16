@@ -29,6 +29,7 @@ import com.napzak.market.core.designsystem.component.topbar.CenteredTextTopBar
 import com.napzak.market.presentation.mypage.type.MyPageMenuType
 import com.napzak.market.R.string.profile_image_description
 import com.napzak.market.R.string.view_my_market
+import com.napzak.market.core.common.util.NoRippleInteractionSource
 
 @Composable
 fun MyPageScreen(
@@ -132,7 +133,10 @@ fun MyPageScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .weight(1f)
-                            .clickable {
+                            .clickable(
+                                indication = null,
+                                interactionSource = NoRippleInteractionSource
+                            ) {
                                 when (menuType) {
                                     MyPageMenuType.HISTORY -> onHistoryNavigate()
                                     MyPageMenuType.GENRE -> onGenreNavigate()

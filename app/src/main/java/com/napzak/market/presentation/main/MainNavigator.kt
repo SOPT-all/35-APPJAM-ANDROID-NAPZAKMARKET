@@ -11,9 +11,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.napzak.market.presentation.dummy.navigation.navigateToDummy
 import com.napzak.market.presentation.explore.navigation.navigateToExplore
+import com.napzak.market.presentation.home.navigation.navigateToHome
 import com.napzak.market.presentation.main.type.MainTab
+import com.napzak.market.presentation.mypage.navigation.navigateToMyPage
 import com.napzak.market.presentation.onboarding.navigation.Onboarding
 
 class MainNavigator(
@@ -47,7 +48,7 @@ class MainNavigator(
         }
 
         when (tab) {
-            MainTab.HOME -> navController.navigateToDummy(navOptions)
+            MainTab.HOME -> navController.navigateToHome(navOptions)
             MainTab.EXPLORE -> navController.navigateToExplore(
                 searchTerm = null,
                 genreId = null,
@@ -57,7 +58,7 @@ class MainNavigator(
                 this.registerDialogVisibilityState = !this.registerDialogVisibilityState
             }
             MainTab.CHAT -> {/*TODO: 채팅화면 연결*/}
-            MainTab.MY ->  {/*TODO: 마이페이지 화면 연결*/}
+            MainTab.MY -> navController.navigateToMyPage(navOptions)
         }
     }
 

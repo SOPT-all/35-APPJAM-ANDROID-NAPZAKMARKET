@@ -51,7 +51,7 @@ class OnboardingViewModel @Inject constructor(
                             it.genreName.contains(searchTerm)
                         }
                     }
-                )
+                ),
             )
         }
     }
@@ -66,14 +66,16 @@ class OnboardingViewModel @Inject constructor(
 
     fun clearSelectedGenre() = _uiState.update { currentState ->
         currentState.copy(
-            selectedGenreList = emptyList()
+            selectedGenreList = emptyList(),
         )
     }
 
     private fun removeSelectedGenre(genre: Genre) {
         _uiState.update { currentState ->
             currentState.copy(
-                selectedGenreList = currentState.selectedGenreList.filter { it.genreId != genre.genreId }
+                selectedGenreList = currentState.selectedGenreList.filter {
+                    it.genreId != genre.genreId
+                },
             )
         }
     }

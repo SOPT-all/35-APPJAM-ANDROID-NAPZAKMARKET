@@ -27,6 +27,15 @@
     <string name="napzak_item_buy">구해요</string>
     <string name="napzak_item_suggest">가격제시</string>
 
+    <!-- Home Screen -->
+    <string name="home_recommendation_title1">납자기님을 위한 맞춤</string>
+    <string name="home_recommendation_title2">PICK!</string>
+    <string name="home_recommendation_body1">납자기님의 취향에 딱 맞는 아이템들을 모아봤어요.</string>
+    <string name="home_popular_title1">지금 가장 많이 찜한 납작템</string>
+    <string name="home_popular_body1">놓치면 아쉬운 인기 아이템들을 구경해볼까요?</string>
+    <string name="home_search_title1">다른 유저들은 뭘 찾고 있을까요?</string>
+    <string name="home_search_body1">덕심 가득한 리스트에서 취향을 나눠보세요.</string>
+
     <!-- ChatScreen-->
     <string name="chat_background_image_description">채팅 화면 배경 캐릭터</string>
     <string name="chat_description_file_attach">채팅창 파일 첨부 아이콘</string>
@@ -44,15 +53,49 @@
     <string name="explore_product">상품 </string>
     <string name="explore_product_count">%d개</string>
 
+    <!-- Registration-->
+    <string name="regi_topbar_title">%s 등록</string>
+    <string name="regi_product_image">상품 이미지</string>
+    <string name="regi_product_image_description">다양한 상품 이미지를 등록하면 판매 확률이 올라가요.</string>
+    <string name="regi_represent_image">대표</string>
+    <string name="regi_title">제목</string>
+    <string name="regi_title_placeholder">제목을 적어주세요.</string>
+    <string name="regi_description">설명</string>
+    <string name="regi_image_number">/10</string>
+    <string name="regi_description_placeholder">자세히 작성하면 더 빠르고 원활한 거래를 할 수 있어요.\n예) 출시 연도, 사이즈, 한정판 여부, 네고 가능 여부 등</string>
+    <string name="regi_product_condition">상품 상태</string>
+    <string name="regi_price">가격</string>
+    <string name="regi_price_description">구하려는 상품 가격의 범위는 1,000원대부터 입력 가능해요.</string>
+    <string name="regi_price_offer">가격 제시</string>
+    <string name="regi_price_won">원</string>
+    <string name="regi_price_range">,000원대</string>
+    <string name="regi_post_price">배송비</string>
+    <string name="regi_post_price_include">포함</string>
+    <string name="regi_post_price_exclude">별도</string>
+    <string name="regi_normal_post">일반 택배</string>
+    <string name="regi_normal_post_placeholder">100~30,000</string>
+    <string name="regi_half_price_post">알뜰/반값 택배</string>
+    <string name="regi_half_price_post_placeholder">0~5,000</string>
+    <string name="register">등록하기</string>
+
+    <!-- MypageScreen -->
+    <string name="menu_history">판매/구매 내역</string>
+    <string name="menu_genre">관심 장르</string>
+    <string name="menu_favorite">찜한 상품</string>
+    <string name="menu_recent">최근 본 상품</string>
+    <string name="mypage_title">마이페이지</string>
+    <string name="view_my_market">내 마켓 보기</string>
+    <string name="profile_image_description">프로필 이미지</string>
+
     <!-- SearchScreen -->
     <string name="search_genre">장르</string>
 
-    <!--Onboarding Screen-->
+    <!-- Onboarding Screen-->
     <string name="onboarding_top_title">좋아하는 장르를 골라보세요!\n취향에 딱 맞는 상품을 찾아드릴게요</string>
     <string name="onboarding_top_choice">최대 4개 선택</string>
     <string name="onboarding_bottom_bar_complete">선택 완료! 시작하기</string>
     <string name="onboarding_bottom_bar_skip">나중에 설정할래요</string>
-    <string name="onboarding_text_field_placeholder">원하는 장르를 직접 입력해 검색해보세요.</string>
+    <string name="onboarding_text_field_placeholder">원하는 장르를 직접 입력해 검색해보세요.</string>"
 
     <!-- GenreSearch BottomSheet -->
     <string name="genre_search_select_genre">원하는 장르를 선택해주세요.</string>

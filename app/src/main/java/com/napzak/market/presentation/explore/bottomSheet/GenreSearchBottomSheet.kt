@@ -1,28 +1,20 @@
 package com.napzak.market.presentation.explore.bottomSheet
 
-import android.view.ViewTreeObserver
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.ime
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.BottomSheetDefaults.DragHandle
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,10 +25,8 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
 import com.napzak.market.core.designsystem.component.textField.SearchBox
 import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.compose.ui.draw.clip
+import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.component.GenreChipButtonGroup
 import com.napzak.market.core.designsystem.component.button.EnableDisableTextButton
 import com.napzak.market.core.designsystem.component.item.GenreSearchItem
@@ -54,147 +44,117 @@ fun GenreSearchBottomSheet(
     onButtonClick: (List<Genre>) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
-    )
+    var searchTerm by remember { mutableStateOf("") }
+    var selectedGenreList by remember {
+        mutableStateOf<List<Genre>>(
+            initialSelectedGenreList
+        )
+    }
+    LaunchedEffect(searchTerm) {
+        onTextChange(searchTerm)
+    }
 
-    val view = LocalView.current
-    var isImeVisible by remember { mutableStateOf(false) }
-
-    DisposableEffect(Unit) {
-        val listener = ViewTreeObserver.OnPreDrawListener {
-            isImeVisible = ViewCompat.getRootWindowInsets(view)
-                ?.isVisible(WindowInsetsCompat.Type.ime()) == true
-            true
-        }
-        view.viewTreeObserver.addOnPreDrawListener(listener)
-        onDispose {
-            view.viewTreeObserver.removeOnPreDrawListener(listener)
-        }
+    BackHandler(
+        enabled = searchTerm.isNotBlank()
+    ) {
+        searchTerm = ""
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .background(Color.Transparent),
-        verticalArrangement = Arrangement.Bottom,
+            .background(NapzakMarketTheme.colors.black70)
     ) {
-        ModalBottomSheet(
-            onDismissRequest = onDismissRequest,
-            sheetState = sheetState,
-            containerColor = NapzakMarketTheme.colors.white,
-            scrimColor = NapzakMarketTheme.colors.black70,
-            dragHandle = {
-                DragHandle(
-                    color = NapzakMarketTheme.colors.gray200,
-                    width = 36.dp,
-                    height = 4.dp,
-                )
-            },
-            contentWindowInsets = { WindowInsets.ime.only(sides = WindowInsetsSides.Bottom) },
-//            modifier = Modifier.then(
-//                if (isImeVisible)
-//                    Modifier.fillMaxHeight(1.0F) // Full height when keyboard is visible
-//                else
-//                    Modifier.fillMaxHeight(0.75F) // Partial height when keyboard is hidden
-//            )
+        Box(
+            Modifier
+                .weight(1f)
+                .noRippleClickable { onDismissRequest() }
+        )
+
+        Column(
+            modifier = Modifier
+                .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                .background(NapzakMarketTheme.colors.white)
+                .padding(top = 30.dp)
         ) {
-            var searchTerm by remember { mutableStateOf("") }
-            var selectedGenreList by remember { mutableStateOf<List<Genre>>(initialSelectedGenreList) }
+            GenreSearchNoticeSection()
 
-            LaunchedEffect(searchTerm) {
-                onTextChange(searchTerm)
-            }
+            Spacer(Modifier.height(18.dp))
 
-            BackHandler(
-                enabled = searchTerm.isNotBlank()
+            SearchBox(
+                placeholder = stringResource(R.string.genre_search_genre_example),
+                searchTerm = searchTerm,
+                onTextChange = {
+                    searchTerm = it
+                    onTextChange(it)
+                },
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
+
+            Spacer(Modifier.height(10.dp))
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(345.dp),
             ) {
-                searchTerm = ""
-            }
+                val list = if (searchTerm.isEmpty()) initialGenreList else genreList
 
-            Column(
-                modifier = modifier
-                    .background(NapzakMarketTheme.colors.white)
-            ) {
-                GenreSearchNoticeSection()
-
-                Spacer(Modifier.height(18.dp))
-
-                SearchBox(
-                    placeholder = stringResource(R.string.genre_search_genre_example),
-                    searchTerm = searchTerm,
-                    onTextChange = {
-                        searchTerm = it
-                        onTextChange(it)
-                    },
+                LazyColumn(
                     modifier = Modifier.padding(horizontal = 20.dp)
-                )
-
-                Spacer(Modifier.height(10.dp))
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(345.dp),
                 ) {
-                    val list = if (searchTerm.isEmpty()) initialGenreList else genreList
-
-                    LazyColumn(
-                        modifier = Modifier.padding(horizontal = 20.dp)
-                    ) {
-                        itemsIndexed(
-                            items = list,
-                            key = { _, genreItem -> genreItem.genreId }
-                        ) { index, genreItem ->
-                            GenreSearchItem(
-                                genreName = genreItem.genreName,
-                                onGenreItemClick = {
-                                    if (selectedGenreList.size < 4) {
-                                        selectedGenreList = selectedGenreList + genreItem
-                                    }
-                                },
-                                isLastItem = index == selectedGenreList.size - 1
-                            )
-                        }
-                    }
-
-                    if (selectedGenreList.isNotEmpty()) {
-                        Column {
-                            Spacer(Modifier.weight(1f))
-                            Row(
-                                modifier = Modifier
-                                    .background(NapzakMarketTheme.colors.gray50)
-                                    .padding(bottom = 12.dp),
-                            ) {
-                                GenreChipButtonGroup(
-                                    genreList = selectedGenreList,
-                                    onGenreClick = { selectedGenre ->
-                                        selectedGenreList =
-                                            selectedGenreList.filter { it.genreId != selectedGenre.genreId }
-                                    },
-                                    onResetClick = { selectedGenreList = emptyList() },
-                                    contentPaddingValues = PaddingValues(horizontal = 20.dp),
-                                    modifier = Modifier
-                                        .padding(top = 16.dp),
-                                )
-                            }
-                        }
+                    itemsIndexed(
+                        items = list,
+                        key = { _, genreItem -> genreItem.genreId }
+                    ) { index, genreItem ->
+                        GenreSearchItem(
+                            genreName = genreItem.genreName,
+                            onGenreItemClick = {
+                                if (selectedGenreList.size < 4) {
+                                    selectedGenreList = selectedGenreList + genreItem
+                                }
+                            },
+                            isLastItem = index == selectedGenreList.size - 1
+                        )
                     }
                 }
 
-                Spacer(Modifier.height(20.dp))
-
-                EnableDisableTextButton(
-                    text = stringResource(R.string.genre_search_apply_button),
-                    isEnabled = true,
-                    onClick = { onButtonClick(selectedGenreList) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp)
-                )
-
-                Spacer(Modifier.height(35.dp))
+                if (selectedGenreList.isNotEmpty()) {
+                    Column {
+                        Spacer(Modifier.weight(1f))
+                        Row(
+                            modifier = Modifier
+                                .background(NapzakMarketTheme.colors.gray50)
+                                .padding(bottom = 12.dp),
+                        ) {
+                            GenreChipButtonGroup(
+                                genreList = selectedGenreList,
+                                onGenreClick = { selectedGenre ->
+                                    selectedGenreList =
+                                        selectedGenreList.filter { it.genreId != selectedGenre.genreId }
+                                },
+                                onResetClick = { selectedGenreList = emptyList() },
+                                contentPaddingValues = PaddingValues(horizontal = 20.dp),
+                                modifier = Modifier
+                                    .padding(top = 16.dp),
+                            )
+                        }
+                    }
+                }
             }
+
+            Spacer(Modifier.height(20.dp))
+
+            EnableDisableTextButton(
+                text = stringResource(R.string.genre_search_apply_button),
+                isEnabled = true,
+                onClick = { onButtonClick(selectedGenreList) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp)
+            )
+
+            Spacer(Modifier.height(35.dp))
         }
     }
 }

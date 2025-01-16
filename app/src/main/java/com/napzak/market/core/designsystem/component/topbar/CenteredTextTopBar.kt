@@ -28,13 +28,14 @@ fun CenteredTextTopBar(
     contentColor: Color = NapzakMarketTheme.colors.gray900,
 ) {
     CommonTopBar(
-        modifier = modifier.padding(top = 15.dp, bottom = 14.dp),
+        modifier = modifier
+            .padding(top = 15.dp, bottom = 14.dp),
         title = title,
         navigationIcon = null,
         onNavigationClick = null,
         textStyle = textStyle,
         backgroundColor = backgroundColor,
-        contentColor = contentColor
+        contentColor = contentColor,
     )
 }
 

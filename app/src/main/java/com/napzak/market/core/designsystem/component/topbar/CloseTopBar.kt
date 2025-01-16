@@ -37,7 +37,7 @@ fun CloseTopBar(
         onNavigationClick = onCloseClick,
         textStyle = textStyle,
         backgroundColor = backgroundColor,
-        contentColor = contentColor
+        contentColor = contentColor,
     )
 }
 

@@ -49,7 +49,7 @@ fun CommonTopBar(
                 .fillMaxWidth()
                 .background(backgroundColor)
                 .then(modifier),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             if (navigationIcon != null) {
                 Icon(
@@ -58,19 +58,20 @@ fun CommonTopBar(
                     tint = contentColor,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
-                        .noRippleClickable { onNavigationClick?.invoke() }
+                        .noRippleClickable { onNavigationClick?.invoke() },
                 )
             }
             Text(
                 text = title,
                 style = textStyle,
-                color = contentColor
+                color = contentColor,
             )
         }
         HorizontalDivider(
             color = borderColor,
-            modifier = Modifier.align(Alignment.BottomCenter),
-            thickness = 1.dp
+            modifier = Modifier
+                .align(Alignment.BottomCenter),
+            thickness = 1.dp,
         )
     }
 }

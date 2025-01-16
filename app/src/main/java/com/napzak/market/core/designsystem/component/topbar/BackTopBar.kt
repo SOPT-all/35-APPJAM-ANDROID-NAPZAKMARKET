@@ -40,7 +40,7 @@ fun BackTopBar(
         onNavigationClick = onBackClick,
         textStyle = textStyle,
         backgroundColor = backgroundColor,
-        contentColor = contentColor
+        contentColor = contentColor,
     )
 }
 

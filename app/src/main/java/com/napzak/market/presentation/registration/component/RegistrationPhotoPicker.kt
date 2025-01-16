@@ -41,7 +41,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  *
  * 사진을 추가하는 포토 픽커입니다.
  *
- * @param imageList
+ * @param imageUrlList
  * @param onPhotoClick
  * @param onLongPressed
  * @param onDeleteClick
@@ -50,7 +50,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 @Composable
 fun RegistrationPhotoPicker(
-    imageList: List<String>,
+    imageUrlList: List<String>,
     onPhotoClick: () -> Unit,
     onLongPressed: (Int) -> Unit,
     onDeleteClick: (Int) -> Unit,
@@ -62,19 +62,19 @@ fun RegistrationPhotoPicker(
     ) {
         item {
             PhotoRegisterButton(
-                imageNumber = imageList.size,
+                imageNumber = imageUrlList.size,
                 onPhotoClick = onPhotoClick
             )
             Spacer(modifier = Modifier.width(10.dp))
         }
         itemsIndexed(
-            items = imageList,
+            items = imageUrlList,
             key = { index, _ -> index },
             contentType = { _, item -> item }
         ) { index, _ ->
             PhotoContainer(
                 index = index,
-                onLongPressed = { onLongPressed(index) },
+                onLongPress = { onLongPressed(index) },
                 onDeleteClick = onDeleteClick
             )
             Spacer(modifier = Modifier.width(3.dp))
@@ -135,7 +135,7 @@ private fun PhotoRegisterButton(
 *
 * @param index
 * @param onDeleteClick
-* @param onLongPressed
+* @param onLongPress
 * @param modifier
 */
 
@@ -143,7 +143,7 @@ private fun PhotoRegisterButton(
 private fun PhotoContainer(
     index: Int,
     onDeleteClick: (Int) -> Unit,
-    onLongPressed: (Int) -> Unit,
+    onLongPress: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -156,7 +156,7 @@ private fun PhotoContainer(
                 .background(NapzakMarketTheme.colors.gray600)
                 .width(80.dp)
                 .aspectRatio(1f)
-                .noRippleCombineClickable { onLongPressed(index) },
+                .noRippleCombineClickable { onLongPress(index) },
         ) {
             if (index == 0) {
                 Text(
@@ -189,7 +189,7 @@ private fun RegistrationPhotoPickerPreview() {
         var imageList by remember { mutableStateOf(listOf("1", "2", "3")) }
 
         RegistrationPhotoPicker(
-            imageList = imageList,
+            imageUrlList = imageList,
             onPhotoClick = { imageList = imageList + "" },
             onLongPressed = { },
             onDeleteClick = { imageList = imageList.toMutableList().apply { removeAt(it) } },

@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
@@ -21,16 +23,13 @@ fun PageIndicator(
     imageCount: Int,
     pagerState: PagerState,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = NapzakMarketTheme.colors.white,
     selectedColor: Color = NapzakMarketTheme.colors.purple30,
     unselectedColor: Color = NapzakMarketTheme.colors.gray400,
 ) {
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(5.dp))
-            .background(color = backgroundColor)
             .wrapContentSize(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         repeat(imageCount) { iteration ->
             val color =
@@ -39,8 +38,19 @@ fun PageIndicator(
                 modifier = Modifier
                     .size(7.dp)
                     .clip(CircleShape)
-                    .background(color)
+                    .background(color),
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun PageIndicatorPreview() {
+    NapzakMarketTheme {
+        PageIndicator(
+            imageCount = 5,
+            pagerState = rememberPagerState(initialPage = 1, pageCount = {3}),
+        )
     }
 }

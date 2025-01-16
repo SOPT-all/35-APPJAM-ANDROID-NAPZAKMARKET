@@ -26,11 +26,11 @@ fun NapzakLogoTopBar(
             .background(NapzakMarketTheme.colors.white)
             .padding(top = 19.dp, bottom = 15.dp, start = 20.dp, end = 20.dp),
         horizontalArrangement = logoArrangement,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
             painter = painterResource(R.drawable.img_logo_text),
-            contentDescription = null
+            contentDescription = null,
         )
     }
 }

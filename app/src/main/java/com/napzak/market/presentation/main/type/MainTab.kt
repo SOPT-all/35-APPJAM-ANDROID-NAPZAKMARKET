@@ -22,7 +22,7 @@ enum class MainTab(
         selectedIcon = R.drawable.ic_home_select_28,
         unselectedIcon = R.drawable.ic_home_unselect_28,
         contentDescription = R.string.main_bottom_bar_home,
-        route = Home, // TODO: Home 루트로 변경
+        route = Home,
     ),
     EXPLORE(
         selectedIcon = R.drawable.ic_look_select_28,

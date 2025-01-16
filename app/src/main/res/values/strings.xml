@@ -52,5 +52,9 @@
     <string name="onboarding_top_choice">최대 4개 선택</string>
     <string name="onboarding_bottom_bar_complete">선택 완료! 시작하기</string>
     <string name="onboarding_bottom_bar_skip">나중에 설정할래요</string>
-    <string name="onboarding_text_field_placeholder">원하는 장르를 직접 입력해 검색해보세요.</string>"
+    <string name="onboarding_text_field_placeholder">원하는 장르를 직접 입력해 검색해보세요.</string>
+
+    <!-- GenreSearch BottomSheet -->
+    <string name="genre_searching_select_genre">원하는 장르를 선택해주세요.</string>
+    <string name="genre_searching_genre_example">예) 건담, 산리오, 주술회전</string>
 </resources>

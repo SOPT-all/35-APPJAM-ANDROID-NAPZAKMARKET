@@ -23,7 +23,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 /**
  * Registration genre button
  *
- * 클릭스 bottomSheet가 올라오는 장르 버튼
+ * 클릭 시 장르 검색 화면으로 이동하는 버튼
  *
  * @param onGenreClick
  * @param modifier

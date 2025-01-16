@@ -43,7 +43,7 @@
     <string name="explore_product">상품 </string>
     <string name="explore_product_count">%d개</string>
 
-    <!--    Registration-->
+    <!-- Registration-->
     <string name="regi_topbar_title">%s 등록</string>
     <string name="regi_product_image">상품 이미지</string>
     <string name="regi_product_image_description">다양한 상품 이미지를 등록하면 판매 확률이 올라가요.</string>
@@ -80,7 +80,7 @@
     <!-- SearchScreen -->
     <string name="search_genre">장르</string>
 
-    <!--Onboarding Screen-->
+    <!-- Onboarding Screen-->
     <string name="onboarding_top_title">좋아하는 장르를 골라보세요!\n취향에 딱 맞는 상품을 찾아드릴게요</string>
     <string name="onboarding_top_choice">최대 4개 선택</string>
     <string name="onboarding_bottom_bar_complete">선택 완료! 시작하기</string>

@@ -74,7 +74,9 @@ fun PostOptionCard(
             ) {
                 RegistrationCheckBox(
                     isChecked = isChecked,
-                    onCheckedChange = { isChecked = !isChecked },
+                    onCheckedChange = { newValue ->
+                        isChecked = newValue
+                    },
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
@@ -86,8 +88,8 @@ fun PostOptionCard(
             Icon(
                 modifier = Modifier.rotate(
                     animateFloatAsState(
-                        targetValue = if (isChecked) 180f else 0f,
-                        animationSpec = tween(durationMillis = 300)
+                        targetValue = if (isChecked) ROTATION_ANGLE_CHECKED else ROTATION_ANGLE_UNCHECKED,
+                        animationSpec = tween(ROTATION_ANIMATION_DURATION)
                     ).value
                 ),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_up_24),
@@ -143,6 +145,10 @@ private fun RegistrationCheckBox(
         tint = Color.Unspecified,
     )
 }
+
+private const val ROTATION_ANGLE_CHECKED = 180f
+private const val ROTATION_ANGLE_UNCHECKED = 0f
+private const val ROTATION_ANIMATION_DURATION = 300
 
 @Preview
 @Composable

@@ -17,7 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.napzak.market.R
+import com.napzak.market.R.string.regi_post_price_include
+import com.napzak.market.R.string.regi_post_price_exclude
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
@@ -32,14 +33,14 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  */
 
 @Composable
-fun PostPriceSelector(
+fun PostFeeSelector(
     selectedTabIndex: Int,
     onIndexSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val tabs = listOf(
-        stringResource(id = R.string.regi_post_price_include),
-        stringResource(id = R.string.regi_post_price_exclude),
+    val feeTab = listOf(
+        stringResource(regi_post_price_include),
+        stringResource(regi_post_price_exclude),
     )
     Box(
         modifier = modifier
@@ -48,8 +49,8 @@ fun PostPriceSelector(
             .padding(3.dp),
     ) {
         Row {
-            tabs.forEachIndexed { index, tab ->
-                PostPriceSelectorIndicator(
+            feeTab.forEachIndexed { index, tab ->
+                PostFeeSelectorIndicator(
                     modifier = Modifier
                         .padding(3.dp)
                         .weight(1f)
@@ -63,7 +64,7 @@ fun PostPriceSelector(
 }
 
 @Composable
-private fun PostPriceSelectorIndicator(
+private fun PostFeeSelectorIndicator(
     isSelected: Boolean,
     title: String,
     modifier: Modifier = Modifier,
@@ -84,10 +85,10 @@ private fun PostPriceSelectorIndicator(
 
 @Preview
 @Composable
-private fun PostPriceSelectorPreview() {
+private fun PostFeeSelectorPreview() {
     NapzakMarketTheme {
         var selectedTabIndex by remember { mutableStateOf(0) }
-        PostPriceSelector(
+        PostFeeSelector(
             selectedTabIndex = selectedTabIndex,
             onIndexSelected = { selectedTabIndex = it }
         )

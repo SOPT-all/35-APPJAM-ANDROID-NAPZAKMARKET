@@ -34,7 +34,7 @@ fun BackTopBar(
 ) {
     CommonTopBar(
         modifier = modifier
-            .padding(vertical = 3.dp),
+            .padding(top = 2.dp, bottom = 4.dp),
         title = title,
         navigationIcon = ImageVector.vectorResource(R.drawable.ic_back_48),
         onNavigationClick = onBackClick,

@@ -58,24 +58,24 @@ fun RegistrationPhotoPicker(
 ) {
     LazyRow(
         modifier = modifier,
-        verticalAlignment = Alignment.Bottom
+        verticalAlignment = Alignment.Bottom,
     ) {
         item {
             PhotoRegisterButton(
                 imageNumber = imageUrlList.size,
-                onPhotoClick = onPhotoClick
+                onPhotoClick = onPhotoClick,
             )
             Spacer(modifier = Modifier.width(10.dp))
         }
         itemsIndexed(
             items = imageUrlList,
             key = { index, _ -> index },
-            contentType = { _, item -> item }
+            contentType = { _, item -> item },
         ) { index, _ ->
             PhotoContainer(
                 index = index,
                 onLongPress = { onLongPressed(index) },
-                onDeleteClick = onDeleteClick
+                onDeleteClick = onDeleteClick,
             )
             Spacer(modifier = Modifier.width(3.dp))
         }

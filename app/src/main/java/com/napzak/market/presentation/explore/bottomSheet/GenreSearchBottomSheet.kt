@@ -28,7 +28,6 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
 import com.napzak.market.core.designsystem.component.textField.SearchBox
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import com.napzak.market.core.common.extension.noRippleClickable
@@ -40,6 +39,7 @@ import com.napzak.market.domain.genre.model.Genre
 @Composable
 fun GenreSearchBottomSheet(
     initialSelectedGenreList: List<Genre>,
+    initialGenreList: List<Genre>,
     genreList: List<Genre>,
     onDismissRequest: () -> Unit,
     onTextChange: (String) -> Unit,
@@ -102,6 +102,10 @@ fun GenreSearchBottomSheet(
                 SearchBox(
                     placeholder = stringResource(R.string.genre_searching_genre_example),
                     searchTerm = searchTerm,
+                    onTextChange = {
+                        searchTerm = it
+                        onTextChange(it)
+                    }
                 )
 
                 Spacer(Modifier.height(10.dp))
@@ -111,13 +115,14 @@ fun GenreSearchBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(345.dp),
-                contentAlignment = Alignment.BottomCenter,
             ) {
+                val list = if (searchTerm.isEmpty()) initialGenreList else genreList
+
                 LazyColumn(
                     modifier = Modifier.padding(horizontal = 20.dp)
                 ) {
                     itemsIndexed(
-                        items = genreList,
+                        items = list,
                         key = { _, genreItem -> genreItem.genreId }
                     ) { index, genreItem ->
                         val borderColor =
@@ -151,22 +156,25 @@ fun GenreSearchBottomSheet(
                 }
 
                 if (selectedGenreList.isNotEmpty()) {
-                    Row(
-                        modifier = Modifier
-                            .background(NapzakMarketTheme.colors.gray50)
-                            .padding(bottom = 12.dp),
-                    ) {
-                        GenreChipButtonGroup(
-                            genreList = selectedGenreList,
-                            onGenreClick = { selectedGenre ->
-                                selectedGenreList =
-                                    selectedGenreList.filter { it.genreId != selectedGenre.genreId }
-                            },
-                            onResetClick = { selectedGenreList = emptyList() },
-                            contentPaddingValues = PaddingValues(horizontal = 20.dp),
+                    Column {
+                        Spacer(Modifier.weight(1f))
+                        Row(
                             modifier = Modifier
-                                .padding(top = 16.dp),
-                        )
+                                .background(NapzakMarketTheme.colors.gray50)
+                                .padding(bottom = 12.dp),
+                        ) {
+                            GenreChipButtonGroup(
+                                genreList = selectedGenreList,
+                                onGenreClick = { selectedGenre ->
+                                    selectedGenreList =
+                                        selectedGenreList.filter { it.genreId != selectedGenre.genreId }
+                                },
+                                onResetClick = { selectedGenreList = emptyList() },
+                                contentPaddingValues = PaddingValues(horizontal = 20.dp),
+                                modifier = Modifier
+                                    .padding(top = 16.dp),
+                            )
+                        }
                     }
                 }
             }

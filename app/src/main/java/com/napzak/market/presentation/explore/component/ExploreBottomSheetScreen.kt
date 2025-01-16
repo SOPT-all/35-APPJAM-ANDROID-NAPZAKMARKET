@@ -11,6 +11,7 @@ import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
 fun ExploreBottomSheetScreen(
     bottomSheetState: ExploreBottomSheetState,
     selectedGenreList: List<Genre>,
+    initialGenreList: List<Genre>,
     genreList: List<Genre>,
     sortType: String,
     onDismissRequest: (ExploreBottomSheetType) -> Unit,
@@ -30,6 +31,7 @@ fun ExploreBottomSheetScreen(
         if (isGenreSearchingBottomSheetVisible) {
             GenreSearchBottomSheet(
                 initialSelectedGenreList = selectedGenreList,
+                initialGenreList = initialGenreList,
                 genreList = genreList,
                 onDismissRequest = { onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING) },
                 onTextChange = onTextChange,

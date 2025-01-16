@@ -6,6 +6,7 @@
     <string name="x_circle_button">x 버튼 아이콘</string>
     <string name="search_button">검색 아이콘</string>
     <string name="down_chevron_button">아래 방향 화살표 아이콘</string>
+    <string name="left_chevron_button">왼쪽 방향 화살표 아이콘</string>
 
     <!-- Component -->
     <string name="selectablechip_genre_counting">%s 외 %d</string>
@@ -50,6 +51,9 @@
     <string name="explore_search_box_placeholder">어떤 아이템을 찾고 계신가요?</string>
     <string name="explore_product">상품 </string>
     <string name="explore_product_count">%d개</string>
+
+    <!-- SearchScreen -->
+    <string name="search_genre">장르</string>
 
     <!--Onboarding Screen-->
     <string name="onboarding_top_title">좋아하는 장르를 골라보세요!\n취향에 딱 맞는 상품을 찾아드릴게요</string>

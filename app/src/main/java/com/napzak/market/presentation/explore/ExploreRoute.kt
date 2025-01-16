@@ -61,7 +61,6 @@ fun ExploreRoute(
             viewModel.initExploreScreenState(searchTerm, genreId)
         }
         viewModel.getExploreProductInformation()
-        viewModel.initGenreList()
     }
 
     ExploreScreen(
@@ -71,7 +70,10 @@ fun ExploreRoute(
         onBackButtonClick = onSearchNavigate,
         onSearchBoxClick = onSearchNavigate,
         onTradeTypeClick = viewModel::updateTradeType,
-        onGenreListClick = { viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.GENRE_SEARCHING) },
+        onGenreListClick = {
+            viewModel.initGenreList()
+            viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.GENRE_SEARCHING)
+        },
         onSoldOutClick = { viewModel.updateSoldOut() },
         onUnopenClick = { viewModel.updateUnopen() },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.SORT) },

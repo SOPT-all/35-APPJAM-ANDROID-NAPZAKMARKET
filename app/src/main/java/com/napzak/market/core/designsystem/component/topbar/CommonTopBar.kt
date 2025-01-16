@@ -1,7 +1,10 @@
 package com.napzak.market.core.designsystem.component.topbar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,9 +14,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.napzak.market.R
+import com.napzak.market.R.string.navigation_icon_description
 import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**
  * 공통 TopBar 컴포넌트
@@ -26,6 +31,7 @@ import com.napzak.market.core.common.extension.noRippleClickable
  * @param onNavigationClick 네비게이션 아이콘 클릭 시 수행할 동작
  * @param modifier TopBar에 적용할 Modifier
  */
+
 @Composable
 fun CommonTopBar(
     title: String,
@@ -35,30 +41,51 @@ fun CommonTopBar(
     modifier: Modifier = Modifier,
     navigationIcon: ImageVector? = null,
     onNavigationClick: (() -> Unit)? = null,
+    borderColor: Color = NapzakMarketTheme.colors.gray100,
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(54.dp)
-            .background(backgroundColor)
-            .padding(horizontal = 13.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        if (navigationIcon != null) {
-            Icon(
-                imageVector = navigationIcon,
-                contentDescription = stringResource(id = R.string.navigation_icon_description),
-                tint = contentColor,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .noRippleClickable {
-                        onNavigationClick?.invoke() }
+    Box {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(backgroundColor)
+                .then(modifier),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (navigationIcon != null) {
+                Icon(
+                    imageVector = navigationIcon,
+                    contentDescription = stringResource(navigation_icon_description),
+                    tint = contentColor,
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .noRippleClickable { onNavigationClick?.invoke() },
+                )
+            }
+            Text(
+                text = title,
+                style = textStyle,
+                color = contentColor,
             )
         }
-        Text(
-            text = title,
-            style = textStyle,
-            color = contentColor,
+        HorizontalDivider(
+            color = borderColor,
+            modifier = Modifier
+                .align(Alignment.BottomCenter),
+            thickness = 1.dp,
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun CommonTopBarPreview() {
+    NapzakMarketTheme {
+        CommonTopBar(
+            modifier = Modifier.padding(vertical = 13.dp, horizontal = 20.dp),
+            title = "장르",
+            textStyle = NapzakMarketTheme.typography.titleSemi18,
+            backgroundColor = NapzakMarketTheme.colors.white,
+            contentColor = NapzakMarketTheme.colors.gray900,
         )
     }
 }

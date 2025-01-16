@@ -43,6 +43,32 @@
     <string name="explore_product">상품 </string>
     <string name="explore_product_count">%d개</string>
 
+    <!-- Registration-->
+    <string name="regi_topbar_title">%s 등록</string>
+    <string name="regi_product_image">상품 이미지</string>
+    <string name="regi_product_image_description">다양한 상품 이미지를 등록하면 판매 확률이 올라가요.</string>
+    <string name="regi_represent_image">대표</string>
+    <string name="regi_title">제목</string>
+    <string name="regi_title_placeholder">제목을 적어주세요.</string>
+    <string name="regi_description">설명</string>
+    <string name="regi_image_number">/10</string>
+    <string name="regi_description_placeholder">자세히 작성하면 더 빠르고 원활한 거래를 할 수 있어요.\n예) 출시 연도, 사이즈, 한정판 여부, 네고 가능 여부 등</string>
+    <string name="regi_product_condition">상품 상태</string>
+    <string name="regi_price">가격</string>
+    <string name="regi_price_description">구하려는 상품 가격의 범위는 1,000원대부터 입력 가능해요.</string>
+    <string name="regi_price_offer">가격 제시</string>
+    <string name="regi_price_won">원</string>
+    <string name="regi_price_range">,000원대</string>
+    <string name="regi_post_price">배송비</string>
+    <string name="regi_post_price_include">포함</string>
+    <string name="regi_post_price_exclude">별도</string>
+    <string name="regi_normal_post">일반 택배</string>
+    <string name="regi_normal_post_placeholder">100~30,000</string>
+    <string name="regi_half_price_post">알뜰/반값 택배</string>
+    <string name="regi_half_price_post_placeholder">0~5,000</string>
+    <string name="register">등록하기</string>
+
+
     <!-- MypageScreen -->
     <string name="menu_history">판매/구매 내역</string>
     <string name="menu_genre">관심 장르</string>
@@ -54,7 +80,7 @@
     <!-- SearchScreen -->
     <string name="search_genre">장르</string>
 
-    <!--Onboarding Screen-->
+    <!-- Onboarding Screen-->
     <string name="onboarding_top_title">좋아하는 장르를 골라보세요!\n취향에 딱 맞는 상품을 찾아드릴게요</string>
     <string name="onboarding_top_choice">최대 4개 선택</string>
     <string name="onboarding_bottom_bar_complete">선택 완료! 시작하기</string>

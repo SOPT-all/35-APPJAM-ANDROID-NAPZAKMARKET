@@ -49,6 +49,7 @@ import com.napzak.market.core.common.util.NoRippleInteractionSource
 import com.napzak.market.core.designsystem.component.button.CommonButton
 import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
+import com.napzak.market.core.designsystem.component.toast.CommonSnackBar
 import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.presentation.detailpage.component.ProductInfoSection
@@ -100,36 +101,18 @@ fun DetailPageScreen(
         },
         snackbarHost = {
             if (showSnackbar) {
-                Box(
+                CommonSnackBar(
+                    message = snackbarMessage,
+                    icon = ImageVector.vectorResource(id = R.drawable.ic_heart_toast_18),
+                    backgroundColor = NapzakMarketTheme.colors.black70,
+                    textColor = NapzakMarketTheme.colors.white,
+                    textStyle = NapzakMarketTheme.typography.bodyMedium14,
+                    shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp)
                         .padding(bottom = 6.dp),
-                    contentAlignment = Alignment.BottomCenter,
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .width(320.dp)
-                            .background(
-                                color = NapzakMarketTheme.colors.black70,
-                                shape = RoundedCornerShape(12.dp),
-                            )
-                            .padding(horizontal = 20.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_heart_toast_18),
-                            contentDescription = null,
-                            tint = Color.Unspecified,
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = snackbarMessage,
-                            style = NapzakMarketTheme.typography.bodyMedium14,
-                            color = NapzakMarketTheme.colors.white,
-                        )
-                    }
-                }
+                )
             }
         },
         bottomBar = {

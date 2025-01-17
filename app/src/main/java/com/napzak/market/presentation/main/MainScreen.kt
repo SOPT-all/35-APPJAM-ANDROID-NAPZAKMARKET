@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.napzak.market.core.type.TradeType
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.explore.navigation.exploreGraph
 import com.napzak.market.presentation.home.navigation.homeGraph
@@ -20,6 +21,9 @@ import com.napzak.market.presentation.main.component.MainRegisterDialog
 import com.napzak.market.presentation.main.type.MainTab
 import com.napzak.market.presentation.mypage.navigation.myPageGraph
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
+import com.napzak.market.presentation.registration.navigation.Registration
+import com.napzak.market.presentation.registration.navigation.navigateToRegistration
+import com.napzak.market.presentation.registration.navigation.registrationGraph
 import com.napzak.market.presentation.search.navigation.navigateToSearch
 import com.napzak.market.presentation.search.navigation.searchGraph
 import kotlinx.collections.immutable.toImmutableList
@@ -46,8 +50,8 @@ fun MainScreen(
             )
 
             MainRegisterDialog(
-                onSellRegisterClick = {/*TODO: 판매 등록 화면 연결*/ },
-                onBuyRegisterClick = {/*TODO: 구매 등록 화면 연결*/ },
+                onSellRegisterClick = { navigator.navController.navigateToRegistration(isSale = true) },
+                onBuyRegisterClick = { navigator.navController.navigateToRegistration(isSale = true) },
                 onDismissRequest = { navigator.navigate(MainTab.REGISTER) },
                 visibility = navigator.registerDialogVisibility,
             )
@@ -97,6 +101,10 @@ private fun MainNavHost(
             onGenreNavigate = {},
             onFavoriteNavigate = {},
             onRecentNavigate = {}
+        )
+        registrationGraph(
+            modifier = modifier,
+            navigateUp = navigator.navController::navigateUp,
         )
     }
 }

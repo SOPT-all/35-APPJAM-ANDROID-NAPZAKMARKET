@@ -61,7 +61,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun DetailPageRoute(
     onItemChatNavigate: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     DetailPageScreen(
         productCondition = stringResource(id = R.string.detail_product_condition_brand_new),
@@ -77,17 +76,18 @@ fun DetailPageScreen(
     deliveryOptions: Pair<Int?, Int?>?,
     chipType: ProductChipType,
     onChatNavigate: () -> Unit,
+    snackBarDuration: Long = 3000L,
 ) {
     val conditionEnum = ProductCondition.fromCondition(productCondition)
-    var showSnackBar by remember { mutableStateOf(false) }
+    var isSnackBarVisible by remember { mutableStateOf(false) }
     val snackBarMessage = stringResource(id = R.string.detail_snackbar_message)
 
     val coroutine = rememberCoroutineScope()
-    LaunchedEffect(showSnackBar) {
-        if (showSnackBar) {
+    LaunchedEffect(isSnackBarVisible) {
+        if (isSnackBarVisible) {
             coroutine.launch {
-                delay(3000)
-                showSnackBar = false
+                delay(snackBarDuration)
+                isSnackBarVisible = false
             }
         }
     }
@@ -100,7 +100,7 @@ fun DetailPageScreen(
             )
         },
         snackbarHost = {
-            if (showSnackBar) {
+            if (isSnackBarVisible) {
                 CommonSnackBar(
                     message = snackBarMessage,
                     icon = ImageVector.vectorResource(id = R.drawable.ic_heart_toast_18),
@@ -117,7 +117,7 @@ fun DetailPageScreen(
         },
         bottomBar = {
             BottomBar(
-                onHeartClick = { showSnackBar = true },
+                onHeartClick = { isSnackBarVisible = true },
                 onChatClick = onChatNavigate,
             )
         }

@@ -44,7 +44,7 @@ class ExploreViewModel @Inject constructor(
                     selectedGenreList = listOf(
                         Genre(
                             genreId = genreId,
-                            genreName = searchTerm.toString()
+                            genreName = searchTerm.toString(),
                         )
                     ),
                 )
@@ -233,7 +233,7 @@ class ExploreViewModel @Inject constructor(
     }
 
     fun updateSelectedGenreList(newSelectedGenreList: List<Genre>) {
-        if (_uiState.value.selectedGenreList.size <= 4) {
+        if (_uiState.value.selectedGenreList.size <= MAX_GENRE_SELECTION) {
             _uiState.update { currentState ->
                 currentState.copy(
                     selectedGenreList = newSelectedGenreList
@@ -299,5 +299,6 @@ class ExploreViewModel @Inject constructor(
 
     companion object {
         private const val DEBOUNCE_DELAY = 500L
+        private const val MAX_GENRE_SELECTION = 4
     }
 }

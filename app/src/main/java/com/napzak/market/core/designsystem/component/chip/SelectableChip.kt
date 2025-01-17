@@ -82,7 +82,7 @@ private fun generateChipText(type: SelectableChipType, genreList: List<Genre>): 
                 else -> stringResource(
                     id = R.string.selectablechip_genre_counting,
                     genreList[0].genreName,
-                    genreList.size - 1
+                    genreList.size - 1,
                 )
             }
         }

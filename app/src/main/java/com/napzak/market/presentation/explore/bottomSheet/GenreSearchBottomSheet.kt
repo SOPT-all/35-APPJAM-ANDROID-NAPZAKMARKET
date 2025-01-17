@@ -59,7 +59,7 @@ fun GenreSearchBottomSheet(
     }
 
     BackHandler(
-        enabled = searchTerm.isNotBlank()
+        enabled = searchTerm.isNotBlank(),
     ) {
         searchTerm = ""
     }
@@ -106,7 +106,7 @@ fun GenreSearchBottomSheet(
                 val list = if (searchTerm.isEmpty()) initialGenreList else genreList
 
                 LazyColumn(
-                    modifier = Modifier.padding(horizontal = 20.dp)
+                    modifier = Modifier.padding(horizontal = 20.dp),
                 ) {
                     itemsIndexed(
                         items = list,
@@ -115,7 +115,7 @@ fun GenreSearchBottomSheet(
                         GenreSearchItem(
                             genreName = genreItem.genreName,
                             onGenreItemClick = {
-                                if (selectedGenreList.size < 4) {
+                                if (selectedGenreList.size < MAX_GENRE_SELECTION) {
                                     selectedGenreList = selectedGenreList + genreItem
                                 }
                                 focusManager.clearFocus()
@@ -164,3 +164,5 @@ fun GenreSearchBottomSheet(
         }
     }
 }
+
+private const val MAX_GENRE_SELECTION = 4

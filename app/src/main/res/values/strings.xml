@@ -7,6 +7,7 @@
     <string name="search_button">검색 아이콘</string>
     <string name="down_chevron_button">아래 방향 화살표 아이콘</string>
     <string name="left_chevron_button">왼쪽 방향 화살표 아이콘</string>
+    <string name="check_button">체크 아이콘</string>
 
     <!-- Component -->
     <string name="selectablechip_genre_counting">%s 외 %d</string>
@@ -77,7 +78,6 @@
     <string name="regi_half_price_post_placeholder">0~5,000</string>
     <string name="register">등록하기</string>
 
-
     <!-- MypageScreen -->
     <string name="menu_history">판매/구매 내역</string>
     <string name="menu_genre">관심 장르</string>
@@ -85,6 +85,7 @@
     <string name="menu_recent">최근 본 상품</string>
     <string name="mypage_title">마이페이지</string>
     <string name="view_my_market">내 마켓 보기</string>
+    <string name="profile_image_description">프로필 이미지</string>
 
     <!-- SearchScreen -->
     <string name="search_genre">장르</string>
@@ -96,6 +97,8 @@
     <string name="onboarding_bottom_bar_skip">나중에 설정할래요</string>
     <string name="onboarding_text_field_placeholder">원하는 장르를 직접 입력해 검색해보세요.</string>"
 
-    <!-- MypageScreen -->
-    <string name="profile_image_description">프로필 이미지</string>
+    <!-- GenreSearch BottomSheet -->
+    <string name="genre_search_select_genre">원하는 장르를 선택해주세요.</string>
+    <string name="genre_search_genre_example">예) 건담, 산리오, 주술회전</string>
+    <string name="genre_search_apply_button">적용하기</string>
 </resources>

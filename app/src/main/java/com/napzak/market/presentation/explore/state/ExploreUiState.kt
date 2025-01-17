@@ -11,13 +11,15 @@ import com.napzak.market.presentation.explore.type.TradeType
 @Immutable
 data class ExploreUiState(
     val loadState: UiState<ExploreProductInformation> = UiState.Loading,
-    val exploreScreenType: String = ExploreScreenType.BASIC.name,
+    val exploreScreenType: ExploreScreenType = ExploreScreenType.BASIC,
     val initSearchTerm: String? = null,
-    val tradeType: String = TradeType.SELL.name,
+    val tradeType: TradeType = TradeType.SELL,
+    val initGenreList: List<Genre> = emptyList(),
+    val selectedGenreList: List<Genre> = emptyList(),
     val genreList: List<Genre> = emptyList(),
     val isOnSale: Boolean = false,
     val isUnopened: Boolean = false,
-    val sortType: String = SortType.RECENT.name,
+    val sortType: SortType = SortType.RECENT,
 )
 
 data class ExploreProductInformation(

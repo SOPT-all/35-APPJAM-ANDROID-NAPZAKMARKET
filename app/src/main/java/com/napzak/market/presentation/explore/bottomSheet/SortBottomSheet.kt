@@ -1,0 +1,115 @@
+package com.napzak.market.presentation.explore.bottomSheet
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.dp
+import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.presentation.explore.type.SortType
+import com.napzak.market.R
+import com.napzak.market.R.string.check_button
+import com.napzak.market.core.common.extension.noRippleClickable
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SortBottomSheet(
+    selectedSortType: SortType,
+    onDismissRequest: () -> Unit,
+    onSortItemClick: (SortType) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(NapzakMarketTheme.colors.black70)
+            .noRippleClickable(onDismissRequest),
+    ) {
+        val sortList = listOf<SortType>(
+            SortType.RECENT,
+            SortType.POPULAR,
+            SortType.HIGH_PRICE,
+            SortType.LOW_PRICE,
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        Column(
+            modifier = Modifier
+                .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                .background(NapzakMarketTheme.colors.white)
+                .noRippleClickable { /* 클릭 방지 */ }
+                .padding(top = 20.dp)
+                .padding(horizontal = 20.dp),
+        ) {
+            sortList.forEach { sortItem ->
+                SortItem(
+                    sortType = sortItem.label,
+                    isSelected = sortItem == selectedSortType,
+                    isLastItem = sortItem == SortType.LOW_PRICE,
+                    onSortItemClick = { onSortItemClick(sortItem) },
+                )
+            }
+            Spacer(Modifier.height(20.dp))
+        }
+    }
+}
+
+@Composable
+fun SortItem(
+    sortType: String,
+    isSelected: Boolean,
+    isLastItem: Boolean,
+    onSortItemClick: () -> Unit,
+) {
+    val borderColor =
+        if (isLastItem) NapzakMarketTheme.colors.white else NapzakMarketTheme.colors.gray100
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .noRippleClickable(onSortItemClick)
+            .drawBehind {
+                drawLine(
+                    color = borderColor,
+                    start = Offset(0f, size.height - 1),
+                    end = Offset(size.width, size.height - 1),
+                    strokeWidth = 1.dp.toPx(),
+                )
+            }
+            .padding(vertical = 18.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = sortType,
+            style = NapzakMarketTheme.typography.titleSemi18,
+            color = if (isSelected) NapzakMarketTheme.colors.purple30 else NapzakMarketTheme.colors.gray900,
+        )
+        if (isSelected) {
+            Spacer(Modifier.weight(1f))
+
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_check_24),
+                contentDescription = stringResource(check_button),
+                tint = NapzakMarketTheme.colors.purple30,
+            )
+        }
+    }
+}

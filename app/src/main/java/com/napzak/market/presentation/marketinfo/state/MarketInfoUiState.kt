@@ -1,10 +1,10 @@
 package com.napzak.market.presentation.marketinfo.state
 
 import com.napzak.market.core.common.state.UiState
+import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.type.SortType
-import com.napzak.market.presentation.explore.type.TradeType
 
 data class MarketInfoUiState(
     val loadState: UiState<MarketUiInformation> = UiState.Loading,

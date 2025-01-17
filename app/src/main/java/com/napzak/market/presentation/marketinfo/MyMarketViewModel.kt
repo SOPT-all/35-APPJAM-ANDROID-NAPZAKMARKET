@@ -3,10 +3,10 @@ package com.napzak.market.presentation.marketinfo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
+import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
 import com.napzak.market.presentation.explore.type.SortType
-import com.napzak.market.presentation.explore.type.TradeType
 import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
 import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
 import com.napzak.market.presentation.marketinfo.state.MarketUiInformation

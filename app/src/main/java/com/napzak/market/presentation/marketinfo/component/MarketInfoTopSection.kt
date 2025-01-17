@@ -40,97 +40,99 @@ fun MarketInfoTopSection(
     onBackButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(marketInfo.storeBackgroundPhoto)
-            .placeholder(R.drawable.img_market_bg)
-            .error(R.drawable.img_market_bg)
-            .build(),
-        contentDescription = stringResource(id = profile_image_description),
-        modifier = Modifier.fillMaxWidth(),
-    )
-
     Box {
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(top = 38.dp),
-        ) {
-            Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_back_48),
-                contentDescription = stringResource(R.string.left_chevron_button),
-                tint = NapzakMarketTheme.colors.gray900,
-                modifier = Modifier.noRippleClickable(onBackButtonClick),
-            )
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(marketInfo.storeBackgroundPhoto)
+                .placeholder(R.drawable.img_market_bg)
+                .error(R.drawable.img_market_bg)
+                .build(),
+            contentDescription = stringResource(id = profile_image_description),
+            modifier = Modifier.fillMaxWidth(),
+        )
 
-            Spacer(Modifier.height(56.dp))
-
+        Box {
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
-                    .background(NapzakMarketTheme.colors.white)
-                    .padding(bottom = 20.dp),
-                horizontalAlignment = CenterHorizontally,
+                    .padding(top = 38.dp),
             ) {
-                Spacer(Modifier.height(30.dp))
-
-                Text(
-                    text = marketInfo.storeNickname,
-                    style = NapzakMarketTheme.typography.titleBold20,
-                    color = NapzakMarketTheme.colors.gray900,
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_back_48),
+                    contentDescription = stringResource(R.string.left_chevron_button),
+                    tint = NapzakMarketTheme.colors.gray900,
+                    modifier = Modifier.noRippleClickable(onBackButtonClick),
                 )
 
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(56.dp))
 
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(NapzakMarketTheme.colors.white)
+                        .padding(bottom = 20.dp),
+                    horizontalAlignment = CenterHorizontally,
                 ) {
-                    marketInfo.genrePreferenceList.forEachIndexed { index, genreItem ->
-                        MarketGenreChip(genreItem.genreName)
+                    Spacer(Modifier.height(30.dp))
 
-                        if (index != marketInfo.genrePreferenceList.lastIndex) {
-                            Spacer(Modifier.width(6.dp))
+                    Text(
+                        text = marketInfo.storeNickname,
+                        style = NapzakMarketTheme.typography.titleBold20,
+                        color = NapzakMarketTheme.colors.gray900,
+                    )
+
+                    Spacer(Modifier.height(8.dp))
+
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        marketInfo.genrePreferenceList.forEachIndexed { index, genreItem ->
+                            MarketGenreChip(genreItem.genreName)
+
+                            if (index != marketInfo.genrePreferenceList.lastIndex) {
+                                Spacer(Modifier.width(6.dp))
+                            }
                         }
                     }
+
+                    Spacer(Modifier.height(12.dp))
+
+                    Text(
+                        text = marketInfo.storeDescription,
+                        style = NapzakMarketTheme.typography.capMedium12,
+                        color = NapzakMarketTheme.colors.gray700,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(horizontal = 20.dp),
+                    )
                 }
-
-                Spacer(Modifier.height(12.dp))
-
-                Text(
-                    text = marketInfo.storeDescription,
-                    style = NapzakMarketTheme.typography.capMedium12,
-                    color = NapzakMarketTheme.colors.gray700,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                )
             }
-        }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 77.dp),
-            horizontalArrangement = Arrangement.Center,
-        ) {
-            Box(
+            Row(
                 modifier = Modifier
-                    .size(88.dp)
-                    .background(
-                        color = NapzakMarketTheme.colors.white,
-                        shape = CircleShape,
-                    ),
-                contentAlignment = Alignment.Center,
+                    .fillMaxWidth()
+                    .padding(top = 77.dp),
+                horizontalArrangement = Arrangement.Center,
             ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(marketInfo.storePhoto)
-                        .placeholder(R.drawable.ic_profile_basic_60)
-                        .error(R.drawable.ic_profile_basic_60)
-                        .build(),
-                    contentDescription = stringResource(profile_image_description),
-                    modifier = Modifier.size(80.dp),
-                )
+                Box(
+                    modifier = Modifier
+                        .size(88.dp)
+                        .background(
+                            color = NapzakMarketTheme.colors.white,
+                            shape = CircleShape,
+                        ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(marketInfo.storePhoto)
+                            .placeholder(R.drawable.ic_profile_basic_60)
+                            .error(R.drawable.ic_profile_basic_60)
+                            .build(),
+                        contentDescription = stringResource(profile_image_description),
+                        modifier = Modifier.size(80.dp),
+                    )
+                }
             }
         }
     }

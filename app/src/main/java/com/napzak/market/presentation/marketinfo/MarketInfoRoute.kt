@@ -1,5 +1,7 @@
 package com.napzak.market.presentation.marketinfo
 
+import android.R.attr.contentDescription
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,9 +20,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,6 +45,7 @@ import com.napzak.market.presentation.marketinfo.component.MarketTradeTypeTab
 import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
 import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
 import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
+import com.napzak.market.presentation.onboarding.state.OnboardingUiState.Companion.initialGenreList
 import kotlin.String
 
 @Composable
@@ -48,7 +54,7 @@ fun MarketInfoRoute(
     onProductDetailNavigate: () -> Unit,
     onBackButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: MarketInfoViewModel = hiltViewModel()
+    viewModel: MarketInfoViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val bottomSheetState by viewModel.bottomSheetState.collectAsStateWithLifecycle()
@@ -171,8 +177,7 @@ fun MarketInfoSuccessScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color = NapzakMarketTheme.colors.white)
-            .padding(top = 40.dp),
+            .background(color = NapzakMarketTheme.colors.white),
     ) {
         MarketInfoTopSection(
             marketInfo = marketInfo,
@@ -252,15 +257,15 @@ fun MarketInfoSuccessScreen(
             )
 
             Spacer(Modifier.height(20.dp))
+
         } else {
             Box(
                 modifier = Modifier.weight(1f),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(R.drawable.img_ready),
+                Image(
+                    painter = painterResource(R.drawable.img_ready),
                     contentDescription = null,
-                    tint = Color.Unspecified,
                 )
 
                 Spacer(Modifier.height(20.dp))
@@ -292,5 +297,40 @@ fun MarketInfoSuccessScreen(
         onSortItemClick = onSortItemClick,
         onTextChange = onTextChange,
         onGenreSelectButtonClick = onGenreSelectButtonClick,
+    )
+}
+
+@Preview
+@Composable
+private fun MarketPreview(modifier: Modifier = Modifier) {
+    MarketInfoSuccessScreen(
+        bottomSheetState = MarketInfoBottomSheetState(),
+        tradeType = TradeType.BUY,
+        selectedGenreList = emptyList(),
+        initialGenreList = emptyList(),
+        genreList = emptyList(),
+        isOnSale = false,
+        isUnopened = false,
+        marketInfo = MarketUiInformation(
+            storeNickname = "123",
+            storeDescription = "asdf",
+            storePhoto = "",
+            storeBackgroundPhoto = "",
+            genrePreferenceList = emptyList(),
+        ),
+        sortType = SortType.RECENT,
+        onBackButtonClick = { },
+        onTradeTypeClick = { },
+        onGenreListClick = {},
+        onSoldOutClick = {},
+        onUnopenClick = { },
+        onSortButtonClick = { },
+        onItemClick = { },
+        onLikeClick = { },
+        onDismissRequest = { },
+        onSortItemClick = {},
+        onTextChange = {},
+        onGenreSelectButtonClick = {},
+        modifier = Modifier,
     )
 }

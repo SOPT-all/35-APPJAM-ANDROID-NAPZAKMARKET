@@ -1,4 +1,4 @@
-package com.napzak.market.core.designsystem.component.toast
+package com.napzak.market.core.designsystem.component.snackbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -24,9 +24,9 @@ import com.napzak.market.R
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**
- * 공통 Toast 컴포넌트.
+ * 공통 SnackBar 컴포넌트.
  *
- * 메시지와 아이콘을 포함한 토스트 메시지를 표시합니다.
+ * 메시지와 아이콘을 포함한 스낵바 메시지를 표시합니다.
  * 사용자 지정 배경색, 텍스트 색상, 텍스트 스타일, 모양 등을 지원하며, 모든 인자는 명시적으로 전달해야 합니다.
  *
  * @param message 표시할 메시지
@@ -57,13 +57,13 @@ fun CommonSnackBar(
                 imageVector = icon,
                 contentDescription = null,
                 tint = Color.Unspecified,
-                modifier = Modifier.size(18.dp)
+                modifier = Modifier.size(18.dp),
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = message,
                 style = textStyle,
-                color = textColor
+                color = textColor,
             )
         }
     }

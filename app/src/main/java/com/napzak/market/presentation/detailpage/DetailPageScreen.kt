@@ -49,7 +49,7 @@ import com.napzak.market.core.common.util.NoRippleInteractionSource
 import com.napzak.market.core.designsystem.component.button.CommonButton
 import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
-import com.napzak.market.core.designsystem.component.toast.CommonSnackBar
+import com.napzak.market.core.designsystem.component.snackbar.CommonSnackBar
 import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.presentation.detailpage.component.ProductInfoSection

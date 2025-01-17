@@ -258,7 +258,7 @@ fun MarketInfoSuccessScreen(
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(R.drawable.img_ready_character),
+                    imageVector = ImageVector.vectorResource(R.drawable.img_ready),
                     contentDescription = null,
                     tint = Color.Unspecified,
                 )

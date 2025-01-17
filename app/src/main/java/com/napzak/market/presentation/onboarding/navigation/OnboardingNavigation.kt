@@ -8,7 +8,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
 import com.napzak.market.core.common.navigation.Route
 import com.napzak.market.presentation.onboarding.OnboardingRoute
-import com.napzak.market.presentation.splash.navigation.Splash
 import kotlinx.serialization.Serializable
 
 fun NavController.navigateToOnboarding(navOptions: NavOptions? = null) =

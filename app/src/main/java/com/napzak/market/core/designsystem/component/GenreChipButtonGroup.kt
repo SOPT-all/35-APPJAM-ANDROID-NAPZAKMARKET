@@ -38,6 +38,7 @@ import com.napzak.market.presentation.onboarding.state.OnboardingUiState
  * @param onResetClick 리셋 버튼 클릭 시 실행할 콜백
  * @param onGenreClick 장르 칩 클릭 시 실행할 콜백
  * @param modifier 수정자
+ * @param backgroundColor 장르칩 그룹의 배경색상
  * @param contentPaddingValues 내부 패딩값
  */
 

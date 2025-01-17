@@ -15,7 +15,7 @@ import com.napzak.market.presentation.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.home.navigation.navigateToHome
 import com.napzak.market.presentation.main.type.MainTab
 import com.napzak.market.presentation.mypage.navigation.navigateToMyPage
-import com.napzak.market.presentation.onboarding.navigation.Onboarding
+import com.napzak.market.presentation.splash.navigation.Splash
 
 class MainNavigator(
     val navController: NavHostController,
@@ -28,7 +28,7 @@ class MainNavigator(
     val registerDialogVisibility: Boolean
         get() = this.registerDialogVisibilityState
 
-    val startDestination = Onboarding
+    val startDestination = Splash
 
     val currentTab: MainTab?
         @Composable get() = MainTab.find { tab ->
@@ -39,13 +39,13 @@ class MainNavigator(
         val navOptions = navOptions {
             navController.currentDestination?.route?.let {
                 popUpTo(it){
-                    inclusive = true
                     saveState = true
                 }
+                launchSingleTop = true
+                restoreState = true
             }
-            launchSingleTop = true
-            restoreState = true
         }
+
 
         when (tab) {
             MainTab.HOME -> navController.navigateToHome(navOptions)

@@ -14,13 +14,15 @@ fun NavController.navigateToDetailPage(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.detailPageGraph(
-    modifier: Modifier = Modifier,
     onChatNavigate: () -> Unit,
+    onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     composable<DetailPage> {
         DetailPageRoute(
             modifier = modifier,
             onItemChatNavigate = onChatNavigate,
+            onNavigateUp = {},
         )
     }
 }

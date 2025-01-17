@@ -61,13 +61,16 @@ import kotlinx.coroutines.launch
 @Composable
 fun DetailPageRoute(
     onItemChatNavigate: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNavigateUp: () -> Unit,
 ) {
     DetailPageScreen(
         productCondition = stringResource(id = R.string.detail_product_condition_brand_new),
         deliveryOptions = Pair(3000, 1500),
         chipType = TradeType.SELL,
         onChatNavigate = onItemChatNavigate,
+        onBackClick = onNavigateUp,
+        modifier = modifier,
     )
 }
 
@@ -77,6 +80,8 @@ fun DetailPageScreen(
     deliveryOptions: Pair<Int?, Int?>?,
     chipType: TradeType,
     onChatNavigate: () -> Unit,
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
     snackBarDuration: Long = 3000L,
 ) {
     val conditionEnum = ProductCondition.fromCondition(productCondition)
@@ -97,7 +102,7 @@ fun DetailPageScreen(
         topBar = {
             BackTopBar(
                 title = "",
-                onBackClick = { /* TODO: 뒤로가기 동작 */ },
+                onBackClick = onBackClick,
             )
         },
         snackbarHost = {
@@ -121,7 +126,8 @@ fun DetailPageScreen(
                 onHeartClick = { isSnackBarVisible = true },
                 onChatClick = onChatNavigate,
             )
-        }
+        },
+        modifier = modifier,
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -471,7 +477,8 @@ fun DetailPageScreenSellPreview() {
                 stringResource(id = R.string.detail_delivery_fee_discounted_preview).toInt(),
             ),
             chipType = TradeType.SELL,
-            onChatNavigate = {}
+            onChatNavigate = {},
+            onBackClick = {},
         )
     }
 }
@@ -484,7 +491,8 @@ fun DetailPageScreenBuyPreview() {
             productCondition = null,
             deliveryOptions = null,
             chipType = TradeType.BUY,
-            onChatNavigate = {}
+            onChatNavigate = {},
+            onBackClick = {},
         )
     }
 }

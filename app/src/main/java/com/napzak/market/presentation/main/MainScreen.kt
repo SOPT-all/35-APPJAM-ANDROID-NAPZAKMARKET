@@ -104,7 +104,10 @@ private fun MainNavHost(
         detailPageGraph(
             modifier = modifier,
             onChatNavigate = navigator.navController::navigateToItemChat,
+            onNavigateUp = navigator.navController::navigateUp,
         )
-        itemChatGraph()
+        itemChatGraph(
+            onNavigateUp = navigator.navController::navigateUp,
+        )
     }
 }

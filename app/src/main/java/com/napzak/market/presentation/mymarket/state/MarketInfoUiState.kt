@@ -6,8 +6,8 @@ import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.type.SortType
 import com.napzak.market.presentation.explore.type.TradeType
 
-data class MyMarketUiState(
-    val loadState: UiState<MyMarketProductInformation> = UiState.Loading,
+data class MarketInfoUiState(
+    val loadState: UiState<MarketUiInformation> = UiState.Loading,
     val tradeType: TradeType = TradeType.SELL,
     val initGenreList: List<Genre> = emptyList(),
     val selectedGenreList: List<Genre> = emptyList(),
@@ -17,6 +17,6 @@ data class MyMarketUiState(
     val sortType: SortType = SortType.RECENT,
 )
 
-data class MyMarketProductInformation(
+data class MarketUiInformation(
     val productList: List<ProductItem>,
 )

@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyMarketViewModel @Inject constructor(
+class MarketInfoViewModel @Inject constructor(
     /* TODO: Repository 연결 */
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MarketInfoUiState())

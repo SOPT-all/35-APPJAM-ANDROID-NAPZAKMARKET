@@ -79,15 +79,15 @@ fun DetailPageScreen(
     onChatNavigate: () -> Unit,
 ) {
     val conditionEnum = ProductCondition.fromCondition(productCondition)
-    var showSnackbar by remember { mutableStateOf(false) }
-    val snackbarMessage = stringResource(id = R.string.detail_snackbar_message)
+    var showSnackBar by remember { mutableStateOf(false) }
+    val snackBarMessage = stringResource(id = R.string.detail_snackbar_message)
 
     val coroutine = rememberCoroutineScope()
-    LaunchedEffect(showSnackbar) {
-        if (showSnackbar) {
+    LaunchedEffect(showSnackBar) {
+        if (showSnackBar) {
             coroutine.launch {
                 delay(3000)
-                showSnackbar = false
+                showSnackBar = false
             }
         }
     }
@@ -100,9 +100,9 @@ fun DetailPageScreen(
             )
         },
         snackbarHost = {
-            if (showSnackbar) {
+            if (showSnackBar) {
                 CommonSnackBar(
-                    message = snackbarMessage,
+                    message = snackBarMessage,
                     icon = ImageVector.vectorResource(id = R.drawable.ic_heart_toast_18),
                     backgroundColor = NapzakMarketTheme.colors.black70,
                     textColor = NapzakMarketTheme.colors.white,
@@ -117,7 +117,7 @@ fun DetailPageScreen(
         },
         bottomBar = {
             BottomBar(
-                onHeartClick = { showSnackbar = true },
+                onHeartClick = { showSnackBar = true },
                 onChatClick = onChatNavigate,
             )
         }
@@ -222,8 +222,7 @@ fun DetailPageScreen(
                     Spacer(modifier = Modifier.height(20.dp))
 
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Text(
@@ -313,7 +312,10 @@ fun DetailPageScreen(
 
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .clickable(
+                            onClick = {/* TODO: 내 마켓 보기로 이동하는 네비게이션 추가 */ }
+                        ),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Box(
@@ -465,7 +467,7 @@ fun DetailPageScreenSellPreview() {
             productCondition = stringResource(id = R.string.detail_product_condition_brand_new_preview),
             deliveryOptions = Pair(
                 stringResource(id = R.string.detail_delivery_fee_normal_preview).toInt(),
-                stringResource(id = R.string.detail_delivery_fee_discounted_preview).toInt()
+                stringResource(id = R.string.detail_delivery_fee_discounted_preview).toInt(),
             ),
             chipType = ProductChipType.SELL,
             onChatNavigate = {}

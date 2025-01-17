@@ -6,7 +6,7 @@ enum class ProductChipType(val label: String) {
 
     companion object {
         fun fromLabel(label: String): ProductChipType? {
-            return values().find { it.label == label }
+            return ProductChipType.entries.find { it.label == label }
         }
     }
 }

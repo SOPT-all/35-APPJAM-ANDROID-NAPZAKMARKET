@@ -114,6 +114,7 @@ class MyMarketViewModel @Inject constructor(
                     storeNickname = "납자기",
                     storeDescription = "마이멜로디, 시나모롤 제일 좋아합니다 :) 해당 장르 상품들 판매 및 제시 채팅 언제든 환영합니다!",
                     storePhoto = "",
+                    storeBackgroundPhoto = "",
                     genrePreferenceList = listOf(
                         Genre(
                             genreId = 1,

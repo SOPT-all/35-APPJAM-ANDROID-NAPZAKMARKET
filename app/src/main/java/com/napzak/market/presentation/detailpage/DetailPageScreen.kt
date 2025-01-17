@@ -61,6 +61,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun DetailPageRoute(
     onItemChatNavigate: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     DetailPageScreen(
         productCondition = stringResource(id = R.string.detail_product_condition_brand_new),

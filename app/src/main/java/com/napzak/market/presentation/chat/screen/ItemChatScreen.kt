@@ -48,6 +48,18 @@ import com.napzak.market.presentation.chat.type.ChatType
  * @param price 채팅 화면 상단에 표시될 가격 정보 텍스트
  * @param showPriceLabel 가격 앞에 레이블을 표시할지 여부 (true: 레이블 표시, false: 레이블 숨김)
  */
+@Composable
+fun ItemChatRoute(
+    modifier: Modifier = Modifier
+) {
+    ItemChatScreen(
+        chatType = ChatType.BUY,
+        title = stringResource(id = R.string.chat_screen_title_buy),
+        description = stringResource(id = R.string.chat_screen_description_buy),
+        price = stringResource(id = R.string.chat_screen_price_buy),
+        showPriceLabel = true
+    )
+}
 
 @Composable
 fun ItemChatScreen(
@@ -57,9 +69,11 @@ fun ItemChatScreen(
     price: String,
     showPriceLabel: Boolean
 ) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(NapzakMarketTheme.colors.white)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(NapzakMarketTheme.colors.white)
+    ) {
         Column(modifier = Modifier.fillMaxSize()) {
             BackTopBar(
                 title = title,

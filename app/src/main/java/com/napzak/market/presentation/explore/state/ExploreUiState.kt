@@ -13,7 +13,7 @@ data class ExploreUiState(
     val loadState: UiState<ExploreProductInformation> = UiState.Loading,
     val exploreScreenType: ExploreScreenType = ExploreScreenType.BASIC,
     val initSearchTerm: String? = null,
-    val tradeType: String = TradeType.SELL.name,
+    val tradeType: TradeType = TradeType.SELL,
     val initGenreList: List<Genre> = emptyList(),
     val selectedGenreList: List<Genre> = emptyList(),
     val genreList: List<Genre> = emptyList(),

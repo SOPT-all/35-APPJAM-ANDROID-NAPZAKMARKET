@@ -79,7 +79,7 @@ fun GenreSearchBottomSheet(
                 .fillMaxHeight(0.75f)
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                 .background(NapzakMarketTheme.colors.white)
-                .noRippleClickable { }
+                .noRippleClickable { /* 클릭 방지 */ }
                 .padding(top = 30.dp),
         ) {
             GenreSearchNoticeSection()

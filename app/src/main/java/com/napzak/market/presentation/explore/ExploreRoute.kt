@@ -326,7 +326,6 @@ fun ExploreSuccessScreen(
     }
 
     ExploreBottomSheetScreen(
-        modifier = Modifier.zIndex(1f),
         bottomSheetState = bottomSheetState,
         selectedGenreList = selectedGenreList,
         initialGenreList = initialGenreList,

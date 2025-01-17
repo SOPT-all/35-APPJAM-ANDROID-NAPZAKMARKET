@@ -40,9 +40,7 @@ fun SortBottomSheet(
         modifier = modifier
             .fillMaxSize()
             .background(NapzakMarketTheme.colors.black70)
-            .noRippleClickable {
-                onDismissRequest()
-            },
+            .noRippleClickable(onDismissRequest),
     ) {
         val sortList = listOf<SortType>(
             SortType.RECENT,
@@ -57,7 +55,7 @@ fun SortBottomSheet(
             modifier = Modifier
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                 .background(NapzakMarketTheme.colors.white)
-                .noRippleClickable { }
+                .noRippleClickable { /* 클릭 방지 */ }
                 .padding(top = 20.dp)
                 .padding(horizontal = 20.dp),
         ) {

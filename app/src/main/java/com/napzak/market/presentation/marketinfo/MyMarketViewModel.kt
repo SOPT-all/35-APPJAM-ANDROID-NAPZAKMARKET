@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
 import com.napzak.market.presentation.explore.type.SortType
 import com.napzak.market.presentation.explore.type.TradeType
+import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
 import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
 import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,9 +28,9 @@ class MyMarketViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(MarketInfoUiState())
     val uiState = _uiState.asStateFlow()
 
-    private val _bottomSheetState: MutableStateFlow<ExploreBottomSheetState> =
-        MutableStateFlow(ExploreBottomSheetState())
-    val bottomSheetState: StateFlow<ExploreBottomSheetState> = _bottomSheetState.asStateFlow()
+    private val _bottomSheetState: MutableStateFlow<MarketInfoBottomSheetState> =
+        MutableStateFlow(MarketInfoBottomSheetState())
+    val bottomSheetState: StateFlow<MarketInfoBottomSheetState> = _bottomSheetState.asStateFlow()
 
     private val _searchTerm: MutableStateFlow<String> = MutableStateFlow("")
     val searchTerm = _searchTerm.asStateFlow()

@@ -7,18 +7,16 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.napzak.market.core.common.navigation.MainTabRoute
 import com.napzak.market.presentation.chat.screen.ItemChatRoute
-import com.napzak.market.presentation.chat.screen.ItemChatScreen
-import com.napzak.market.presentation.chat.type.ChatType
 import kotlinx.serialization.Serializable
 
-fun NavController.navigateToItemChatScreen(navOptions: NavOptions? = null) {
-    navigate(ChatScreen, navOptions)
+fun NavController.navigateToItemChat(navOptions: NavOptions? = null) {
+    navigate(ItemChat, navOptions)
 }
 
 fun NavGraphBuilder.itemChatGraph(
     modifier: Modifier = Modifier,
 ) {
-    composable<ChatScreen> {
+    composable<ItemChat> {
         ItemChatRoute(
             modifier = modifier
         )
@@ -26,4 +24,4 @@ fun NavGraphBuilder.itemChatGraph(
 }
 
 @Serializable
-data object ChatScreen : MainTabRoute
+data object ItemChat : MainTabRoute

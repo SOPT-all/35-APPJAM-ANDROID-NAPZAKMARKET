@@ -3,6 +3,7 @@ package com.napzak.market.presentation.registration.component
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
@@ -46,13 +47,13 @@ fun RegistrationNumberTextField(
     val borderColor = NapzakMarketTheme.colors.gray300
 
     Row(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
     ) {
         Box {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 BasicTextField(
                     modifier = Modifier
-                        .width(96.dp)
+                        .fillMaxWidth(BOTTOM_BORDER_WEIGHT)
                         .drawBehind {
                             drawLine(
                                 color = borderColor,
@@ -97,6 +98,8 @@ fun RegistrationNumberTextField(
         )
     }
 }
+
+private const val BOTTOM_BORDER_WEIGHT = 90f / 360f
 
 @Preview
 @Composable

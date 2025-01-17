@@ -57,7 +57,7 @@ fun ExploreRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val bottomSheetState by viewModel.bottomSheetState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(true) {
+    LaunchedEffect(uiState) {
         if (searchTerm != null || genreId != null) {
             viewModel.initExploreScreenState(searchTerm, genreId)
         }
@@ -104,7 +104,7 @@ fun ExploreScreen(
     onItemClick: (Int) -> Unit,
     onLikeClick: (Int) -> Unit,
     onDismissRequest: (ExploreBottomSheetType) -> Unit,
-    onSortItemClick: (String) -> Unit,
+    onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
     onGenreSelectButtonClick: (List<Genre>) -> Unit,
     modifier: Modifier = Modifier,
@@ -166,7 +166,7 @@ fun ExploreSuccessScreen(
     isOnSale: Boolean,
     isUnopened: Boolean,
     productList: List<ProductItem>,
-    sortType: String,
+    sortType: SortType,
     onBackButtonClick: (String) -> Unit,
     onSearchBoxClick: (String?) -> Unit,
     onTradeTypeClick: (String) -> Unit,
@@ -177,7 +177,7 @@ fun ExploreSuccessScreen(
     onItemClick: (Int) -> Unit,
     onLikeClick: (Int) -> Unit,
     onDismissRequest: (ExploreBottomSheetType) -> Unit,
-    onSortItemClick: (String) -> Unit,
+    onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
     onGenreSelectButtonClick: (List<Genre>) -> Unit,
 ) {
@@ -303,7 +303,7 @@ fun ExploreSuccessScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = SortType.getSortLabel(sortType),
+                    text = sortType.label,
                     style = NapzakMarketTheme.typography.capMedium12,
                     color = NapzakMarketTheme.colors.gray600,
                 )
@@ -356,7 +356,7 @@ private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
         isOnSale = false,
         isUnopened = false,
         productList = emptyList(),
-        sortType = SortType.RECENT.name,
+        sortType = SortType.RECENT,
         onBackButtonClick = { },
         onSearchBoxClick = { },
         onTradeTypeClick = { },

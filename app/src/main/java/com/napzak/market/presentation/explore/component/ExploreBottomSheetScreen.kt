@@ -10,6 +10,7 @@ import com.napzak.market.presentation.explore.bottomSheet.GenreSearchBottomSheet
 import com.napzak.market.presentation.explore.bottomSheet.SortBottomSheet
 import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
+import com.napzak.market.presentation.explore.type.SortType
 
 @Composable
 fun ExploreBottomSheetScreen(
@@ -18,9 +19,9 @@ fun ExploreBottomSheetScreen(
     selectedGenreList: List<Genre>,
     initialGenreList: List<Genre>,
     genreList: List<Genre>,
-    sortType: String,
+    sortType: SortType,
     onDismissRequest: (ExploreBottomSheetType) -> Unit,
-    onSortItemClick: (String) -> Unit,
+    onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
     onGenreSelectButtonClick: (List<Genre>) -> Unit,
 ) {

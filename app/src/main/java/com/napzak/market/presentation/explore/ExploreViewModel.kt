@@ -226,7 +226,7 @@ class ExploreViewModel @Inject constructor(
         _uiState.update { currentState ->
             currentState.copy(
                 tradeType = newTradeType,
-                sortType = SortType.RECENT.name
+                sortType = SortType.RECENT
             )
         }
         getExploreProductInformation()
@@ -261,7 +261,7 @@ class ExploreViewModel @Inject constructor(
         getExploreProductInformation()
     }
 
-    fun updateSortType(newSortType: String) {
+    fun updateSortType(newSortType: SortType) {
         _uiState.update { currentState ->
             currentState.copy(
                 sortType = newSortType

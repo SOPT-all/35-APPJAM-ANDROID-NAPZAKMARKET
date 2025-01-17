@@ -19,7 +19,7 @@ data class ExploreUiState(
     val genreList: List<Genre> = emptyList(),
     val isOnSale: Boolean = false,
     val isUnopened: Boolean = false,
-    val sortType: String = SortType.RECENT.name,
+    val sortType: SortType = SortType.RECENT,
 )
 
 data class ExploreProductInformation(

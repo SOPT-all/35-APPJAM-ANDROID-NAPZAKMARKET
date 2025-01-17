@@ -31,9 +31,9 @@ import com.napzak.market.core.common.extension.noRippleClickable
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SortBottomSheet(
-    selectedSortType: String,
+    selectedSortType: SortType,
     onDismissRequest: () -> Unit,
-    onSortItemClick: (String) -> Unit,
+    onSortItemClick: (SortType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -64,9 +64,11 @@ fun SortBottomSheet(
             sortList.forEach { sortItem ->
                 SortItem(
                     sortType = sortItem.label,
-                    isSelected = sortItem.name == selectedSortType,
-                    isLastItem = sortItem.name == SortType.LOW_PRICE.name,
-                    onSortItemClick = { onSortItemClick(sortItem.name) },
+//                    isSelected = sortItem.name == selectedSortType,
+                    isSelected = sortItem == selectedSortType,
+//                    isLastItem = sortItem.name == SortType.LOW_PRICE.name,
+                    isLastItem = sortItem == SortType.LOW_PRICE,
+                    onSortItemClick = { onSortItemClick(sortItem) },
                 )
             }
             Spacer(Modifier.height(20.dp))

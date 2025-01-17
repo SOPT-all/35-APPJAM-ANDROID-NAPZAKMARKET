@@ -3,6 +3,7 @@ package com.napzak.market.presentation.marketinfo
 import android.R.attr.contentDescription
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -259,9 +260,12 @@ fun MarketInfoSuccessScreen(
             Spacer(Modifier.height(20.dp))
 
         } else {
-            Box(
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.Center,
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
             ) {
                 Image(
                     painter = painterResource(R.drawable.img_ready),

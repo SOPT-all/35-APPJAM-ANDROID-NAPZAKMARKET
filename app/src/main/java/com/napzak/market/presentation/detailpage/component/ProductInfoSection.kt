@@ -18,7 +18,7 @@ import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
-import com.napzak.market.presentation.detailpage.type.ProductChipType
+import com.napzak.market.core.type.TradeType
 
 /**
  * 상품 정보 섹션을 구성하는 Composable.
@@ -38,7 +38,7 @@ import com.napzak.market.presentation.detailpage.type.ProductChipType
  */
 @Composable
 fun ProductInfoSection(
-    chipType: ProductChipType,
+    chipType: TradeType,
     timeText: String,
     views: Int,
     likes: Int,
@@ -58,7 +58,7 @@ fun ProductInfoSection(
                 text = chipType.label,
                 chipColors = CustomChipColors(
                     contentColor = NapzakMarketTheme.colors.white,
-                    containerColor = if (chipType == ProductChipType.BUY) NapzakMarketTheme.colors.gray900 else NapzakMarketTheme.colors.purple30
+                    containerColor = if (chipType == TradeType.BUY) NapzakMarketTheme.colors.gray900 else NapzakMarketTheme.colors.purple30
                 ),
             )
 
@@ -124,7 +124,7 @@ fun ProductInfoSection(
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            if (chipType == ProductChipType.BUY && isPriceSuggested) {
+            if (chipType == TradeType.BUY && isPriceSuggested) {
                 TextChip(
                     text = stringResource(id = R.string.detail_price_suggest_chip),
                     chipColors = CustomChipColors(
@@ -149,7 +149,7 @@ fun ProductInfoSection(
 fun ProductInfoSectionSellPreview() {
     NapzakMarketTheme {
         ProductInfoSection(
-            chipType = ProductChipType.SELL,
+            chipType = TradeType.SELL,
             timeText = "1시간 전",
             views = 27,
             likes = 4,
@@ -165,7 +165,7 @@ fun ProductInfoSectionSellPreview() {
 fun ProductInfoSectionBuyWithPriceSuggestionPreview() {
     NapzakMarketTheme {
         ProductInfoSection(
-            chipType = ProductChipType.BUY,
+            chipType = TradeType.BUY,
             timeText = "1시간 전",
             views = 50,
             likes = 12,
@@ -182,7 +182,7 @@ fun ProductInfoSectionBuyWithPriceSuggestionPreview() {
 fun ProductInfoSectionBuyWithoutPriceSuggestionPreview() {
     NapzakMarketTheme {
         ProductInfoSection(
-            chipType = ProductChipType.BUY,
+            chipType = TradeType.BUY,
             timeText = "1시간 전",
             views = 50,
             likes = 12,

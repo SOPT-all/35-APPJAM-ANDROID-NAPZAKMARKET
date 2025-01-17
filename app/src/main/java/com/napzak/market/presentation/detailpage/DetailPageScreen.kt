@@ -52,8 +52,8 @@ import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.component.snackbar.CommonSnackBar
 import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.core.type.TradeType
 import com.napzak.market.presentation.detailpage.component.ProductInfoSection
-import com.napzak.market.presentation.detailpage.type.ProductChipType
 import com.napzak.market.presentation.detailpage.type.ProductCondition
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -66,7 +66,7 @@ fun DetailPageRoute(
     DetailPageScreen(
         productCondition = stringResource(id = R.string.detail_product_condition_brand_new),
         deliveryOptions = Pair(3000, 1500),
-        chipType = ProductChipType.SELL,
+        chipType = TradeType.SELL,
         onChatNavigate = onItemChatNavigate,
     )
 }
@@ -75,7 +75,7 @@ fun DetailPageRoute(
 fun DetailPageScreen(
     productCondition: String?,
     deliveryOptions: Pair<Int?, Int?>?,
-    chipType: ProductChipType,
+    chipType: TradeType,
     onChatNavigate: () -> Unit,
     snackBarDuration: Long = 3000L,
 ) {
@@ -178,7 +178,7 @@ fun DetailPageScreen(
                     color = NapzakMarketTheme.colors.gray900,
                 )
 
-                if (chipType == ProductChipType.SELL) {
+                if (chipType == TradeType.SELL) {
 
                     Spacer(modifier = Modifier.height(35.dp))
 
@@ -470,7 +470,7 @@ fun DetailPageScreenSellPreview() {
                 stringResource(id = R.string.detail_delivery_fee_normal_preview).toInt(),
                 stringResource(id = R.string.detail_delivery_fee_discounted_preview).toInt(),
             ),
-            chipType = ProductChipType.SELL,
+            chipType = TradeType.SELL,
             onChatNavigate = {}
         )
     }
@@ -483,7 +483,7 @@ fun DetailPageScreenBuyPreview() {
         DetailPageScreen(
             productCondition = null,
             deliveryOptions = null,
-            chipType = ProductChipType.BUY,
+            chipType = TradeType.BUY,
             onChatNavigate = {}
         )
     }

@@ -47,6 +47,7 @@
     <string name="chat_screen_price_buy">100,000원대</string>
     <string name="chat_screen_title_sell">딸기 마이멜로디 마스코트 인형</string>
     <string name="chat_screen_price_sell">35,000원</string>
+    <string name="chat_message_placeholder">메시지를 입력하세요.</string>
 
     <!-- LoadingScreen -->
     <string name="loading_ready_image_description">준비중 상태를 나타내는 캐릭터</string>

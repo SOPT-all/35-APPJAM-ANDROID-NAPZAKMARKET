@@ -10,6 +10,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.napzak.market.presentation.chat.navigation.itemChatGraph
+import com.napzak.market.presentation.chat.navigation.navigateToItemChatScreen
+import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.dummy.navigation.navigateToDummy
 import com.napzak.market.presentation.explore.navigation.exploreGraph
@@ -99,5 +102,10 @@ private fun MainNavHost(
             onFavoriteNavigate = {},
             onRecentNavigate = {}
         )
+        detailPageGraph(
+            modifier = modifier,
+            onChatNavigate = navigator.navController::navigateToItemChatScreen,
+        )
+        itemChatGraph()
     }
 }

@@ -1,5 +1,6 @@
 package com.napzak.market.presentation.splash
 
+import android.os.Build
 import android.view.View
 import android.view.Window
 import androidx.activity.ComponentActivity
@@ -142,8 +143,11 @@ private fun setSystemBarStyle(
         val controller = WindowCompat.getInsetsController(it, view)
         controller.isAppearanceLightStatusBars = isLightTheme
         controller.isAppearanceLightNavigationBars = isLightTheme
-        it.statusBarColor = barColor
-        it.navigationBarColor = barColor
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            it.statusBarColor = barColor
+            it.navigationBarColor = barColor
+        }
     }
 }
 

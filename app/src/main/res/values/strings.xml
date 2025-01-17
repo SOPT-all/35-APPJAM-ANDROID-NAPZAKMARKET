@@ -7,6 +7,7 @@
     <string name="search_button">검색 아이콘</string>
     <string name="down_chevron_button">아래 방향 화살표 아이콘</string>
     <string name="left_chevron_button">왼쪽 방향 화살표 아이콘</string>
+    <string name="check_button">체크 아이콘</string>
 
     <!-- Component -->
     <string name="selectablechip_genre_counting">%s 외 %d</string>
@@ -25,6 +26,15 @@
     <string name="napzak_item_sell">팔아요</string>
     <string name="napzak_item_buy">구해요</string>
     <string name="napzak_item_suggest">가격제시</string>
+
+    <!-- Home Screen -->
+    <string name="home_recommendation_title1">납자기님을 위한 맞춤</string>
+    <string name="home_recommendation_title2">PICK!</string>
+    <string name="home_recommendation_body1">납자기님의 취향에 딱 맞는 아이템들을 모아봤어요.</string>
+    <string name="home_popular_title1">지금 가장 많이 찜한 납작템</string>
+    <string name="home_popular_body1">놓치면 아쉬운 인기 아이템들을 구경해볼까요?</string>
+    <string name="home_search_title1">다른 유저들은 뭘 찾고 있을까요?</string>
+    <string name="home_search_body1">덕심 가득한 리스트에서 취향을 나눠보세요.</string>
 
     <!-- ChatScreen-->
     <string name="chat_background_image_description">채팅 화면 배경 캐릭터</string>
@@ -72,7 +82,6 @@
     <string name="regi_half_price_post">알뜰/반값 택배</string>
     <string name="regi_half_price_post_placeholder">0~5,000</string>
     <string name="register">등록하기</string>
-
 
     <!-- MypageScreen -->
     <string name="menu_history">판매/구매 내역</string>
@@ -132,4 +141,9 @@
     <string name="detail_delivery_included">포함</string>
     <string name="detail_delivery_fee_normal">%d원</string>
     <string name="detail_delivery_fee_discounted">%d원</string>
+
+    <!-- GenreSearch BottomSheet -->
+    <string name="genre_search_select_genre">원하는 장르를 선택해주세요.</string>
+    <string name="genre_search_genre_example">예) 건담, 산리오, 주술회전</string>
+    <string name="genre_search_apply_button">적용하기</string>
 </resources>

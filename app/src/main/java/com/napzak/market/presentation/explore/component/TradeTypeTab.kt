@@ -19,8 +19,8 @@ import com.napzak.market.presentation.explore.type.TradeType
 
 @Composable
 fun TradeTypeTab(
-    selectedTab: String,
-    onTradeTypeClick: (String) -> Unit,
+    selectedTab: TradeType,
+    onTradeTypeClick: (TradeType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val borderColor = NapzakMarketTheme.colors.gray300
@@ -41,8 +41,8 @@ fun TradeTypeTab(
     ) {
         TradeTypeTabItem(
             tradeType = TradeType.SELL.label,
-            isSelected = selectedTab == TradeType.SELL.name,
-            onTradeTypeClick = { onTradeTypeClick(TradeType.SELL.name) },
+            isSelected = selectedTab == TradeType.SELL,
+            onTradeTypeClick = { onTradeTypeClick(TradeType.SELL) },
             modifier = Modifier.weight(1f),
         )
 
@@ -50,8 +50,8 @@ fun TradeTypeTab(
 
         TradeTypeTabItem(
             tradeType = TradeType.BUY.label,
-            isSelected = selectedTab == TradeType.BUY.name,
-            onTradeTypeClick = { onTradeTypeClick(TradeType.BUY.name) },
+            isSelected = selectedTab == TradeType.BUY,
+            onTradeTypeClick = { onTradeTypeClick(TradeType.BUY) },
             modifier = Modifier.weight(1f),
         )
     }
@@ -96,7 +96,7 @@ private fun TradeTypeTabItem(
 @Composable
 private fun TradeTypeTabPreview(modifier: Modifier = Modifier) {
     TradeTypeTab(
-        selectedTab = TradeType.SELL.name,
+        selectedTab = TradeType.SELL,
         onTradeTypeClick = { /* 특정 탭이 클릭 되었을 때 */ },
         modifier = modifier,
     )

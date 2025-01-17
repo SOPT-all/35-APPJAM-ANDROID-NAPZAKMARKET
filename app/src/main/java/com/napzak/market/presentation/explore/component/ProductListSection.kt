@@ -17,13 +17,13 @@ import com.napzak.market.presentation.explore.type.TradeType
 
 @Composable
 fun ProductListSection(
-    tradeType: String,
+    tradeType: TradeType,
     productList: List<ProductItem>,
     onItemClick: (Int) -> Unit,
     onLikeClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (tradeType == TradeType.SELL.name) {
+    if (tradeType == TradeType.SELL) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(20.dp),
@@ -75,7 +75,7 @@ fun ProductListSection(
 @Composable
 private fun ProductListSectionPreview(modifier: Modifier = Modifier) {
     ProductListSection(
-        tradeType = TradeType.BUY.name,
+        tradeType = TradeType.BUY,
         productList = listOf(
             ProductItem(
                 productId = 201,

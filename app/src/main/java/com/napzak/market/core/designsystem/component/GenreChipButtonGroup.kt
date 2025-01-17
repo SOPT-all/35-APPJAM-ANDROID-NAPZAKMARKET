@@ -7,16 +7,19 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +38,7 @@ import com.napzak.market.presentation.onboarding.state.OnboardingUiState
  * @param onResetClick 리셋 버튼 클릭 시 실행할 콜백
  * @param onGenreClick 장르 칩 클릭 시 실행할 콜백
  * @param modifier 수정자
+ * @param backgroundColor 장르칩 그룹의 배경색상
  * @param contentPaddingValues 내부 패딩값
  */
 
@@ -45,6 +49,7 @@ fun GenreChipButtonGroup(
     onResetClick: () -> Unit,
     onGenreClick: (Genre) -> Unit,
     modifier: Modifier = Modifier,
+    backgroundColor: Color = NapzakMarketTheme.colors.white,
     contentPaddingValues: PaddingValues = PaddingValues(0.dp),
 ) {
     CompositionLocalProvider(
@@ -53,14 +58,16 @@ fun GenreChipButtonGroup(
             AnimatedContent(
                 targetState = genreList.isNotEmpty(),
                 transitionSpec = {
-                    slideInVertically { fullHeight -> -fullHeight }togetherWith
+                    slideInVertically { fullHeight -> -fullHeight } togetherWith
                             slideOutVertically { fullHeight -> -fullHeight }
                 },
                 label = "GenreChip",
             ) { hasGenre ->
                 if (hasGenre) {
                     LazyRow(
-                        modifier = modifier.fillMaxWidth(),
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .background(color = backgroundColor),
                         contentPadding = contentPaddingValues,
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
                         verticalAlignment = Alignment.CenterVertically,
@@ -69,6 +76,10 @@ fun GenreChipButtonGroup(
                             RoundedIconButton(
                                 icon = ImageVector.vectorResource(id = R.drawable.ic_reset_18),
                                 onClick = onResetClick,
+                                modifier = Modifier.background(
+                                    color = backgroundColor,
+                                    shape = RoundedCornerShape(topEnd = 50.dp, bottomEnd = 50.dp)
+                                )
                             )
                         }
 
@@ -76,7 +87,8 @@ fun GenreChipButtonGroup(
                             RemovableChip(
                                 text = genre.genreName,
                                 onClick = { onGenreClick(genre) },
-                                modifier = Modifier.animateItem(
+                                modifier = Modifier
+                                    .animateItem(
                                     fadeInSpec = tween(200),
                                     fadeOutSpec = tween(200),
                                 )

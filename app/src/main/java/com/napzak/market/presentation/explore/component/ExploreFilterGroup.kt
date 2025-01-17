@@ -18,7 +18,7 @@ import com.napzak.market.presentation.explore.type.TradeType
 
 @Composable
 fun ExploreFilterGroup(
-    tradeType: String,
+    tradeType: TradeType,
     genreList: List<Genre>,
     isOnSale: Boolean,
     isUnopened: Boolean,
@@ -50,7 +50,7 @@ fun ExploreFilterGroup(
             genreList = genreList,
         )
 
-        if (tradeType == TradeType.SELL.name) {
+        if (tradeType == TradeType.SELL) {
             Spacer(Modifier.width(6.dp))
 
             SelectableChip(
@@ -68,7 +68,7 @@ fun ExploreFilterGroup(
 @Composable
 private fun FilterGroupPreview(modifier: Modifier = Modifier) {
     ExploreFilterGroup(
-        tradeType = TradeType.SELL.name,
+        tradeType = TradeType.SELL,
         genreList = emptyList(),
         isOnSale = false,
         isUnopened = false,

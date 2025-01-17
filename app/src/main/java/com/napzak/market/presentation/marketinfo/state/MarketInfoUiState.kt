@@ -23,5 +23,5 @@ data class MarketUiInformation(
     val storeDescription: String,
     val storePhoto: String,
     val genrePreferenceList: List<Genre>,
-    val productList: List<ProductItem>,
+    val productList: List<ProductItem> = emptyList(),
 )

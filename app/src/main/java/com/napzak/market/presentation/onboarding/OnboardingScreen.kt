@@ -101,9 +101,9 @@ private fun OnboardingScreen(
             genreList = uiState.selectedGenreList,
             onGenreClick = onGenreClick,
             onResetClick = onResetClick,
-            contentPaddingValues = PaddingValues(horizontal = 20.dp),
+            contentPaddingValues = PaddingValues(end = 20.dp),
             modifier = Modifier
-                .padding(top = 16.dp),
+                .padding(start = 20.dp, top = 16.dp),
         )
 
         Box(modifier = Modifier.weight(1f)) {

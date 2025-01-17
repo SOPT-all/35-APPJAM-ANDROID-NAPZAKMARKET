@@ -1,16 +1,247 @@
 package com.napzak.market.presentation.marketinfo
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.napzak.market.core.common.state.UiState
+import com.napzak.market.domain.genre.model.Genre
+import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
+import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
+import com.napzak.market.presentation.explore.type.SortType
+import com.napzak.market.presentation.explore.type.TradeType
 import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
+import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MyMarketViewModel @Inject constructor(
     /* TODO: Repository 연결 */
-): ViewModel() {
+) : ViewModel() {
     private val _uiState = MutableStateFlow(MarketInfoUiState())
     val uiState = _uiState.asStateFlow()
+
+    private val _bottomSheetState: MutableStateFlow<ExploreBottomSheetState> =
+        MutableStateFlow(ExploreBottomSheetState())
+    val bottomSheetState: StateFlow<ExploreBottomSheetState> = _bottomSheetState.asStateFlow()
+
+    private val _searchTerm: MutableStateFlow<String> = MutableStateFlow("")
+    val searchTerm = _searchTerm.asStateFlow()
+
+    fun initGenreList() {
+        /* TODO: 장르 리스트 조회 API 연결 */
+        _uiState.update { currentState ->
+            currentState.copy(
+                initGenreList = listOf(
+                    Genre(
+                        genreId = 1,
+                        genreName = "나루토",
+                    ),
+                    Genre(
+                        genreId = 2,
+                        genreName = "원피스",
+                    ),
+                    Genre(
+                        genreId = 3,
+                        genreName = "블리치",
+                    ),
+                    Genre(
+                        genreId = 4,
+                        genreName = "귀멸의 칼날",
+                    ),
+                    Genre(
+                        genreId = 5,
+                        genreName = "주술회전",
+                    ),
+                    Genre(
+                        genreId = 6,
+                        genreName = "진격의 거인",
+                    ),
+                    Genre(
+                        genreId = 7,
+                        genreName = "데스노트",
+                    ),
+                    Genre(
+                        genreId = 8,
+                        genreName = "짱구는 못말려",
+                    ),
+                    Genre(
+                        genreId = 9,
+                        genreName = "도라에몽",
+                    ),
+                    Genre(
+                        genreId = 10,
+                        genreName = "강철의 연금술사",
+                    ),
+                    Genre(
+                        genreId = 11,
+                        genreName = "체인소맨",
+                    ),
+                    Genre(
+                        genreId = 12,
+                        genreName = "원펀맨",
+                    ),
+                    Genre(
+                        genreId = 13,
+                        genreName = "드래곤볼",
+                    ),
+                    Genre(
+                        genreId = 14,
+                        genreName = "명탐정 코난",
+                    ),
+                    Genre(
+                        genreId = 15,
+                        genreName = "슬램덩크",
+                    )
+                )
+            )
+        }
+    }
+
+    fun getMarketInformation() {
+        /* TODO: 마켓정보 조회 API 연결 */
+        updateLoadState(
+            loadState = UiState.Success(
+                MarketUiInformation(
+                    storeId = 1,
+                    storeNickname = "납자기",
+                    storeDescription = "마이멜로디, 시나모롤 제일 좋아합니다 :) 해당 장르 상품들 판매 및 제시 채팅 언제든 환영합니다!",
+                    storePhoto = "",
+                    genrePreferenceList = listOf(
+                        Genre(
+                            genreId = 1,
+                            genreName = "나루토",
+                        ),
+                        Genre(
+                            genreId = 2,
+                            genreName = "원피스",
+                        ),
+                        Genre(
+                            genreId = 3,
+                            genreName = "블리치",
+                        ),
+                        Genre(
+                            genreId = 4,
+                            genreName = "귀멸의 칼날",
+                        ),
+                    )
+                )
+            )
+        )
+    }
+
+    fun changeSearchText(newValue: String) = viewModelScope.launch {
+        updateSearchValue(newValue)
+        debounceSearch()
+    }
+
+    private fun updateSearchValue(newValue: String) = _searchTerm.update { newValue }
+
+    @OptIn(FlowPreview::class)
+    private suspend fun debounceSearch() = _searchTerm.debounce(DEBOUNCE_DELAY)
+        .collectLatest { debounced ->
+            getGenreList(debounced)
+        }
+
+    // TODO: 서버 통신으로 대체
+    private fun getGenreList(searchTerm: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                genreList = if (searchTerm.isEmpty()) {
+                    uiState.value.initGenreList
+                } else {
+                    uiState.value.initGenreList.filter {
+                        it.genreName.contains(searchTerm)
+                    }
+                }
+            )
+        }
+    }
+
+    fun updateTradeType(newTradeType: TradeType) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                tradeType = newTradeType,
+                sortType = SortType.RECENT
+            )
+        }
+        getMarketInformation()
+    }
+
+    fun updateSelectedGenreList(newSelectedGenreList: List<Genre>) {
+        if (_uiState.value.selectedGenreList.size <= MAX_GENRE_SELECTION) {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    selectedGenreList = newSelectedGenreList
+                )
+            }
+        }
+        getMarketInformation()
+    }
+
+    fun updateSoldOut() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                isOnSale = !uiState.value.isOnSale
+            )
+        }
+        getMarketInformation()
+    }
+
+    fun updateUnopen() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                isUnopened = !uiState.value.isUnopened
+            )
+        }
+        getMarketInformation()
+    }
+
+    fun updateSortType(newSortType: SortType) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                sortType = newSortType
+            )
+        }
+        getMarketInformation()
+    }
+
+    fun updateItemLikeButton(productId: Int) {
+        /* TODO: 좋아요 API 연결 및 기능 연결 */
+    }
+
+    fun updateBottomSheetVisibility(type: ExploreBottomSheetType) {
+        when (type) {
+            ExploreBottomSheetType.SORT -> {
+                _bottomSheetState.update {
+                    it.copy(isSortBottomSheetVisible = !_bottomSheetState.value.isSortBottomSheetVisible)
+                }
+            }
+
+            ExploreBottomSheetType.GENRE_SEARCHING -> {
+                _bottomSheetState.update {
+                    it.copy(isGenreSearchingBottomSheetVisible = !_bottomSheetState.value.isGenreSearchingBottomSheetVisible)
+                }
+            }
+        }
+    }
+
+    private fun updateLoadState(loadState: UiState<MarketUiInformation>) =
+        _uiState.update { currentState ->
+            currentState.copy(
+                loadState = loadState
+            )
+        }
+
+    companion object {
+        private const val DEBOUNCE_DELAY = 500L
+        private const val MAX_GENRE_SELECTION = 4
+    }
 }

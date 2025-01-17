@@ -157,7 +157,7 @@ fun ExploreScreen(
 fun ExploreSuccessScreen(
     modifier: Modifier = Modifier,
     bottomSheetState: ExploreBottomSheetState,
-    exploreScreenType: String,
+    exploreScreenType: ExploreScreenType,
     initSearchTerm: String?,
     tradeType: String,
     selectedGenreList: List<Genre>,
@@ -188,7 +188,7 @@ fun ExploreSuccessScreen(
             .padding(top = 40.dp),
     ) {
         when (exploreScreenType) {
-            ExploreScreenType.BASIC.name -> {
+            ExploreScreenType.BASIC -> {
                 Box {
                     SearchBox(
                         placeholder = stringResource(id = R.string.explore_search_box_placeholder),
@@ -200,7 +200,7 @@ fun ExploreSuccessScreen(
                 }
             }
 
-            ExploreScreenType.WORD_SEARCH_RESULT.name -> {
+            ExploreScreenType.WORD_SEARCH_RESULT -> {
                 Row(
                     modifier = Modifier.padding(end = 20.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -227,7 +227,7 @@ fun ExploreSuccessScreen(
                 }
             }
 
-            ExploreScreenType.GENRE_SEARCH_RESULT.name -> {
+            ExploreScreenType.GENRE_SEARCH_RESULT -> {
                 Row(
                     modifier = Modifier.padding(end = 20.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -348,7 +348,7 @@ private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
             isGenreSearchingBottomSheetVisible = false
         ),
         tradeType = TradeType.SELL.name,
-        exploreScreenType = ExploreScreenType.BASIC.name,
+        exploreScreenType = ExploreScreenType.BASIC,
         initSearchTerm = "",
         selectedGenreList = emptyList(),
         initialGenreList = emptyList(),

@@ -40,7 +40,7 @@ class ExploreViewModel @Inject constructor(
         _uiState.update { currentState ->
             if (genreId != null) { /* 장르 선택 검색인 경우 */
                 currentState.copy(
-                    exploreScreenType = ExploreScreenType.GENRE_SEARCH_RESULT.name,
+                    exploreScreenType = ExploreScreenType.GENRE_SEARCH_RESULT,
                     selectedGenreList = listOf(
                         Genre(
                             genreId = genreId,
@@ -50,7 +50,7 @@ class ExploreViewModel @Inject constructor(
                 )
             } else { /* 일반 검색인 경우 */
                 currentState.copy(
-                    exploreScreenType = ExploreScreenType.WORD_SEARCH_RESULT.name,
+                    exploreScreenType = ExploreScreenType.WORD_SEARCH_RESULT,
                     initSearchTerm = searchTerm,
                 )
             }

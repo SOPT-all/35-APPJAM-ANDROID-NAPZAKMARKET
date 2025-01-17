@@ -64,9 +64,7 @@ fun SortBottomSheet(
             sortList.forEach { sortItem ->
                 SortItem(
                     sortType = sortItem.label,
-//                    isSelected = sortItem.name == selectedSortType,
                     isSelected = sortItem == selectedSortType,
-//                    isLastItem = sortItem.name == SortType.LOW_PRICE.name,
                     isLastItem = sortItem == SortType.LOW_PRICE,
                     onSortItemClick = { onSortItemClick(sortItem) },
                 )

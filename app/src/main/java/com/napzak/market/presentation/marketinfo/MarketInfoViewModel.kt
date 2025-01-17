@@ -35,6 +35,15 @@ class MarketInfoViewModel @Inject constructor(
     private val _searchTerm: MutableStateFlow<String> = MutableStateFlow("")
     val searchTerm = _searchTerm.asStateFlow()
 
+    fun setStoreId(storeId: Long) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                storeId = storeId
+            )
+        }
+        getMarketInformation()
+    }
+
     fun initGenreList() {
         /* TODO: 장르 리스트 조회 API 연결 */
         _uiState.update { currentState ->
@@ -110,7 +119,6 @@ class MarketInfoViewModel @Inject constructor(
         updateLoadState(
             loadState = UiState.Success(
                 MarketUiInformation(
-                    storeId = 1,
                     storeNickname = "납자기",
                     storeDescription = "마이멜로디, 시나모롤 제일 좋아합니다 :) 해당 장르 상품들 판매 및 제시 채팅 언제든 환영합니다!",
                     storePhoto = "",

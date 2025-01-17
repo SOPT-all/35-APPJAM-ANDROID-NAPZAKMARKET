@@ -44,6 +44,7 @@ import kotlin.String
 
 @Composable
 fun MarketInfoRoute(
+    storeId: Long,
     onProductDetailNavigate: () -> Unit,
     onBackButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -51,6 +52,8 @@ fun MarketInfoRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val bottomSheetState by viewModel.bottomSheetState.collectAsStateWithLifecycle()
+
+    viewModel.setStoreId(storeId)
 
     LaunchedEffect(uiState) {
         viewModel.getMarketInformation()

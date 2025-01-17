@@ -8,6 +8,7 @@ import com.napzak.market.domain.genre.model.Genre
 
 data class MarketInfoUiState(
     val loadState: UiState<MarketUiInformation> = UiState.Loading,
+    val storeId: Long = 0,
     val tradeType: TradeType = TradeType.SELL,
     val initGenreList: List<Genre> = emptyList(),
     val selectedGenreList: List<Genre> = emptyList(),
@@ -18,7 +19,6 @@ data class MarketInfoUiState(
 )
 
 data class MarketUiInformation(
-    val storeId: Long,
     val storeNickname: String,
     val storeDescription: String,
     val storePhoto: String,

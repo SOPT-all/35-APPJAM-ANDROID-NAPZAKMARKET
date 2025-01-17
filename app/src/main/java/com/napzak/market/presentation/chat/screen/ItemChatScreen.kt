@@ -36,28 +36,19 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.presentation.chat.component.ChatInfoSection
 import com.napzak.market.presentation.chat.type.ChatType
 
-/**
- * 채팅 화면 컴포넌트.
- *
- * 구매 또는 판매 채팅 유형에 따라 제목, 설명, 가격 정보를 표시합니다.
- * 필요에 따라 가격 레이블을 추가로 표시할 수 있습니다.
- *
- * @param chatType 채팅의 유형 (구매 또는 판매)
- * @param title 채팅 화면 상단에 표시될 제목 텍스트
- * @param description 채팅 화면 상단에 표시될 설명 텍스트
- * @param price 채팅 화면 상단에 표시될 가격 정보 텍스트
- * @param showPriceLabel 가격 앞에 레이블을 표시할지 여부 (true: 레이블 표시, false: 레이블 숨김)
- */
 @Composable
 fun ItemChatRoute(
-    modifier: Modifier = Modifier
-) {
+    modifier: Modifier = Modifier,
+    onNavigateUp: () -> Unit = {},
+    ) {
     ItemChatScreen(
         chatType = ChatType.BUY,
         title = stringResource(id = R.string.chat_screen_title_buy),
         description = stringResource(id = R.string.chat_screen_description_buy),
         price = stringResource(id = R.string.chat_screen_price_buy),
-        showPriceLabel = true
+        showPriceLabel = true,
+        onBackClick = onNavigateUp,
+        modifier = modifier,
     )
 }
 
@@ -67,19 +58,19 @@ fun ItemChatScreen(
     title: String,
     description: String,
     price: String,
-    showPriceLabel: Boolean
+    showPriceLabel: Boolean,
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .background(NapzakMarketTheme.colors.white)
+            .background(NapzakMarketTheme.colors.white),
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             BackTopBar(
                 title = title,
-                onBackClick = {
-                    // TODO: 뒤로가기 액션 구현 필요
-                },
+                onBackClick = onBackClick,
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = NapzakMarketTheme.typography.titleSemi18,
                 backgroundColor = NapzakMarketTheme.colors.white,
@@ -149,7 +140,7 @@ fun ItemChatScreen(
                     onValueChange = {},
                     placeholder = {
                         Text(
-                            text = "메시지를 입력하세요.",
+                            text = stringResource(id = R.string.chat_message_placeholder),
                             color = NapzakMarketTheme.colors.gray400,
                             style = NapzakMarketTheme.typography.bodyMedium14,
                         )
@@ -184,7 +175,8 @@ fun ChatScreenBuyPreview() {
         title = "납작한 외계인",
         description = "양스타 토모에 히요리 이츠누이 함께",
         price = "100,000원대",
-        showPriceLabel = true
+        showPriceLabel = true,
+        onBackClick = {}
     )
 }
 
@@ -196,6 +188,7 @@ fun ChatScreenSellPreview() {
         title = "납작한 외계인",
         description = "딸기 마이멜로디 마스코트 인형",
         price = "35,000원",
-        showPriceLabel = false
+        showPriceLabel = false,
+        onBackClick = {}
     )
 }

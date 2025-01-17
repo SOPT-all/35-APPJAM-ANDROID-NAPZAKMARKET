@@ -107,6 +107,7 @@ private fun MainNavHost(
             onNavigateUp = navigator.navController::navigateUp,
         )
         itemChatGraph(
+            modifier = Modifier.systemBarsPadding(),
             onNavigateUp = navigator.navController::navigateUp,
         )
     }

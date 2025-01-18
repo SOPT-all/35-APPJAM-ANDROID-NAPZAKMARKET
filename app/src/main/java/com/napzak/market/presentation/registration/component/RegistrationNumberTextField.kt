@@ -74,7 +74,7 @@ fun RegistrationNumberTextField(
                     decorationBox = { innerTextField ->
                         Box(
                             modifier = Modifier
-                                .padding(end = 61.dp, bottom = 8.dp),
+                                .padding(bottom = 8.dp),
                         ) {
                             if (number.isEmpty()) {
                                 Text(

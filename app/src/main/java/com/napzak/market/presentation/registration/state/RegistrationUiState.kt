@@ -8,12 +8,12 @@ data class RegistrationUiState(
     val genre: String = "",
     val title: String = "",
     val description: String = "",
-    val productCondition: Int = -1,
 
+    val productCondition: Int = -1,
     val productSalePrice: String = "",
     val normalPostFee: String = "",
     val halfPostFee: String = "",
 
     val productPurchasePrice: String = "",
-    val isOfferPossible: Boolean = false,
+    val isOfferAvailable: Boolean = false,
 )

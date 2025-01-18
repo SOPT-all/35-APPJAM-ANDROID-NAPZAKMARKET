@@ -18,16 +18,14 @@ class RegistrationViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(RegistrationUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun photoUpload() {
+    fun updatePhotoList(newImageUrlList: List<String>) = _uiState.update { it.copy(imageUrlList = it.imageUrlList + newImageUrlList) }
 
-    }
+    fun deletePhoto(photoIndex: Int)  = _uiState.update { it.copy(imageUrlList = it.imageUrlList.filterIndexed { index, _ -> index != photoIndex }) }
 
-    fun representPhotoChange(newPhoto: Int) {
-
-    }
-
-    fun deletePhoto(photoIndex: Int) {
-
+    fun changeRepresentPhoto(newPhoto: Int) = _uiState.update {
+        val newImageUrlList = it.imageUrlList.toMutableList()
+        newImageUrlList.add(0, newImageUrlList.removeAt(newPhoto))
+        it.copy(imageUrlList = newImageUrlList)
     }
 
     fun updatePlainTextValue(
@@ -67,11 +65,15 @@ class RegistrationViewModel @Inject constructor(
     private fun formatNumericValue(
         newValue: String,
         maxValue: Int
-    ) : String {
+    ): String {
         val rawValue = newValue.filter { it.isDigit() }.toIntOrNull() ?: 0
         val limitedValue = rawValue.coerceAtMost(maxValue)
         return DecimalFormat("#,###").format(limitedValue)
     }
+
+    fun updateProductCondition(newCondition: Int) = _uiState.update { it.copy(productCondition = newCondition) }
+
+    fun updateOfferAvailability(isAvailable: Boolean) = _uiState.update { it.copy(isOfferAvailable = isAvailable) }
 
     companion object {
         private const val MAX_TITLE_LENGTH = 48

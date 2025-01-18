@@ -69,6 +69,7 @@
     <string name="regi_price_description">구하려는 상품 가격의 범위는 1,000원대부터 입력 가능해요.</string>
     <string name="regi_price_offer">가격 제시</string>
     <string name="regi_price_won">원</string>
+    <string name="regi_price_range_placeholder">000</string>
     <string name="regi_price_range">,000원대</string>
     <string name="regi_post_fee">배송비</string>
     <string name="regi_post_fee_include">포함</string>

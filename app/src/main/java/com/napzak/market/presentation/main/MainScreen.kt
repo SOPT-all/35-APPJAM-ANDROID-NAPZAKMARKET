@@ -51,7 +51,7 @@ fun MainScreen(
 
             MainRegisterDialog(
                 onSellRegisterClick = { navigator.navController.navigateToRegistration(isSale = true) },
-                onBuyRegisterClick = { navigator.navController.navigateToRegistration(isSale = true) },
+                onBuyRegisterClick = { navigator.navController.navigateToRegistration(isSale = false) },
                 onDismissRequest = { navigator.navigate(MainTab.REGISTER) },
                 visibility = navigator.registerDialogVisibility,
             )

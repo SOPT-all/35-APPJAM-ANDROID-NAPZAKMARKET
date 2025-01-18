@@ -21,13 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.R
-import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**
@@ -71,7 +69,7 @@ fun PostOptionCard(
             ) {
                 RegistrationCheckBox(
                     isChecked = isChecked,
-                    onCheckedChange = onCheckedChange,
+                    onCheckChange = onCheckedChange,
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
@@ -112,33 +110,6 @@ fun PostOptionCard(
             )
         }
     }
-}
-
-/**
- * Registration check box
- *
- * 등록 화면에서 사용되는 checkbox
- *
- * @param isChecked
- * @param onCheckedChange
- * @param modifier
- */
-
-@Composable
-private fun RegistrationCheckBox(
-    isChecked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val checkBox =
-        if (isChecked) R.drawable.ic_checkbox_selected_20 else R.drawable.ic_checkbox_unselected_20
-    Icon(
-        modifier = modifier
-            .noRippleClickable { onCheckedChange(!isChecked) },
-        imageVector = ImageVector.vectorResource(checkBox),
-        contentDescription = null,
-        tint = Color.Unspecified,
-    )
 }
 
 private const val ROTATION_ANGLE_CHECKED = 180f

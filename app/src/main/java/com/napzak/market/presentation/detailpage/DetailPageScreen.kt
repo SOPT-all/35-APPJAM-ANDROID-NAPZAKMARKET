@@ -26,6 +26,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,6 +42,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.napzak.market.R
@@ -54,20 +56,24 @@ import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.presentation.detailpage.component.ProductInfoSection
+import com.napzak.market.presentation.detailpage.state.DetailPageUiState
+import com.napzak.market.presentation.detailpage.state.MarketInfoUiState
 import com.napzak.market.presentation.detailpage.type.ProductCondition
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun DetailPageRoute(
+    viewModel: DetailPageViewModel = hiltViewModel(),
     onItemChatNavigate: () -> Unit,
-    modifier: Modifier = Modifier,
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
+
+    val uiState by viewModel.uiState.collectAsState()
+
     DetailPageScreen(
-        productCondition = stringResource(id = R.string.detail_product_condition_brand_new),
-        deliveryOptions = Pair(3000, 1500),
-        chipType = TradeType.SELL,
+        uiState = uiState,
         onChatNavigate = onItemChatNavigate,
         onBackClick = onNavigateUp,
         modifier = modifier,
@@ -76,15 +82,13 @@ fun DetailPageRoute(
 
 @Composable
 fun DetailPageScreen(
-    productCondition: String?,
-    deliveryOptions: Pair<Int?, Int?>?,
-    chipType: TradeType,
+    uiState: DetailPageUiState,
     onChatNavigate: () -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     snackBarDuration: Long = 3000L,
 ) {
-    val conditionEnum = ProductCondition.fromCondition(productCondition)
+    val conditionEnum =ProductCondition.fromCondition(uiState.productCondition)
     var isSnackBarVisible by remember { mutableStateOf(false) }
     val snackBarMessage = stringResource(id = R.string.detail_snackbar_message)
 
@@ -152,13 +156,13 @@ fun DetailPageScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             ProductInfoSection(
-                chipType = chipType,
-                timeText = stringResource(id = R.string.detail_time_text),
-                views = 27,
-                likes = 4,
-                title = stringResource(id = R.string.detail_title),
-                subtitle = stringResource(id = R.string.detail_subtitle),
-                price = stringResource(id = R.string.detail_price),
+                chipType = TradeType.valueOf(uiState.tradeType),
+                timeText = uiState.uploadTime,
+                views = uiState.viewCount,
+                likes = uiState.interestCount,
+                title = uiState.genreName,
+                subtitle = uiState.productName,
+                price = "${uiState.price}원",
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -184,7 +188,7 @@ fun DetailPageScreen(
                     color = NapzakMarketTheme.colors.gray900,
                 )
 
-                if (chipType == TradeType.SELL) {
+                if (uiState.tradeType == TradeType.SELL.name) {
 
                     Spacer(modifier = Modifier.height(35.dp))
 
@@ -237,9 +241,9 @@ fun DetailPageScreen(
                             style = NapzakMarketTheme.typography.bodySemi16,
                             color = NapzakMarketTheme.colors.gray800,
                         )
-                        if (deliveryOptions != null) {
+                        if (uiState.standardDeliveryFee > 0 || uiState.halfDeliveryFee > 0) {
                             Row {
-                                deliveryOptions.first?.let {
+                                uiState.standardDeliveryFee.takeIf { it > 0 }?.let {
                                     Row {
                                         Text(
                                             text = stringResource(id = R.string.detail_delivery_normal),
@@ -259,7 +263,7 @@ fun DetailPageScreen(
                                         )
                                     }
                                 }
-                                deliveryOptions.second?.let {
+                                uiState.halfDeliveryFee.takeIf { it > 0 }?.let {
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Row {
                                         Text(
@@ -468,29 +472,25 @@ fun BottomBar(
 
 @Preview(showBackground = true)
 @Composable
-fun DetailPageScreenSellPreview() {
-    NapzakMarketTheme {
-        DetailPageScreen(
-            productCondition = stringResource(id = R.string.detail_product_condition_brand_new_preview),
-            deliveryOptions = Pair(
-                stringResource(id = R.string.detail_delivery_fee_normal_preview).toInt(),
-                stringResource(id = R.string.detail_delivery_fee_discounted_preview).toInt(),
-            ),
-            chipType = TradeType.SELL,
-            onChatNavigate = {},
-            onBackClick = {},
+fun DetailPageScreenPreview() {
+    val mockUiState = DetailPageUiState(
+        productName = "딸기 마이멜로디 마스코트 인형",
+        price = 35000,
+        uploadTime = "1시간 전",
+        viewCount = 120,
+        interestCount = 45,
+        description = "사용한 마이멜로디 판매합니다.",
+        productCondition = "미개봉",
+        marketInfo = MarketInfoUiState(
+            nickname = "납작한 외계인",
+            totalProducts = 10,
+            totalTransactions = 7,
         )
-    }
-}
+    )
 
-@Preview(showBackground = true)
-@Composable
-fun DetailPageScreenBuyPreview() {
     NapzakMarketTheme {
         DetailPageScreen(
-            productCondition = null,
-            deliveryOptions = null,
-            chipType = TradeType.BUY,
+            uiState = mockUiState,
             onChatNavigate = {},
             onBackClick = {},
         )

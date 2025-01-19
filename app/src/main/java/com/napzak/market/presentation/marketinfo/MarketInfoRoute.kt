@@ -1,8 +1,6 @@
 package com.napzak.market.presentation.marketinfo
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.common.state.UiState
+import com.napzak.market.core.designsystem.component.image.EmptyImage
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.MarketTab
@@ -256,37 +254,11 @@ fun MarketInfoSuccessScreen(
             Spacer(Modifier.height(20.dp))
 
         } else {
-            Column(
+            EmptyImage(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.img_ready),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .width(162.dp)
-                        .height(128.dp)
-                )
-
-                Spacer(Modifier.height(20.dp))
-
-                Text(
-                    text = stringResource(R.string.ready_notice),
-                    style = NapzakMarketTheme.typography.titleSemi20,
-                    color = NapzakMarketTheme.colors.gray800,
-                )
-
-                Spacer(Modifier.height(6.dp))
-
-                Text(
-                    text = stringResource(R.string.ready_wait_please),
-                    style = NapzakMarketTheme.typography.bodyMedium14,
-                    color = NapzakMarketTheme.colors.gray600,
-                )
-            }
+                    .weight(1f)
+            )
         }
     }
 

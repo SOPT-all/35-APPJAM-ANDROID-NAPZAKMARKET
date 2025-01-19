@@ -48,7 +48,6 @@ fun RegistrationBuyGroup(
         )
         Spacer(modifier = Modifier.height(24.dp))
         RegistrationNumberTextField(
-            modifier = Modifier,
             number = number,
             placeholder = stringResource(R.string.regi_price_range_placeholder),
             onNumberChange = onNumberChange,

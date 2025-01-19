@@ -14,10 +14,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.napzak.market.R
+import com.napzak.market.core.common.util.priceSeparatorTransformation
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**
@@ -33,25 +36,26 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 @Composable
 fun RegistrationPriceTextField(
-    price: TextFieldValue,
+    price: String,
     placeholder: String,
-    onPriceChange: (TextFieldValue) -> Unit,
+    onPriceChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     BasicTextField(
         modifier = modifier.fillMaxWidth(),
         value = price,
-        textStyle = NapzakMarketTheme.typography.bodyMedium14.copy(
+        textStyle = NapzakMarketTheme.typography.bodyMedium16.copy(
             color = NapzakMarketTheme.colors.gray900,
         ),
         onValueChange = onPriceChange,
         singleLine = true,
+        visualTransformation = priceSeparatorTransformation(),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = KeyboardType.NumberPassword,
         ),
         decorationBox = { innerTextField ->
             Box {
-                if (price.text.isEmpty()) {
+                if (price.isEmpty()) {
                     Text(
                         text = placeholder,
                         style = NapzakMarketTheme.typography.bodyMedium16,
@@ -74,7 +78,7 @@ fun RegistrationPriceTextField(
 @Composable
 private fun RegistrationPriceTextFieldPreview() {
     NapzakMarketTheme {
-        var text by remember { mutableStateOf(TextFieldValue("")) }
+        var text by remember { mutableStateOf("") }
         Column {
             RegistrationPriceTextField(
                 price = text,

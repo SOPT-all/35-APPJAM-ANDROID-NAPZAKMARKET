@@ -1,5 +1,8 @@
 package com.napzak.market.presentation.detailpage.state
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class DetailPageUiState(
     val profileImageUrl: String? = null,
     val productId: Long = 0L,
@@ -21,6 +24,7 @@ data class DetailPageUiState(
     val marketReviews: List<MarketReviewUiState> = emptyList(),
 )
 
+@Immutable
 data class MarketInfoUiState(
     val userId: Long = 0L,
     val nickname: String = "",
@@ -28,6 +32,7 @@ data class MarketInfoUiState(
     val totalTransactions: Int = 0,
 )
 
+@Immutable
 data class MarketReviewUiState(
     val reviewId: Long = 0L,
     val reviewerNickname: String = "",

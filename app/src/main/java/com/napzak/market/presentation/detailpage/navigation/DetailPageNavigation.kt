@@ -22,7 +22,7 @@ fun NavGraphBuilder.detailPageGraph(
         DetailPageRoute(
             modifier = modifier,
             onItemChatNavigate = onChatNavigate,
-            onNavigateUp = {},
+            onNavigateUp = onNavigateUp,
         )
     }
 }

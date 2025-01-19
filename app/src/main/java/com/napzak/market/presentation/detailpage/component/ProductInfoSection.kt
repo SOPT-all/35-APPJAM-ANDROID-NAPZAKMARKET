@@ -29,7 +29,7 @@ import com.napzak.market.core.type.TradeType
  * @param chipType 상품 유형 (BUY: 구해요, SELL: 팔아요)
  * @param timeText 등록 시간 텍스트
  * @param views 조회수
- * @param likes 좋아요 수
+ * @param likeCount 좋아요 수
  * @param title 상품의 주요 제목
  * @param subtitle 상품의 상세 부제목
  * @param price 상품 가격 정보
@@ -41,7 +41,7 @@ fun ProductInfoSection(
     chipType: TradeType,
     timeText: String,
     views: Int,
-    likes: Int,
+    likeCount: Int,
     title: String,
     subtitle: String,
     price: String,
@@ -58,7 +58,11 @@ fun ProductInfoSection(
                 text = chipType.label,
                 chipColors = CustomChipColors(
                     contentColor = NapzakMarketTheme.colors.white,
-                    containerColor = if (chipType == TradeType.BUY) NapzakMarketTheme.colors.gray900 else NapzakMarketTheme.colors.purple30
+                    containerColor = if (chipType == TradeType.BUY) {
+                        NapzakMarketTheme.colors.gray900
+                    } else {
+                        NapzakMarketTheme.colors.purple30
+                    }
                 ),
             )
 
@@ -99,7 +103,7 @@ fun ProductInfoSection(
                 )
                 Spacer(modifier = Modifier.width(2.dp))
                 Text(
-                    text = likes.toString(),
+                    text = likeCount.toString(),
                     style = NapzakMarketTheme.typography.capMedium12,
                     color = NapzakMarketTheme.colors.gray500,
                 )
@@ -152,7 +156,7 @@ fun ProductInfoSectionSellPreview() {
             chipType = TradeType.SELL,
             timeText = "1시간 전",
             views = 27,
-            likes = 4,
+            likeCount = 4,
             title = "산리오",
             subtitle = "딸기 마이멜로디 마스코트 인형",
             price = "35,000원",
@@ -168,7 +172,7 @@ fun ProductInfoSectionBuyWithPriceSuggestionPreview() {
             chipType = TradeType.BUY,
             timeText = "1시간 전",
             views = 50,
-            likes = 12,
+            likeCount = 12,
             title = "앙상블스타즈",
             subtitle = "앙스타 토모에 히요리 이츠누이 함께사는누이 곰인형",
             price = "100,000원대",
@@ -185,7 +189,7 @@ fun ProductInfoSectionBuyWithoutPriceSuggestionPreview() {
             chipType = TradeType.BUY,
             timeText = "1시간 전",
             views = 50,
-            likes = 12,
+            likeCount = 12,
             title = "앙상블스타즈",
             subtitle = "앙스타 토모에 히요리 이츠누이 함께사는누이 곰인형",
             price = "100,000원대",

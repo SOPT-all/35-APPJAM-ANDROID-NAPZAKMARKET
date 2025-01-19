@@ -20,8 +20,8 @@ import com.napzak.market.presentation.explore.component.ProductListSection
 fun MarketProductListSection(
     tradeType: TradeType,
     productList: List<ProductItem>,
-    onItemClick: (Int) -> Unit,
-    onLikeClick: (Int) -> Unit,
+    onItemClick: (Long) -> Unit,
+    onLikeClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(

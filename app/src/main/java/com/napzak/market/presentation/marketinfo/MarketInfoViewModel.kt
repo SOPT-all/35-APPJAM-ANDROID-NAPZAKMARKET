@@ -216,7 +216,7 @@ class MarketInfoViewModel @Inject constructor(
         }
     }
 
-    fun updateItemLikeButton(productId: Int) {
+    fun updateItemLikeButton(productId: Long) {
         /* TODO: 좋아요 API 연결 및 기능 연결 */
     }
 

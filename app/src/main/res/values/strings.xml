@@ -107,10 +107,6 @@
     <string name="detail_view_icon_description">조회 수를 나타내는 아이콘</string>
     <string name="detail_like_icon_description">좋아요 수를 나타내는 아이콘</string>
     <string name="detail_price_suggest_chip">가격 제시</string>
-    <string name="detail_product_condition_brand_new">미개봉</string>
-    <string name="detail_product_condition_slightly_used">약간의 사용감</string>
-    <string name="detail_product_condition_used">사용감 있음</string>
-    <string name="detail_product_condition_lightly_used">약간 사용감 있음</string>
     <string name="detail_snackbar_message">상품을 찜했어요!</string>
     <string name="detail_image_placeholder">이미지 영역</string>
     <string name="detail_time_text">1시간 전</string>

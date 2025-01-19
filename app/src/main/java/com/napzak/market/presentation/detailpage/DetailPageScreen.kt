@@ -204,7 +204,7 @@ fun DetailPageScreen(
                             style = NapzakMarketTheme.typography.bodySemi16,
                             color = NapzakMarketTheme.colors.gray800,
                         )
-                        val conditionLabel = stringResource(id = conditionEnum.labelResId)
+                        val conditionLabel = conditionEnum.label
                         TextChip(
                             text = conditionLabel,
                             textStyle = NapzakMarketTheme.typography.bodySemi14,

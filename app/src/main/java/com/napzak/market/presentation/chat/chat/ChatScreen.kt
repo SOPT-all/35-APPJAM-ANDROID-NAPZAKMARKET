@@ -18,7 +18,7 @@ import com.napzak.market.core.designsystem.component.image.EmptyImage
  */
 
 @Composable
-fun PrepareScreen(
+fun ChatScreen(
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -33,6 +33,6 @@ fun PrepareScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun PrepareScreenBottomBarPreview() {
-    PrepareScreen()
+private fun ChatScreenBottomBarPreview() {
+    ChatScreen()
 }

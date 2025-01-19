@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.napzak.market.presentation.chat.chat.navigation.navigateToChat
 import com.napzak.market.presentation.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.home.navigation.navigateToHome
 import com.napzak.market.presentation.main.type.MainTab
@@ -57,7 +58,7 @@ class MainNavigator(
             MainTab.REGISTER ->  {
                 this.registerDialogVisibilityState = !this.registerDialogVisibilityState
             }
-            MainTab.CHAT -> navController.navigateToPrepare(navOptions)
+            MainTab.CHAT -> navController.navigateToChat(navOptions)
             MainTab.MY -> navController.navigateToMyPage(navOptions)
         }
     }

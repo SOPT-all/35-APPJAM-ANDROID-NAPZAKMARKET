@@ -40,7 +40,7 @@ import com.napzak.market.core.designsystem.theme.White
 @Composable
 fun SplashRoute(
     onOnboardingNavigate: () -> Unit,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     viewModel: SplashViewModel = hiltViewModel()
 ) {
     val view by rememberUpdatedState(LocalView.current)

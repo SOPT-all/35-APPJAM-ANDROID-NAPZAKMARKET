@@ -15,7 +15,7 @@ fun NavController.navigateToMyPage(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.myPageGraph(
     modifier: Modifier = Modifier,
-    onMyMarketNavigate: () -> Unit,
+    onMyMarketNavigate: (Long) -> Unit,
     onHistoryNavigate: () -> Unit,
     onGenreNavigate: () -> Unit,
     onFavoriteNavigate: () -> Unit,

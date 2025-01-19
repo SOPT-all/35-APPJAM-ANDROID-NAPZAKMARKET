@@ -32,8 +32,8 @@ import kotlinx.collections.immutable.toImmutableList
 @Composable
 fun HomePopularItemGroup(
     popularItems: ImmutableList<ProductItem>,
-    onLikeClick: (Int) -> Unit,
-    onItemClick: (Int) -> Unit,
+    onLikeClick: (Long) -> Unit,
+    onItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context by rememberUpdatedState( LocalContext.current )
@@ -119,7 +119,7 @@ private fun HomePopularGroupPreview() {
                 repeat(4) {
                     this.add(
                         ProductItem(
-                            productId = it,
+                            productId = it.toLong(),
                             productName = "딸기 마이멜로디 마스코트 인형",
                             genreName = "산리오",
                             price = 35000,

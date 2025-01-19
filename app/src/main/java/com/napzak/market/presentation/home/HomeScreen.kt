@@ -54,8 +54,8 @@ fun HomeRoute(
 @Composable
 private fun HomeScreen(
     uiState: HomeUiState,
-    onLikeClick: (Int) -> Unit,
-    onItemClick: (Int) -> Unit,
+    onLikeClick: (Long) -> Unit,
+    onItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     CompositionLocalProvider(

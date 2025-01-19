@@ -5,12 +5,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
+import com.napzak.market.core.type.SortType
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.bottomSheet.GenreSearchBottomSheet
 import com.napzak.market.presentation.explore.bottomSheet.SortBottomSheet
 import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
-import com.napzak.market.presentation.explore.type.SortType
 
 @Composable
 fun ExploreBottomSheetScreen(

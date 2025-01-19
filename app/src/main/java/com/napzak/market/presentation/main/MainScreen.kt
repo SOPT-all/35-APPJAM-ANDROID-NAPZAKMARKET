@@ -86,23 +86,33 @@ private fun MainNavHost(
         startDestination = navigator.startDestination,
     ) {
         dummyGraph(modifier = modifier)
+
         splashGraph(
             modifier = Modifier.navigationBarsPadding(),
             onOnboardingNavigate = navigator.navController::navigateToOnboarding,
         )
-        exploreGraph(
-            modifier = modifier,
-            onSearchNavigate = navigator.navController::navigateToSearch,
-        )
+
         onboardingGraph(
             modifier = Modifier.systemBarsPadding(),
             navigateToHome = navigator.navController::navigateToHome,
         )
+
+        homeGraph(modifier = modifier)
+
+        exploreGraph(
+            modifier = modifier,
+            onSearchNavigate = navigator.navController::navigateToSearch,
+        )
+
         searchGraph(
             modifier = modifier,
             onExploreNavigate = navigator.navController::navigateToExplore,
         )
-        homeGraph(modifier = modifier)
+
+        chatGraph(
+            modifier = modifier,
+        )
+
         myPageGraph(
             modifier = modifier,
             onMyMarketNavigate = navigator.navController::navigateToMarketInfo,
@@ -111,22 +121,23 @@ private fun MainNavHost(
             onFavoriteNavigate = {},
             onRecentNavigate = {}
         )
+
         marketInfoGraph(
             modifier = modifier,
             onBackButtonClick = { navigator.navController.popBackStack() },
             onProductDetailNavigate = { /* TODO: 상품상세 화면으로 이동 연결 */ },
         )
+
         detailPageGraph(
             modifier = modifier,
             onChatNavigate = navigator.navController::navigateToItemChat,
             onNavigateUp = navigator.navController::navigateUp,
         )
+
         itemChatGraph(
             modifier = Modifier.systemBarsPadding(),
             onNavigateUp = navigator.navController::navigateUp,
         )
-        chatGraph(
-            modifier = modifier,
-        )
+
     }
 }

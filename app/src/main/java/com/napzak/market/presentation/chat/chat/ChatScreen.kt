@@ -27,7 +27,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 @Composable
 fun ChatScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
         Column(
             modifier = modifier.fillMaxSize(),

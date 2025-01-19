@@ -131,6 +131,7 @@ fun ProductInfoSection(
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             if (tradeType == TradeType.BUY && isPriceSuggested) {
                 TextChip(
@@ -141,7 +142,6 @@ fun ProductInfoSection(
                     ),
                     shape = RoundedCornerShape(4.dp),
                 )
-                Spacer(modifier = Modifier.width(8.dp))
             }
             Text(
                 text = price,

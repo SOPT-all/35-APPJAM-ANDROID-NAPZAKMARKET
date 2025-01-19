@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore.component
+package com.napzak.market.presentation.explore.explore.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -8,9 +8,9 @@ import androidx.compose.ui.window.PopupProperties
 import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.core.type.SortType
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.presentation.explore.bottomSheet.GenreSearchBottomSheet
-import com.napzak.market.presentation.explore.bottomSheet.SortBottomSheet
-import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
+import com.napzak.market.presentation.explore.explore.bottomSheet.GenreSearchBottomSheet
+import com.napzak.market.presentation.explore.explore.bottomSheet.SortBottomSheet
+import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 
 @Composable
 fun ExploreBottomSheetScreen(

@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore.component
+package com.napzak.market.presentation.explore.explore.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row

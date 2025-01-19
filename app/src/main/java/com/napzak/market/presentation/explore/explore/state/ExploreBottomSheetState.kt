@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore.state
+package com.napzak.market.presentation.explore.explore.state
 
 data class ExploreBottomSheetState(
     val isSortBottomSheetVisible: Boolean = false,

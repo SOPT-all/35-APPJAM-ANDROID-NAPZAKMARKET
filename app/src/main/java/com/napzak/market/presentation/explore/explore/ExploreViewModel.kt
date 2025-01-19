@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore
+package com.napzak.market.presentation.explore.explore
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,10 +8,10 @@ import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
-import com.napzak.market.presentation.explore.state.ExploreProductInformation
-import com.napzak.market.presentation.explore.state.ExploreUiState
-import com.napzak.market.presentation.explore.type.ExploreScreenType
+import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
+import com.napzak.market.presentation.explore.explore.state.ExploreProductInformation
+import com.napzak.market.presentation.explore.explore.state.ExploreUiState
+import com.napzak.market.presentation.explore.explore.type.ExploreScreenType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore
+package com.napzak.market.presentation.explore.explore
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -29,20 +29,20 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.component.textField.SearchBox
 import com.napzak.market.domain.explore.model.ProductItem
-import com.napzak.market.presentation.explore.state.ExploreUiState
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.presentation.explore.component.ExploreBottomSheetScreen
-import com.napzak.market.presentation.explore.component.ExploreFilterGroup
-import com.napzak.market.presentation.explore.component.ProductListSection
-import com.napzak.market.presentation.explore.component.TradeTypeTab
-import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
 import com.napzak.market.core.type.BottomSheetType
-import com.napzak.market.presentation.explore.type.ExploreScreenType
+import com.napzak.market.presentation.explore.explore.component.ExploreBottomSheetScreen
+import com.napzak.market.presentation.explore.explore.component.ExploreFilterGroup
+import com.napzak.market.presentation.explore.explore.component.ProductListSection
+import com.napzak.market.presentation.explore.explore.component.TradeTypeTab
+import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
+import com.napzak.market.presentation.explore.explore.state.ExploreUiState
+import com.napzak.market.presentation.explore.explore.type.ExploreScreenType
 
 @Composable
 fun ExploreRoute(

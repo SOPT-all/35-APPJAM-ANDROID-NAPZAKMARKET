@@ -49,8 +49,14 @@ fun CommonSnackBar(
 ) {
     Box(
         modifier = modifier
-            .background(color = backgroundColor, shape = shape)
-            .padding(horizontal = 20.dp, vertical = 12.dp),
+            .background(
+                color = backgroundColor,
+                shape = shape,
+            )
+            .padding(
+                horizontal = 20.dp,
+                vertical = 12.dp,
+            ),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(

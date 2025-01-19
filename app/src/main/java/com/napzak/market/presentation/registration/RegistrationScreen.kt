@@ -19,13 +19,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,6 +44,7 @@ import com.napzak.market.presentation.registration.component.RegistrationSellGro
 import com.napzak.market.presentation.registration.state.RegistrationUiState
 import com.napzak.market.presentation.registration.type.NumeralInputType
 import com.napzak.market.presentation.registration.type.PlainTextInputType
+import com.napzak.market.presentation.registration.type.PostFeeType
 
 @Composable
 fun RegistrationRoute(
@@ -113,6 +111,7 @@ fun RegistrationRoute(
         onDescriptionChange = { viewModel.updatePlainTextValue(it, PlainTextInputType.Description) },
         onSalePriceChange = { viewModel.updateNumericValue(it, NumeralInputType.ProductSalePrice) },
         onProductConditionChange = viewModel::updateProductCondition,
+        onPostFeeChange = viewModel::updatePostFeeType,
         onNormalPostFeeChange = { viewModel.updateNumericValue(it, NumeralInputType.NormalPostFee) },
         onHalfPostFeeChange = { viewModel.updateNumericValue(it, NumeralInputType.HalfPostFee) },
         onOfferCheckChange = viewModel::updateOfferAvailability,
@@ -135,6 +134,7 @@ fun RegistrationScreen(
     onDescriptionChange: (String) -> Unit,
     onSalePriceChange: (String) -> Unit,
     onProductConditionChange: (Int) -> Unit,
+    onPostFeeChange: (PostFeeType) -> Unit,
     onNormalPostFeeChange: (String) -> Unit,
     onHalfPostFeeChange: (String) -> Unit,
     onPurchasePriceChange: (String) -> Unit,
@@ -235,14 +235,20 @@ fun RegistrationScreen(
                     onSalePriceChange = onSalePriceChange,
                     productCondition = uiState.productCondition,
                     onProductConditionChange = onProductConditionChange,
-                    postFeeState = postFeeState,
-                    onPostFeeChange = { postFeeState = it },
+                    postFeeType = if (uiState.isPostFeeIncluded) PostFeeType.INCLUDED else PostFeeType.EXCLUDED,
+                    onPostFeeChange = onPostFeeChange,
                     isNormalPostChecked = isNormalPostChecked,
-                    onNormalPostCheckedChange = { isNormalPostChecked = it },
+                    onNormalPostCheckedChange = {
+                        isNormalPostChecked = it
+                        if (!isNormalPostChecked) onNormalPostFeeChange("")
+                    },
                     normalPostFee = uiState.normalPostFee,
                     onNormalPostFeeChange = onNormalPostFeeChange,
                     isHalfPostChecked = isHalfPostChecked,
-                    onHalfPostCheckedChange = { isHalfPostChecked = it },
+                    onHalfPostCheckedChange = {
+                        isHalfPostChecked = it
+                        if (!isHalfPostChecked) onHalfPostFeeChange("")
+                    },
                     halfPostFee = uiState.halfPostFee,
                     onHalfPostFeeChange = onHalfPostFeeChange,
                 )

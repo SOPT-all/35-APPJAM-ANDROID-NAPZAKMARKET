@@ -72,9 +72,7 @@
     <string name="regi_price_range_placeholder">000</string>
     <string name="regi_price_range">,000원대</string>
     <string name="regi_post_fee">배송비</string>
-    <string name="regi_post_fee_include">포함</string>
-    <string name="regi_post_fee_exclude">별도</string>
-    <string name="regi_normal_post">일반 택배</string>
+\    <string name="regi_normal_post">일반 택배</string>
     <string name="regi_normal_post_placeholder">100~30,000</string>
     <string name="regi_half_price_post">알뜰/반값 택배</string>
     <string name="regi_half_price_post_placeholder">0~5,000</string>

@@ -20,7 +20,7 @@ fun NavGraphBuilder.itemChatGraph(
     composable<ItemChat> {
         ItemChatRoute(
             modifier = modifier,
-            onNavigateUp = onNavigateUp
+            onNavigateUp = onNavigateUp,
         )
     }
 }

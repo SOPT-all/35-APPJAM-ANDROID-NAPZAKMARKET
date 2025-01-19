@@ -19,10 +19,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,6 +52,7 @@ import com.napzak.market.presentation.registration.type.PlainTextInputType
 fun RegistrationRoute(
     isSale: Boolean,
     navigateUp: () -> Unit,
+    navigateToGenreSearch: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RegistrationViewModel = hiltViewModel(),
 ) {
@@ -61,19 +65,26 @@ fun RegistrationRoute(
         if (updatedListSize <= 10) {
             viewModel.updatePhotoList(uris.map { it.toString() })
         } else {
-            /* TODO: 최대 개수 초과 시 로직 */
-        }
-    }
-    val getPhotoPickerLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.PickMultipleVisualMedia(maxItems = currentListSize)
-    ) { uris: List<Uri> ->
-        val updatedListSize = uiState.imageUrlList.size + uris.size
-        if (updatedListSize <= 10) {
-            viewModel.updatePhotoList(uris.map { it.toString() })
-        } else {
-            /* TODO: 최대 개수 초과 시 로직 */
             val remainingUris = uris.takeLast(MAX_ITEMS - uiState.imageUrlList.size)
             viewModel.updatePhotoList(remainingUris.map { it.toString() })
+        }
+    }
+    val getPhotoPickerLauncher = when (uiState.imageUrlList.size) {
+        MAX_ITEMS - 1 -> rememberLauncherForActivityResult(
+            ActivityResultContracts.PickVisualMedia()
+        ) { uri: Uri? ->
+            uri?.let { viewModel.updatePhotoList(listOf(it.toString())) }
+        }
+        else -> rememberLauncherForActivityResult(
+            ActivityResultContracts.PickMultipleVisualMedia(maxItems = currentListSize)
+        ) { uris: List<Uri> ->
+            val updatedListSize = uiState.imageUrlList.size + uris.size
+            if (updatedListSize <= 10) {
+                viewModel.updatePhotoList(uris.map { it.toString() })
+            } else {
+                val remainingUris = uris.takeLast(MAX_ITEMS - uiState.imageUrlList.size)
+                viewModel.updatePhotoList(remainingUris.map { it.toString() })
+            }
         }
     }
 
@@ -85,21 +96,27 @@ fun RegistrationRoute(
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 if (MAX_ITEMS - uiState.imageUrlList.size > 0) getImageStorageLauncher.launch(INPUT_TYPE)
                 else {
-                    /* TODO: 최대 개수 초과 시 다이얼로그 */
+                    /* TODO: 최대 개수 초과 시 스낵바 */
                 }
             }
             else {
-                getPhotoPickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                if (MAX_ITEMS - uiState.imageUrlList.size > 0) getPhotoPickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                else {
+                    /* TODO: 최대 개수 초과 시 스낵바 */
+                }
             }
         },
         onPhotoLongPress = viewModel::changeRepresentPhoto,
         onDeleteClick = viewModel::deletePhoto,
-        onGenreClick = { },
+        onGenreClick = navigateToGenreSearch,
         onTitleChange = { viewModel.updatePlainTextValue(it, PlainTextInputType.Title) },
         onDescriptionChange = { viewModel.updatePlainTextValue(it, PlainTextInputType.Description) },
         onSalePriceChange = { viewModel.updateNumericValue(it, NumeralInputType.ProductSalePrice) },
         onProductConditionChange = viewModel::updateProductCondition,
-        onCheckChange = viewModel::updateOfferAvailability,
+        onNormalPostFeeChange = { viewModel.updateNumericValue(it, NumeralInputType.NormalPostFee) },
+        onHalfPostFeeChange = { viewModel.updateNumericValue(it, NumeralInputType.HalfPostFee) },
+        onOfferCheckChange = viewModel::updateOfferAvailability,
+        onPurchasePriceChange = { viewModel.updateNumericValue(it, NumeralInputType.ProductPurchasePrice) },
         modifier = modifier,
     )
 }
@@ -116,16 +133,19 @@ fun RegistrationScreen(
     onGenreClick: () -> Unit,
     onTitleChange: (String) -> Unit,
     onDescriptionChange: (String) -> Unit,
-    onSalePriceChange: (String) -> Unit = {},
+    onSalePriceChange: (String) -> Unit,
     onProductConditionChange: (Int) -> Unit,
-    onCheckChange: (Boolean) -> Unit,
+    onNormalPostFeeChange: (String) -> Unit,
+    onHalfPostFeeChange: (String) -> Unit,
+    onPurchasePriceChange: (String) -> Unit,
+    onOfferCheckChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val paddedModifier = Modifier.padding(horizontal = 20.dp)
     val listState = rememberLazyListState()
-    var postFeeState by remember { mutableStateOf(0) }
-    var isNormalPostChecked by remember { mutableStateOf(false) }
-    var isHalfPostChecked by remember { mutableStateOf(false) }
+    var postFeeState by rememberSaveable { mutableStateOf(0) }
+    var isNormalPostChecked by rememberSaveable { mutableStateOf(false) }
+    var isHalfPostChecked by rememberSaveable { mutableStateOf(false) }
 
     LazyColumn(
         modifier = modifier
@@ -145,14 +165,14 @@ fun RegistrationScreen(
                 modifier = paddedModifier,
                 text = stringResource(R.string.regi_product_image),
                 style = NapzakMarketTheme.typography.bodySemi16,
-                color = NapzakMarketTheme.colors.gray900
+                color = NapzakMarketTheme.colors.gray900,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 modifier = paddedModifier,
                 text = stringResource(R.string.regi_product_image_description),
                 style = NapzakMarketTheme.typography.bodyMedium14,
-                color = NapzakMarketTheme.colors.gray600
+                color = NapzakMarketTheme.colors.gray600,
             )
             Spacer(modifier = Modifier.height(16.dp))
             RegistrationPhotoPicker(
@@ -160,14 +180,15 @@ fun RegistrationScreen(
                 imageUrlList = uiState.imageUrlList,
                 onPhotoClick = onPhotoClick,
                 onLongPress = onPhotoLongPress,
-                onDeleteClick = onDeleteClick
+                onDeleteClick = onDeleteClick,
             )
         }
         item {
             Spacer(modifier = Modifier.height(40.dp))
             RegistrationGenreButton(
                 modifier = paddedModifier,
-                onGenreClick = onGenreClick
+                genre = uiState.genre,
+                onGenreClick = onGenreClick,
             )
         }
         item {
@@ -176,7 +197,7 @@ fun RegistrationScreen(
                 modifier = paddedModifier,
                 text = stringResource(R.string.regi_title),
                 style = NapzakMarketTheme.typography.bodySemi16,
-                color = NapzakMarketTheme.colors.gray900
+                color = NapzakMarketTheme.colors.gray900,
             )
             Spacer(modifier = Modifier.height(12.dp))
             RegistrationPlainTextField(
@@ -185,14 +206,14 @@ fun RegistrationScreen(
                 placeholder = stringResource(regi_title_placeholder),
                 onTextChange = onTitleChange,
                 isTitle = true,
-                maxLength = 48
+                maxLength = 48,
             )
             Spacer(modifier = Modifier.height(35.dp))
             Text(
                 modifier = paddedModifier,
                 text = stringResource(R.string.regi_description),
                 style = NapzakMarketTheme.typography.bodySemi16,
-                color = NapzakMarketTheme.colors.gray900
+                color = NapzakMarketTheme.colors.gray900,
             )
             Spacer(modifier = Modifier.height(12.dp))
             RegistrationPlainTextField(
@@ -201,7 +222,7 @@ fun RegistrationScreen(
                 placeholder = stringResource(R.string.regi_description_placeholder),
                 onTextChange = onDescriptionChange,
                 isTitle = false,
-                maxLength = 240
+                maxLength = 240,
             )
         }
         if (registrationType == TradeType.SELL) {
@@ -218,8 +239,12 @@ fun RegistrationScreen(
                     onPostFeeChange = { postFeeState = it },
                     isNormalPostChecked = isNormalPostChecked,
                     onNormalPostCheckedChange = { isNormalPostChecked = it },
+                    normalPostFee = uiState.normalPostFee,
+                    onNormalPostFeeChange = onNormalPostFeeChange,
                     isHalfPostChecked = isHalfPostChecked,
                     onHalfPostCheckedChange = { isHalfPostChecked = it },
+                    halfPostFee = uiState.halfPostFee,
+                    onHalfPostFeeChange = onHalfPostFeeChange,
                 )
             }
         }
@@ -229,9 +254,9 @@ fun RegistrationScreen(
                 RegistrationBuyGroup(
                     modifier = paddedModifier,
                     number = uiState.productPurchasePrice,
-                    onNumberChange = { },
+                    onNumberChange = onPurchasePriceChange,
                     isOfferAvailable = uiState.isOfferAvailable,
-                    onCheckChange = onCheckChange,
+                    onCheckChange = onOfferCheckChange,
                 )
             }
         }
@@ -266,6 +291,7 @@ private fun RegistrationScreenPreview() {
         RegistrationRoute(
             isSale = false,
             navigateUp = { },
+            navigateToGenreSearch = { },
         )
     }
 }

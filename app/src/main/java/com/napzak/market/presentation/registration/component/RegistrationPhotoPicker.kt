@@ -115,7 +115,7 @@ private fun PhotoRegisterButton(
             .aspectRatio(1f)
             .clip(RoundedCornerShape(12.dp))
             .background(NapzakMarketTheme.colors.gray100)
-            .noRippleClickable(onPhotoClick),
+            .noRippleClickable { if (imageNumber < 10) onPhotoClick() },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {

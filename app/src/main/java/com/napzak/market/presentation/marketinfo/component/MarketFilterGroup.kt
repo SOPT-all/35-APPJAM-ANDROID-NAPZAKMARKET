@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore.component
+package com.napzak.market.presentation.marketinfo.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -13,12 +13,12 @@ import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.component.chip.SelectableChip
 import com.napzak.market.core.designsystem.component.chip.type.SelectableChipType
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.presentation.explore.type.TradeType
 
 @Composable
-fun ExploreFilterGroup(
-    tradeType: TradeType,
+fun MarketFilterGroup(
+    marketTab: MarketTab,
     genreList: List<Genre>,
     isOnSale: Boolean,
     isUnopened: Boolean,
@@ -51,8 +51,8 @@ fun ExploreFilterGroup(
             genreList = genreList,
         )
 
-        when (tradeType) {
-            TradeType.BUY -> {
+        when (marketTab) {
+            MarketTab.SELL -> {
                 Spacer(Modifier.width(6.dp))
 
                 SelectableChip(
@@ -63,7 +63,8 @@ fun ExploreFilterGroup(
                     genreList = genreList,
                 )
             }
-            TradeType.SELL -> {}
+            MarketTab.BUY -> {}
+            MarketTab.REVIEW -> {}
         }
     }
 }
@@ -71,8 +72,8 @@ fun ExploreFilterGroup(
 @Preview
 @Composable
 private fun FilterGroupPreview(modifier: Modifier = Modifier) {
-    ExploreFilterGroup(
-        tradeType = TradeType.SELL,
+    MarketFilterGroup(
+        marketTab = MarketTab.SELL,
         genreList = emptyList(),
         isOnSale = false,
         isUnopened = false,

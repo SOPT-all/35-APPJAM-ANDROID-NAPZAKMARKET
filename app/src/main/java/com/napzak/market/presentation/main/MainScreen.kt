@@ -18,6 +18,8 @@ import com.napzak.market.presentation.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.main.component.MainBottomBar
 import com.napzak.market.presentation.main.component.MainRegisterDialog
 import com.napzak.market.presentation.main.type.MainTab
+import com.napzak.market.presentation.marketinfo.navigation.marketInfoGraph
+import com.napzak.market.presentation.marketinfo.navigation.navigateToMarketInfo
 import com.napzak.market.presentation.mypage.navigation.myPageGraph
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
 import com.napzak.market.presentation.search.navigation.navigateToSearch
@@ -92,11 +94,16 @@ private fun MainNavHost(
         homeGraph(modifier = modifier)
         myPageGraph(
             modifier = modifier,
-            onMyMarketNavigate = {},
+            onMyMarketNavigate = navigator.navController::navigateToMarketInfo,
             onHistoryNavigate = {},
             onGenreNavigate = {},
             onFavoriteNavigate = {},
             onRecentNavigate = {}
+        )
+        marketInfoGraph(
+            modifier = modifier,
+            onBackButtonClick = { navigator.navController.popBackStack() },
+            onProductDetailNavigate = { /* TODO: 상품상세 화면으로 이동 연결 */ },
         )
     }
 }

@@ -30,7 +30,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  * 사용자 지정 배경색, 텍스트 색상, 텍스트 스타일, 모양 등을 지원하며, 모든 인자는 명시적으로 전달해야 합니다.
  *
  * @param message 표시할 메시지
- * @param icon 아이콘 리소스
+ * @param icon 아이콘 리소스, null이면 아이콘이 안보임
  * @param modifier Modifier
  * @param backgroundColor 배경색
  * @param textColor 텍스트 색상
@@ -40,13 +40,13 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 @Composable
 fun CommonSnackBar(
     message: String,
-    icon: ImageVector,
     backgroundColor: Color,
     textColor: Color,
     textStyle: TextStyle,
-    shape: Shape,
     modifier: Modifier = Modifier,
-) {
+    icon: ImageVector? = null,
+    shape: Shape = RoundedCornerShape(12.dp),
+    ) {
     Box(
         modifier = modifier
             .background(
@@ -59,13 +59,15 @@ fun CommonSnackBar(
             ),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = Color.Unspecified,
-                modifier = Modifier.size(18.dp),
-            )
-            Spacer(modifier = Modifier.width(8.dp))
+            if(icon != null) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = Color.Unspecified,
+                    modifier = Modifier.size(18.dp),
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+            }
             Text(
                 text = message,
                 style = textStyle,
@@ -95,11 +97,10 @@ fun CommonSnackBarPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun CommonSnackBarMessagePreview() {
+fun CommonSnackBarWithoutIconPreview() {
     NapzakMarketTheme {
         CommonSnackBar(
-            message = "긴 메시지가 들어갑니다. 메시지가 길어져도 문제가 없는지 확인하기 위한 예제입니다.",
-            icon = ImageVector.vectorResource(id = R.drawable.ic_heart_toast_18),
+            message = "버튼을 한번 더 누르시면 종료 돼요.",
             backgroundColor = NapzakMarketTheme.colors.black70,
             textColor = NapzakMarketTheme.colors.white,
             textStyle = NapzakMarketTheme.typography.bodyMedium14,

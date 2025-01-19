@@ -1,5 +1,6 @@
 package com.napzak.market.presentation.chat.chat.navigation
 
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -13,9 +14,13 @@ fun NavController.navigateToChat(navOptions: NavOptions? = null) {
     navigate(Chat, navOptions)
 }
 
-fun NavGraphBuilder.chatGraph() {
+fun NavGraphBuilder.chatGraph(
+    modifier: Modifier = Modifier,
+) {
     composable<Chat> {
-        ChatScreen()
+        ChatScreen(
+            modifier = modifier
+        )
     }
 }
 

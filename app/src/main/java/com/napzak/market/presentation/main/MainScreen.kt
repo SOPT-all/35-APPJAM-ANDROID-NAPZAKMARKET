@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.napzak.market.presentation.chat.chat.navigation.chatGraph
 import com.napzak.market.presentation.chat.itemchat.navigation.itemChatGraph
 import com.napzak.market.presentation.chat.itemchat.navigation.navigateToItemChat
 import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
@@ -123,6 +124,9 @@ private fun MainNavHost(
         itemChatGraph(
             modifier = Modifier.systemBarsPadding(),
             onNavigateUp = navigator.navController::navigateUp,
+        )
+        chatGraph(
+            modifier = modifier,
         )
     }
 }

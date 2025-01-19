@@ -26,9 +26,11 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  */
 
 @Composable
-fun ChatScreen() {
+fun ChatScreen(
+    modifier: Modifier = Modifier
+) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {

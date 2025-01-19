@@ -42,13 +42,6 @@ fun SortBottomSheet(
             .background(NapzakMarketTheme.colors.black70)
             .noRippleClickable(onDismissRequest),
     ) {
-        val sortList = listOf<SortType>(
-            SortType.RECENT,
-            SortType.POPULAR,
-            SortType.HIGH_PRICE,
-            SortType.LOW_PRICE,
-        )
-
         Spacer(Modifier.weight(1f))
 
         Column(
@@ -59,7 +52,7 @@ fun SortBottomSheet(
                 .padding(top = 20.dp)
                 .padding(horizontal = 20.dp),
         ) {
-            sortList.forEach { sortItem ->
+            SortType.entries.forEach { sortItem ->
                 SortItem(
                     sortType = sortItem.label,
                     isSelected = sortItem == selectedSortType,

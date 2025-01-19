@@ -38,7 +38,6 @@ fun SinglePlayLottieAnimation(
         composition = lottieComposition,
         progress = { animationState.progress },
         clipToCompositionBounds = false,
-
     )
 }
 

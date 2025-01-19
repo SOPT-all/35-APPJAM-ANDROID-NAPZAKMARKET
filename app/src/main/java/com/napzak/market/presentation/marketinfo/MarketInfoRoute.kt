@@ -219,7 +219,7 @@ fun MarketInfoSuccessScreen(
                 Text(
                     text = stringResource(
                         id = R.string.explore_product_count,
-                        marketInfo.productList.size
+                        marketInfo.productList.size,
                     ),
                     style = NapzakMarketTheme.typography.bodySemi14,
                     color = NapzakMarketTheme.colors.purple30,

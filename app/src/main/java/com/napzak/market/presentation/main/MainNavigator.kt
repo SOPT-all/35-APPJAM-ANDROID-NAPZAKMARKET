@@ -16,7 +16,6 @@ import com.napzak.market.presentation.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.home.navigation.navigateToHome
 import com.napzak.market.presentation.main.type.MainTab
 import com.napzak.market.presentation.mypage.navigation.navigateToMyPage
-import com.napzak.market.presentation.prepare.navigation.navigateToPrepare
 import com.napzak.market.presentation.splash.navigation.Splash
 
 class MainNavigator(

@@ -184,7 +184,7 @@ fun DetailPageScreen(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Text(
-                    text = stringResource(id = R.string.detail_product_description),
+                    text = uiState.description,
                     style = NapzakMarketTheme.typography.bodyMedium16,
                     color = NapzakMarketTheme.colors.gray900,
                     textAlign = TextAlign.Start,
@@ -481,7 +481,7 @@ fun DetailPageScreenSellPreview() {
         uploadTime = "3시간 전",
         viewCount = 120,
         interestCount = 45,
-        description = "사용하지 않은 마이멜로디 인형입니다.",
+        description = "딸기 마멜 인형 판매합니다!",
         productCondition = "미개봉",
         tradeType = TradeType.SELL.name,
         standardDeliveryFee = 3000,
@@ -506,7 +506,7 @@ fun DetailPageScreenSellPreview() {
 @Composable
 fun DetailPageScreenBuyPreview() {
     val mockUiState = DetailPageUiState(
-        productName = "캐릭터 피규어",
+        productName = "앙상블스타즈",
         price = 25000,
         uploadTime = "1시간 전",
         viewCount = 87,

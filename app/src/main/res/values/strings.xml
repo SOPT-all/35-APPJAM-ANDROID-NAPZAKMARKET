@@ -113,12 +113,6 @@
     <string name="detail_title">산리오</string>
     <string name="detail_subtitle">딸기 마이멜로디 마스코트 인형</string>
     <string name="detail_price">35,000원</string>
-    <string name="detail_product_description">
-    딸기 마멜 인형 판매합니다!
-    일본에서 출시되자마자 인기 많았던 딸기 마스코트 인형입니다.
-    개봉 후 장식장에만 보관해놨어요!
-    편하게 둘러보시고 채팅 주세요! (남은 수량: 1개)
-    </string>
     <string name="detail_product_status_label">상품 상태</string>
     <string name="detail_delivery_fee_label">배송비</string>
     <string name="detail_delivery_normal">일반</string>

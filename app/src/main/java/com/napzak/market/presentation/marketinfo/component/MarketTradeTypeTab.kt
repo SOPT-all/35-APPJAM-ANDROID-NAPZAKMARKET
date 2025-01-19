@@ -16,12 +16,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
-import com.napzak.market.core.type.TradeType
+import com.napzak.market.core.type.MarketTab
 
 /**
  * 상품 거래 타입을 선택하는 탭 컴포넌트
  *
- * @param tradeTypeList 탭에 넣을 타입 리스트
  * @param itemPadding 탭 사이에 적용될 패딩
  * @param selectedTab 선택된 탭
  * @param onTradeTypeClick 탭이 클릭 되었을 경우 실행되는 콜백
@@ -30,13 +29,13 @@ import com.napzak.market.core.type.TradeType
 
 @Composable
 fun MarketTradeTypeTab(
-    tradeTypeList: List<TradeType>,
     itemPadding: Dp,
-    selectedTab: TradeType,
-    onTradeTypeClick: (TradeType) -> Unit,
+    selectedTab: MarketTab,
+    onTradeTypeClick: (MarketTab) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val borderColor = NapzakMarketTheme.colors.gray300
+    val marketTabList = listOf(MarketTab.SELL, MarketTab.BUY, MarketTab.REVIEW)
 
     Row(
         modifier = modifier
@@ -52,7 +51,7 @@ fun MarketTradeTypeTab(
             }
             .padding(horizontal = 20.dp),
     ) {
-        tradeTypeList.forEachIndexed { index, tradeTypeItem ->
+        marketTabList.forEachIndexed { index, tradeTypeItem ->
             TradeTypeTabItem(
                 tradeType = tradeTypeItem.label,
                 isSelected = selectedTab == tradeTypeItem,
@@ -60,7 +59,7 @@ fun MarketTradeTypeTab(
                 modifier = Modifier.weight(1f),
             )
 
-            if (index != tradeTypeList.lastIndex) {
+            if (index != marketTabList.lastIndex) {
                 Spacer(Modifier.width(itemPadding))
             }
         }
@@ -104,23 +103,10 @@ private fun TradeTypeTabItem(
 
 @Preview(showBackground = true)
 @Composable
-private fun TradeTypeTab1Preview(modifier: Modifier = Modifier) {
+private fun TradeTypeTabPreview(modifier: Modifier = Modifier) {
     MarketTradeTypeTab(
-        tradeTypeList = listOf(TradeType.SELL, TradeType.BUY, TradeType.REVIEW),
         itemPadding = 12.dp,
-        selectedTab = TradeType.SELL,
-        onTradeTypeClick = { /* 특정 탭이 클릭 되었을 때 */ },
-        modifier = modifier,
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun TradeTypeTab2Preview(modifier: Modifier = Modifier) {
-    MarketTradeTypeTab(
-        tradeTypeList = listOf(TradeType.SELL, TradeType.BUY),
-        itemPadding = 15.dp,
-        selectedTab = TradeType.SELL,
+        selectedTab = MarketTab.SELL,
         onTradeTypeClick = { /* 특정 탭이 클릭 되었을 때 */ },
         modifier = modifier,
     )

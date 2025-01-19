@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.SortType
-import com.napzak.market.core.type.TradeType
+import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
 import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
@@ -173,10 +173,10 @@ class MarketInfoViewModel @Inject constructor(
         }
     }
 
-    fun updateTradeType(newTradeType: TradeType) {
+    fun updateMarketTab(newMarketTab: MarketTab) {
         _uiState.update { currentState ->
             currentState.copy(
-                tradeType = newTradeType,
+                marketTab = newMarketTab,
                 sortType = SortType.RECENT
             )
         }

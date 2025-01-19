@@ -31,7 +31,7 @@ import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.core.type.SortType
-import com.napzak.market.core.type.TradeType
+import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
 import com.napzak.market.presentation.marketinfo.component.MarketFilterGroup
@@ -68,7 +68,7 @@ fun MarketInfoRoute(
         uiState = uiState,
         bottomSheetState = bottomSheetState,
         onBackButtonClick = onBackButtonClick,
-        onTradeTypeClick = viewModel::updateTradeType,
+        onTradeTypeClick = viewModel::updateMarketTab,
         onGenreListClick = {
             viewModel.initGenreList()
             viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.GENRE_SEARCHING)
@@ -93,7 +93,7 @@ fun MarketInfoScreen(
     uiState: MarketInfoUiState,
     bottomSheetState: MarketInfoBottomSheetState,
     onBackButtonClick: () -> Unit,
-    onTradeTypeClick: (TradeType) -> Unit,
+    onTradeTypeClick: (MarketTab) -> Unit,
     onGenreListClick: () -> Unit,
     onSoldOutClick: () -> Unit,
     onUnopenClick: () -> Unit,
@@ -121,7 +121,7 @@ fun MarketInfoScreen(
                 MarketInfoSuccessScreen(
                     modifier = modifier,
                     bottomSheetState = bottomSheetState,
-                    tradeType = tradeType,
+                    marketTab = marketTab,
                     selectedGenreList = selectedGenreList,
                     genreList = genreList,
                     initialGenreList = initGenreList,
@@ -150,7 +150,7 @@ fun MarketInfoScreen(
 @Composable
 fun MarketInfoSuccessScreen(
     bottomSheetState: MarketInfoBottomSheetState,
-    tradeType: TradeType,
+    marketTab: MarketTab,
     selectedGenreList: List<Genre>,
     initialGenreList: List<Genre>,
     genreList: List<Genre>,
@@ -159,7 +159,7 @@ fun MarketInfoSuccessScreen(
     marketInfo: MarketUiInformation,
     sortType: SortType,
     onBackButtonClick: () -> Unit,
-    onTradeTypeClick: (TradeType) -> Unit,
+    onTradeTypeClick: (MarketTab) -> Unit,
     onGenreListClick: () -> Unit,
     onSoldOutClick: () -> Unit,
     onUnopenClick: () -> Unit,
@@ -183,15 +183,14 @@ fun MarketInfoSuccessScreen(
         )
 
         MarketTradeTypeTab(
-            tradeTypeList = listOf(TradeType.SELL, TradeType.BUY, TradeType.REVIEW),
             itemPadding = 12.dp,
-            selectedTab = tradeType,
+            selectedTab = marketTab,
             onTradeTypeClick = onTradeTypeClick,
         )
 
-        if (tradeType != TradeType.REVIEW) {
+        if (marketTab != MarketTab.REVIEW) {
             MarketFilterGroup(
-                tradeType = tradeType,
+                marketTab = marketTab,
                 genreList = selectedGenreList,
                 isOnSale = isOnSale,
                 isUnopened = isUnopened,
@@ -248,7 +247,7 @@ fun MarketInfoSuccessScreen(
             }
 
             MarketProductListSection(
-                tradeType = tradeType,
+                tradeType = marketTab,
                 productList = marketInfo.productList,
                 onItemClick = onItemClick,
                 onLikeClick = onLikeClick,
@@ -309,7 +308,7 @@ fun MarketInfoSuccessScreen(
 private fun MarketPreview(modifier: Modifier = Modifier) {
     MarketInfoSuccessScreen(
         bottomSheetState = MarketInfoBottomSheetState(),
-        tradeType = TradeType.BUY,
+        marketTab = MarketTab.BUY,
         selectedGenreList = emptyList(),
         initialGenreList = emptyList(),
         genreList = emptyList(),

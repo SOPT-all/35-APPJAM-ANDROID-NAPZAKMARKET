@@ -13,12 +13,12 @@ import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.component.chip.SelectableChip
 import com.napzak.market.core.designsystem.component.chip.type.SelectableChipType
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
-import com.napzak.market.core.type.TradeType
+import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.genre.model.Genre
 
 @Composable
 fun MarketFilterGroup(
-    tradeType: TradeType,
+    marketTab: MarketTab,
     genreList: List<Genre>,
     isOnSale: Boolean,
     isUnopened: Boolean,
@@ -50,7 +50,7 @@ fun MarketFilterGroup(
             genreList = genreList,
         )
 
-        if (tradeType == TradeType.SELL) {
+        if (marketTab == MarketTab.SELL) {
             Spacer(Modifier.width(6.dp))
 
             SelectableChip(
@@ -68,7 +68,7 @@ fun MarketFilterGroup(
 @Composable
 private fun FilterGroupPreview(modifier: Modifier = Modifier) {
     MarketFilterGroup(
-        tradeType = TradeType.SELL,
+        marketTab = MarketTab.SELL,
         genreList = emptyList(),
         isOnSale = false,
         isUnopened = false,

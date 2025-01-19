@@ -12,12 +12,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.component.item.NapzakBuyItem
 import com.napzak.market.core.designsystem.component.item.NapzakSellItem
-import com.napzak.market.core.type.TradeType
+import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.explore.model.ProductItem
 
 @Composable
 fun MarketProductListSection(
-    tradeType: TradeType,
+    tradeType: MarketTab,
     productList: List<ProductItem>,
     onItemClick: (Long) -> Unit,
     onLikeClick: (Long) -> Unit,
@@ -30,7 +30,7 @@ fun MarketProductListSection(
         horizontalArrangement = Arrangement.spacedBy(20.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-        if (tradeType == TradeType.SELL) {
+        if (tradeType == MarketTab.SELL) {
             items(productList) { productItem ->
                 NapzakSellItem(
                     title = productItem.productName,
@@ -67,7 +67,7 @@ fun MarketProductListSection(
 @Composable
 private fun ProductListSectionPreview(modifier: Modifier = Modifier) {
     MarketProductListSection(
-        tradeType = TradeType.BUY,
+        tradeType = MarketTab.BUY,
         productList = listOf(
             ProductItem(
                 productId = 201,

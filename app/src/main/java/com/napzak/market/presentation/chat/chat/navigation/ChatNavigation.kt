@@ -6,7 +6,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.napzak.market.core.common.navigation.MainTabRoute
-import com.napzak.market.core.common.navigation.Route
 import com.napzak.market.presentation.chat.chat.ChatScreen
 import kotlinx.serialization.Serializable
 
@@ -19,7 +18,7 @@ fun NavGraphBuilder.chatGraph(
 ) {
     composable<Chat> {
         ChatScreen(
-            modifier = modifier
+            modifier = modifier,
         )
     }
 }

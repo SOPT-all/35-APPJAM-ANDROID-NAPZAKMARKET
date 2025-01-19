@@ -35,7 +35,7 @@ fun ChatScreen() {
             Icon(
                 painter = painterResource(R.drawable.img_chat_ready),
                 contentDescription = stringResource(R.string.loading_ready_image_description),
-                tint = Color.Unspecified
+                tint = Color.Unspecified,
             )
 
             Spacer(modifier = Modifier.height(20.dp))

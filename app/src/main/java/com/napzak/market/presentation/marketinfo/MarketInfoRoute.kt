@@ -55,7 +55,9 @@ fun MarketInfoRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val bottomSheetState by viewModel.bottomSheetState.collectAsStateWithLifecycle()
 
-    viewModel.setStoreId(storeId)
+    LaunchedEffect(Unit) {
+        viewModel.setStoreId(storeId)
+    }
 
     LaunchedEffect(uiState) {
         viewModel.getMarketInformation()
@@ -71,17 +73,17 @@ fun MarketInfoRoute(
             viewModel.initGenreList()
             viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.GENRE_SEARCHING)
         },
-        onSoldOutClick = { viewModel.updateSoldOut() },
-        onUnopenClick = { viewModel.updateUnopen() },
+        onSoldOutClick = viewModel::updateSoldOut,
+        onUnopenClick = viewModel::updateUnopen,
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.SORT) },
         onItemClick = { onProductDetailNavigate() },
         onLikeClick = viewModel::updateItemLikeButton,
-        onDismissRequest = { viewModel.updateBottomSheetVisibility(it) },
+        onDismissRequest = viewModel::updateBottomSheetVisibility,
         onSortItemClick = {
             viewModel.updateSortType(it)
             viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.SORT)
         },
-        onTextChange = { viewModel.changeSearchText(it) },
+        onTextChange = viewModel::changeSearchText,
         onGenreSelectButtonClick = viewModel::updateSelectedGenreList,
     )
 }

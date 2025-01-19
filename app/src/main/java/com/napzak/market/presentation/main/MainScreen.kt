@@ -4,6 +4,7 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
@@ -15,18 +16,20 @@ import com.napzak.market.presentation.chat.navigation.navigateToItemChat
 import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.explore.navigation.exploreGraph
+import com.napzak.market.presentation.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.home.navigation.homeGraph
 import com.napzak.market.presentation.home.navigation.navigateToHome
-import com.napzak.market.presentation.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.main.component.MainBottomBar
 import com.napzak.market.presentation.main.component.MainRegisterDialog
 import com.napzak.market.presentation.main.type.MainTab
 import com.napzak.market.presentation.marketinfo.navigation.marketInfoGraph
 import com.napzak.market.presentation.marketinfo.navigation.navigateToMarketInfo
 import com.napzak.market.presentation.mypage.navigation.myPageGraph
+import com.napzak.market.presentation.onboarding.navigation.navigateToOnboarding
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
 import com.napzak.market.presentation.search.navigation.navigateToSearch
 import com.napzak.market.presentation.search.navigation.searchGraph
+import com.napzak.market.presentation.splash.navigation.splashGraph
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
@@ -82,6 +85,10 @@ private fun MainNavHost(
         startDestination = navigator.startDestination,
     ) {
         dummyGraph(modifier = modifier)
+        splashGraph(
+            modifier = Modifier.navigationBarsPadding(),
+            onOnboardingNavigate = navigator.navController::navigateToOnboarding,
+        )
         exploreGraph(
             modifier = modifier,
             onSearchNavigate = navigator.navController::navigateToSearch,

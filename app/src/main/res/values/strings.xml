@@ -27,6 +27,9 @@
     <string name="napzak_item_buy">구해요</string>
     <string name="napzak_item_suggest">가격제시</string>
 
+    <!--Splash Screen -->
+    <string name="splash_button_next">납작마켓 시작하기</string>
+
     <!-- Home Screen -->
     <string name="home_recommendation_title1">납자기님을 위한 맞춤</string>
     <string name="home_recommendation_title2">PICK!</string>

@@ -19,6 +19,10 @@ import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
 import com.napzak.market.core.type.TradeType
+import com.napzak.market.R.string.detail_view_icon_description
+import com.napzak.market.R.string.detail_like_icon_description
+import com.napzak.market.R.string.detail_price_suggest_chip
+
 
 /**
  * 상품 정보 섹션을 구성하는 Composable.
@@ -86,7 +90,7 @@ fun ProductInfoSection(
 
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_view_16),
-                    contentDescription = stringResource(id = R.string.detail_view_icon_description),
+                    contentDescription = stringResource(id = detail_view_icon_description),
                     tint = Color.Unspecified,
                 )
                 Spacer(modifier = Modifier.width(2.dp))
@@ -98,7 +102,7 @@ fun ProductInfoSection(
                 Spacer(modifier = Modifier.width(4.dp))
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_heart_sm_16),
-                    contentDescription = stringResource(id = R.string.detail_like_icon_description),
+                    contentDescription = stringResource(id = detail_like_icon_description),
                     tint = Color.Unspecified,
                 )
                 Spacer(modifier = Modifier.width(2.dp))
@@ -130,7 +134,7 @@ fun ProductInfoSection(
         ) {
             if (chipType == TradeType.BUY && isPriceSuggested) {
                 TextChip(
-                    text = stringResource(id = R.string.detail_price_suggest_chip),
+                    text = stringResource(id = detail_price_suggest_chip),
                     chipColors = CustomChipColors(
                         contentColor = NapzakMarketTheme.colors.purple30,
                         containerColor = NapzakMarketTheme.colors.purple10,

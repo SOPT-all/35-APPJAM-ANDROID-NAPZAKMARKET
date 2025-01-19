@@ -28,7 +28,8 @@ fun MarketFilterGroup(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
             .background(color = NapzakMarketTheme.colors.gray50)
             .padding(horizontal = 20.dp, vertical = 10.dp),
     ) {
@@ -50,16 +51,20 @@ fun MarketFilterGroup(
             genreList = genreList,
         )
 
-        if (marketTab == MarketTab.SELL) {
-            Spacer(Modifier.width(6.dp))
+        when (marketTab) {
+            MarketTab.SELL -> {
+                Spacer(Modifier.width(6.dp))
 
-            SelectableChip(
-                isSelected = isUnopened,
-                modifier = modifier,
-                selectableChipType = SelectableChipType.UNOPEN,
-                onClick = onUnopenClick,
-                genreList = genreList,
-            )
+                SelectableChip(
+                    isSelected = isUnopened,
+                    modifier = modifier,
+                    selectableChipType = SelectableChipType.UNOPEN,
+                    onClick = onUnopenClick,
+                    genreList = genreList,
+                )
+            }
+            MarketTab.BUY -> {}
+            MarketTab.REVIEW -> {}
         }
     }
 }

@@ -24,14 +24,14 @@ fun MarketProductListSection(
     onLikeClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (tradeType == TradeType.SELL) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(20.dp),
-            modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-        ) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        contentPadding = PaddingValues(20.dp),
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(20.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+    ) {
+        if (tradeType == TradeType.SELL) {
             items(productList) { productItem ->
                 NapzakSellItem(
                     title = productItem.productName,
@@ -45,15 +45,7 @@ fun MarketProductListSection(
                     onLikeClick = { onLikeClick(productItem.productId) },
                 )
             }
-        }
-    } else {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(20.dp),
-            modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-        ) {
+        } else {
             items(productList) { productItem ->
                 NapzakBuyItem(
                     title = productItem.productName,

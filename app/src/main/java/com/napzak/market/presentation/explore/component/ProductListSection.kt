@@ -19,8 +19,8 @@ import com.napzak.market.presentation.explore.type.TradeType
 fun ProductListSection(
     tradeType: TradeType,
     productList: List<ProductItem>,
-    onItemClick: (Int) -> Unit,
-    onLikeClick: (Int) -> Unit,
+    onItemClick: (Long) -> Unit,
+    onLikeClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (tradeType == TradeType.SELL) {
@@ -32,17 +32,19 @@ fun ProductListSection(
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             items(productList) { productItem ->
-                NapzakSellItem(
-                    title = productItem.productName,
-                    genre = productItem.genreName,
-                    price = productItem.price.toString(),
-                    imgUrl = productItem.photo,
-                    isLiked = productItem.isLiked,
-                    isMyItem = false,
-                    createdTime = productItem.uploadTime,
-                    onItemClick = { onItemClick(productItem.productId) },
-                    onLikeClick = { onLikeClick(productItem.productId) },
-                )
+                with(productItem) {
+                    NapzakSellItem(
+                        title = productName,
+                        genre = genreName,
+                        price = price.toString(),
+                        imgUrl = photo,
+                        isLiked = isLiked,
+                        isMyItem = false,
+                        createdTime = uploadTime,
+                        onItemClick = { onItemClick(productId) },
+                        onLikeClick = { onLikeClick(productId) },
+                    )
+                }
             }
         }
     } else {
@@ -54,18 +56,20 @@ fun ProductListSection(
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             items(productList) { productItem ->
-                NapzakBuyItem(
-                    title = productItem.productName,
-                    genre = productItem.genreName,
-                    price = productItem.price.toString(),
-                    imgUrl = productItem.photo,
-                    isLiked = productItem.isLiked,
-                    isMyItem = false,
-                    isOfferPossible = productItem.isPriceNegotiable,
-                    createdTime = productItem.uploadTime,
-                    onItemClick = { onItemClick(productItem.productId) },
-                    onLikeClick = { onLikeClick(productItem.productId) },
-                )
+                with(productItem) {
+                    NapzakBuyItem(
+                        title = productName,
+                        genre = genreName,
+                        price = price.toString(),
+                        imgUrl = photo,
+                        isLiked = isLiked,
+                        isMyItem = false,
+                        isOfferPossible = isPriceNegotiable,
+                        createdTime = uploadTime,
+                        onItemClick = { onItemClick(productId) },
+                        onLikeClick = { onLikeClick(productId) },
+                    )
+                }
             }
         }
     }

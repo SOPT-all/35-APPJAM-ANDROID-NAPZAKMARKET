@@ -16,8 +16,8 @@ import com.napzak.market.domain.explore.model.ProductItem
 fun HomeItemRow(
     itemList: List<ProductItem>,
     itemWidth: Dp,
-    onLikeClick: (Int) -> Unit,
-    onItemClick: (Int) -> Unit,
+    onLikeClick: (Long) -> Unit,
+    onItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyRow(

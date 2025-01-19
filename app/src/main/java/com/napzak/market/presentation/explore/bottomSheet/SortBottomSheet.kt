@@ -23,10 +23,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
-import com.napzak.market.presentation.explore.type.SortType
 import com.napzak.market.R
 import com.napzak.market.R.string.check_button
 import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.type.SortType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,13 +42,6 @@ fun SortBottomSheet(
             .background(NapzakMarketTheme.colors.black70)
             .noRippleClickable(onDismissRequest),
     ) {
-        val sortList = listOf<SortType>(
-            SortType.RECENT,
-            SortType.POPULAR,
-            SortType.HIGH_PRICE,
-            SortType.LOW_PRICE,
-        )
-
         Spacer(Modifier.weight(1f))
 
         Column(
@@ -59,7 +52,7 @@ fun SortBottomSheet(
                 .padding(top = 20.dp)
                 .padding(horizontal = 20.dp),
         ) {
-            sortList.forEach { sortItem ->
+            SortType.entries.forEach { sortItem ->
                 SortItem(
                     sortType = sortItem.label,
                     isSelected = sortItem == selectedSortType,

@@ -26,11 +26,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.napzak.market.R
+import com.napzak.market.R.string.splash_button_next
 import com.napzak.market.core.designsystem.component.button.CommonButton
 import com.napzak.market.core.designsystem.component.image.SinglePlayLottieAnimation
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
@@ -44,7 +47,7 @@ fun SplashRoute(
     viewModel: SplashViewModel = hiltViewModel()
 ) {
     val view by rememberUpdatedState(LocalView.current)
-    val window = remember{ (view.context as? ComponentActivity)?.window }
+    val window = remember { (view.context as? ComponentActivity)?.window }
 
     LaunchedEffect(key1 = Unit) {
         window?.let {
@@ -94,7 +97,7 @@ private fun SplashScreen(
             .background(color = NapzakMarketTheme.colors.purple30),
     ) {
         SinglePlayLottieAnimation(
-            jsonFile = com.napzak.market.R.raw.splash_android,
+            jsonFile = R.raw.splash_android,
             modifier = Modifier.fillMaxSize(),
             completionDelay = 1000,
             onLottieComplete = onSplashAnimationComplete,
@@ -110,7 +113,7 @@ private fun SplashScreen(
                 .align(Alignment.BottomCenter),
         ) {
             CommonButton(
-                text = "납작마켓 시작하기",
+                text = stringResource(id = splash_button_next),
                 buttonColors = ButtonDefaults.buttonColors(
                     containerColor = NapzakMarketTheme.colors.gray900,
                     contentColor = NapzakMarketTheme.colors.white,
@@ -144,7 +147,7 @@ private fun setSystemBarStyle(
         controller.isAppearanceLightStatusBars = isLightTheme
         controller.isAppearanceLightNavigationBars = isLightTheme
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
             it.statusBarColor = barColor
             it.navigationBarColor = barColor
         }

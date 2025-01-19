@@ -55,7 +55,7 @@ fun SplashRoute(
                 window = window,
                 view = view,
                 isLightTheme = false,
-                barColor = Purple30.toArgb()
+                barColor = Purple30.toArgb(),
             )
         }
     }
@@ -66,7 +66,7 @@ fun SplashRoute(
                 window = window,
                 view = view,
                 isLightTheme = true,
-                barColor = White.toArgb()
+                barColor = White.toArgb(),
             )
         }
     }
@@ -130,7 +130,7 @@ private fun SplashScreen(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(bottom = 95.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             )
         }
     }

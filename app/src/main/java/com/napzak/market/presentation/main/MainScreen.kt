@@ -10,6 +10,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.napzak.market.presentation.chat.navigation.itemChatGraph
+import com.napzak.market.presentation.chat.navigation.navigateToItemChat
+import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.explore.navigation.exploreGraph
 import com.napzak.market.presentation.home.navigation.homeGraph
@@ -104,6 +107,15 @@ private fun MainNavHost(
             modifier = modifier,
             onBackButtonClick = { navigator.navController.popBackStack() },
             onProductDetailNavigate = { /* TODO: 상품상세 화면으로 이동 연결 */ },
+        )
+        detailPageGraph(
+            modifier = modifier,
+            onChatNavigate = navigator.navController::navigateToItemChat,
+            onNavigateUp = navigator.navController::navigateUp,
+        )
+        itemChatGraph(
+            modifier = Modifier.systemBarsPadding(),
+            onNavigateUp = navigator.navController::navigateUp,
         )
     }
 }

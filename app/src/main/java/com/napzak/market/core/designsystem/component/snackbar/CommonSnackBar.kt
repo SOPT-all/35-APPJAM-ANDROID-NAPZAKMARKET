@@ -45,7 +45,7 @@ fun CommonSnackBar(
     textColor: Color,
     textStyle: TextStyle,
     shape: Shape,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier

@@ -13,9 +13,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class DetailPageViewModel @Inject constructor(
-    //private val repository: DetailPageRepository
-) : ViewModel() {
+class DetailPageViewModel @Inject constructor() : ViewModel() {
 
     private val _uiState = MutableStateFlow(DetailPageUiState())
     val uiState: StateFlow<DetailPageUiState> = _uiState

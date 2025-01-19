@@ -41,7 +41,6 @@ class MarketInfoViewModel @Inject constructor(
                 storeId = storeId
             )
         }
-        getMarketInformation()
     }
 
     fun initGenreList() {
@@ -181,7 +180,6 @@ class MarketInfoViewModel @Inject constructor(
                 sortType = SortType.RECENT
             )
         }
-        getMarketInformation()
     }
 
     fun updateSelectedGenreList(newSelectedGenreList: List<Genre>) {
@@ -192,7 +190,6 @@ class MarketInfoViewModel @Inject constructor(
                 )
             }
         }
-        getMarketInformation()
     }
 
     fun updateSoldOut() {
@@ -201,7 +198,6 @@ class MarketInfoViewModel @Inject constructor(
                 isOnSale = !uiState.value.isOnSale
             )
         }
-        getMarketInformation()
     }
 
     fun updateUnopen() {
@@ -210,7 +206,6 @@ class MarketInfoViewModel @Inject constructor(
                 isUnopened = !uiState.value.isUnopened
             )
         }
-        getMarketInformation()
     }
 
     fun updateSortType(newSortType: SortType) {
@@ -219,7 +214,6 @@ class MarketInfoViewModel @Inject constructor(
                 sortType = newSortType
             )
         }
-        getMarketInformation()
     }
 
     fun updateItemLikeButton(productId: Int) {

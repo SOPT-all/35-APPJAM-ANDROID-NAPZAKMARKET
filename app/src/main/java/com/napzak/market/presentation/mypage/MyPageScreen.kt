@@ -34,7 +34,7 @@ import com.napzak.market.core.common.util.NoRippleInteractionSource
 @Composable
 fun MyPageScreen(
     modifier: Modifier = Modifier,
-    onMyMarketNavigate: () -> Unit,
+    onMyMarketNavigate: (Long) -> Unit,
     onHistoryNavigate: () -> Unit,
     onGenreNavigate: () -> Unit,
     onFavoriteNavigate: () -> Unit,
@@ -110,7 +110,7 @@ fun MyPageScreen(
                     CommonButton(
                         text = stringResource(id = view_my_market),
                         onClick = {
-                            onMyMarketNavigate()
+                            onMyMarketNavigate(0) /* TODO: 인자값 사용자 storeID로 변경 필요 */
                         },
                         buttonColors = ButtonDefaults.buttonColors(containerColor = NapzakMarketTheme.colors.purple30),
                         shape = RoundedCornerShape(12.dp),

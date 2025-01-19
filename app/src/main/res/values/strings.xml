@@ -137,4 +137,8 @@
     <string name="genre_search_select_genre">원하는 장르를 선택해주세요.</string>
     <string name="genre_search_genre_example">예) 건담, 산리오, 주술회전</string>
     <string name="genre_search_apply_button">적용하기</string>
+
+    <!-- Ready -->
+    <string name="ready_notice">준비중이에요</string>
+    <string name="ready_wait_please">조금만 기다려주세요!</string>
 </resources>

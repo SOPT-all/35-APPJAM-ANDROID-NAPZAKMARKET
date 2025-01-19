@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore.component
+package com.napzak.market.presentation.marketinfo.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -9,13 +9,13 @@ import com.napzak.market.core.type.SortType
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.bottomSheet.GenreSearchBottomSheet
 import com.napzak.market.presentation.explore.bottomSheet.SortBottomSheet
-import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
+import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
 
 @Composable
-fun ExploreBottomSheetScreen(
+fun MarketInfoBottomSheetScreen(
     modifier: Modifier = Modifier,
-    bottomSheetState: ExploreBottomSheetState,
+    bottomSheetState: MarketInfoBottomSheetState,
     selectedGenreList: List<Genre>,
     initialGenreList: List<Genre>,
     genreList: List<Genre>,
@@ -62,8 +62,8 @@ fun ExploreBottomSheetScreen(
                     genreList = genreList,
                     onDismissRequest = { onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING) },
                     onTextChange = onTextChange,
-                    onButtonClick = {
-                        onGenreSelectButtonClick(it)
+                    onButtonClick = { selectedGenreList ->
+                        onGenreSelectButtonClick(selectedGenreList)
                         onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING)
                     },
                 )

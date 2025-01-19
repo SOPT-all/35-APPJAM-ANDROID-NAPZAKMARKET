@@ -159,7 +159,7 @@ fun DetailPageScreen(
                 chipType = TradeType.valueOf(uiState.tradeType),
                 timeText = uiState.uploadTime,
                 views = uiState.viewCount,
-                likes = uiState.interestCount,
+                likeCount = uiState.interestCount,
                 title = uiState.genreName,
                 subtitle = uiState.productName,
                 price = "${uiState.price}원",

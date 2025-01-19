@@ -19,8 +19,8 @@ import com.napzak.market.presentation.explore.type.TradeType
 fun ProductListSection(
     tradeType: TradeType,
     productList: List<ProductItem>,
-    onItemClick: (Int) -> Unit,
-    onLikeClick: (Int) -> Unit,
+    onItemClick: (Long) -> Unit,
+    onLikeClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (tradeType == TradeType.SELL) {

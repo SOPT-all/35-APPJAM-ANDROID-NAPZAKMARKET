@@ -11,6 +11,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.napzak.market.presentation.chat.navigation.itemChatGraph
+import com.napzak.market.presentation.chat.navigation.navigateToItemChat
+import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.explore.navigation.exploreGraph
 import com.napzak.market.presentation.explore.navigation.navigateToExplore
@@ -19,6 +22,8 @@ import com.napzak.market.presentation.home.navigation.navigateToHome
 import com.napzak.market.presentation.main.component.MainBottomBar
 import com.napzak.market.presentation.main.component.MainRegisterDialog
 import com.napzak.market.presentation.main.type.MainTab
+import com.napzak.market.presentation.marketinfo.navigation.marketInfoGraph
+import com.napzak.market.presentation.marketinfo.navigation.navigateToMarketInfo
 import com.napzak.market.presentation.mypage.navigation.myPageGraph
 import com.napzak.market.presentation.onboarding.navigation.navigateToOnboarding
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
@@ -99,11 +104,25 @@ private fun MainNavHost(
         homeGraph(modifier = modifier)
         myPageGraph(
             modifier = modifier,
-            onMyMarketNavigate = {},
+            onMyMarketNavigate = navigator.navController::navigateToMarketInfo,
             onHistoryNavigate = {},
             onGenreNavigate = {},
             onFavoriteNavigate = {},
             onRecentNavigate = {}
+        )
+        marketInfoGraph(
+            modifier = modifier,
+            onBackButtonClick = { navigator.navController.popBackStack() },
+            onProductDetailNavigate = { /* TODO: 상품상세 화면으로 이동 연결 */ },
+        )
+        detailPageGraph(
+            modifier = modifier,
+            onChatNavigate = navigator.navController::navigateToItemChat,
+            onNavigateUp = navigator.navController::navigateUp,
+        )
+        itemChatGraph(
+            modifier = Modifier.systemBarsPadding(),
+            onNavigateUp = navigator.navController::navigateUp,
         )
     }
 }

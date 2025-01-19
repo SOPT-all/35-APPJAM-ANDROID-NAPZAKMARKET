@@ -24,7 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.napzak.market.core.common.state.UiState
@@ -34,6 +33,7 @@ import com.napzak.market.presentation.explore.state.ExploreUiState
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.core.type.SortType
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.component.ExploreBottomSheetScreen
 import com.napzak.market.presentation.explore.component.ExploreFilterGroup
@@ -42,7 +42,6 @@ import com.napzak.market.presentation.explore.component.TradeTypeTab
 import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
 import com.napzak.market.presentation.explore.type.ExploreScreenType
-import com.napzak.market.presentation.explore.type.SortType
 import com.napzak.market.presentation.explore.type.TradeType
 
 @Composable
@@ -75,7 +74,7 @@ fun ExploreRoute(
             viewModel.initGenreList()
             viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.GENRE_SEARCHING)
         },
-        onSoldOutClick = { viewModel.updateSoldOut() },
+        onSoldOutClick = { viewModel.updateSale() },
         onUnopenClick = { viewModel.updateUnopen() },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.SORT) },
         onItemClick = { onProductDetailNavigate() },
@@ -101,8 +100,8 @@ fun ExploreScreen(
     onSoldOutClick: () -> Unit,
     onUnopenClick: () -> Unit,
     onSortButtonClick: () -> Unit,
-    onItemClick: (Int) -> Unit,
-    onLikeClick: (Int) -> Unit,
+    onItemClick: (Long) -> Unit,
+    onLikeClick: (Long) -> Unit,
     onDismissRequest: (ExploreBottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
@@ -174,8 +173,8 @@ fun ExploreSuccessScreen(
     onSoldOutClick: () -> Unit,
     onUnopenClick: () -> Unit,
     onSortButtonClick: () -> Unit,
-    onItemClick: (Int) -> Unit,
-    onLikeClick: (Int) -> Unit,
+    onItemClick: (Long) -> Unit,
+    onLikeClick: (Long) -> Unit,
     onDismissRequest: (ExploreBottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,

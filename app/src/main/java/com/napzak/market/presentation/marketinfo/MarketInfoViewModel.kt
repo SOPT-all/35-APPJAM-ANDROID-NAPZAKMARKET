@@ -1,17 +1,15 @@
-package com.napzak.market.presentation.explore
+package com.napzak.market.presentation.marketinfo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.SortType
-import com.napzak.market.domain.explore.model.ProductItem
+import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
-import com.napzak.market.presentation.explore.state.ExploreProductInformation
-import com.napzak.market.presentation.explore.state.ExploreUiState
 import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
-import com.napzak.market.presentation.explore.type.ExploreScreenType
-import com.napzak.market.presentation.explore.type.TradeType
+import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
+import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
+import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,37 +22,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ExploreViewModel @Inject constructor(
+class MarketInfoViewModel @Inject constructor(
     /* TODO: Repository 연결 */
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(ExploreUiState())
+    private val _uiState = MutableStateFlow(MarketInfoUiState())
     val uiState = _uiState.asStateFlow()
 
-    private val _bottomSheetState: MutableStateFlow<ExploreBottomSheetState> =
-        MutableStateFlow(ExploreBottomSheetState())
-    val bottomSheetState: StateFlow<ExploreBottomSheetState> = _bottomSheetState.asStateFlow()
+    private val _bottomSheetState: MutableStateFlow<MarketInfoBottomSheetState> =
+        MutableStateFlow(MarketInfoBottomSheetState())
+    val bottomSheetState: StateFlow<MarketInfoBottomSheetState> = _bottomSheetState.asStateFlow()
 
     private val _searchTerm: MutableStateFlow<String> = MutableStateFlow("")
     val searchTerm = _searchTerm.asStateFlow()
 
-    fun initExploreScreenState(searchTerm: String?, genreId: Long?) {
+    fun setStoreId(storeId: Long) {
         _uiState.update { currentState ->
-            if (genreId != null) { /* 장르 선택 검색인 경우 */
-                currentState.copy(
-                    exploreScreenType = ExploreScreenType.GENRE_SEARCH_RESULT,
-                    selectedGenreList = listOf(
-                        Genre(
-                            genreId = genreId,
-                            genreName = searchTerm.toString(),
-                        )
-                    ),
-                )
-            } else { /* 일반 검색인 경우 */
-                currentState.copy(
-                    exploreScreenType = ExploreScreenType.WORD_SEARCH_RESULT,
-                    initSearchTerm = searchTerm,
-                )
-            }
+            currentState.copy(
+                storeId = storeId
+            )
         }
     }
 
@@ -128,66 +113,31 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun getExploreProductInformation() {
-        /* TODO: 상품 리스트 조회 API 연결 */
+    fun getMarketInformation() {
+        /* TODO: 마켓정보 조회 API 연결 */
         updateLoadState(
             loadState = UiState.Success(
-                ExploreProductInformation(
-                    productList = listOf(
-                        ProductItem(
-                            productId = 201,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
+                MarketUiInformation(
+                    storeNickname = "납자기",
+                    storeDescription = "마이멜로디, 시나모롤 제일 좋아합니다 :) 해당 장르 상품들 판매 및 제시 채팅 언제든 환영합니다!",
+                    storePhoto = "",
+                    storeBackgroundPhoto = "",
+                    genrePreferenceList = listOf(
+                        Genre(
+                            genreId = 1,
+                            genreName = "나루토",
                         ),
-                        ProductItem(
-                            productId = 202,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
+                        Genre(
+                            genreId = 2,
+                            genreName = "원피스",
                         ),
-                        ProductItem(
-                            productId = 203,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
+                        Genre(
+                            genreId = 3,
+                            genreName = "블리치",
                         ),
-                        ProductItem(
-                            productId = 204,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
-                        ),
-                        ProductItem(
-                            productId = 205,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
+                        Genre(
+                            genreId = 4,
+                            genreName = "귀멸의 칼날",
                         ),
                     )
                 )
@@ -223,14 +173,13 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun updateTradeType(newTradeType: TradeType) {
+    fun updateMarketTab(newMarketTab: MarketTab) {
         _uiState.update { currentState ->
             currentState.copy(
-                tradeType = newTradeType,
+                marketTab = newMarketTab,
                 sortType = SortType.RECENT
             )
         }
-        getExploreProductInformation()
     }
 
     fun updateSelectedGenreList(newSelectedGenreList: List<Genre>) {
@@ -241,7 +190,6 @@ class ExploreViewModel @Inject constructor(
                 )
             }
         }
-        getExploreProductInformation()
     }
 
     fun updateSale() {
@@ -250,7 +198,6 @@ class ExploreViewModel @Inject constructor(
                 isOnSale = !uiState.value.isOnSale
             )
         }
-        getExploreProductInformation()
     }
 
     fun updateUnopen() {
@@ -259,7 +206,6 @@ class ExploreViewModel @Inject constructor(
                 isUnopened = !uiState.value.isUnopened
             )
         }
-        getExploreProductInformation()
     }
 
     fun updateSortType(newSortType: SortType) {
@@ -268,7 +214,6 @@ class ExploreViewModel @Inject constructor(
                 sortType = newSortType
             )
         }
-        getExploreProductInformation()
     }
 
     fun updateItemLikeButton(productId: Long) {
@@ -291,7 +236,7 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    private fun updateLoadState(loadState: UiState<ExploreProductInformation>) =
+    private fun updateLoadState(loadState: UiState<MarketUiInformation>) =
         _uiState.update { currentState ->
             currentState.copy(
                 loadState = loadState

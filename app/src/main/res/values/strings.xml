@@ -45,6 +45,12 @@
     <string name="chat_buy_title">구해요</string>
     <string name="chat_sell_title">팔아요</string>
     <string name="chat_price_label">가격제시</string>
+    <string name="chat_screen_title_buy">납작한 외계인</string>
+    <string name="chat_screen_description_buy">양스타 토모에 히요리 이츠누이 함께</string>
+    <string name="chat_screen_price_buy">100,000원대</string>
+    <string name="chat_screen_title_sell">딸기 마이멜로디 마스코트 인형</string>
+    <string name="chat_screen_price_sell">35,000원</string>
+    <string name="chat_message_placeholder">메시지를 입력하세요.</string>
 
     <!-- LoadingScreen -->
     <string name="loading_ready_image_description">준비중 상태를 나타내는 캐릭터</string>
@@ -100,8 +106,42 @@
     <string name="onboarding_bottom_bar_skip">나중에 설정할래요</string>
     <string name="onboarding_text_field_placeholder">원하는 장르를 직접 입력해 검색해보세요.</string>"
 
+    <!-- DetailPageScreen -->
+    <string name="detail_view_icon_description">조회 수를 나타내는 아이콘</string>
+    <string name="detail_like_icon_description">좋아요 수를 나타내는 아이콘</string>
+    <string name="detail_price_suggest_chip">가격 제시</string>
+    <string name="detail_snackbar_message">상품을 찜했어요!</string>
+    <string name="detail_image_placeholder">이미지 영역</string>
+    <string name="detail_time_text">1시간 전</string>
+    <string name="detail_title">산리오</string>
+    <string name="detail_subtitle">딸기 마이멜로디 마스코트 인형</string>
+    <string name="detail_price">35,000원</string>
+    <string name="detail_product_status_label">상품 상태</string>
+    <string name="detail_delivery_fee_label">배송비</string>
+    <string name="detail_delivery_normal">일반</string>
+    <string name="detail_delivery_discounted">알뜰/반값</string>
+    <string name="detail_market_info_label">마켓 정보</string>
+    <string name="detail_market_nickname">납작한 외계인</string>
+    <string name="detail_market_products_label">상품</string>
+    <string name="detail_market_products_count">%d개</string>
+    <string name="detail_market_transactions_label">거래내역</string>
+    <string name="detail_market_transactions_count">%d건</string>
+    <string name="detail_separator_dot">·</string>
+    <string name="detail_like_button_description">좋아요 버튼</string>
+    <string name="detail_chat_button">채팅하기</string>
+    <string name="detail_product_condition_brand_new_preview">미개봉</string>
+    <string name="detail_delivery_fee_normal_preview">3000</string>
+    <string name="detail_delivery_fee_discounted_preview">1500</string>
+    <string name="detail_delivery_included">포함</string>
+    <string name="detail_delivery_fee_normal">%d원</string>
+    <string name="detail_delivery_fee_discounted">%d원</string>
+
     <!-- GenreSearch BottomSheet -->
     <string name="genre_search_select_genre">원하는 장르를 선택해주세요.</string>
     <string name="genre_search_genre_example">예) 건담, 산리오, 주술회전</string>
     <string name="genre_search_apply_button">적용하기</string>
+
+    <!-- Ready -->
+    <string name="ready_notice">준비중이에요</string>
+    <string name="ready_wait_please">조금만 기다려주세요!</string>
 </resources>

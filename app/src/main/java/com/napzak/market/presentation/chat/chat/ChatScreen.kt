@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.chat.screen
+package com.napzak.market.presentation.chat.chat
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

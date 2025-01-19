@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.chat.component
+package com.napzak.market.presentation.chat.itemchat.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

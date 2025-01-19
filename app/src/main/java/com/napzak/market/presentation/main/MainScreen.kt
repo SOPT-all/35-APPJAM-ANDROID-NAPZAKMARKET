@@ -11,8 +11,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import com.napzak.market.presentation.chat.navigation.itemChatGraph
-import com.napzak.market.presentation.chat.navigation.navigateToItemChat
+import com.napzak.market.presentation.chat.itemchat.navigation.itemChatGraph
+import com.napzak.market.presentation.chat.itemchat.navigation.navigateToItemChat
 import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.explore.navigation.exploreGraph

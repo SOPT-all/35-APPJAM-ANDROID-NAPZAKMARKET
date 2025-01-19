@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -156,7 +157,7 @@ fun DetailPageScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             ProductInfoSection(
-                chipType = TradeType.valueOf(uiState.tradeType),
+                tradeType = TradeType.valueOf(uiState.tradeType),
                 timeText = uiState.uploadTime,
                 views = uiState.viewCount,
                 likeCount = uiState.interestCount,
@@ -186,6 +187,7 @@ fun DetailPageScreen(
                     text = stringResource(id = R.string.detail_product_description),
                     style = NapzakMarketTheme.typography.bodyMedium16,
                     color = NapzakMarketTheme.colors.gray900,
+                    textAlign = TextAlign.Start,
                 )
 
                 if (uiState.tradeType == TradeType.SELL.name) {

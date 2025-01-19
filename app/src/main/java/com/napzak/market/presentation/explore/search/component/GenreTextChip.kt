@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.search.component
+package com.napzak.market.presentation.explore.search.component
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.RoundedCornerShape

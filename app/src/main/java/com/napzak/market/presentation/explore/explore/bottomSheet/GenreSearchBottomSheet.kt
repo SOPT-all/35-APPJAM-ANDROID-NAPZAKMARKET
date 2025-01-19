@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore.bottomSheet
+package com.napzak.market.presentation.explore.explore.bottomSheet
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -34,7 +34,7 @@ import com.napzak.market.core.designsystem.component.GenreChipButtonGroup
 import com.napzak.market.core.designsystem.component.button.EnableDisableTextButton
 import com.napzak.market.core.designsystem.component.item.GenreSearchItem
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.presentation.explore.component.GenreSearchNoticeSection
+import com.napzak.market.presentation.explore.explore.component.GenreSearchNoticeSection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

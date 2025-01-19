@@ -1,11 +1,11 @@
-package com.napzak.market.presentation.search
+package com.napzak.market.presentation.explore.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.presentation.search.state.RelatedGenreList
-import com.napzak.market.presentation.search.state.SearchUiState
+import com.napzak.market.presentation.explore.search.state.RelatedGenreList
+import com.napzak.market.presentation.explore.search.state.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow

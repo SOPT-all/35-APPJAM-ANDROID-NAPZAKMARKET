@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore.component
+package com.napzak.market.presentation.explore.explore.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.component.chip.SelectableChip
 import com.napzak.market.core.designsystem.component.chip.type.SelectableChipType
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.presentation.explore.type.TradeType
 
 @Composable
 fun ExploreFilterGroup(

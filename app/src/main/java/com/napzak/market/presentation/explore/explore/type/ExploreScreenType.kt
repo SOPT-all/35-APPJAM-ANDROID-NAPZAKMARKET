@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore.type
+package com.napzak.market.presentation.explore.explore.type
 
 enum class ExploreScreenType {
     BASIC,

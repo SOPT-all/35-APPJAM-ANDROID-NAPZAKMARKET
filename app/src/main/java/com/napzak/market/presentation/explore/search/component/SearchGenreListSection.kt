@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.search.component
+package com.napzak.market.presentation.explore.search.component
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn

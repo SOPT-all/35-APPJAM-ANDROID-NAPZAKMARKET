@@ -15,8 +15,8 @@ import com.napzak.market.presentation.chat.navigation.itemChatGraph
 import com.napzak.market.presentation.chat.navigation.navigateToItemChat
 import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
-import com.napzak.market.presentation.explore.navigation.exploreGraph
-import com.napzak.market.presentation.explore.navigation.navigateToExplore
+import com.napzak.market.presentation.explore.explore.navigation.exploreGraph
+import com.napzak.market.presentation.explore.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.home.navigation.homeGraph
 import com.napzak.market.presentation.home.navigation.navigateToHome
 import com.napzak.market.presentation.main.component.MainBottomBar
@@ -27,8 +27,8 @@ import com.napzak.market.presentation.marketinfo.navigation.navigateToMarketInfo
 import com.napzak.market.presentation.mypage.navigation.myPageGraph
 import com.napzak.market.presentation.onboarding.navigation.navigateToOnboarding
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
-import com.napzak.market.presentation.search.navigation.navigateToSearch
-import com.napzak.market.presentation.search.navigation.searchGraph
+import com.napzak.market.presentation.explore.search.navigation.navigateToSearch
+import com.napzak.market.presentation.explore.search.navigation.searchGraph
 import com.napzak.market.presentation.splash.navigation.splashGraph
 import kotlinx.collections.immutable.toImmutableList
 

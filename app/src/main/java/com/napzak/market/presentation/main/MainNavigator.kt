@@ -12,6 +12,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.napzak.market.presentation.explore.explore.navigation.navigateToExplore
+import com.napzak.market.presentation.home.navigation.Home
 import com.napzak.market.presentation.home.navigation.navigateToHome
 import com.napzak.market.presentation.main.type.MainTab
 import com.napzak.market.presentation.mypage.navigation.navigateToMyPage
@@ -37,13 +38,11 @@ class MainNavigator(
 
     fun navigate(tab: MainTab) {
         val navOptions = navOptions {
-            navController.currentDestination?.route?.let {
-                popUpTo(it){
-                    saveState = true
-                }
-                launchSingleTop = true
-                restoreState = true
+            popUpTo(Home) {
+                saveState = true
             }
+            launchSingleTop = true
+            restoreState = true
         }
 
         when (tab) {
@@ -53,10 +52,15 @@ class MainNavigator(
                 genreId = null,
                 navOptions = navOptions,
             )
-            MainTab.REGISTER ->  {
+
+            MainTab.REGISTER -> {
                 this.registerDialogVisibilityState = !this.registerDialogVisibilityState
             }
-            MainTab.CHAT -> {/*TODO: 채팅화면 연결*/}
+
+            MainTab.CHAT -> {
+                /*TODO: 채팅화면 연결*/
+            }
+
             MainTab.MY -> navController.navigateToMyPage(navOptions)
         }
     }

@@ -24,7 +24,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -113,10 +112,12 @@ private fun OnboardingScreen(
                 .zIndex(1f),
         )
 
-        Box(modifier = Modifier
-            .padding(top = 30.dp)
-            .weight(1f)
-            .zIndex(-1f)) {
+        Box(
+            modifier = Modifier
+                .padding(top = 30.dp)
+                .weight(1f)
+                .zIndex(-1f)
+        ) {
             when (uiState.genreList) {
                 is UiState.Loading -> {}
                 is UiState.Empty -> {}
@@ -181,20 +182,17 @@ private fun BoxScope.SuccessScreen(
             ) {
                 GradientBox(
                     modifier = Modifier.align(Alignment.TopCenter),
-                    brushColors = listOf(
-                        NapzakMarketTheme.colors.white,
-                        Color.Transparent,
-                    ),
+                    brushColors = with(NapzakMarketTheme.colors) {
+                        listOf(white, white0)
+                    },
                 )
             }
 
             GradientBox(
                 modifier = Modifier.align(Alignment.BottomCenter),
-                brushColors = listOf(
-                    Color.Transparent,
-                    NapzakMarketTheme.colors.white,
-
-                ),
+                brushColors = with(NapzakMarketTheme.colors) {
+                    listOf(white0, white)
+                },
             )
         }
     )

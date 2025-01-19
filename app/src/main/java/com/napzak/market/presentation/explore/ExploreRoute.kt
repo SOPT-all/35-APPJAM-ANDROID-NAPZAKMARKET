@@ -34,15 +34,15 @@ import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.core.type.SortType
+import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.component.ExploreBottomSheetScreen
 import com.napzak.market.presentation.explore.component.ExploreFilterGroup
 import com.napzak.market.presentation.explore.component.ProductListSection
 import com.napzak.market.presentation.explore.component.TradeTypeTab
 import com.napzak.market.presentation.explore.state.ExploreBottomSheetState
-import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
+import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.presentation.explore.type.ExploreScreenType
-import com.napzak.market.presentation.explore.type.TradeType
 
 @Composable
 fun ExploreRoute(
@@ -72,17 +72,17 @@ fun ExploreRoute(
         onTradeTypeClick = viewModel::updateTradeType,
         onGenreListClick = {
             viewModel.initGenreList()
-            viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.GENRE_SEARCHING)
+            viewModel.updateBottomSheetVisibility(BottomSheetType.GENRE_SEARCHING)
         },
         onSoldOutClick = { viewModel.updateSale() },
         onUnopenClick = { viewModel.updateUnopen() },
-        onSortButtonClick = { viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.SORT) },
+        onSortButtonClick = { viewModel.updateBottomSheetVisibility(BottomSheetType.SORT) },
         onItemClick = { onProductDetailNavigate() },
         onLikeClick = viewModel::updateItemLikeButton,
         onDismissRequest = { viewModel.updateBottomSheetVisibility(it) },
         onSortItemClick = {
             viewModel.updateSortType(it)
-            viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.SORT)
+            viewModel.updateBottomSheetVisibility(BottomSheetType.SORT)
         },
         onTextChange = { viewModel.changeSearchText(it) },
         onGenreSelectButtonClick = viewModel::updateSelectedGenreList,
@@ -102,7 +102,7 @@ fun ExploreScreen(
     onSortButtonClick: () -> Unit,
     onItemClick: (Long) -> Unit,
     onLikeClick: (Long) -> Unit,
-    onDismissRequest: (ExploreBottomSheetType) -> Unit,
+    onDismissRequest: (BottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
     onGenreSelectButtonClick: (List<Genre>) -> Unit,
@@ -175,7 +175,7 @@ fun ExploreSuccessScreen(
     onSortButtonClick: () -> Unit,
     onItemClick: (Long) -> Unit,
     onLikeClick: (Long) -> Unit,
-    onDismissRequest: (ExploreBottomSheetType) -> Unit,
+    onDismissRequest: (BottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
     onGenreSelectButtonClick: (List<Genre>) -> Unit,

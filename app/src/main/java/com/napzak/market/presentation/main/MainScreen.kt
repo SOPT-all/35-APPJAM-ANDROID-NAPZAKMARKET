@@ -27,8 +27,8 @@ import com.napzak.market.presentation.marketinfo.navigation.navigateToMarketInfo
 import com.napzak.market.presentation.mypage.navigation.myPageGraph
 import com.napzak.market.presentation.onboarding.navigation.navigateToOnboarding
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
-import com.napzak.market.presentation.search.navigation.navigateToSearch
-import com.napzak.market.presentation.search.navigation.searchGraph
+import com.napzak.market.presentation.explore.search.navigation.navigateToSearch
+import com.napzak.market.presentation.explore.search.navigation.searchGraph
 import com.napzak.market.presentation.splash.navigation.splashGraph
 import kotlinx.collections.immutable.toImmutableList
 

@@ -2,45 +2,35 @@ package com.napzak.market.core.designsystem.component.snackbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.napzak.market.R
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**
- * 공통 SnackBar 컴포넌트.
+ * 공통 SnackBar 컴포넌트 (아이콘 없음).
  *
- * 메시지와 아이콘을 포함한 스낵바 메시지를 표시합니다.
+ * 메시지만 포함한 스낵바 메시지를 표시합니다.
  * 사용자 지정 배경색, 텍스트 색상, 텍스트 스타일, 모양 등을 지원하며, 모든 인자는 명시적으로 전달해야 합니다.
  *
  * @param message 표시할 메시지
- * @param icon 아이콘 리소스
- * @param modifier Modifier
  * @param backgroundColor 배경색
  * @param textColor 텍스트 색상
  * @param textStyle 텍스트 스타일
  * @param shape 모양
+ * @param modifier Modifier
  */
 @Composable
-fun CommonSnackBar(
+fun CommonSnackBarWithoutIcon(
     message: String,
-    icon: ImageVector,
     backgroundColor: Color,
     textColor: Color,
     textStyle: TextStyle,
@@ -58,30 +48,20 @@ fun CommonSnackBar(
                 vertical = 12.dp,
             ),
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = Color.Unspecified,
-                modifier = Modifier.size(18.dp),
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = message,
-                style = textStyle,
-                color = textColor,
-            )
-        }
+        Text(
+            text = message,
+            style = textStyle,
+            color = textColor,
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun CommonSnackBarPreview() {
+fun CommonSnackBarWithoutIconPreview() {
     NapzakMarketTheme {
-        CommonSnackBar(
-            message = "상품을 찜했어요!",
-            icon = ImageVector.vectorResource(id = R.drawable.ic_heart_toast_18),
+        CommonSnackBarWithoutIcon(
+            message = "버튼을 한번 더 누르시면 종료 돼요.",
             backgroundColor = NapzakMarketTheme.colors.black70,
             textColor = NapzakMarketTheme.colors.white,
             textStyle = NapzakMarketTheme.typography.bodyMedium14,
@@ -95,11 +75,10 @@ fun CommonSnackBarPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun CommonSnackBarMessagePreview() {
+fun CommonSnackBarWithoutIconMessagePreview() {
     NapzakMarketTheme {
-        CommonSnackBar(
+        CommonSnackBarWithoutIcon(
             message = "긴 메시지가 들어갑니다. 메시지가 길어져도 문제가 없는지 확인하기 위한 예제입니다.",
-            icon = ImageVector.vectorResource(id = R.drawable.ic_heart_toast_18),
             backgroundColor = NapzakMarketTheme.colors.black70,
             textColor = NapzakMarketTheme.colors.white,
             textStyle = NapzakMarketTheme.typography.bodyMedium14,

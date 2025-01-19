@@ -21,6 +21,7 @@ import com.napzak.market.core.designsystem.component.topbar.NapzakLogoTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.presentation.home.component.HomeBannerPager
 import com.napzak.market.presentation.home.component.HomeMostSearchedItemGroup
+import com.napzak.market.presentation.home.component.HomePopularItemGroup
 import com.napzak.market.presentation.home.component.HomeRecommendationItemGroup
 import com.napzak.market.presentation.home.state.HomeUiState
 import kotlinx.collections.immutable.toImmutableList
@@ -99,8 +100,8 @@ private fun HomeScreen(
                 HomeUiStateGroup(
                     uiState = uiState.popularItems,
                     success = { uiState ->
-                        HomeRecommendationItemGroup(
-                            recommendedItems = uiState.toImmutableList(),
+                        HomePopularItemGroup(
+                            popularItems = uiState.toImmutableList(),
                             onLikeClick = onLikeClick,
                             onItemClick = onItemClick,
                             modifier = Modifier

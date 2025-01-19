@@ -265,6 +265,9 @@ fun MarketInfoSuccessScreen(
                 Image(
                     painter = painterResource(R.drawable.img_ready),
                     contentDescription = null,
+                    modifier = Modifier
+                        .width(162.dp)
+                        .height(128.dp)
                 )
 
                 Spacer(Modifier.height(20.dp))

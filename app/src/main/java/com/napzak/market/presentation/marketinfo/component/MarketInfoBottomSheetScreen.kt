@@ -62,8 +62,8 @@ fun MarketInfoBottomSheetScreen(
                     genreList = genreList,
                     onDismissRequest = { onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING) },
                     onTextChange = onTextChange,
-                    onButtonClick = {
-                        onGenreSelectButtonClick(it)
+                    onButtonClick = { selectedGenreList ->
+                        onGenreSelectButtonClick(selectedGenreList)
                         onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING)
                     },
                 )

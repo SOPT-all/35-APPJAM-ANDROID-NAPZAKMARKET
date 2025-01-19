@@ -89,7 +89,7 @@ private fun TradeTypeTabItem(
                     strokeWidth = strokeWidth,
                 )
             }
-            .noRippleClickable { onTradeTypeClick() }
+            .noRippleClickable(onTradeTypeClick)
             .padding(bottom = 2.dp)
             .padding(vertical = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,

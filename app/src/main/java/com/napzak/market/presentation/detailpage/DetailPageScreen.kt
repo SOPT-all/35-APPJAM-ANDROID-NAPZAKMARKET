@@ -55,11 +55,11 @@ import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.component.snackbar.CommonSnackBar
 import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.presentation.detailpage.component.ProductInfoSection
 import com.napzak.market.presentation.detailpage.state.DetailPageUiState
 import com.napzak.market.presentation.detailpage.state.MarketInfoUiState
-import com.napzak.market.presentation.detailpage.type.ProductCondition
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -89,7 +89,7 @@ fun DetailPageScreen(
     modifier: Modifier = Modifier,
     snackBarDuration: Long = 3000L,
 ) {
-    val conditionEnum =ProductCondition.fromCondition(uiState.productCondition)
+    val conditionEnum = ProductConditionType.fromCondition(uiState.productCondition)
     var isSnackBarVisible by remember { mutableStateOf(false) }
     val snackBarMessage = stringResource(id = R.string.detail_snackbar_message)
 
@@ -474,19 +474,22 @@ fun BottomBar(
 
 @Preview(showBackground = true)
 @Composable
-fun DetailPageScreenPreview() {
+fun DetailPageScreenSellPreview() {
     val mockUiState = DetailPageUiState(
         productName = "딸기 마이멜로디 마스코트 인형",
         price = 35000,
-        uploadTime = "1시간 전",
+        uploadTime = "3시간 전",
         viewCount = 120,
         interestCount = 45,
-        description = "사용한 마이멜로디 판매합니다.",
+        description = "사용하지 않은 마이멜로디 인형입니다.",
         productCondition = "미개봉",
+        tradeType = TradeType.SELL.name,
+        standardDeliveryFee = 3000,
+        halfDeliveryFee = 1500,
         marketInfo = MarketInfoUiState(
-            nickname = "납작한 외계인",
-            totalProducts = 10,
-            totalTransactions = 7,
+            nickname = "판매자1",
+            totalProducts = 15,
+            totalTransactions = 20,
         )
     )
 
@@ -494,7 +497,35 @@ fun DetailPageScreenPreview() {
         DetailPageScreen(
             uiState = mockUiState,
             onChatNavigate = {},
-            onBackClick = {},
+            onBackClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DetailPageScreenBuyPreview() {
+    val mockUiState = DetailPageUiState(
+        productName = "캐릭터 피규어",
+        price = 25000,
+        uploadTime = "1시간 전",
+        viewCount = 87,
+        interestCount = 15,
+        description = "사용하던 피규어를 구매하려 합니다.",
+        productCondition = "아주 좋은 상태",
+        tradeType = TradeType.BUY.name,
+        marketInfo = MarketInfoUiState(
+            nickname = "구매자1",
+            totalProducts = 5,
+            totalTransactions = 3,
+        )
+    )
+
+    NapzakMarketTheme {
+        DetailPageScreen(
+            uiState = mockUiState,
+            onChatNavigate = {},
+            onBackClick = {}
         )
     }
 }

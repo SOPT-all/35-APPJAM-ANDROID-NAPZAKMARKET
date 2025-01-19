@@ -192,7 +192,7 @@ class MarketInfoViewModel @Inject constructor(
         }
     }
 
-    fun updateSoldOut() {
+    fun updateSale() {
         _uiState.update { currentState ->
             currentState.copy(
                 isOnSale = !uiState.value.isOnSale

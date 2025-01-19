@@ -74,7 +74,7 @@ fun ExploreRoute(
             viewModel.initGenreList()
             viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.GENRE_SEARCHING)
         },
-        onSoldOutClick = { viewModel.updateSoldOut() },
+        onSoldOutClick = { viewModel.updateSale() },
         onUnopenClick = { viewModel.updateUnopen() },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(ExploreBottomSheetType.SORT) },
         onItemClick = { onProductDetailNavigate() },

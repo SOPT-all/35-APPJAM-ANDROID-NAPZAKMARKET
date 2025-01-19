@@ -2,8 +2,8 @@ package com.napzak.market.presentation.home.state
 
 import com.napzak.market.R
 import com.napzak.market.core.common.state.UiState
+import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.explore.model.ProductItem
-import com.napzak.market.presentation.explore.explore.type.TradeType
 
 data class HomeUiState(
     val bannerImages: UiState<List<Int>> = UiState.Loading,
@@ -18,6 +18,7 @@ data class HomeUiState(
                 R.drawable.img_banner_home2,
             )
         )
+
         val dummyData = UiState.Success(
             listOf(
                 ProductItem(

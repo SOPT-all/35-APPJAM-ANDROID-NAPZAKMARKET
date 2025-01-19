@@ -11,7 +11,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import com.napzak.market.presentation.chat.chat.navigation.chatGraph
 import com.napzak.market.presentation.chat.itemchat.navigation.itemChatGraph
 import com.napzak.market.presentation.chat.itemchat.navigation.navigateToItemChat
 import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
@@ -28,6 +27,7 @@ import com.napzak.market.presentation.marketinfo.navigation.navigateToMarketInfo
 import com.napzak.market.presentation.mypage.navigation.myPageGraph
 import com.napzak.market.presentation.onboarding.navigation.navigateToOnboarding
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
+import com.napzak.market.presentation.prepare.navigation.prepareGraph
 import com.napzak.market.presentation.search.navigation.navigateToSearch
 import com.napzak.market.presentation.search.navigation.searchGraph
 import com.napzak.market.presentation.splash.navigation.splashGraph
@@ -109,7 +109,7 @@ private fun MainNavHost(
             onExploreNavigate = navigator.navController::navigateToExplore,
         )
 
-        chatGraph(
+        prepareGraph(
             modifier = modifier,
         )
 
@@ -138,6 +138,5 @@ private fun MainNavHost(
             modifier = Modifier.systemBarsPadding(),
             onNavigateUp = navigator.navController::navigateUp,
         )
-
     }
 }

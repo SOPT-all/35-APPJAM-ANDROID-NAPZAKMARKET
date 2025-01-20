@@ -108,10 +108,8 @@ fun SearchSuccessScreen(
     onGenreItemClick: (Genre) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    BackHandler(
-        enabled = searchTerm.isNotBlank()
-    ) {
-        onTextChange("")
+    BackHandler {
+        if (searchTerm.isNotBlank()) onTextChange("") else onBackButtonClick()
     }
 
     Column(

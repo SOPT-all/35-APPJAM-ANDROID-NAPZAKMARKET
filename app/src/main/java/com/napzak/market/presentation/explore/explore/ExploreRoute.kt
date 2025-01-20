@@ -66,10 +66,11 @@ fun ExploreRoute(
         }
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.initExploreScreenState(searchTerm, genreId)
+    }
+
     LaunchedEffect(uiState) {
-        if (searchTerm != null || genreId != null) {
-            viewModel.initExploreScreenState(searchTerm, genreId)
-        }
         viewModel.getExploreProductInformation()
     }
 

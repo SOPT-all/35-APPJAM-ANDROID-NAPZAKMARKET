@@ -101,7 +101,7 @@ private fun MainNavHost(
 
         homeGraph(
             modifier = modifier,
-            onDetailPageNavigate = navigator.navController::navigateToDetailPage
+            onDetailPageNavigate = navigator.navController::navigateToDetailPage,
         )
 
         exploreGraph(

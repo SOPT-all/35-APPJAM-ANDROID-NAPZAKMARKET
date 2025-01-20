@@ -13,8 +13,8 @@ import kotlinx.serialization.Serializable
 
 fun NavController.navigateToRegistration(
     navOptions: NavOptions? = null,
-    isSale: Boolean,
-) = navigate(Registration(isSale), navOptions)
+    tradeType: String,
+) = navigate(Registration(tradeType), navOptions)
 
 fun NavController.navigateToGenreSearch(
     navOptions: NavOptions? = null,
@@ -26,10 +26,10 @@ fun NavGraphBuilder.registrationGraph(
     modifier: Modifier = Modifier,
 ) {
     composable<Registration> {
-        val tradeType = it.toRoute<Registration>()
+        val registration = it.toRoute<Registration>()
 
         RegistrationRoute(
-            isSale = tradeType.isSale,
+            tradeType = registration.tradeType,
             navigateUp = navigateUp,
             navigateToGenreSearch = navigateToGenreSearch,
             modifier = modifier,
@@ -46,7 +46,7 @@ fun NavGraphBuilder.registrationGraph(
 
 @Serializable
 data class Registration(
-    val isSale: Boolean,
+    val tradeType: String,
 ) : Route
 
 @Serializable

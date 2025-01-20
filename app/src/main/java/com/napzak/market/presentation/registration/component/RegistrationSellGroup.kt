@@ -49,7 +49,7 @@ fun RegistrationSellGroup(
         )
         Spacer(modifier = Modifier.height(12.dp))
         ProductConditionGridButton(
-            conditionType = ProductConditionType.entries.map { it.condition },
+            conditionType = ProductConditionType.entries.map { it.label },
             selectedIndex = productCondition,
             onIndexSelected = onProductConditionChange,
         )

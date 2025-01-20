@@ -1,9 +1,11 @@
 package com.napzak.market.presentation.registration.state
 
 import androidx.compose.runtime.Immutable
+import com.napzak.market.core.type.TradeType
 
 @Immutable
 data class RegistrationUiState(
+    val tradeType: TradeType = TradeType.SELL,
     val imageUrlList: List<String> = emptyList(),
     val searchTerm: String = "",
     val genre: String = "",

@@ -48,7 +48,7 @@ import com.napzak.market.presentation.registration.type.PostFeeType
 
 @Composable
 fun RegistrationRoute(
-    isSale: Boolean,
+    tradeType: String,
     navigateUp: () -> Unit,
     navigateToGenreSearch: () -> Unit,
     modifier: Modifier = Modifier,
@@ -88,7 +88,7 @@ fun RegistrationRoute(
 
     RegistrationScreen(
         uiState = uiState,
-        registrationType = if (isSale) TradeType.SELL else TradeType.BUY,
+        registrationType = if (tradeType == TradeType.SELL.label) TradeType.SELL else TradeType.BUY,
         onCloseClick = navigateUp,
         onPhotoClick = {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
@@ -280,7 +280,7 @@ fun RegistrationScreen(
                 shape = RoundedCornerShape(12.dp),
                 textStyle = NapzakMarketTheme.typography.bodyBold16,
                 contentPadding = PaddingValues(vertical = 15.dp),
-                isEnabled = true,
+                isEnabled = uiState.isButtonEnabled,
             )
         }
     }
@@ -295,7 +295,7 @@ private const val MIN_ITEMS = 2
 private fun RegistrationScreenPreview() {
     NapzakMarketTheme {
         RegistrationRoute(
-            isSale = false,
+            tradeType = "팔아요",
             navigateUp = { },
             navigateToGenreSearch = { },
         )

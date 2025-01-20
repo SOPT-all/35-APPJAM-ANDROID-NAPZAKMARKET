@@ -28,11 +28,9 @@ import com.napzak.market.presentation.marketinfo.navigation.navigateToMarketInfo
 import com.napzak.market.presentation.mypage.navigation.myPageGraph
 import com.napzak.market.presentation.onboarding.navigation.navigateToOnboarding
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
-import com.napzak.market.presentation.registration.navigation.Registration
+import com.napzak.market.presentation.registration.navigation.navigateToGenreSearch
 import com.napzak.market.presentation.registration.navigation.navigateToRegistration
 import com.napzak.market.presentation.registration.navigation.registrationGraph
-import com.napzak.market.presentation.search.navigation.navigateToSearch
-import com.napzak.market.presentation.search.navigation.searchGraph
 import com.napzak.market.presentation.explore.search.navigation.navigateToSearch
 import com.napzak.market.presentation.explore.search.navigation.searchGraph
 import com.napzak.market.presentation.splash.navigation.splashGraph
@@ -60,8 +58,8 @@ fun MainScreen(
             )
 
             MainRegisterDialog(
-                onSellRegisterClick = { navigator.navController.navigateToRegistration(isSale = true) },
-                onBuyRegisterClick = { navigator.navController.navigateToRegistration(isSale = false) },
+                onSellRegisterClick = { navigator.navController.navigateToRegistration(tradeType = TradeType.SELL.label) },
+                onBuyRegisterClick = { navigator.navController.navigateToRegistration(tradeType = TradeType.BUY.label) },
                 onDismissRequest = { navigator.navigate(MainTab.REGISTER) },
                 visibility = navigator.registerDialogVisibility,
             )
@@ -133,6 +131,7 @@ private fun MainNavHost(
         registrationGraph(
             modifier = modifier,
             navigateUp = navigator.navController::navigateUp,
+            navigateToGenreSearch = navigator.navController::navigateToGenreSearch,
         )
     }
 }

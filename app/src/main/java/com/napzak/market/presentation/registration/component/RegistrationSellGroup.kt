@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
@@ -88,13 +89,13 @@ fun RegistrationSellGroup(
             onTabSelected = onPostFeeChange,
         )
         AnimatedVisibility(
-            visible = postFeeType == PostFeeType.INCLUDED,
+            visible = postFeeType == PostFeeType.EXCLUDED,
             modifier = Modifier.animateContentSize()
         ) {
             Column {
                 Spacer(modifier = Modifier.height(12.dp))
                 PostOptionCard(
-                    title = "일반 택배",
+                    title = stringResource(R.string.regi_normal_post),
                     price = normalPostFee,
                     placeHolder = stringResource(R.string.regi_normal_post_placeholder),
                     onPriceChange = onNormalPostFeeChange,
@@ -103,7 +104,7 @@ fun RegistrationSellGroup(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 PostOptionCard(
-                    title = "일반 택배",
+                    title = stringResource(R.string.regi_half_price_post),
                     price = halfPostFee,
                     placeHolder = stringResource(R.string.regi_half_price_post_placeholder),
                     onPriceChange = onHalfPostFeeChange,

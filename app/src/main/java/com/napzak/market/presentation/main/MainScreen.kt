@@ -1,7 +1,5 @@
 package com.napzak.market.presentation.main
 
-import android.app.Activity
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
@@ -10,21 +8,9 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
-import com.napzak.market.core.designsystem.component.snackbar.CommonSnackBar
-import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.presentation.chat.navigation.itemChatGraph
 import com.napzak.market.presentation.chat.navigation.navigateToItemChat
 import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
@@ -45,48 +31,12 @@ import com.napzak.market.presentation.onboarding.navigation.navigateToOnboarding
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
 import com.napzak.market.presentation.splash.navigation.splashGraph
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
     navigator: MainNavigator = rememberMainNavigator(),
 ) {
-    val context = LocalContext.current
-    var backPressedState by remember { mutableStateOf(true) }
-    var backPressedTime = 0L
-
-    val snackBarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
-
-    BackHandler(enabled = backPressedState) {
-        if (System.currentTimeMillis() - backPressedTime <= 2000) {
-            (context as Activity).finish()
-        } else {
-            backPressedState = true
-            coroutineScope.launch {
-                snackBarHostState.showSnackbar(
-                    message = "버튼을 한 번 더 누르면 종료돼요",
-                    duration = SnackbarDuration.Short
-                )
-            }
-        }
-        backPressedTime = System.currentTimeMillis()
-    }
-
     Scaffold(
-        snackbarHost = {
-            SnackbarHost(
-                hostState = snackBarHostState,
-                modifier = Modifier.padding(bottom = 10.dp)
-            ) { snackBarData ->
-                CommonSnackBar(
-                    message = snackBarData.visuals.message,
-                    backgroundColor = NapzakMarketTheme.colors.black70,
-                    textColor = NapzakMarketTheme.colors.white,
-                    textStyle = NapzakMarketTheme.typography.bodyMedium14,
-                )
-            }
-        },
         bottomBar = {
             MainBottomBar(
                 isVisible = navigator.showBottomBar(),

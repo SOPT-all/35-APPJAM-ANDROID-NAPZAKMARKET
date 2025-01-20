@@ -37,7 +37,10 @@ class ExploreViewModel @Inject constructor(
     private val _searchTerm: MutableStateFlow<String> = MutableStateFlow("")
     val searchTerm = _searchTerm.asStateFlow()
 
-    fun initExploreScreenState(searchTerm: String?, genreId: Long?) {
+    fun initExploreScreenState(
+        searchTerm: String?,
+        genreId: Long?
+    ) {
         val exploreScreenType = when {
             searchTerm != null && genreId != null -> {
                 initSelectedGenreList(searchTerm, genreId)
@@ -65,7 +68,10 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    private fun initSelectedGenreList(genreName: String?, genreId: Long?) {
+    private fun initSelectedGenreList(
+        genreName: String?,
+        genreId: Long?
+    ) {
         _uiState.update { currentState ->
             if (genreName == null) {
                 currentState.copy(

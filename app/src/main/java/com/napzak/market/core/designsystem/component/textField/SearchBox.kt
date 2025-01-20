@@ -61,7 +61,11 @@ fun SearchBox(
     var textFieldValue by remember { mutableStateOf(TextFieldValue(searchTerm)) }
 
     LaunchedEffect(searchTerm) {
-        textFieldValue = textFieldValue.copy(text = searchTerm, selection = TextRange(searchTerm.length))
+        textFieldValue =
+            textFieldValue.copy(
+                text = searchTerm,
+                selection = TextRange(searchTerm.length)
+            )
     }
 
     LaunchedEffect(Unit) {

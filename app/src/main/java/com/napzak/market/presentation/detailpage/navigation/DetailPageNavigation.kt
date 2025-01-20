@@ -9,8 +9,8 @@ import com.napzak.market.core.common.navigation.MainTabRoute
 import com.napzak.market.presentation.detailpage.DetailPageRoute
 import kotlinx.serialization.Serializable
 
-fun NavController.navigateToDetailPage(navOptions: NavOptions? = null) {
-    navigate(DetailPage, navOptions)
+fun NavController.navigateToDetailPage(productId: Long = 0, navOptions: NavOptions? = null) {
+    navigate(DetailPage(productId), navOptions)
 }
 
 fun NavGraphBuilder.detailPageGraph(
@@ -28,4 +28,6 @@ fun NavGraphBuilder.detailPageGraph(
 }
 
 @Serializable
-data object DetailPage : MainTabRoute
+data class DetailPage(
+    val productId: Long, // TODO: 기본값 추후에 지우기
+) : MainTabRoute

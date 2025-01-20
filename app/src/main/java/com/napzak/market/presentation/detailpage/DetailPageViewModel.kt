@@ -1,7 +1,10 @@
 package com.napzak.market.presentation.detailpage
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
+import com.napzak.market.presentation.detailpage.navigation.DetailPage
 import com.napzak.market.presentation.detailpage.state.DetailPageUiState
 import com.napzak.market.presentation.detailpage.state.MarketInfoUiState
 import com.napzak.market.presentation.detailpage.state.MarketReviewUiState
@@ -13,12 +16,16 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class DetailPageViewModel @Inject constructor() : ViewModel() {
+class DetailPageViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DetailPageUiState())
     val uiState: StateFlow<DetailPageUiState> = _uiState
 
+
     init {
+        val detailPage = savedStateHandle.toRoute<DetailPage>().productId // productId를 가져옴
         loadDetailPageData()
     }
 
@@ -27,7 +34,7 @@ class DetailPageViewModel @Inject constructor() : ViewModel() {
             _uiState.value = DetailPageUiState(
                 profileImageUrl = "https://example.com/profile_image.png",
                 productId = 1L,
-                tradeType = "팔아요",
+                tradeType = "SELL",
                 genreName = "산리오",
                 productName = "딸기 마이멜로디 마스코트 인형",
                 price = 50000,

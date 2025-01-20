@@ -104,7 +104,7 @@ private fun HomeScreen(
                 color = NapzakMarketTheme.colors.white,
             ),
         ) {
-            LazyColumn{
+            LazyColumn {
                 stickyHeader {
                     NapzakLogoTopBar()
                 }
@@ -168,7 +168,9 @@ private fun HomeScreen(
 
             SnackbarHost(
                 hostState = snackBarHostState,
-                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 6.dp)
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 6.dp),
             ) { snackBarData ->
                 CommonSnackBar(
                     message = snackBarData.visuals.message,

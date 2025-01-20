@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore.explore.bottomSheet
+package com.napzak.market.core.designsystem.component.bottomSheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -22,10 +22,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
 import com.napzak.market.R.string.check_button
 import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.core.type.SortType
 
 @OptIn(ExperimentalMaterial3Api::class)

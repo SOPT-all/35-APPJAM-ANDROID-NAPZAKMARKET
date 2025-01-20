@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.chat.screen
+package com.napzak.market.presentation.chat.itemchat
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,8 +34,8 @@ import com.napzak.market.R
 import com.napzak.market.core.common.util.NoRippleInteractionSource
 import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
-import com.napzak.market.presentation.chat.component.ChatInfoSection
-import com.napzak.market.presentation.chat.type.ChatType
+import com.napzak.market.presentation.chat.itemchat.component.ChatInfoSection
+import com.napzak.market.presentation.chat.itemchat.type.ChatType
 
 @Composable
 fun ItemChatRoute(

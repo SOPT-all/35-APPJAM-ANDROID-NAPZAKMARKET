@@ -3,6 +3,7 @@ package com.napzak.market.presentation.registration
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.type.ProductConditionType
+import com.napzak.market.core.type.TradeType
 import com.napzak.market.presentation.registration.state.RegistrationUiState
 import com.napzak.market.presentation.registration.type.NumeralInputType
 import com.napzak.market.presentation.registration.type.PlainTextInputType
@@ -30,6 +31,8 @@ class RegistrationViewModel @Inject constructor(
             )
         }
     }
+
+    fun updateTradeType(newTradeType: TradeType) = _uiState.update { it.copy(tradeType = newTradeType) }
 
     fun updatePhotoList(newImageUrlList: List<String>) = _uiState.update { it.copy(imageUrlList = it.imageUrlList + newImageUrlList) }
 
@@ -103,15 +106,7 @@ class RegistrationViewModel @Inject constructor(
 
     fun updateOfferAvailability(isAvailable: Boolean) = _uiState.update { it.copy(isOfferAvailable = isAvailable) }
 
-    fun updateButtonState(
-        isButtonEnabled: Boolean,
-        isSale: Boolean,
-    ) = with(_uiState.value) {
-        if (imageUrlList.isNotEmpty() && genre.isNotEmpty() && title.isNotEmpty() && description.isNotEmpty()) {
-//            when (_uiState.value.)
-        }
-            isButtonEnabled != _uiState.value.isButtonEnabled
-    }
+    fun updateButtonState(isButtonEnabled: Boolean) = _uiState.update { it.copy(isButtonEnabled = isButtonEnabled) }
 
     companion object {
         private const val MAX_TITLE_LENGTH = 48

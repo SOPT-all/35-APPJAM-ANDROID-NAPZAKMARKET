@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -19,11 +18,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,6 +48,7 @@ import com.napzak.market.presentation.registration.state.RegistrationUiState
 import com.napzak.market.presentation.registration.type.NumeralInputType
 import com.napzak.market.presentation.registration.type.PlainTextInputType
 import com.napzak.market.presentation.registration.type.PostFeeType
+import timber.log.Timber
 
 @Composable
 fun RegistrationRoute(
@@ -64,7 +67,7 @@ fun RegistrationRoute(
         if (updatedListSize <= 10) {
             viewModel.updatePhotoList(uris.map { it.toString() })
         } else {
-            val remainingUris = uris.takeLast(MAX_ITEMS - uiState.imageUrlList.size)
+            val remainingUris = uris.take(MAX_ITEMS - uiState.imageUrlList.size)
             viewModel.updatePhotoList(remainingUris.map { it.toString() })
         }
     }
@@ -81,10 +84,14 @@ fun RegistrationRoute(
             if (updatedListSize <= 10) {
                 viewModel.updatePhotoList(uris.map { it.toString() })
             } else {
-                val remainingUris = uris.takeLast(MAX_ITEMS - uiState.imageUrlList.size)
+                val remainingUris = uris.take(MAX_ITEMS - uiState.imageUrlList.size)
                 viewModel.updatePhotoList(remainingUris.map { it.toString() })
             }
         }
+    }
+
+    LaunchedEffect(tradeType) {
+        viewModel.updateTradeType(if (tradeType == TradeType.SELL.label) TradeType.SELL else TradeType.BUY)
     }
 
     RegistrationScreen(
@@ -117,6 +124,7 @@ fun RegistrationRoute(
         onHalfPostFeeChange = { viewModel.updateNumericValue(it, NumeralInputType.HalfPostFee) },
         onOfferCheckChange = viewModel::updateOfferAvailability,
         onPurchasePriceChange = { viewModel.updateNumericValue(it, NumeralInputType.ProductPurchasePrice) },
+        updateButtonState = viewModel::updateButtonState,
         modifier = modifier,
     )
 }
@@ -140,17 +148,73 @@ fun RegistrationScreen(
     onHalfPostFeeChange: (String) -> Unit,
     onPurchasePriceChange: (String) -> Unit,
     onOfferCheckChange: (Boolean) -> Unit,
+    updateButtonState: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val paddedModifier = Modifier.padding(horizontal = 20.dp)
     val listState = rememberLazyListState()
-    var postFeeState by rememberSaveable { mutableStateOf(0) }
+//    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
     var isNormalPostChecked by rememberSaveable { mutableStateOf(false) }
     var isHalfPostChecked by rememberSaveable { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(listState.isScrollInProgress) {
+        if (listState.isScrollInProgress) {
+            focusManager.clearFocus()
+        }
+    }
+
+    LaunchedEffect(uiState) {
+        val isCommonFieldsValid = uiState.title.isNotEmpty() && uiState.description.isNotEmpty() && uiState.imageUrlList.isNotEmpty()
+
+        val isPurchaseConditionValid = uiState.tradeType == TradeType.BUY && uiState.productPurchasePrice.isNotEmpty()
+
+//        val isPostFeeValid = when {
+//            isNormalPostChecked && uiState.normalPostFee.isNotEmpty() && !isHalfPostChecked -> true
+//            isNormalPostChecked && uiState.normalPostFee.isNotEmpty() && isHalfPostChecked && uiState.halfPostFee.isNotEmpty() -> true
+//            isNormalPostChecked && uiState.normalPostFee.isEmpty() && isHalfPostChecked && uiState.halfPostFee.isNotEmpty() -> false
+//            isNormalPostChecked && uiState.normalPostFee.isEmpty() && isHalfPostChecked && uiState.halfPostFee.isEmpty() -> false
+//            !isNormalPostChecked && isHalfPostChecked && uiState.halfPostFee.isNotEmpty() -> true
+//            !isNormalPostChecked && isHalfPostChecked && uiState.halfPostFee.isEmpty() -> false
+//            isNormalPostChecked && uiState.normalPostFee.isNotEmpty() && isHalfPostChecked && uiState.halfPostFee.isEmpty() -> false
+//            !isNormalPostChecked && !isHalfPostChecked -> false
+//            else -> false
+//        }
+//
+//        val isSaleConditionValid = uiState.tradeType == TradeType.SELL &&
+//                uiState.productCondition != null &&
+//                uiState.productSalePrice.isNotEmpty() &&
+//                (uiState.isPostFeeIncluded || isPostFeeValid)
+
+
+        val isSaleConditionValid = uiState.tradeType == TradeType.SELL && uiState.productSalePrice.isNotEmpty() && uiState.productCondition != null &&
+                when {
+            !uiState.isPostFeeIncluded && isNormalPostChecked && isHalfPostChecked && (uiState.normalPostFee.isEmpty() || uiState.halfPostFee.isEmpty()) -> false
+            !uiState.isPostFeeIncluded && !isNormalPostChecked && !isHalfPostChecked -> false
+            !uiState.isPostFeeIncluded && isNormalPostChecked && uiState.normalPostFee.isEmpty() -> false
+            !uiState.isPostFeeIncluded && isHalfPostChecked && uiState.halfPostFee.isEmpty() -> false
+            uiState.isPostFeeIncluded -> true
+            else -> true
+        }
+
+        val isButtonEnabled = isCommonFieldsValid && (isPurchaseConditionValid || isSaleConditionValid)
+        updateButtonState(isButtonEnabled)
+
+        Timber.d(
+            "tradeType: ${uiState.tradeType} " +
+            "isCommonFieldsValid: $isCommonFieldsValid, " +
+            "isCommonFieldsValid: ${uiState.title}, " +
+            "isCommonFieldsValid: ${uiState.description}, " +
+            "isCommonFieldsValid: ${uiState.imageUrlList}, " +
+                    "isPurchaseConditionValid: $isPurchaseConditionValid, " +
+                    "isSaleConditionValid: $isSaleConditionValid, " +
+                    "isButtonEnabled: $isButtonEnabled"
+        )
+    }
 
     LazyColumn(
         modifier = modifier
-            .imePadding()
             .background(NapzakMarketTheme.colors.white),
         state = listState,
     ) {
@@ -210,6 +274,8 @@ fun RegistrationScreen(
                 maxLength = 48,
             )
             Spacer(modifier = Modifier.height(35.dp))
+        }
+        item {
             Text(
                 modifier = paddedModifier,
                 text = stringResource(R.string.regi_description),
@@ -241,14 +307,14 @@ fun RegistrationScreen(
                     isNormalPostChecked = isNormalPostChecked,
                     onNormalPostCheckedChange = {
                         isNormalPostChecked = it
-                        if (!isNormalPostChecked) onNormalPostFeeChange("")
+                        if (!isNormalPostChecked) onNormalPostFeeChange(BLANK)
                     },
                     normalPostFee = uiState.normalPostFee,
                     onNormalPostFeeChange = onNormalPostFeeChange,
                     isHalfPostChecked = isHalfPostChecked,
                     onHalfPostCheckedChange = {
                         isHalfPostChecked = it
-                        if (!isHalfPostChecked) onHalfPostFeeChange("")
+                        if (!isHalfPostChecked) onHalfPostFeeChange(BLANK)
                     },
                     halfPostFee = uiState.halfPostFee,
                     onHalfPostFeeChange = onHalfPostFeeChange,
@@ -290,6 +356,7 @@ fun RegistrationScreen(
 private const val INPUT_TYPE = "image/*"
 private const val MAX_ITEMS = 10
 private const val MIN_ITEMS = 2
+private const val BLANK = ""
 
 @Preview
 @Composable

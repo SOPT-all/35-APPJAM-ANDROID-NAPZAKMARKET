@@ -18,7 +18,6 @@ import com.napzak.market.presentation.chat.itemchat.navigation.navigateToItemCha
 import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.explore.explore.navigation.exploreGraph
-import com.napzak.market.presentation.explore.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.explore.search.navigation.navigateToSearch
 import com.napzak.market.presentation.explore.search.navigation.searchGraph
 import com.napzak.market.presentation.home.navigation.homeGraph
@@ -107,12 +106,23 @@ private fun MainNavHost(
 
         exploreGraph(
             modifier = modifier,
+            onBackButtonClick = navigator.navController::popBackStack,
             onSearchNavigate = navigator.navController::navigateToSearch,
         )
 
         searchGraph(
             modifier = modifier,
-            onExploreNavigate = navigator.navController::navigateToExplore,
+            onExploreNavigate = { searchTerm, genreId ->
+                navigator.navController.previousBackStackEntry?.savedStateHandle?.set(
+                    "searchTerm",
+                    searchTerm
+                )
+                navigator.navController.previousBackStackEntry?.savedStateHandle?.set(
+                    "genreId",
+                    genreId
+                )
+                navigator.navController.popBackStack()
+            }
         )
 
         chatGraph(
@@ -130,7 +140,7 @@ private fun MainNavHost(
 
         marketInfoGraph(
             modifier = modifier,
-            onBackButtonClick = { navigator.navController.popBackStack() },
+            onBackButtonClick = navigator.navController::popBackStack,
             onProductDetailNavigate = { /* TODO: 상품상세 화면으로 이동 연결 */ },
         )
 

@@ -104,6 +104,10 @@ class RegistrationViewModel @Inject constructor(
 
     fun updatePostFeeType(newPostFeeType: PostFeeType) = _uiState.update { it.copy(isPostFeeIncluded = newPostFeeType == PostFeeType.INCLUDED) }
 
+    fun updateNormalPostState(newCheckState: Boolean) = _uiState.update { it.copy(isNormalPostChecked = newCheckState) }
+
+    fun updateHalfPostState(newCheckState: Boolean) = _uiState.update { it.copy(isHalfPostChecked = newCheckState) }
+
     fun updateOfferAvailability(isAvailable: Boolean) = _uiState.update { it.copy(isOfferAvailable = isAvailable) }
 
     fun updateButtonState(isButtonEnabled: Boolean) = _uiState.update { it.copy(isButtonEnabled = isButtonEnabled) }

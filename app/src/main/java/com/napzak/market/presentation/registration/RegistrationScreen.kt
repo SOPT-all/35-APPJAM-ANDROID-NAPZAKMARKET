@@ -20,10 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -48,7 +44,6 @@ import com.napzak.market.presentation.registration.state.RegistrationUiState
 import com.napzak.market.presentation.registration.type.NumeralInputType
 import com.napzak.market.presentation.registration.type.PlainTextInputType
 import com.napzak.market.presentation.registration.type.PostFeeType
-import timber.log.Timber
 
 @Composable
 fun RegistrationRoute(
@@ -120,7 +115,9 @@ fun RegistrationRoute(
         onSalePriceChange = { viewModel.updateNumericValue(it, NumeralInputType.ProductSalePrice) },
         onProductConditionChange = viewModel::updateProductCondition,
         onPostFeeChange = viewModel::updatePostFeeType,
+        onNormalPostStateChange = viewModel::updateNormalPostState,
         onNormalPostFeeChange = { viewModel.updateNumericValue(it, NumeralInputType.NormalPostFee) },
+        onHalfPostStateChange = viewModel::updateHalfPostState,
         onHalfPostFeeChange = { viewModel.updateNumericValue(it, NumeralInputType.HalfPostFee) },
         onOfferCheckChange = viewModel::updateOfferAvailability,
         onPurchasePriceChange = { viewModel.updateNumericValue(it, NumeralInputType.ProductPurchasePrice) },
@@ -144,7 +141,9 @@ fun RegistrationScreen(
     onSalePriceChange: (String) -> Unit,
     onProductConditionChange: (ProductConditionType) -> Unit,
     onPostFeeChange: (PostFeeType) -> Unit,
+    onNormalPostStateChange: (Boolean) -> Unit,
     onNormalPostFeeChange: (String) -> Unit,
+    onHalfPostStateChange: (Boolean) -> Unit,
     onHalfPostFeeChange: (String) -> Unit,
     onPurchasePriceChange: (String) -> Unit,
     onOfferCheckChange: (Boolean) -> Unit,
@@ -153,11 +152,7 @@ fun RegistrationScreen(
 ) {
     val paddedModifier = Modifier.padding(horizontal = 20.dp)
     val listState = rememberLazyListState()
-//    val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
-    var isNormalPostChecked by rememberSaveable { mutableStateOf(false) }
-    var isHalfPostChecked by rememberSaveable { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(listState.isScrollInProgress) {
         if (listState.isScrollInProgress) {
@@ -170,47 +165,19 @@ fun RegistrationScreen(
 
         val isPurchaseConditionValid = uiState.tradeType == TradeType.BUY && uiState.productPurchasePrice.isNotEmpty()
 
-//        val isPostFeeValid = when {
-//            isNormalPostChecked && uiState.normalPostFee.isNotEmpty() && !isHalfPostChecked -> true
-//            isNormalPostChecked && uiState.normalPostFee.isNotEmpty() && isHalfPostChecked && uiState.halfPostFee.isNotEmpty() -> true
-//            isNormalPostChecked && uiState.normalPostFee.isEmpty() && isHalfPostChecked && uiState.halfPostFee.isNotEmpty() -> false
-//            isNormalPostChecked && uiState.normalPostFee.isEmpty() && isHalfPostChecked && uiState.halfPostFee.isEmpty() -> false
-//            !isNormalPostChecked && isHalfPostChecked && uiState.halfPostFee.isNotEmpty() -> true
-//            !isNormalPostChecked && isHalfPostChecked && uiState.halfPostFee.isEmpty() -> false
-//            isNormalPostChecked && uiState.normalPostFee.isNotEmpty() && isHalfPostChecked && uiState.halfPostFee.isEmpty() -> false
-//            !isNormalPostChecked && !isHalfPostChecked -> false
-//            else -> false
-//        }
-//
-//        val isSaleConditionValid = uiState.tradeType == TradeType.SELL &&
-//                uiState.productCondition != null &&
-//                uiState.productSalePrice.isNotEmpty() &&
-//                (uiState.isPostFeeIncluded || isPostFeeValid)
-
-
-        val isSaleConditionValid = uiState.tradeType == TradeType.SELL && uiState.productSalePrice.isNotEmpty() && uiState.productCondition != null &&
-                when {
-            !uiState.isPostFeeIncluded && isNormalPostChecked && isHalfPostChecked && (uiState.normalPostFee.isEmpty() || uiState.halfPostFee.isEmpty()) -> false
-            !uiState.isPostFeeIncluded && !isNormalPostChecked && !isHalfPostChecked -> false
-            !uiState.isPostFeeIncluded && isNormalPostChecked && uiState.normalPostFee.isEmpty() -> false
-            !uiState.isPostFeeIncluded && isHalfPostChecked && uiState.halfPostFee.isEmpty() -> false
-            uiState.isPostFeeIncluded -> true
-            else -> true
+        val isPostFeeValid = when {
+            uiState.isNormalPostChecked && uiState.normalPostFee.isNotEmpty() && (!uiState.isHalfPostChecked || uiState.halfPostFee.isNotEmpty()) -> true
+            !uiState.isNormalPostChecked && uiState.isHalfPostChecked && uiState.halfPostFee.isNotEmpty() -> true
+            else -> false
         }
+
+        val isSaleConditionValid = uiState.tradeType == TradeType.SELL &&
+                uiState.productCondition != null &&
+                uiState.productSalePrice.isNotEmpty() &&
+                (uiState.isPostFeeIncluded || isPostFeeValid)
 
         val isButtonEnabled = isCommonFieldsValid && (isPurchaseConditionValid || isSaleConditionValid)
         updateButtonState(isButtonEnabled)
-
-        Timber.d(
-            "tradeType: ${uiState.tradeType} " +
-            "isCommonFieldsValid: $isCommonFieldsValid, " +
-            "isCommonFieldsValid: ${uiState.title}, " +
-            "isCommonFieldsValid: ${uiState.description}, " +
-            "isCommonFieldsValid: ${uiState.imageUrlList}, " +
-                    "isPurchaseConditionValid: $isPurchaseConditionValid, " +
-                    "isSaleConditionValid: $isSaleConditionValid, " +
-                    "isButtonEnabled: $isButtonEnabled"
-        )
     }
 
     LazyColumn(
@@ -304,17 +271,17 @@ fun RegistrationScreen(
                     onProductConditionChange = onProductConditionChange,
                     postFeeType = if (uiState.isPostFeeIncluded) PostFeeType.INCLUDED else PostFeeType.EXCLUDED,
                     onPostFeeChange = onPostFeeChange,
-                    isNormalPostChecked = isNormalPostChecked,
+                    isNormalPostChecked = uiState.isNormalPostChecked,
                     onNormalPostCheckedChange = {
-                        isNormalPostChecked = it
-                        if (!isNormalPostChecked) onNormalPostFeeChange(BLANK)
+                        onNormalPostStateChange(it)
+                        if (!uiState.isNormalPostChecked) onNormalPostFeeChange(BLANK)
                     },
                     normalPostFee = uiState.normalPostFee,
                     onNormalPostFeeChange = onNormalPostFeeChange,
-                    isHalfPostChecked = isHalfPostChecked,
+                    isHalfPostChecked = uiState.isHalfPostChecked,
                     onHalfPostCheckedChange = {
-                        isHalfPostChecked = it
-                        if (!isHalfPostChecked) onHalfPostFeeChange(BLANK)
+                        onHalfPostStateChange(it)
+                        if (!uiState.isHalfPostChecked) onHalfPostFeeChange(BLANK)
                     },
                     halfPostFee = uiState.halfPostFee,
                     onHalfPostFeeChange = onHalfPostFeeChange,

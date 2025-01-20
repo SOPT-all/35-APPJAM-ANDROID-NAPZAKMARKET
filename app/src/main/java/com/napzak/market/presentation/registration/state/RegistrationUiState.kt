@@ -18,7 +18,9 @@ data class RegistrationUiState(
     val productCondition: ProductConditionType? = null,
     val productSalePrice: String = "",
     val isPostFeeIncluded: Boolean = true,
+    val isNormalPostChecked: Boolean = false,
     val normalPostFee: String = "",
+    val isHalfPostChecked: Boolean = false,
     val halfPostFee: String = "",
 
     val productPurchasePrice: String = "",

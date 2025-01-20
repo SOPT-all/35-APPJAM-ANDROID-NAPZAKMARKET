@@ -310,6 +310,7 @@ fun RegistrationScreen(
                     containerColor = NapzakMarketTheme.colors.purple30,
                     contentColor = NapzakMarketTheme.colors.white,
                     disabledContainerColor = NapzakMarketTheme.colors.gray400,
+                    disabledContentColor = NapzakMarketTheme.colors.white,
                 ),
                 shape = RoundedCornerShape(12.dp),
                 textStyle = NapzakMarketTheme.typography.bodyBold16,

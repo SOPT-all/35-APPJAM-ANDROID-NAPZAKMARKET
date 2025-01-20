@@ -14,10 +14,15 @@ import androidx.navigation.compose.NavHost
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.presentation.chat.navigation.itemChatGraph
 import com.napzak.market.presentation.chat.navigation.navigateToItemChat
+import com.napzak.market.presentation.chat.chat.navigation.chatGraph
+import com.napzak.market.presentation.chat.itemchat.navigation.itemChatGraph
+import com.napzak.market.presentation.chat.itemchat.navigation.navigateToItemChat
 import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.explore.explore.navigation.exploreGraph
 import com.napzak.market.presentation.explore.explore.navigation.navigateToExplore
+import com.napzak.market.presentation.explore.search.navigation.navigateToSearch
+import com.napzak.market.presentation.explore.search.navigation.searchGraph
 import com.napzak.market.presentation.home.navigation.homeGraph
 import com.napzak.market.presentation.home.navigation.navigateToHome
 import com.napzak.market.presentation.main.component.MainBottomBar
@@ -33,6 +38,8 @@ import com.napzak.market.presentation.registration.navigation.navigateToRegistra
 import com.napzak.market.presentation.registration.navigation.registrationGraph
 import com.napzak.market.presentation.explore.search.navigation.navigateToSearch
 import com.napzak.market.presentation.explore.search.navigation.searchGraph
+import com.napzak.market.presentation.prepare.navigation.navigateToPrepare
+import com.napzak.market.presentation.prepare.navigation.prepareGraph
 import com.napzak.market.presentation.splash.navigation.splashGraph
 import kotlinx.collections.immutable.toImmutableList
 
@@ -89,44 +96,61 @@ private fun MainNavHost(
         startDestination = navigator.startDestination,
     ) {
         dummyGraph(modifier = modifier)
+
         splashGraph(
             modifier = Modifier.navigationBarsPadding(),
             onOnboardingNavigate = navigator.navController::navigateToOnboarding,
         )
-        exploreGraph(
-            modifier = modifier,
-            onSearchNavigate = navigator.navController::navigateToSearch,
-        )
+
         onboardingGraph(
             modifier = Modifier.systemBarsPadding(),
             navigateToHome = navigator.navController::navigateToHome,
         )
+
+        homeGraph(modifier = modifier)
+
+        exploreGraph(
+            modifier = modifier,
+            onSearchNavigate = navigator.navController::navigateToSearch,
+        )
+
         searchGraph(
             modifier = modifier,
             onExploreNavigate = navigator.navController::navigateToExplore,
         )
-        homeGraph(modifier = modifier)
+
+        chatGraph(
+            modifier = modifier,
+        )
+
         myPageGraph(
             modifier = modifier,
             onMyMarketNavigate = navigator.navController::navigateToMarketInfo,
-            onHistoryNavigate = {},
-            onGenreNavigate = {},
-            onFavoriteNavigate = {},
-            onRecentNavigate = {}
+            onHistoryNavigate = navigator.navController::navigateToPrepare,
+            onGenreNavigate = navigator.navController::navigateToPrepare,
+            onFavoriteNavigate = navigator.navController::navigateToPrepare,
+            onRecentNavigate = navigator.navController::navigateToPrepare,
         )
+
         marketInfoGraph(
             modifier = modifier,
             onBackButtonClick = { navigator.navController.popBackStack() },
             onProductDetailNavigate = { /* TODO: 상품상세 화면으로 이동 연결 */ },
         )
+
         detailPageGraph(
             modifier = modifier,
             onChatNavigate = navigator.navController::navigateToItemChat,
             onNavigateUp = navigator.navController::navigateUp,
         )
+
         itemChatGraph(
             modifier = Modifier.systemBarsPadding(),
             onNavigateUp = navigator.navController::navigateUp,
+        )
+
+        prepareGraph(
+            modifier = modifier,
         )
         registrationGraph(
             modifier = modifier,

@@ -10,6 +10,7 @@ import com.napzak.market.presentation.dummy.navigation.Dummy
 import com.napzak.market.presentation.explore.explore.navigation.Explore
 import com.napzak.market.presentation.home.navigation.Home
 import com.napzak.market.presentation.mypage.navigation.MyPage
+import com.napzak.market.presentation.chat.chat.navigation.Chat
 
 
 // TODO: 구현 시작 시 수정
@@ -41,7 +42,7 @@ enum class MainTab(
         selectedIcon = R.drawable.ic_chat_select_28,
         unselectedIcon = R.drawable.ic_chat_unselect_28,
         contentDescription = R.string.main_bottom_bar_chat,
-        route = Dummy, // TODO: Chat 루트로 변경
+        route = Chat, // TODO: Chat 루트로 변경
     ),
     MY(
         selectedIcon = R.drawable.ic_my_select_28,

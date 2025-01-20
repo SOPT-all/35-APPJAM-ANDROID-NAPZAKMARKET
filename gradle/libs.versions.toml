@@ -12,7 +12,7 @@ coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-datastore = "1.1.1"
+datastore = "1.1.2"
 
 kotlin = "2.0.0"
 kotlinxImmutable = "0.3.7"
@@ -91,7 +91,7 @@ hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-comp
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltManager" }
 
 ## miscellaneous
-coil-compose = {group = "io.coil-kt", name="coil-compose", version.ref="coil"}
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 process-phoenix = { group = "com.jakewharton", name = "process-phoenix", version.ref = "phoenix" }

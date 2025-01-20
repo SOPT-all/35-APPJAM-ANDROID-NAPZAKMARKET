@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.component.GenreChipButtonGroup
@@ -142,9 +143,11 @@ fun GenreSearchBottomSheet(
                                         selectedGenreList.filter { it.genreId != selectedGenre.genreId }
                                 },
                                 onResetClick = { selectedGenreList = emptyList() },
-                                contentPaddingValues = PaddingValues(horizontal = 20.dp),
+                                backgroundColor = NapzakMarketTheme.colors.gray50,
+                                contentPaddingValues = PaddingValues(end = 20.dp),
                                 modifier = Modifier
-                                    .padding(top = 16.dp),
+                                    .padding(start = 20.dp, top = 16.dp)
+                                    .zIndex(1f),
                             )
                         }
                     }

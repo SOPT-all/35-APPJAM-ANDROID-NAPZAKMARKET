@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -33,6 +34,12 @@ fun RegistrationGenreSearchRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    DisposableEffect(Unit) {
+        onDispose {
+            viewModel.updateSearchTerm(BLANK)
+        }
+    }
+
     RegistrationGenreSearchScreen(
         onBackClick = onBackClick,
         genreList = uiState.genreList,
@@ -41,6 +48,7 @@ fun RegistrationGenreSearchRoute(
         onSearchButtonClick = viewModel::searchGenre,
         onGenreSelect = {
             viewModel.updateGenre(it)
+            viewModel.updateSearchTerm(BLANK)
             onBackClick()
         },
         modifier = modifier,
@@ -62,7 +70,7 @@ fun RegistrationGenreSearchScreen(
 
     LazyColumn(
         modifier = modifier
-            .background(NapzakMarketTheme.colors.white)
+            .background(NapzakMarketTheme.colors.white),
     ) {
         stickyHeader {
             BackTopBar(
@@ -101,6 +109,8 @@ fun RegistrationGenreSearchScreen(
         }
     }
 }
+
+private const val BLANK = ""
 
 @Preview
 @Composable

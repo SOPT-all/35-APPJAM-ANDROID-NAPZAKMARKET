@@ -29,7 +29,7 @@ fun EmptyImage(modifier: Modifier = Modifier) {
             contentDescription = null,
             modifier = Modifier
                 .width(162.dp)
-                .height(128.dp)
+                .height(128.dp),
         )
 
         Spacer(Modifier.height(20.dp))

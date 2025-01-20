@@ -108,6 +108,7 @@ private fun MainNavHost(
             modifier = modifier,
             onBackButtonClick = navigator.navController::popBackStack,
             onSearchNavigate = navigator.navController::navigateToSearch,
+            onDetailPageNavigate = navigator.navController::navigateToDetailPage,
         )
 
         searchGraph(
@@ -141,7 +142,7 @@ private fun MainNavHost(
         marketInfoGraph(
             modifier = modifier,
             onBackButtonClick = navigator.navController::popBackStack,
-            onProductDetailNavigate = { /* TODO: 상품상세 화면으로 이동 연결 */ },
+            onDetailPageNavigate = navigator.navController::navigateToDetailPage,
         )
 
         detailPageGraph(

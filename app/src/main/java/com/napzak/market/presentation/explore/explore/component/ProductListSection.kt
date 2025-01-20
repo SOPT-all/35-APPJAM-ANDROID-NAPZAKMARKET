@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore.component
+package com.napzak.market.presentation.explore.explore.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,8 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.component.item.NapzakBuyItem
 import com.napzak.market.core.designsystem.component.item.NapzakSellItem
+import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.explore.model.ProductItem
-import com.napzak.market.presentation.explore.type.TradeType
 
 @Composable
 fun ProductListSection(

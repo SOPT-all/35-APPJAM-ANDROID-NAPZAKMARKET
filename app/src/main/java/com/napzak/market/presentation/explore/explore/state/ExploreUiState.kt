@@ -1,12 +1,12 @@
-package com.napzak.market.presentation.explore.state
+package com.napzak.market.presentation.explore.explore.state
 
 import androidx.compose.runtime.Immutable
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.SortType
+import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.presentation.explore.type.ExploreScreenType
-import com.napzak.market.presentation.explore.type.TradeType
+import com.napzak.market.presentation.explore.explore.type.ExploreScreenType
 
 @Immutable
 data class ExploreUiState(

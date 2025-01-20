@@ -3,10 +3,10 @@ package com.napzak.market.presentation.marketinfo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
+import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
 import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
 import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
 import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
@@ -220,15 +220,15 @@ class MarketInfoViewModel @Inject constructor(
         /* TODO: 좋아요 API 연결 및 기능 연결 */
     }
 
-    fun updateBottomSheetVisibility(type: ExploreBottomSheetType) {
+    fun updateBottomSheetVisibility(type: BottomSheetType) {
         when (type) {
-            ExploreBottomSheetType.SORT -> {
+            BottomSheetType.SORT -> {
                 _bottomSheetState.update {
                     it.copy(isSortBottomSheetVisible = !_bottomSheetState.value.isSortBottomSheetVisible)
                 }
             }
 
-            ExploreBottomSheetType.GENRE_SEARCHING -> {
+            BottomSheetType.GENRE_SEARCHING -> {
                 _bottomSheetState.update {
                     it.copy(isGenreSearchingBottomSheetVisible = !_bottomSheetState.value.isGenreSearchingBottomSheetVisible)
                 }

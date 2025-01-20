@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
-import com.napzak.market.presentation.search.component.GenreTextChip
+import com.napzak.market.presentation.explore.search.component.GenreTextChip
 
 /**
  * 장르 검색 시 하단에 보여지는 장르 item 컴포넌트

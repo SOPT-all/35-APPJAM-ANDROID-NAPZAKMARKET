@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore.bottomSheet
+package com.napzak.market.presentation.explore.explore.bottomSheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

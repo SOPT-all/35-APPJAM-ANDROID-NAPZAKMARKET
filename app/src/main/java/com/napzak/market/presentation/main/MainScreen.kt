@@ -12,8 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.presentation.chat.navigation.itemChatGraph
-import com.napzak.market.presentation.chat.navigation.navigateToItemChat
 import com.napzak.market.presentation.chat.chat.navigation.chatGraph
 import com.napzak.market.presentation.chat.itemchat.navigation.itemChatGraph
 import com.napzak.market.presentation.chat.itemchat.navigation.navigateToItemChat
@@ -36,8 +34,6 @@ import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
 import com.napzak.market.presentation.registration.navigation.navigateToGenreSearch
 import com.napzak.market.presentation.registration.navigation.navigateToRegistration
 import com.napzak.market.presentation.registration.navigation.registrationGraph
-import com.napzak.market.presentation.explore.search.navigation.navigateToSearch
-import com.napzak.market.presentation.explore.search.navigation.searchGraph
 import com.napzak.market.presentation.prepare.navigation.navigateToPrepare
 import com.napzak.market.presentation.prepare.navigation.prepareGraph
 import com.napzak.market.presentation.splash.navigation.splashGraph
@@ -152,6 +148,7 @@ private fun MainNavHost(
         prepareGraph(
             modifier = modifier,
         )
+
         registrationGraph(
             modifier = modifier,
             navigateUp = navigator.navController::navigateUp,

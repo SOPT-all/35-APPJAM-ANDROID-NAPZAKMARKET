@@ -91,6 +91,7 @@ private fun MainNavHost(
         )
         exploreGraph(
             modifier = modifier,
+            onBackButtonClick = navigator.navController::popBackStack,
             onSearchNavigate = navigator.navController::navigateToSearch,
         )
         onboardingGraph(
@@ -99,7 +100,17 @@ private fun MainNavHost(
         )
         searchGraph(
             modifier = modifier,
-            onExploreNavigate = navigator.navController::navigateToExplore,
+            onExploreNavigate = { searchTerm, genreId ->
+                navigator.navController.previousBackStackEntry?.savedStateHandle?.set(
+                    "searchTerm",
+                    searchTerm
+                )
+                navigator.navController.previousBackStackEntry?.savedStateHandle?.set(
+                    "genreId",
+                    genreId
+                )
+                navigator.navController.popBackStack()
+            }
         )
         homeGraph(modifier = modifier)
         myPageGraph(
@@ -112,7 +123,7 @@ private fun MainNavHost(
         )
         marketInfoGraph(
             modifier = modifier,
-            onBackButtonClick = { navigator.navController.popBackStack() },
+            onBackButtonClick = navigator.navController::popBackStack,
             onProductDetailNavigate = { /* TODO: 상품상세 화면으로 이동 연결 */ },
         )
         detailPageGraph(

@@ -5,7 +5,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
 import com.napzak.market.core.common.navigation.MainTabRoute
 import com.napzak.market.presentation.explore.explore.ExploreRoute
 import kotlinx.serialization.Serializable
@@ -18,16 +17,20 @@ fun NavController.navigateToExplore(
 
 fun NavGraphBuilder.exploreGraph(
     onSearchNavigate: (String?) -> Unit,
+    onBackButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     composable<Explore> { backStackEntry ->
-        val explore: Explore = backStackEntry.toRoute()
+        val savedStateHandle = backStackEntry.savedStateHandle
+        val searchTerm: String? = savedStateHandle["searchTerm"]
+        val genreId: Long? = savedStateHandle["genreId"]
 
         ExploreRoute(
-            searchTerm = explore.searchTerm,
-            genreId = explore.genreId,
+            searchTerm = searchTerm,
+            genreId = genreId,
             modifier = modifier,
             onSearchNavigate = onSearchNavigate,
+            onBackButtonClick = onBackButtonClick,
             onProductDetailNavigate = { /* TODO: 상세페이지로 이동 */ },
         )
     }

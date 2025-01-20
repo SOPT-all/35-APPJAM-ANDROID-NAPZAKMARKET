@@ -1,5 +1,6 @@
 package com.napzak.market.presentation.explore.explore
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -48,6 +49,7 @@ import com.napzak.market.presentation.explore.explore.type.ExploreScreenType
 fun ExploreRoute(
     searchTerm: String?,
     genreId: Long?,
+    onBackButtonClick: () -> Unit,
     onSearchNavigate: (String?) -> Unit,
     onProductDetailNavigate: () -> Unit,
     modifier: Modifier = Modifier,
@@ -56,10 +58,19 @@ fun ExploreRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val bottomSheetState by viewModel.bottomSheetState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(uiState) {
-        if (searchTerm != null || genreId != null) {
-            viewModel.initExploreScreenState(searchTerm, genreId)
+    BackHandler {
+        if (uiState.exploreScreenType == ExploreScreenType.BASIC) {
+            onBackButtonClick()
+        } else {
+            onSearchNavigate(uiState.initSearchTerm)
         }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.initExploreScreenState(searchTerm, genreId)
+    }
+
+    LaunchedEffect(uiState) {
         viewModel.getExploreProductInformation()
     }
 
@@ -67,7 +78,7 @@ fun ExploreRoute(
         modifier = modifier,
         uiState = uiState,
         bottomSheetState = bottomSheetState,
-        onBackButtonClick = onSearchNavigate,
+        onResultBackButtonClick = onSearchNavigate,
         onSearchBoxClick = onSearchNavigate,
         onTradeTypeClick = viewModel::updateTradeType,
         onGenreListClick = {
@@ -93,7 +104,7 @@ fun ExploreRoute(
 fun ExploreScreen(
     uiState: ExploreUiState,
     bottomSheetState: ExploreBottomSheetState,
-    onBackButtonClick: (String?) -> Unit,
+    onResultBackButtonClick: (String?) -> Unit,
     onSearchBoxClick: (String?) -> Unit,
     onTradeTypeClick: (TradeType) -> Unit,
     onGenreListClick: () -> Unit,
@@ -133,7 +144,7 @@ fun ExploreScreen(
                     isUnopened = isUnopened,
                     productList = uiState.loadState.data.productList,
                     sortType = sortType,
-                    onBackButtonClick = onBackButtonClick,
+                    onBackButtonClick = onResultBackButtonClick,
                     onSearchBoxClick = onSearchBoxClick,
                     onTradeTypeClick = onTradeTypeClick,
                     onGenreListClick = onGenreListClick,

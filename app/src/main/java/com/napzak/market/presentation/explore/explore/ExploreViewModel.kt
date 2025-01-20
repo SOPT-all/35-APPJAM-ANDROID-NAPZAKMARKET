@@ -38,23 +38,57 @@ class ExploreViewModel @Inject constructor(
     val searchTerm = _searchTerm.asStateFlow()
 
     fun initExploreScreenState(searchTerm: String?, genreId: Long?) {
+        val exploreScreenType = when {
+            searchTerm != null && genreId != null -> {
+                initSelectedGenreList(searchTerm, genreId)
+                ExploreScreenType.GENRE_SEARCH_RESULT
+            }
+            searchTerm != null -> {
+                initSearchTerm(searchTerm)
+                ExploreScreenType.WORD_SEARCH_RESULT
+            }
+            else -> {
+                initSelectedGenreList(null, null)
+                initSearchTerm(null)
+                ExploreScreenType.BASIC
+            }
+        }
+
+        updateUiState(exploreScreenType)
+    }
+
+    private fun updateUiState(exploreScreenType: ExploreScreenType) {
         _uiState.update { currentState ->
-            if (genreId != null) { /* 장르 선택 검색인 경우 */
+            currentState.copy(
+                exploreScreenType = exploreScreenType
+            )
+        }
+    }
+
+    fun initSelectedGenreList(genreName: String?, genreId: Long?) {
+        _uiState.update { currentState ->
+            if (genreName == null) {
                 currentState.copy(
-                    exploreScreenType = ExploreScreenType.GENRE_SEARCH_RESULT,
+                    selectedGenreList = emptyList(),
+                )
+            } else {
+                currentState.copy(
                     selectedGenreList = listOf(
                         Genre(
-                            genreId = genreId,
-                            genreName = searchTerm.toString(),
+                            genreId = genreId ?: 0,
+                            genreName = genreName,
                         )
                     ),
                 )
-            } else { /* 일반 검색인 경우 */
-                currentState.copy(
-                    exploreScreenType = ExploreScreenType.WORD_SEARCH_RESULT,
-                    initSearchTerm = searchTerm,
-                )
             }
+        }
+    }
+
+    fun initSearchTerm(searchTerm: String?) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                initSearchTerm = searchTerm,
+            )
         }
     }
 

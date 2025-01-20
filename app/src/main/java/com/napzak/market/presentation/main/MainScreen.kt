@@ -16,7 +16,6 @@ import com.napzak.market.presentation.chat.navigation.navigateToItemChat
 import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.explore.explore.navigation.exploreGraph
-import com.napzak.market.presentation.explore.explore.navigation.navigateToExplore
 import com.napzak.market.presentation.home.navigation.homeGraph
 import com.napzak.market.presentation.home.navigation.navigateToHome
 import com.napzak.market.presentation.main.component.MainBottomBar

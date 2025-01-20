@@ -1,5 +1,6 @@
 package com.napzak.market.presentation.detailpage.navigation
 
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -16,11 +17,10 @@ fun NavController.navigateToDetailPage(productId: Long = 0, navOptions: NavOptio
 fun NavGraphBuilder.detailPageGraph(
     onChatNavigate: () -> Unit,
     onNavigateUp: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     composable<DetailPage> {
         DetailPageRoute(
-            modifier = modifier,
+            modifier = Modifier.systemBarsPadding(),
             onItemChatNavigate = onChatNavigate,
             onNavigateUp = onNavigateUp,
         )

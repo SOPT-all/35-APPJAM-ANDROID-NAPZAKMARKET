@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.napzak.market.R
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.domain.explore.model.ProductItem
-import com.napzak.market.presentation.explore.type.TradeType
+import com.napzak.market.presentation.explore.explore.type.TradeType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 

@@ -5,11 +5,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
+import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.core.type.SortType
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.presentation.explore.bottomSheet.GenreSearchBottomSheet
-import com.napzak.market.presentation.explore.bottomSheet.SortBottomSheet
-import com.napzak.market.presentation.explore.type.ExploreBottomSheetType
+import com.napzak.market.presentation.explore.explore.bottomSheet.GenreSearchBottomSheet
+import com.napzak.market.presentation.explore.explore.bottomSheet.SortBottomSheet
 import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
 
 @Composable
@@ -20,7 +20,7 @@ fun MarketInfoBottomSheetScreen(
     initialGenreList: List<Genre>,
     genreList: List<Genre>,
     sortType: SortType,
-    onDismissRequest: (ExploreBottomSheetType) -> Unit,
+    onDismissRequest: (BottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
     onGenreSelectButtonClick: (List<Genre>) -> Unit,
@@ -29,7 +29,7 @@ fun MarketInfoBottomSheetScreen(
         if (isSortBottomSheetVisible) {
             Popup(
                 alignment = Alignment.BottomCenter,
-                onDismissRequest = { onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING) },
+                onDismissRequest = { onDismissRequest(BottomSheetType.SORT) },
                 properties = PopupProperties(
                     focusable = true,
                     excludeFromSystemGesture = true,
@@ -39,7 +39,7 @@ fun MarketInfoBottomSheetScreen(
             ) {
                 SortBottomSheet(
                     selectedSortType = sortType,
-                    onDismissRequest = { onDismissRequest(ExploreBottomSheetType.SORT) },
+                    onDismissRequest = { onDismissRequest(BottomSheetType.SORT) },
                     onSortItemClick = onSortItemClick,
                 )
             }
@@ -48,7 +48,7 @@ fun MarketInfoBottomSheetScreen(
         if (isGenreSearchingBottomSheetVisible) {
             Popup(
                 alignment = Alignment.BottomCenter,
-                onDismissRequest = { onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING) },
+                onDismissRequest = { onDismissRequest(BottomSheetType.GENRE_SEARCHING) },
                 properties = PopupProperties(
                     focusable = true,
                     excludeFromSystemGesture = true,
@@ -60,11 +60,11 @@ fun MarketInfoBottomSheetScreen(
                     initialSelectedGenreList = selectedGenreList,
                     initialGenreList = initialGenreList,
                     genreList = genreList,
-                    onDismissRequest = { onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING) },
+                    onDismissRequest = { onDismissRequest(BottomSheetType.GENRE_SEARCHING) },
                     onTextChange = onTextChange,
                     onButtonClick = { selectedGenreList ->
                         onGenreSelectButtonClick(selectedGenreList)
-                        onDismissRequest(ExploreBottomSheetType.GENRE_SEARCHING)
+                        onDismissRequest(BottomSheetType.GENRE_SEARCHING)
                     },
                 )
             }

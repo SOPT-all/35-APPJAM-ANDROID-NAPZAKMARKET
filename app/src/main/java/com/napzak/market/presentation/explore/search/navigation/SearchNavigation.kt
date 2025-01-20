@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.search.navigation
+package com.napzak.market.presentation.explore.search.navigation
 
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.napzak.market.core.common.navigation.Route
-import com.napzak.market.presentation.search.SearchRoute
+import com.napzak.market.presentation.explore.search.SearchRoute
 import kotlinx.serialization.Serializable
 
 fun NavController.navigateToSearch(searchTerm: String? = null, navOptions: NavOptions? = null) =

@@ -1,4 +1,4 @@
-package com.napzak.market.presentation.explore.navigation
+package com.napzak.market.presentation.explore.explore.navigation
 
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.napzak.market.core.common.navigation.MainTabRoute
-import com.napzak.market.presentation.explore.ExploreRoute
+import com.napzak.market.presentation.explore.explore.ExploreRoute
 import kotlinx.serialization.Serializable
 
 fun NavController.navigateToExplore(

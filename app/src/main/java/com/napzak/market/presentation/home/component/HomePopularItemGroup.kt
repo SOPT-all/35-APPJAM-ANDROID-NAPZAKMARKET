@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.napzak.market.R
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.domain.explore.model.ProductItem
-import com.napzak.market.presentation.explore.explore.type.TradeType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -126,7 +125,7 @@ private fun HomePopularGroupPreview() {
                             uploadTime = "1시간전",
                             photo = "",
                             isLiked = false,
-                            tradeType = TradeType.SELL.name,
+                            tradeType = "팔아요",
                             tradeStatus = "판매중",
                             isPriceNegotiable = false,
                         )

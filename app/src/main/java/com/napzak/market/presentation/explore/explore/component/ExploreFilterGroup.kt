@@ -52,7 +52,7 @@ fun ExploreFilterGroup(
         )
 
         when (tradeType) {
-            TradeType.BUY -> {
+            TradeType.SELL -> {
                 Spacer(Modifier.width(6.dp))
 
                 SelectableChip(
@@ -63,7 +63,8 @@ fun ExploreFilterGroup(
                     genreList = genreList,
                 )
             }
-            TradeType.SELL -> {}
+
+            TradeType.BUY -> {}
         }
     }
 }

@@ -51,7 +51,7 @@ fun ExploreRoute(
     genreId: Long?,
     onBackButtonClick: () -> Unit,
     onSearchNavigate: (String?) -> Unit,
-    onProductDetailNavigate: () -> Unit,
+    onProductDetailNavigate: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ExploreViewModel = hiltViewModel(),
 ) {
@@ -88,7 +88,7 @@ fun ExploreRoute(
         onSoldOutClick = { viewModel.updateSale() },
         onUnopenClick = { viewModel.updateUnopen() },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(BottomSheetType.SORT) },
-        onItemClick = { onProductDetailNavigate() },
+        onItemClick = onProductDetailNavigate,
         onLikeClick = viewModel::updateItemLikeButton,
         onDismissRequest = { viewModel.updateBottomSheetVisibility(it) },
         onSortItemClick = {

@@ -65,7 +65,7 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun initSelectedGenreList(genreName: String?, genreId: Long?) {
+    private fun initSelectedGenreList(genreName: String?, genreId: Long?) {
         _uiState.update { currentState ->
             if (genreName == null) {
                 currentState.copy(
@@ -84,7 +84,7 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun initSearchTerm(searchTerm: String?) {
+    private fun initSearchTerm(searchTerm: String?) {
         _uiState.update { currentState ->
             currentState.copy(
                 initSearchTerm = searchTerm,

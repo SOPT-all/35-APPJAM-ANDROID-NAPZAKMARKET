@@ -16,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
@@ -32,11 +34,13 @@ import com.napzak.market.core.common.extension.noRippleClickable
  * 검색창 컴포넌트
  *
  * @param placeholder 검색어가 입력되지 않았을 때 보여지는 텍스트
+ * @param modifier 수정자
  * @param readOnly BasicTextField 활성화 여부
  * @param searchTerm 사용자가 입력한 검색어 텍스트
+ * @param isInitialFocusNeeded 화면 진입 시 TextField의 Focus 여부
  * @param onTextChange 사용자가 텍스트 입력 시 실행할 콜백
  * @param onSearchButtonClick 검색 아이콘 클릭 시 실행할 콜백
- * @param modifier 수정자
+ * @param focusRequester 포커스 관리를 위한 FocusRequester 객체
  */
 
 @Composable
@@ -45,10 +49,18 @@ fun SearchBox(
     modifier: Modifier = Modifier,
     readOnly: Boolean = false,
     searchTerm: String = "",
+    isInitialFocusNeeded: Boolean = false,
     onTextChange: (String) -> Unit = {},
     onSearchButtonClick: () -> Unit = {},
+    focusRequester: FocusRequester = FocusRequester(),
 ) {
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(Unit) {
+        if (isInitialFocusNeeded) {
+            focusRequester.requestFocus()
+        }
+    }
 
     Row(
         modifier = modifier
@@ -64,7 +76,9 @@ fun SearchBox(
         BasicTextField(
             value = searchTerm,
             onValueChange = onTextChange,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .focusRequester(focusRequester),
             readOnly = readOnly,
             enabled = !readOnly,
             textStyle = NapzakMarketTheme.typography.bodySemi14,
@@ -117,7 +131,7 @@ fun SearchBox(
 @Preview
 @Composable
 private fun SearchBoxPreview(modifier: Modifier = Modifier) {
-    var searchTerm by remember {mutableStateOf("")}
+    var searchTerm by remember { mutableStateOf("") }
     SearchBox(
         placeholder = "어떤 아이템을 찾고 계신가요?",
         readOnly = false,

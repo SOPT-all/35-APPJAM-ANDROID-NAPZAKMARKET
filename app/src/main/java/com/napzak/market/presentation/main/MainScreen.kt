@@ -32,8 +32,6 @@ import com.napzak.market.presentation.onboarding.navigation.navigateToOnboarding
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
 import com.napzak.market.presentation.prepare.navigation.navigateToPrepare
 import com.napzak.market.presentation.prepare.navigation.prepareGraph
-import com.napzak.market.presentation.explore.search.navigation.navigateToSearch
-import com.napzak.market.presentation.explore.search.navigation.searchGraph
 import com.napzak.market.presentation.splash.navigation.splashGraph
 import kotlinx.collections.immutable.toImmutableList
 

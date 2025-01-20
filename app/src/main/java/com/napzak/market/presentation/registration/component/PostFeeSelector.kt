@@ -46,7 +46,7 @@ fun PostFeeSelector(
                         .weight(1f)
                         .noRippleClickable { onTabSelected(tab) },
                     isSelected = selectedTab == tab,
-                    title = tab.title,
+                    title = tab.label,
                 )
             }
         }

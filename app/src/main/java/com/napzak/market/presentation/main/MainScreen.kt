@@ -15,6 +15,7 @@ import com.napzak.market.presentation.chat.chat.navigation.chatGraph
 import com.napzak.market.presentation.chat.itemchat.navigation.itemChatGraph
 import com.napzak.market.presentation.chat.itemchat.navigation.navigateToItemChat
 import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
+import com.napzak.market.presentation.detailpage.navigation.navigateToDetailPage
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.explore.explore.navigation.exploreGraph
 import com.napzak.market.presentation.explore.search.navigation.navigateToSearch
@@ -98,7 +99,10 @@ private fun MainNavHost(
             navigateToHome = navigator.navController::navigateToHome,
         )
 
-        homeGraph(modifier = modifier)
+        homeGraph(
+            modifier = modifier,
+            onDetailPageNavigate = navigator.navController::navigateToDetailPage
+        )
 
         exploreGraph(
             modifier = modifier,
@@ -141,7 +145,6 @@ private fun MainNavHost(
         )
 
         detailPageGraph(
-            modifier = modifier,
             onChatNavigate = navigator.navController::navigateToItemChat,
             onNavigateUp = navigator.navController::navigateUp,
         )

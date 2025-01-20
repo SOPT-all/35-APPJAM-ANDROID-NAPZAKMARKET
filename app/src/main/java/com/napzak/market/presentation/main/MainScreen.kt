@@ -153,6 +153,7 @@ private fun MainNavHost(
             modifier = modifier,
             navigateUp = navigator.navController::navigateUp,
             navigateToGenreSearch = navigator.navController::navigateToGenreSearch,
+            navController = navigator.navController,
         )
     }
 }

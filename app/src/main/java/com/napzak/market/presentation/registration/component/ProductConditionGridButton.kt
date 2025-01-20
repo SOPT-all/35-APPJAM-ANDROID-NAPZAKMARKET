@@ -11,16 +11,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.core.type.ProductConditionType
 
 
 /**
@@ -28,36 +25,33 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  *
  * 상품의 상태를 표시하는 버튼으로, 초기 상태는 비어 있음
  *
- * @param conditionType
- * @param selectedIndex
- * @param onIndexSelected
+ * @param selectedCondition
+ * @param onConditionSelected
  * @param modifier
  */
 
 @Composable
 fun ProductConditionGridButton(
-    conditionType: List<String>,
-    selectedIndex: Int,
-    onIndexSelected: (Int) -> Unit,
+    selectedCondition: ProductConditionType?,
+    onConditionSelected: (ProductConditionType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        conditionType.chunked(2).forEach { rowItems ->
+        ProductConditionType.entries.chunked(2).forEach { rowItems ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 rowItems.forEach { item ->
-                    val index = conditionType.indexOf(item)
                     ProductConditionItem(
                         modifier = Modifier
                             .weight(1f)
-                            .noRippleClickable { onIndexSelected(index) },
-                        condition = item,
-                        isSelected = selectedIndex == index,
+                            .noRippleClickable { onConditionSelected(item) },
+                        condition = item.label,
+                        isSelected = selectedCondition == item,
                     )
                 }
             }
@@ -95,11 +89,9 @@ fun ProductConditionItem(
 @Composable
 private fun ProductConditionGridButtonPreview() {
     NapzakMarketTheme {
-        var selectedIndex by remember { mutableStateOf(-1) }
         ProductConditionGridButton(
-            conditionType = listOf("미개봉", "아주 좋은 상태", "약간의 사용감", "사용감"),
-            selectedIndex = selectedIndex,
-            onIndexSelected = { index -> selectedIndex = index }
+            selectedCondition = ProductConditionType.GOOD,
+            onConditionSelected = {}
         )
     }
 }

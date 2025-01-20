@@ -2,6 +2,7 @@ package com.napzak.market.presentation.registration
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.presentation.registration.state.RegistrationUiState
 import com.napzak.market.presentation.registration.type.NumeralInputType
 import com.napzak.market.presentation.registration.type.PlainTextInputType
@@ -96,15 +97,18 @@ class RegistrationViewModel @Inject constructor(
 
     fun searchGenre() = viewModelScope.launch {  }
 
-    fun updateProductCondition(newCondition: Int) = _uiState.update { it.copy(productCondition = newCondition) }
+    fun updateProductCondition(newCondition: ProductConditionType) = _uiState.update { it.copy(productCondition = newCondition) }
 
     fun updatePostFeeType(newPostFeeType: PostFeeType) = _uiState.update { it.copy(isPostFeeIncluded = newPostFeeType == PostFeeType.INCLUDED) }
 
     fun updateOfferAvailability(isAvailable: Boolean) = _uiState.update { it.copy(isOfferAvailable = isAvailable) }
 
-    fun updateButtonState(isButtonEnabled: Boolean) = with(_uiState.value) {
+    fun updateButtonState(
+        isButtonEnabled: Boolean,
+        isSale: Boolean,
+    ) = with(_uiState.value) {
         if (imageUrlList.isNotEmpty() && genre.isNotEmpty() && title.isNotEmpty() && description.isNotEmpty()) {
-            when (_uiState.value.)
+//            when (_uiState.value.)
         }
             isButtonEnabled != _uiState.value.isButtonEnabled
     }

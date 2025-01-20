@@ -35,6 +35,7 @@ import com.napzak.market.R.string.regi_topbar_title
 import com.napzak.market.core.designsystem.component.button.CommonButton
 import com.napzak.market.core.designsystem.component.topbar.CloseTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.presentation.registration.component.RegistrationBuyGroup
 import com.napzak.market.presentation.registration.component.RegistrationGenreButton
@@ -133,7 +134,7 @@ fun RegistrationScreen(
     onTitleChange: (String) -> Unit,
     onDescriptionChange: (String) -> Unit,
     onSalePriceChange: (String) -> Unit,
-    onProductConditionChange: (Int) -> Unit,
+    onProductConditionChange: (ProductConditionType) -> Unit,
     onPostFeeChange: (PostFeeType) -> Unit,
     onNormalPostFeeChange: (String) -> Unit,
     onHalfPostFeeChange: (String) -> Unit,

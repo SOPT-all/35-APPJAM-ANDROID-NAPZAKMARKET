@@ -26,8 +26,8 @@ fun RegistrationSellGroup(
     salePricePlaceHolder: String,
     onSalePriceChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    productCondition: Int,
-    onProductConditionChange: (Int) -> Unit,
+    productCondition: ProductConditionType?,
+    onProductConditionChange: (ProductConditionType) -> Unit,
     postFeeType: PostFeeType,
     onPostFeeChange: (PostFeeType) -> Unit,
     isNormalPostChecked: Boolean,
@@ -49,9 +49,8 @@ fun RegistrationSellGroup(
         )
         Spacer(modifier = Modifier.height(12.dp))
         ProductConditionGridButton(
-            conditionType = ProductConditionType.entries.map { it.label },
-            selectedIndex = productCondition,
-            onIndexSelected = onProductConditionChange,
+            selectedCondition = productCondition,
+            onConditionSelected = onProductConditionChange,
         )
     }
     Spacer(modifier = Modifier.height(36.dp))
@@ -126,7 +125,7 @@ private fun RegistrationSellGroupPreview() {
             salePrice = "",
             salePricePlaceHolder = "100~30,000",
             onSalePriceChange = { },
-            productCondition = -1,
+            productCondition = ProductConditionType.GOOD,
             onProductConditionChange = {},
             postFeeType = PostFeeType.INCLUDED,
             onPostFeeChange = {},

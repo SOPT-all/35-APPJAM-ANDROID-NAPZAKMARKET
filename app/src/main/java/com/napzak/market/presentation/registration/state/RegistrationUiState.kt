@@ -1,6 +1,7 @@
 package com.napzak.market.presentation.registration.state
 
 import androidx.compose.runtime.Immutable
+import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
 
 @Immutable
@@ -14,7 +15,7 @@ data class RegistrationUiState(
     val description: String = "",
     val isButtonEnabled: Boolean = false,
 
-    val productCondition: Int = -1,
+    val productCondition: ProductConditionType? = null,
     val productSalePrice: String = "",
     val isPostFeeIncluded: Boolean = false,
     val normalPostFee: String = "",

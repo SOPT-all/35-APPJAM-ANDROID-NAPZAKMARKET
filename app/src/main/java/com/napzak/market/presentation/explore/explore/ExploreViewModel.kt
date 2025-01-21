@@ -196,7 +196,7 @@ class ExploreViewModel @Inject constructor(
                     }
                 }
                 .onFailure { response ->
-                    Timber.e(response.message)
+                    Timber.e(response)
                 }
         } else {
             exploreRepository.fetchBuyProductItemList(productListFilter)
@@ -212,7 +212,7 @@ class ExploreViewModel @Inject constructor(
                     }
                 }
                 .onFailure { response ->
-                    Timber.e(response.message)
+                    Timber.e(response)
                 }
         }
     }

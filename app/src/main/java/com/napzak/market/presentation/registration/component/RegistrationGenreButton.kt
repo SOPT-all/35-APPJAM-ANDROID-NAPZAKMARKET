@@ -31,6 +31,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 @Composable
 fun RegistrationGenreButton(
+    genre: String,
     onGenreClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -50,11 +51,23 @@ fun RegistrationGenreButton(
                 style = NapzakMarketTheme.typography.bodySemi16,
                 color = NapzakMarketTheme.colors.gray900,
             )
-            Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_more_18),
-                contentDescription = null,
-                tint = NapzakMarketTheme.colors.gray400,
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                if (genre.isNotEmpty()) {
+                    Text(
+                        text = genre,
+                        style = NapzakMarketTheme.typography.bodySemi16,
+                        color = NapzakMarketTheme.colors.purple30,
+                    )
+                }
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_more_18),
+                    contentDescription = null,
+                    tint = NapzakMarketTheme.colors.gray400,
+                )
+            }
         }
         HorizontalDivider(
             modifier = Modifier
@@ -70,6 +83,7 @@ fun RegistrationGenreButton(
 private fun RegistrationGenreButtonPreview() {
     NapzakMarketTheme {
         RegistrationGenreButton(
+            genre = "건담",
             onGenreClick = { }
         )
     }

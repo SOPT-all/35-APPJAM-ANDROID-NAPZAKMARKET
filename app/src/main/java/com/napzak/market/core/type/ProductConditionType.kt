@@ -1,8 +1,8 @@
 package com.napzak.market.core.type
 
 enum class ProductConditionType(val label: String) {
-    GOOD("아주 좋은 상태"),
     UNUSED("미개봉"),
+    GOOD("아주 좋은 상태"),
     SOSO("약간의 사용감"),
     USED("사용감 있음");
 

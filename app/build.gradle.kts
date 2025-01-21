@@ -35,6 +35,20 @@ android {
                 "TEST_BASE_URL",
                 properties.getProperty("test.base.url")
             )
+
+            buildConfigField(
+                "String",
+                "ACCESS_TOKEN",
+                properties.getProperty("access.token")
+            )
+        }
+
+        defaultConfig {
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                properties.getProperty("base.url")
+            )
         }
 
         release {

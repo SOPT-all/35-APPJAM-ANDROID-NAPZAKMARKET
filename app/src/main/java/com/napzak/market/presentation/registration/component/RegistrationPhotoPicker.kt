@@ -1,8 +1,10 @@
 package com.napzak.market.presentation.registration.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,15 +16,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
@@ -31,7 +30,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.napzak.market.R
+import com.napzak.market.R.string.regi_image_number
+import com.napzak.market.R.string.x_circle_button
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.common.extension.noRippleCombineClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
@@ -43,7 +45,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  *
  * @param imageUrlList
  * @param onPhotoClick
- * @param onLongPressed
+ * @param onPress
  * @param onDeleteClick
  * @param modifier
  */
@@ -52,7 +54,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 fun RegistrationPhotoPicker(
     imageUrlList: List<String>,
     onPhotoClick: () -> Unit,
-    onLongPressed: (Int) -> Unit,
+    onPress: (Int) -> Unit,
     onDeleteClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -62,6 +64,8 @@ fun RegistrationPhotoPicker(
     ) {
         item {
             PhotoRegisterButton(
+                modifier = Modifier
+                    .padding(start = 20.dp),
                 imageNumber = imageUrlList.size,
                 onPhotoClick = onPhotoClick,
             )
@@ -71,13 +75,18 @@ fun RegistrationPhotoPicker(
             items = imageUrlList,
             key = { index, _ -> index },
             contentType = { _, item -> item },
-        ) { index, _ ->
-            PhotoContainer(
-                index = index,
-                onLongPress = { onLongPressed(index) },
-                onDeleteClick = onDeleteClick,
-            )
-            Spacer(modifier = Modifier.width(3.dp))
+        ) { index, url ->
+            Row {
+                PhotoContainer(
+                    modifier = Modifier
+                        .padding(end = if (index == imageUrlList.lastIndex) 16.dp else 0.dp),
+                    index = index,
+                    imageUrl = url,
+                    onPress = { onPress(index) },
+                    onDeleteClick = onDeleteClick,
+                )
+                Spacer(modifier = Modifier.width(3.dp))
+            }
         }
     }
 }
@@ -99,15 +108,17 @@ private fun PhotoRegisterButton(
 ) {
     Column(
         modifier = modifier
+            .padding(top = 8.dp)
             .width(80.dp)
+            .aspectRatio(1f)
             .clip(RoundedCornerShape(12.dp))
             .background(NapzakMarketTheme.colors.gray100)
-            .padding(vertical = 17.5.dp, horizontal = 26.dp)
-            .noRippleClickable(onPhotoClick),
+            .noRippleClickable { if (imageNumber < 10) onPhotoClick() },
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
         Icon(
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_photo_28),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_photo_28),
             contentDescription = null,
             tint = Color.Unspecified,
         )
@@ -117,7 +128,7 @@ private fun PhotoRegisterButton(
                 append(imageNumber.toString())
             }
             withStyle(style = SpanStyle(color = NapzakMarketTheme.colors.gray500)) {
-                append(stringResource(R.string.regi_image_number))
+                append(stringResource(regi_image_number))
             }
         }
         Text(
@@ -127,23 +138,23 @@ private fun PhotoRegisterButton(
     }
 }
 
-
 /**
-* Photo container
-*
-* 사용자가 업로드한 사진을 보여주는 container, 길게 눌러서 대표 사진으로 변경 가능
-*
-* @param index
-* @param onDeleteClick
-* @param onLongPress
-* @param modifier
-*/
+ * Photo container
+ *
+ * 사용자가 업로드한 사진을 보여주는 container, 길게 눌러서 대표 사진으로 변경 가능
+ *
+ * @param index
+ * @param onDeleteClick
+ * @param onPress
+ * @param modifier
+ */
 
 @Composable
 private fun PhotoContainer(
     index: Int,
+    imageUrl: String,
     onDeleteClick: (Int) -> Unit,
-    onLongPress: (Int) -> Unit,
+    onPress: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -151,13 +162,18 @@ private fun PhotoContainer(
     ) {
         Box(
             modifier = Modifier
-                .padding(top = 7.dp, end = 7.dp)
+                .padding(top = 8.dp, end = 8.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(NapzakMarketTheme.colors.gray600)
                 .width(80.dp)
                 .aspectRatio(1f)
-                .noRippleCombineClickable { onLongPress(index) },
+                .noRippleCombineClickable { onPress(index) },
         ) {
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+            )
             if (index == 0) {
                 Text(
                     modifier = Modifier
@@ -175,8 +191,8 @@ private fun PhotoContainer(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .noRippleClickable { onDeleteClick(index) },
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_close_circle_28),
-            contentDescription = stringResource(R.string.x_circle_button),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_close_circle_28),
+            contentDescription = stringResource(x_circle_button),
             tint = Color.Unspecified,
         )
     }
@@ -186,13 +202,11 @@ private fun PhotoContainer(
 @Composable
 private fun RegistrationPhotoPickerPreview() {
     NapzakMarketTheme {
-        var imageList by remember { mutableStateOf(listOf("1", "2", "3")) }
-
         RegistrationPhotoPicker(
-            imageUrlList = imageList,
-            onPhotoClick = { imageList = imageList + "" },
-            onLongPressed = { },
-            onDeleteClick = { imageList = imageList.toMutableList().apply { removeAt(it) } },
+            imageUrlList = listOf("1", "2", "3"),
+            onPhotoClick = { },
+            onPress = { },
+            onDeleteClick = { },
         )
     }
 }

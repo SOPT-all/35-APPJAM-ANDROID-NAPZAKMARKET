@@ -6,7 +6,8 @@ import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.explore.model.ProductItem
+import com.napzak.market.domain.explore.usecase.GetProductBuyListUseCase
+import com.napzak.market.domain.explore.usecase.GetProductSellListUseCase
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.explore.state.ExploreProductInformation
@@ -25,7 +26,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
-    /* TODO: Repository 연결 */
+    private val getProductSellListUseCase: GetProductSellListUseCase,
+    private val getProductBuyListUseCase: GetProductBuyListUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ExploreUiState())
     val uiState = _uiState.asStateFlow()
@@ -39,17 +41,19 @@ class ExploreViewModel @Inject constructor(
 
     fun initExploreScreenState(
         searchTerm: String?,
-        genreId: Long?
+        genreId: Long?,
     ) {
         val exploreScreenType = when {
             searchTerm != null && genreId != null -> {
                 initSelectedGenreList(searchTerm, genreId)
                 ExploreScreenType.GENRE_SEARCH_RESULT
             }
+
             searchTerm != null -> {
                 initSearchTerm(searchTerm)
                 ExploreScreenType.WORD_SEARCH_RESULT
             }
+
             else -> {
                 initSelectedGenreList(null, null)
                 initSearchTerm(null)
@@ -60,7 +64,7 @@ class ExploreViewModel @Inject constructor(
         updateUiState(exploreScreenType)
     }
 
-    private fun updateUiState(exploreScreenType: ExploreScreenType) {
+    private fun updateUiState(exploreScreenType: ExploreScreenType) { // TODO: 함수명 변경 필요
         _uiState.update { currentState ->
             currentState.copy(
                 exploreScreenType = exploreScreenType
@@ -70,7 +74,7 @@ class ExploreViewModel @Inject constructor(
 
     private fun initSelectedGenreList(
         genreName: String?,
-        genreId: Long?
+        genreId: Long?,
     ) {
         _uiState.update { currentState ->
             if (genreName == null) {
@@ -168,71 +172,52 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun getExploreProductInformation() {
-        /* TODO: 상품 리스트 조회 API 연결 */
-        updateLoadState(
-            loadState = UiState.Success(
-                ExploreProductInformation(
-                    productList = listOf(
-                        ProductItem(
-                            productId = 201,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
-                        ),
-                        ProductItem(
-                            productId = 202,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
-                        ),
-                        ProductItem(
-                            productId = 203,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
-                        ),
-                        ProductItem(
-                            productId = 204,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
-                        ),
-                        ProductItem(
-                            productId = 205,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
-                        ),
-                    )
+    fun getExploreProductInformation() = viewModelScope.launch {
+        with(uiState.value) {
+            if (tradeType == TradeType.SELL) {
+                getProductSellListUseCase(
+                    sortType = sortType.name,
+                    isOnSale = isOnSale,
+                    isUnopened = isUnopened,
+                    genreItems = selectedGenreList,
                 )
-            )
-        )
+                    .onSuccess { response ->
+                        if (response.isEmpty()) {
+                            updateLoadState(UiState.Empty)
+                        } else {
+                            updateLoadState(
+                                UiState.Success(
+                                    ExploreProductInformation(productList = response)
+                                )
+                            )
+                        }
+                    }
+                    .onFailure { response ->
+                        updateLoadState(UiState.Failure(response.toString()))
+                    }
+
+            } else {
+                getProductBuyListUseCase(
+                    sortType = sortType.name,
+                    isOnSale = isOnSale,
+                    genreItems = selectedGenreList,
+                )
+                    .onSuccess { response ->
+                        if (response.isEmpty()) {
+                            updateLoadState(UiState.Empty)
+                        } else {
+                            updateLoadState(
+                                UiState.Success(
+                                    ExploreProductInformation(productList = response)
+                                )
+                            )
+                        }
+                    }
+                    .onFailure { response ->
+                        updateLoadState(UiState.Failure(response.toString()))
+                    }
+            }
+        }
     }
 
     fun changeSearchText(newValue: String) = viewModelScope.launch {
@@ -270,7 +255,6 @@ class ExploreViewModel @Inject constructor(
                 sortType = SortType.RECENT
             )
         }
-        getExploreProductInformation()
     }
 
     fun updateSelectedGenreList(newSelectedGenreList: List<Genre>) {
@@ -281,7 +265,6 @@ class ExploreViewModel @Inject constructor(
                 )
             }
         }
-        getExploreProductInformation()
     }
 
     fun updateSale() {
@@ -290,7 +273,6 @@ class ExploreViewModel @Inject constructor(
                 isOnSale = !uiState.value.isOnSale
             )
         }
-        getExploreProductInformation()
     }
 
     fun updateUnopen() {
@@ -299,7 +281,6 @@ class ExploreViewModel @Inject constructor(
                 isUnopened = !uiState.value.isUnopened
             )
         }
-        getExploreProductInformation()
     }
 
     fun updateSortType(newSortType: SortType) {
@@ -308,7 +289,6 @@ class ExploreViewModel @Inject constructor(
                 sortType = newSortType
             )
         }
-        getExploreProductInformation()
     }
 
     fun updateItemLikeButton(productId: Long) {

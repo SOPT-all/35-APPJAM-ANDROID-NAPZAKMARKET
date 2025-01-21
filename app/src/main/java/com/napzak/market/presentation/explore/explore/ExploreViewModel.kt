@@ -252,7 +252,6 @@ class ExploreViewModel @Inject constructor(
                 sortType = SortType.RECENT
             )
         }
-        getExploreProductInformation()
     }
 
     fun updateSelectedGenreList(newSelectedGenreList: List<Genre>) {
@@ -263,7 +262,6 @@ class ExploreViewModel @Inject constructor(
                 )
             }
         }
-        getExploreProductInformation()
     }
 
     fun updateSale() {
@@ -272,7 +270,6 @@ class ExploreViewModel @Inject constructor(
                 isOnSale = !uiState.value.isOnSale
             )
         }
-        getExploreProductInformation()
     }
 
     fun updateUnopen() {
@@ -281,7 +278,6 @@ class ExploreViewModel @Inject constructor(
                 isUnopened = !uiState.value.isUnopened
             )
         }
-        getExploreProductInformation()
     }
 
     fun updateSortType(newSortType: SortType) {
@@ -290,7 +286,6 @@ class ExploreViewModel @Inject constructor(
                 sortType = newSortType
             )
         }
-        getExploreProductInformation()
     }
 
     fun updateItemLikeButton(productId: Long) {

@@ -131,7 +131,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun deleteInterest(productId: Long) = viewModelScope.launch {
-        interestRepository.postInterest(productId)
+        interestRepository.deleteInterest(productId)
             .onSuccess {
                 loadItems()
             }

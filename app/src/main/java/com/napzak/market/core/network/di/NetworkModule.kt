@@ -91,7 +91,7 @@ object NetworkModule {
         client: OkHttpClient,
         factory: Converter.Factory,
     ): Retrofit = Retrofit.Builder()
-        .baseUrl(TEST_BASE_URL)
+        .baseUrl(BASE_URL)
         .client(client)
         .addConverterFactory(factory)
         .build()

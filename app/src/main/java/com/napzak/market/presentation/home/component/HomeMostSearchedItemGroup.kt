@@ -106,6 +106,7 @@ private fun HomeRecommendationGroupPreview() {
                             isInterested = false,
                             tradeType = "팔아요",
                             tradeStatus = "판매중",
+                            isOwnedByCurrentUser = false,
                             isPriceNegotiable = false,
                         )
                     )

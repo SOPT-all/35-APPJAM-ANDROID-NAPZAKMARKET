@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ProductSellItemsRequest(
+    @SerialName("storeOwnerId")
+    val storeOwnerId: Long,
     @SerialName("sortOption")
     val sortOption: String,
     @SerialName("genreId")

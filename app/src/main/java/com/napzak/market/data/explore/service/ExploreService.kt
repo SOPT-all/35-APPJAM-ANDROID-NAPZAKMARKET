@@ -47,7 +47,7 @@ interface ExploreService {
         genreIds: List<Long>? = null,
         @Query("cursor")
         cursor: String,
-    )
+    ): BaseResponse<ProductSellItemsResponse>
 
     @GET("products/buy/search")
     suspend fun getSearchedProductBuyItems(
@@ -61,5 +61,5 @@ interface ExploreService {
         genreIds: List<Long>? = null,
         @Query("cursor")
         cursor: String,
-    )
+    ): BaseResponse<ProductBuyItemsResponse>
 }

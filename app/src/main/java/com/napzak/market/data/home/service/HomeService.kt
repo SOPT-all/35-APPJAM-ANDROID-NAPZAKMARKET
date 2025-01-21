@@ -2,6 +2,7 @@ package com.napzak.market.data.home.service
 
 import com.napzak.market.core.network.BaseResponse
 import com.napzak.market.data.home.dto.HomeBannerResponse
+import com.napzak.market.data.home.dto.HomeBuyProductResponse
 import com.napzak.market.data.home.dto.HomePopularProductResponse
 import com.napzak.market.data.home.dto.HomeRecommendProductResponse
 import retrofit2.http.GET
@@ -15,4 +16,7 @@ interface HomeService {
 
     @GET("products/home/sell")
     suspend fun getHomePopularProduct(): BaseResponse<HomePopularProductResponse>
+
+    @GET("products/home/buy")
+    suspend fun getHomeBuyProduct(): BaseResponse<HomeBuyProductResponse>
 }

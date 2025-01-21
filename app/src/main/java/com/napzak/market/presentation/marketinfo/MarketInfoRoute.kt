@@ -290,7 +290,7 @@ private fun MarketPreview(modifier: Modifier = Modifier) {
             storeNickname = "123",
             storeDescription = "asdf",
             storePhoto = "",
-            storeBackgroundPhoto = "",
+            storeCover = "",
             genrePreferenceList = emptyList(),
         ),
         sortType = SortType.RECENT,

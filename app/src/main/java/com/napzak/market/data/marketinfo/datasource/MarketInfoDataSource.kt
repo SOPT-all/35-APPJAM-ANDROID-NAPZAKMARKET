@@ -2,10 +2,10 @@ package com.napzak.market.data.marketinfo.datasource
 
 import com.napzak.market.core.network.BaseResponse
 import com.napzak.market.data.marketinfo.dto.MarketInfoResponse
-import com.napzak.market.data.marketinfo.dto.ProductBuyItemsRequest
-import com.napzak.market.data.marketinfo.dto.ProductBuyItemsResponse
-import com.napzak.market.data.marketinfo.dto.ProductSellItemsRequest
-import com.napzak.market.data.marketinfo.dto.ProductSellItemsResponse
+import com.napzak.market.data.marketinfo.dto.MarketProductBuyItemsRequest
+import com.napzak.market.data.marketinfo.dto.MarketProductBuyItemsResponse
+import com.napzak.market.data.marketinfo.dto.MarketProductSellItemsRequest
+import com.napzak.market.data.marketinfo.dto.MarketProductSellItemsResponse
 import com.napzak.market.data.marketinfo.service.MarketInfoService
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ class MarketInfoDataSource @Inject constructor(
     suspend fun getMarketInfo(request: Long): BaseResponse<MarketInfoResponse> =
         service.getMarketInfo(storeId = request)
 
-    suspend fun getMarketProductSellItems(request: ProductSellItemsRequest): BaseResponse<ProductSellItemsResponse> =
+    suspend fun getMarketProductSellItems(request: MarketProductSellItemsRequest): BaseResponse<MarketProductSellItemsResponse> =
         service.getMarketProductSellItems(
             storeOwnerId = request.storeOwnerId,
             sortOption = request.sortOption,
@@ -25,7 +25,7 @@ class MarketInfoDataSource @Inject constructor(
             cursor = "",
         )
 
-    suspend fun getMarketProductBuyItems(request: ProductBuyItemsRequest): BaseResponse<ProductBuyItemsResponse> =
+    suspend fun getMarketProductBuyItems(request: MarketProductBuyItemsRequest): BaseResponse<MarketProductBuyItemsResponse> =
         service.getMarketProductBuyItems(
             storeOwnerId = request.storeOwnerId,
             sortOption = request.sortOption,

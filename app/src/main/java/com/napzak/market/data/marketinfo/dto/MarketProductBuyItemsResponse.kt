@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ProductBuyItemsResponse(
+data class MarketProductBuyItemsResponse(
     @SerialName("productBuyList")
     val productBuyList: List<ProductBuyItem>,
     @SerialName("nextCursor")

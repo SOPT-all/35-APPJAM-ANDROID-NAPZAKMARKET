@@ -38,17 +38,17 @@ class RegistrationViewModel @Inject constructor(
     }
 
     fun updatePhotoList(newImageUrlList: List<String>) = _uiState.update { currentState ->
-        currentState.copy(imageUrlList = currentState.imageUrlList + newImageUrlList)
+        currentState.copy(imageUrl = currentState.imageUrl + newImageUrlList)
     }
 
     fun deletePhoto(photoIndex: Int) = _uiState.update { currentState ->
-        currentState.copy(imageUrlList = currentState.imageUrlList.filterIndexed { index, _ -> index != photoIndex })
+        currentState.copy(imageUrl = currentState.imageUrl.filterIndexed { index, _ -> index != photoIndex })
     }
 
     fun changeRepresentPhoto(newPhoto: Int) = _uiState.update { currentState ->
-        val newImageUrlList = currentState.imageUrlList.toMutableList()
+        val newImageUrlList = currentState.imageUrl.toMutableList()
         newImageUrlList.add(0, newImageUrlList.removeAt(newPhoto))
-        currentState.copy(imageUrlList = newImageUrlList)
+        currentState.copy(imageUrl = newImageUrlList)
     }
 
     fun updatePlainTextValue(
@@ -137,7 +137,7 @@ class RegistrationViewModel @Inject constructor(
     fun updateButtonState() {
         val isCommonFieldsValid = _uiState.value.title.isNotEmpty()
                 && _uiState.value.description.isNotEmpty()
-                && _uiState.value.imageUrlList.isNotEmpty()
+                && _uiState.value.imageUrl.isNotEmpty()
 
         val isPurchaseConditionValid = _uiState.value.tradeType == TradeType.BUY
                 && _uiState.value.productPurchasePrice.isNotEmpty()
@@ -164,7 +164,7 @@ class RegistrationViewModel @Inject constructor(
     }
 
     fun getPresignedUrl() = viewModelScope.launch {
-        val presignedUrlMap = getPresignedUrlUseCase(_uiState.value.imageUrlList)
+        val presignedUrlMap = getPresignedUrlUseCase(_uiState.value.imageUrl)
     }
 
     companion object {

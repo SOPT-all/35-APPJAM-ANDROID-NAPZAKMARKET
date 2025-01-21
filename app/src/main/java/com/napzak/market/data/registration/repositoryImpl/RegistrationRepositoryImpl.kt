@@ -10,7 +10,7 @@ class RegistrationRepositoryImpl @Inject constructor(
     private val registrationRemoteDataSource: RegistrationRemoteDataSource,
 ) : RegistrationRepository {
 
-    override suspend fun getPresignedUrlList(
+    override suspend fun getPresignedUrl(
         imageTitles: String,
     ): Result<PresignedUrlMap> = runCatching {
         registrationRemoteDataSource.getPresignedUrl(imageTitles).toPresignedUrlMap()

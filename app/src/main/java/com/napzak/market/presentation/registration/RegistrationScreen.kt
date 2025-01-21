@@ -60,13 +60,13 @@ fun RegistrationRoute(
     viewModel: RegistrationViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val currentImageListSize = (MAX_ITEMS - uiState.imageUrlList.size).coerceAtLeast(MIN_ITEMS)
+    val currentImageListSize = (MAX_ITEMS - uiState.imageUrl.size).coerceAtLeast(MIN_ITEMS)
     val getImageStorageLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetMultipleContents()
     ) { uris: List<Uri> ->
         handleUris(uris, currentImageListSize, viewModel::updatePhotoList)
     }
-    val getPhotoPickerLauncher = when (uiState.imageUrlList.size) {
+    val getPhotoPickerLauncher = when (uiState.imageUrl.size) {
         MAX_ITEMS - 1 -> rememberLauncherForActivityResult(
             ActivityResultContracts.PickVisualMedia()
         ) { uri: Uri? ->
@@ -87,7 +87,7 @@ fun RegistrationRoute(
         registrationType = if (tradeType == TradeType.SELL.label) TradeType.SELL else TradeType.BUY,
         onCloseClick = navigateUp,
         onPhotoClick = {
-            val remainImageSize = MAX_ITEMS - uiState.imageUrlList.size
+            val remainImageSize = MAX_ITEMS - uiState.imageUrl.size
 
             when {
                 remainImageSize <= 0 -> { /* TODO: 최대 개수 초과 시 스낵바 처리 */ }
@@ -122,13 +122,13 @@ fun RegistrationRoute(
 private fun handleUris(
     uris: List<Uri>,
     remainingSlots: Int,
-    updatePhotoList: (List<String>) -> Unit,
+    updatePhoto: (List<String>) -> Unit,
 ) {
     if (uris.size <= remainingSlots) {
-        updatePhotoList(uris.map { it.toString() })
+        updatePhoto(uris.map { it.toString() })
     } else {
         val limitedUris = uris.take(remainingSlots)
-        updatePhotoList(limitedUris.map { it.toString() })
+        updatePhoto(limitedUris.map { it.toString() })
     }
 }
 
@@ -197,7 +197,7 @@ fun RegistrationScreen(
             Spacer(modifier = Modifier.height(16.dp))
             RegistrationPhotoPicker(
                 modifier = Modifier,
-                imageUrlList = uiState.imageUrlList,
+                imageUrlList = uiState.imageUrl,
                 onPhotoClick = onPhotoClick,
                 onPress = onPhotoPress,
                 onDeleteClick = onDeleteClick,

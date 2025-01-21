@@ -9,7 +9,7 @@ class GetPresignedUrlUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         imageTitles: List<String>,
-    ): Result<PresignedUrlMap> = registrationRepository.getPresignedUrlList(
+    ): Result<PresignedUrlMap> = registrationRepository.getPresignedUrl(
         imageTitles = List(imageTitles.size) { index ->
             "$IMAGE_TITLE_PREFIX${index + 1}.jpg"
         }.joinToString("&")

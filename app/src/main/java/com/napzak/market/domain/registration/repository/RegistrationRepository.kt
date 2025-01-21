@@ -4,5 +4,5 @@ import com.napzak.market.domain.registration.model.PresignedUrlMap
 
 interface RegistrationRepository {
 
-    suspend fun getPresignedUrlList(imageTitles: String): Result<PresignedUrlMap>
+    suspend fun getPresignedUrl(imageTitles: String): Result<PresignedUrlMap>
 }

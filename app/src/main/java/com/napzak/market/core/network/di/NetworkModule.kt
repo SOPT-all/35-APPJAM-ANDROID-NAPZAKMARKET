@@ -102,7 +102,7 @@ object NetworkModule {
         client: OkHttpClient,
         factory: Converter.Factory,
     ): Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL) //TODO: 서버 IP 주입
+        .baseUrl(BASE_URL)
         .client(client)
         .addConverterFactory(factory)
         .build()

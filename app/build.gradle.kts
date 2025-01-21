@@ -39,7 +39,7 @@ android {
             buildConfigField(
                 "String",
                 "ACCESS_TOKEN",
-                properties.getProperty("token")
+                properties.getProperty("access.token")
             )
         }
 

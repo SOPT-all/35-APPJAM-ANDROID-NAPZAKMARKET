@@ -4,12 +4,12 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ProductBuyListResponse(
-    @SerialName("productBuyList")
-    val productBuyList: List<ProductBuyItem>,
+data class ProductSellItemsResponse(
+    @SerialName("productSellList")
+    val productSellList: List<ProductSellItem>,
 ) {
     @Serializable
-    data class ProductBuyItem(
+    data class ProductSellItem(
         @SerialName("productId")
         val productId: Long,
         @SerialName("genreName")
@@ -28,8 +28,6 @@ data class ProductBuyListResponse(
         val tradeType: String,
         @SerialName("tradeStatus")
         val tradeStatus: String,
-        @SerialName("isPriceNegotiable")
-        val isPriceNegotiable: Boolean,
         @SerialName("isOwnedByCurrentUser")
         val isOwnedByCurrentUser: Boolean,
         @SerialName("nextCursor") // TODO: 서버측에 확인 필요

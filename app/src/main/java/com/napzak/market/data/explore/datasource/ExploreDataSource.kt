@@ -1,18 +1,18 @@
 package com.napzak.market.data.explore.datasource
 
 import com.napzak.market.core.network.BaseResponse
-import com.napzak.market.data.explore.dto.ProductBuyListRequest
-import com.napzak.market.data.explore.dto.ProductBuyListResponse
-import com.napzak.market.data.explore.dto.ProductSellListRequest
-import com.napzak.market.data.explore.dto.ProductSellListResponse
+import com.napzak.market.data.explore.dto.ProductBuyItemsRequest
+import com.napzak.market.data.explore.dto.ProductBuyItemsResponse
+import com.napzak.market.data.explore.dto.ProductSellItemsRequest
+import com.napzak.market.data.explore.dto.ProductSellItemsResponse
 import com.napzak.market.data.explore.service.ExploreService
 import javax.inject.Inject
 
 class ExploreDataSource @Inject constructor(
     private val service: ExploreService,
 ) {
-    suspend fun getProductSellList(request: ProductSellListRequest): BaseResponse<ProductSellListResponse> =
-        service.getProductSellList(
+    suspend fun getProductSellItems(request: ProductSellItemsRequest): BaseResponse<ProductSellItemsResponse> =
+        service.getProductSellItems(
             sortOption = request.sortOption,
             isOnSale = request.isOnSale,
             isUnopened = request.isUnopened,
@@ -20,8 +20,8 @@ class ExploreDataSource @Inject constructor(
             cursor = "",
         )
 
-    suspend fun getProductBuyList(request: ProductBuyListRequest): BaseResponse<ProductBuyListResponse> =
-        service.getProductBuyList(
+    suspend fun getProductBuyItems(request: ProductBuyItemsRequest): BaseResponse<ProductBuyItemsResponse> =
+        service.getProductBuyItems(
             sortOption = request.sortOption,
             isOnSale = request.isOnSale,
             genreIds = request.genreIds,

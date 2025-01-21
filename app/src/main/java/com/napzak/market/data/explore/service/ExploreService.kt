@@ -1,14 +1,14 @@
 package com.napzak.market.data.explore.service
 
 import com.napzak.market.core.network.BaseResponse
-import com.napzak.market.data.explore.dto.ProductBuyListResponse
-import com.napzak.market.data.explore.dto.ProductSellListResponse
+import com.napzak.market.data.explore.dto.ProductBuyItemsResponse
+import com.napzak.market.data.explore.dto.ProductSellItemsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ExploreService {
     @GET("products/sell")
-    suspend fun getProductSellList(
+    suspend fun getProductSellItems(
         @Query("sortOption")
         sortOption: String = "RECENT",
         @Query("isOnSale")
@@ -19,10 +19,10 @@ interface ExploreService {
         genreIds: List<Long>? = null,
         @Query("cursor")
         cursor: String,
-    ): BaseResponse<ProductSellListResponse>
+    ): BaseResponse<ProductSellItemsResponse>
 
     @GET("products/buy")
-    suspend fun getProductBuyList(
+    suspend fun getProductBuyItems(
         @Query("sortOption")
         sortOption: String = "RECENT",
         @Query("isOnSale")
@@ -31,5 +31,5 @@ interface ExploreService {
         genreIds: List<Long>? = null,
         @Query("cursor")
         cursor: String,
-    ): BaseResponse<ProductBuyListResponse>
+    ): BaseResponse<ProductBuyItemsResponse>
 }

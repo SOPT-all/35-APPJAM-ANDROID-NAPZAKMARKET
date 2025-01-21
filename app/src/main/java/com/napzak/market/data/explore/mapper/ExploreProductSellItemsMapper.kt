@@ -1,19 +1,20 @@
 package com.napzak.market.data.explore.mapper
 
-import com.napzak.market.data.explore.dto.ProductBuyListRequest
-import com.napzak.market.data.explore.dto.ProductBuyListResponse
+import com.napzak.market.data.explore.dto.ProductSellItemsRequest
+import com.napzak.market.data.explore.dto.ProductSellItemsResponse
 import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.domain.explore.model.ProductListFilter
 
-fun ProductListFilter.toProductBuyRequest(): ProductBuyListRequest =
-    ProductBuyListRequest(
+fun ProductListFilter.toProductSellRequest(): ProductSellItemsRequest =
+    ProductSellItemsRequest(
         sortOption = this.sortOption,
         isOnSale = this.isOnSale,
+        isUnopened = this.isUnopened,
         genreIds = this.genreId,
     )
 
-fun ProductBuyListResponse.toProductBuyList(): List<ProductItem> =
-    productBuyList.map { productItem ->
+fun ProductSellItemsResponse.toProductSellList(): List<ProductItem> =
+    productSellList.map { productItem ->
         with(productItem) {
             ProductItem(
                 productId = productId,
@@ -25,7 +26,6 @@ fun ProductBuyListResponse.toProductBuyList(): List<ProductItem> =
                 isInterested = isInterested,
                 tradeType = tradeType,
                 tradeStatus = tradeStatus,
-                isPriceNegotiable = isPriceNegotiable,
                 isOwnedByCurrentUser = isOwnedByCurrentUser,
             )
         }

@@ -14,12 +14,12 @@ class ExploreRepositoryImpl @Inject constructor(
     private val dataSource: ExploreDataSource,
 ): ExploreRepository {
     override suspend fun fetchSellProductItems(request: ProductListFilter): Result<List<ProductItem>> = runCatching {
-        val response = dataSource.getProductSellList(request.toProductSellRequest())
+        val response = dataSource.getProductSellItems(request.toProductSellRequest())
         response.data.toProductSellList()
     }
 
     override suspend fun fetchBuyProductItems(request: ProductListFilter): Result<List<ProductItem>> = runCatching {
-        val response = dataSource.getProductBuyList(request.toProductBuyRequest())
+        val response = dataSource.getProductBuyItems(request.toProductBuyRequest())
         response.data.toProductBuyList()
     }
 }

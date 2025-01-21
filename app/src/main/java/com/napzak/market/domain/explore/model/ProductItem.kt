@@ -7,9 +7,9 @@ data class ProductItem(
     val photo: String,
     val price: Int,
     val uploadTime: String,
-    val isInterested: Boolean,
+    val isLiked: Boolean,
     val tradeType: String,
     val tradeStatus: String,
     val isPriceNegotiable: Boolean = false, /* 구해요 item에서만 사용 */
-    val isOwnedByCurrentUser: Boolean,
+    val isOwnedByCurrentUser: Boolean = false,/* TODO: 추후 default값 삭제 필요 */
 )

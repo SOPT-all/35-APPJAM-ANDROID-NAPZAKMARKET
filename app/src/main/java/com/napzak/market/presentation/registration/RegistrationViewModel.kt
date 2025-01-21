@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
+import com.napzak.market.domain.registration.usecase.GetPresignedUrlUseCase
 import com.napzak.market.presentation.registration.state.RegistrationUiState
 import com.napzak.market.presentation.registration.type.NumeralInputType
 import com.napzak.market.presentation.registration.type.PlainTextInputType
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
-    /* TODO: Repository 연결 */
+    private val getPresignedUrlUseCase: GetPresignedUrlUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(RegistrationUiState())
     val uiState = _uiState.asStateFlow()
@@ -160,6 +161,10 @@ class RegistrationViewModel @Inject constructor(
         _uiState.update { currentState ->
             currentState.copy(isButtonEnabled = isButtonEnabled)
         }
+    }
+
+    fun getPresignedUrl() = viewModelScope.launch {
+        val presignedUrlMap = getPresignedUrlUseCase(_uiState.value.imageUrlList)
     }
 
     companion object {

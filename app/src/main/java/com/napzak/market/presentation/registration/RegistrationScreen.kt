@@ -114,21 +114,21 @@ fun RegistrationRoute(
         onOfferCheckChange = viewModel::updateOfferAvailability,
         onPurchasePriceChange = { purchasePrice -> viewModel.updateNumericValue(purchasePrice, NumeralInputType.ProductPurchasePrice) },
         updateButtonState = viewModel::updateButtonState,
+        onRegistrationClick = viewModel::getPresignedUrl,
         modifier = modifier,
     )
 }
 
 private fun handleUris(
     uris: List<Uri>,
-    currentImageListSize: Int,
+    remainingSlots: Int,
     updatePhotoList: (List<String>) -> Unit,
 ) {
-    val updatedListSize = currentImageListSize + uris.size
-    if (updatedListSize <= MAX_ITEMS) {
+    if (uris.size <= remainingSlots) {
         updatePhotoList(uris.map { it.toString() })
     } else {
-        val remainingUris = uris.take(MAX_ITEMS - currentImageListSize)
-        updatePhotoList(remainingUris.map { it.toString() })
+        val limitedUris = uris.take(remainingSlots)
+        updatePhotoList(limitedUris.map { it.toString() })
     }
 }
 
@@ -154,6 +154,7 @@ fun RegistrationScreen(
     onPurchasePriceChange: (String) -> Unit,
     onOfferCheckChange: (Boolean) -> Unit,
     updateButtonState: () -> Unit,
+    onRegistrationClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val paddedModifier = Modifier.padding(horizontal = 20.dp)
@@ -292,7 +293,7 @@ fun RegistrationScreen(
                 modifier = paddedModifier
                     .fillMaxWidth(),
                 text = stringResource(register),
-                onClick = { /*TODO*/ },
+                onClick = onRegistrationClick,
                 buttonColors = with(NapzakMarketTheme.colors) {
                     ButtonDefaults.buttonColors().copy(
                         containerColor = purple30,

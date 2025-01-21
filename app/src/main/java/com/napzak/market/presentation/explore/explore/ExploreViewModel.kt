@@ -173,63 +173,7 @@ class ExploreViewModel @Inject constructor(
         updateLoadState(
             loadState = UiState.Success(
                 ExploreProductInformation(
-                    productList = listOf(
-                        ProductItem(
-                            productId = 201,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
-                        ),
-                        ProductItem(
-                            productId = 202,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
-                        ),
-                        ProductItem(
-                            productId = 203,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
-                        ),
-                        ProductItem(
-                            productId = 204,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
-                        ),
-                        ProductItem(
-                            productId = 205,
-                            genreName = "짱구",
-                            productName = "피규어",
-                            photo = "",
-                            price = 120000,
-                            uploadTime = "3일",
-                            isLiked = true,
-                            tradeType = "SELL",
-                            tradeStatus = "BEFORE_TRADE",
-                        ),
-                    )
+                    productList = emptyList()
                 )
             )
         )

@@ -32,16 +32,22 @@ class RegistrationViewModel @Inject constructor(
         }
     }
 
-    fun updateTradeType(newTradeType: TradeType) = _uiState.update { it.copy(tradeType = newTradeType) }
+    fun updateTradeType(newTradeType: TradeType) = _uiState.update { currentState ->
+        currentState.copy(tradeType = newTradeType)
+    }
 
-    fun updatePhotoList(newImageUrlList: List<String>) = _uiState.update { it.copy(imageUrlList = it.imageUrlList + newImageUrlList) }
+    fun updatePhotoList(newImageUrlList: List<String>) = _uiState.update { currentState ->
+        currentState.copy(imageUrlList = currentState.imageUrlList + newImageUrlList)
+    }
 
-    fun deletePhoto(photoIndex: Int)  = _uiState.update { it.copy(imageUrlList = it.imageUrlList.filterIndexed { index, _ -> index != photoIndex }) }
+    fun deletePhoto(photoIndex: Int) = _uiState.update { currentState ->
+        currentState.copy(imageUrlList = currentState.imageUrlList.filterIndexed { index, _ -> index != photoIndex })
+    }
 
-    fun changeRepresentPhoto(newPhoto: Int) = _uiState.update {
-        val newImageUrlList = it.imageUrlList.toMutableList()
+    fun changeRepresentPhoto(newPhoto: Int) = _uiState.update { currentState ->
+        val newImageUrlList = currentState.imageUrlList.toMutableList()
         newImageUrlList.add(0, newImageUrlList.removeAt(newPhoto))
-        it.copy(imageUrlList = newImageUrlList)
+        currentState.copy(imageUrlList = newImageUrlList)
     }
 
     fun updatePlainTextValue(
@@ -49,11 +55,12 @@ class RegistrationViewModel @Inject constructor(
         inputType: PlainTextInputType,
     ) {
         when (inputType) {
-            is PlainTextInputType.Title -> if (newValue.length <= MAX_TITLE_LENGTH) _uiState.update {
-                it.copy(title = newValue)
+            is PlainTextInputType.Title -> if (newValue.length <= MAX_TITLE_LENGTH) _uiState.update { currentState ->
+                currentState.copy(title = newValue)
             }
-            is PlainTextInputType.Description -> if (newValue.length <= MAX_DESCRIPTION_LENGTH) _uiState.update {
-                it.copy(description = newValue)
+
+            is PlainTextInputType.Description -> if (newValue.length <= MAX_DESCRIPTION_LENGTH) _uiState.update { currentState ->
+                currentState.copy(description = newValue)
             }
         }
     }
@@ -63,17 +70,20 @@ class RegistrationViewModel @Inject constructor(
         inputType: NumeralInputType,
     ) {
         when (inputType) {
-            is NumeralInputType.ProductPurchasePrice -> _uiState.update {
-                it.copy(productPurchasePrice = formatPriceValue(newValue, MAX_PURCHASE_PRICE))
+            is NumeralInputType.ProductPurchasePrice -> _uiState.update { currentState ->
+                currentState.copy(productPurchasePrice = formatPriceValue(newValue, MAX_PURCHASE_PRICE))
             }
-            is NumeralInputType.ProductSalePrice -> _uiState.update {
-                it.copy(productSalePrice = formatPriceValue(newValue, MAX_SALE_PRICE))
+
+            is NumeralInputType.ProductSalePrice -> _uiState.update { currentState ->
+                currentState.copy(productSalePrice = formatPriceValue(newValue, MAX_SALE_PRICE))
             }
-            is NumeralInputType.NormalPostFee -> _uiState.update {
-                it.copy(normalPostFee = formatPriceValue(newValue, MAX_NORMAL_POST_FEE))
+
+            is NumeralInputType.NormalPostFee -> _uiState.update { currentState ->
+                currentState.copy(normalPostFee = formatPriceValue(newValue, MAX_NORMAL_POST_FEE))
             }
-            is NumeralInputType.HalfPostFee -> _uiState.update {
-                it.copy(halfPostFee = formatPriceValue(newValue, MAX_HALF_POST_FEE))
+
+            is NumeralInputType.HalfPostFee -> _uiState.update { currentState ->
+                currentState.copy(halfPostFee = formatPriceValue(newValue, MAX_HALF_POST_FEE))
             }
         }
     }
@@ -82,35 +92,75 @@ class RegistrationViewModel @Inject constructor(
         input: String,
         maxValue: Int,
     ): String {
-        val rawValue = input.replace(",", "").takeIf {
-            it.isNotEmpty() && it.all { it.isDigit() }
-        }?.toIntOrNull() ?: 0
+        if (input.isEmpty()) return ""
 
-        return if (rawValue == 0 && input.isEmpty()) "" else {
-            val limitedValue = rawValue.coerceAtMost(maxValue)
-            DecimalFormat("#,###").format(limitedValue)
-        }
+        val rawValue = input.replace(",", "").toIntOrNull() ?: 0
+        val limitedValue = rawValue.coerceAtMost(maxValue)
+
+        return DecimalFormat("#,###").format(limitedValue)
     }
 
-    fun fetchGenreList() = _uiState.update { it.copy(genreList = it.genreList) }
+    fun fetchGenreList() = _uiState.update { currentState ->
+        currentState.copy(genreList = currentState.genreList)
+    }
 
-    fun updateGenre(newGenre: String) = _uiState.update { it.copy(genre = newGenre) }
+    fun updateGenre(newGenre: String) = _uiState.update { currentState ->
+        currentState.copy(genre = newGenre)
+    }
 
-    fun updateSearchTerm(newSearchTerm: String) = _uiState.update { it.copy(searchTerm = newSearchTerm) }
+    fun updateSearchTerm(newSearchTerm: String) = _uiState.update { currentState ->
+        currentState.copy(searchTerm = newSearchTerm)
+    }
 
-    fun searchGenre() = viewModelScope.launch {  }
+    fun searchGenre() = viewModelScope.launch { }
 
-    fun updateProductCondition(newCondition: ProductConditionType) = _uiState.update { it.copy(productCondition = newCondition) }
+    fun updateProductCondition(newCondition: ProductConditionType) = _uiState.update { currentState ->
+        currentState.copy(productCondition = newCondition)
+    }
 
-    fun updatePostFeeType(newPostFeeType: PostFeeType) = _uiState.update { it.copy(isPostFeeIncluded = newPostFeeType == PostFeeType.INCLUDED) }
+    fun updatePostFeeType(newPostFeeType: PostFeeType) = _uiState.update { currentState ->
+        currentState.copy(isPostFeeIncluded = newPostFeeType == PostFeeType.INCLUDED)
+    }
 
-    fun updateNormalPostState(newCheckState: Boolean) = _uiState.update { it.copy(isNormalPostChecked = newCheckState) }
+    fun updateNormalPostState(newCheckState: Boolean) = _uiState.update { currentState ->
+        currentState.copy(isNormalPostChecked = newCheckState) }
 
-    fun updateHalfPostState(newCheckState: Boolean) = _uiState.update { it.copy(isHalfPostChecked = newCheckState) }
+    fun updateHalfPostState(newCheckState: Boolean) = _uiState.update { currentState ->
+        currentState.copy(isHalfPostChecked = newCheckState)
+    }
 
-    fun updateOfferAvailability(isAvailable: Boolean) = _uiState.update { it.copy(isOfferAvailable = isAvailable) }
+    fun updateOfferAvailability(isAvailable: Boolean) = _uiState.update { currentState ->
+        currentState.copy(isOfferAvailable = isAvailable)
+    }
 
-    fun updateButtonState(isButtonEnabled: Boolean) = _uiState.update { it.copy(isButtonEnabled = isButtonEnabled) }
+    fun updateButtonState() {
+        val isCommonFieldsValid = _uiState.value.title.isNotEmpty()
+                && _uiState.value.description.isNotEmpty()
+                && _uiState.value.imageUrlList.isNotEmpty()
+
+        val isPurchaseConditionValid = _uiState.value.tradeType == TradeType.BUY
+                && _uiState.value.productPurchasePrice.isNotEmpty()
+
+        val isPostFeeValid = when {
+            _uiState.value.isNormalPostChecked && _uiState.value.normalPostFee.isNotEmpty()
+                    && (!_uiState.value.isHalfPostChecked || _uiState.value.halfPostFee.isNotEmpty()) -> true
+
+            !_uiState.value.isNormalPostChecked && _uiState.value.isHalfPostChecked
+                    && _uiState.value.halfPostFee.isNotEmpty() -> true
+
+            else -> false
+        }
+
+        val isSaleConditionValid = _uiState.value.tradeType == TradeType.SELL
+                && _uiState.value.productCondition != null && _uiState.value.productSalePrice.isNotEmpty()
+                && (_uiState.value.isPostFeeIncluded || isPostFeeValid)
+
+        val isButtonEnabled = isCommonFieldsValid && (isPurchaseConditionValid || isSaleConditionValid)
+
+        _uiState.update { currentState ->
+            currentState.copy(isButtonEnabled = isButtonEnabled)
+        }
+    }
 
     companion object {
         private const val MAX_TITLE_LENGTH = 48

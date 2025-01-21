@@ -28,7 +28,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 @Composable
 fun RegistrationGenreSearchRoute(
-    onBackClick: () -> Unit,
+    navigateUp: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RegistrationViewModel = hiltViewModel(),
 ) {
@@ -41,7 +41,7 @@ fun RegistrationGenreSearchRoute(
     }
 
     RegistrationGenreSearchScreen(
-        onBackClick = onBackClick,
+        onBackClick = navigateUp,
         genreList = uiState.genreList,
         searchValue = uiState.searchTerm,
         onSearchValueChange = viewModel::updateSearchTerm,
@@ -49,7 +49,7 @@ fun RegistrationGenreSearchRoute(
         onGenreSelect = {
             viewModel.updateGenre(it)
             viewModel.updateSearchTerm(BLANK)
-            onBackClick()
+            navigateUp()
         },
         modifier = modifier,
     )

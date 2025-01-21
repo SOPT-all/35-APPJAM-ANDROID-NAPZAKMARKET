@@ -36,13 +36,13 @@ fun PostFeeSelector(
         modifier = modifier
             .fillMaxWidth()
             .background(NapzakMarketTheme.colors.gray100, RoundedCornerShape(10.dp))
-            .padding(3.dp),
+            .padding(4.dp),
     ) {
         Row {
             PostFeeType.entries.forEach { tab ->
                 PostFeeSelectorIndicator(
                     modifier = Modifier
-                        .padding(3.dp)
+                        .padding(4.dp)
                         .weight(1f)
                         .noRippleClickable { onTabSelected(tab) },
                     isSelected = selectedTab == tab,

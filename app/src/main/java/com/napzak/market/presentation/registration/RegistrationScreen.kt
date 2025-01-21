@@ -55,22 +55,16 @@ import com.napzak.market.presentation.registration.type.PostFeeType
 fun RegistrationRoute(
     tradeType: String,
     navigateUp: () -> Unit,
-    navigateToGenreSearch: () -> Unit,
+    onGenreSearchNavigate: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RegistrationViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val currentListSize = (MAX_ITEMS - uiState.imageUrlList.size).coerceAtLeast(MIN_ITEMS)
+    val currentImageListSize = (MAX_ITEMS - uiState.imageUrlList.size).coerceAtLeast(MIN_ITEMS)
     val getImageStorageLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetMultipleContents()
     ) { uris: List<Uri> ->
-        val updatedListSize = uiState.imageUrlList.size + uris.size
-        if (updatedListSize <= 10) {
-            viewModel.updatePhotoList(uris.map { it.toString() })
-        } else {
-            val remainingUris = uris.take(MAX_ITEMS - uiState.imageUrlList.size)
-            viewModel.updatePhotoList(remainingUris.map { it.toString() })
-        }
+        handleUris(uris, currentImageListSize, viewModel::updatePhotoList)
     }
     val getPhotoPickerLauncher = when (uiState.imageUrlList.size) {
         MAX_ITEMS - 1 -> rememberLauncherForActivityResult(
@@ -78,20 +72,13 @@ fun RegistrationRoute(
         ) { uri: Uri? ->
             uri?.let { viewModel.updatePhotoList(listOf(it.toString())) }
         }
+
         else -> rememberLauncherForActivityResult(
-            ActivityResultContracts.PickMultipleVisualMedia(maxItems = currentListSize)
-        ) { uris: List<Uri> ->
-            val updatedListSize = uiState.imageUrlList.size + uris.size
-            if (updatedListSize <= 10) {
-                viewModel.updatePhotoList(uris.map { it.toString() })
-            } else {
-                val remainingUris = uris.take(MAX_ITEMS - uiState.imageUrlList.size)
-                viewModel.updatePhotoList(remainingUris.map { it.toString() })
-            }
-        }
+            ActivityResultContracts.PickMultipleVisualMedia(maxItems = currentImageListSize)
+        ) { uris: List<Uri> -> handleUris(uris, currentImageListSize, viewModel::updatePhotoList) }
     }
 
-    LaunchedEffect(tradeType) {
+    LaunchedEffect(Unit) {
         viewModel.updateTradeType(if (tradeType == TradeType.SELL.label) TradeType.SELL else TradeType.BUY)
     }
 
@@ -100,36 +87,49 @@ fun RegistrationRoute(
         registrationType = if (tradeType == TradeType.SELL.label) TradeType.SELL else TradeType.BUY,
         onCloseClick = navigateUp,
         onPhotoClick = {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                if (MAX_ITEMS - uiState.imageUrlList.size > 0) getImageStorageLauncher.launch(INPUT_TYPE)
-                else {
-                    /* TODO: 최대 개수 초과 시 스낵바 */
-                }
-            }
-            else {
-                if (MAX_ITEMS - uiState.imageUrlList.size > 0) getPhotoPickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                else {
-                    /* TODO: 최대 개수 초과 시 스낵바 */
-                }
+            val remainImageSize = MAX_ITEMS - uiState.imageUrlList.size
+
+            when {
+                remainImageSize <= 0 -> { /* TODO: 최대 개수 초과 시 스낵바 처리 */ }
+
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU -> getImageStorageLauncher.launch(INPUT_TYPE)
+
+                else -> getPhotoPickerLauncher.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
             }
         },
-        onPhotoLongPress = viewModel::changeRepresentPhoto,
+        onPhotoPress = viewModel::changeRepresentPhoto,
         onDeleteClick = viewModel::deletePhoto,
-        onGenreClick = navigateToGenreSearch,
-        onTitleChange = { viewModel.updatePlainTextValue(it, PlainTextInputType.Title) },
-        onDescriptionChange = { viewModel.updatePlainTextValue(it, PlainTextInputType.Description) },
-        onSalePriceChange = { viewModel.updateNumericValue(it, NumeralInputType.ProductSalePrice) },
+        onGenreClick = onGenreSearchNavigate,
+        onTitleChange = { title -> viewModel.updatePlainTextValue(title, PlainTextInputType.Title) },
+        onDescriptionChange = { description -> viewModel.updatePlainTextValue(description, PlainTextInputType.Description) },
+        onSalePriceChange = { salePrice -> viewModel.updateNumericValue(salePrice, NumeralInputType.ProductSalePrice) },
         onProductConditionChange = viewModel::updateProductCondition,
         onPostFeeChange = viewModel::updatePostFeeType,
         onNormalPostStateChange = viewModel::updateNormalPostState,
-        onNormalPostFeeChange = { viewModel.updateNumericValue(it, NumeralInputType.NormalPostFee) },
+        onNormalPostFeeChange = { normalPostFee -> viewModel.updateNumericValue(normalPostFee, NumeralInputType.NormalPostFee) },
         onHalfPostStateChange = viewModel::updateHalfPostState,
-        onHalfPostFeeChange = { viewModel.updateNumericValue(it, NumeralInputType.HalfPostFee) },
+        onHalfPostFeeChange = { halfPostFee -> viewModel.updateNumericValue(halfPostFee, NumeralInputType.HalfPostFee) },
         onOfferCheckChange = viewModel::updateOfferAvailability,
-        onPurchasePriceChange = { viewModel.updateNumericValue(it, NumeralInputType.ProductPurchasePrice) },
+        onPurchasePriceChange = { purchasePrice -> viewModel.updateNumericValue(purchasePrice, NumeralInputType.ProductPurchasePrice) },
         updateButtonState = viewModel::updateButtonState,
         modifier = modifier,
     )
+}
+
+private fun handleUris(
+    uris: List<Uri>,
+    currentImageListSize: Int,
+    updatePhotoList: (List<String>) -> Unit,
+) {
+    val updatedListSize = currentImageListSize + uris.size
+    if (updatedListSize <= MAX_ITEMS) {
+        updatePhotoList(uris.map { it.toString() })
+    } else {
+        val remainingUris = uris.take(MAX_ITEMS - currentImageListSize)
+        updatePhotoList(remainingUris.map { it.toString() })
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -139,7 +139,7 @@ fun RegistrationScreen(
     registrationType: TradeType,
     onCloseClick: () -> Unit,
     onPhotoClick: () -> Unit,
-    onPhotoLongPress: (Int) -> Unit,
+    onPhotoPress: (Int) -> Unit,
     onDeleteClick: (Int) -> Unit,
     onGenreClick: () -> Unit,
     onTitleChange: (String) -> Unit,
@@ -153,7 +153,7 @@ fun RegistrationScreen(
     onHalfPostFeeChange: (String) -> Unit,
     onPurchasePriceChange: (String) -> Unit,
     onOfferCheckChange: (Boolean) -> Unit,
-    updateButtonState: (Boolean) -> Unit,
+    updateButtonState: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val paddedModifier = Modifier.padding(horizontal = 20.dp)
@@ -166,29 +166,10 @@ fun RegistrationScreen(
         }
     }
 
-    LaunchedEffect(uiState) {
-        val isCommonFieldsValid = uiState.title.isNotEmpty() && uiState.description.isNotEmpty() && uiState.imageUrlList.isNotEmpty()
-
-        val isPurchaseConditionValid = uiState.tradeType == TradeType.BUY && uiState.productPurchasePrice.isNotEmpty()
-
-        val isPostFeeValid = when {
-            uiState.isNormalPostChecked && uiState.normalPostFee.isNotEmpty() && (!uiState.isHalfPostChecked || uiState.halfPostFee.isNotEmpty()) -> true
-            !uiState.isNormalPostChecked && uiState.isHalfPostChecked && uiState.halfPostFee.isNotEmpty() -> true
-            else -> false
-        }
-
-        val isSaleConditionValid = uiState.tradeType == TradeType.SELL &&
-                uiState.productCondition != null &&
-                uiState.productSalePrice.isNotEmpty() &&
-                (uiState.isPostFeeIncluded || isPostFeeValid)
-
-        val isButtonEnabled = isCommonFieldsValid && (isPurchaseConditionValid || isSaleConditionValid)
-        updateButtonState(isButtonEnabled)
-    }
+    LaunchedEffect(uiState) { updateButtonState() }
 
     LazyColumn(
-        modifier = modifier
-            .background(NapzakMarketTheme.colors.white),
+        modifier = modifier.background(NapzakMarketTheme.colors.white),
         state = listState,
     ) {
         stickyHeader {
@@ -217,7 +198,7 @@ fun RegistrationScreen(
                 modifier = Modifier,
                 imageUrlList = uiState.imageUrlList,
                 onPhotoClick = onPhotoClick,
-                onLongPress = onPhotoLongPress,
+                onPress = onPhotoPress,
                 onDeleteClick = onDeleteClick,
             )
         }
@@ -244,7 +225,7 @@ fun RegistrationScreen(
                 placeholder = stringResource(regi_title_placeholder),
                 onTextChange = onTitleChange,
                 isTitle = true,
-                maxLength = 48,
+                maxLength = MAX_TITLE_LENGTH,
             )
             Spacer(modifier = Modifier.height(35.dp))
         }
@@ -262,7 +243,7 @@ fun RegistrationScreen(
                 placeholder = stringResource(regi_description_placeholder),
                 onTextChange = onDescriptionChange,
                 isTitle = false,
-                maxLength = 240,
+                maxLength = MAX_DESCRIPTION_LENGTH,
             )
         }
         if (registrationType == TradeType.SELL) {
@@ -278,15 +259,15 @@ fun RegistrationScreen(
                     postFeeType = if (uiState.isPostFeeIncluded) PostFeeType.INCLUDED else PostFeeType.EXCLUDED,
                     onPostFeeChange = onPostFeeChange,
                     isNormalPostChecked = uiState.isNormalPostChecked,
-                    onNormalPostCheckedChange = {
-                        onNormalPostStateChange(it)
+                    onNormalPostCheckedChange = { normalCheckState ->
+                        onNormalPostStateChange(normalCheckState)
                         if (!uiState.isNormalPostChecked) onNormalPostFeeChange(BLANK)
                     },
                     normalPostFee = uiState.normalPostFee,
                     onNormalPostFeeChange = onNormalPostFeeChange,
                     isHalfPostChecked = uiState.isHalfPostChecked,
-                    onHalfPostCheckedChange = {
-                        onHalfPostStateChange(it)
+                    onHalfPostCheckedChange = { halfCheckState ->
+                        onHalfPostStateChange(halfCheckState)
                         if (!uiState.isHalfPostChecked) onHalfPostFeeChange(BLANK)
                     },
                     halfPostFee = uiState.halfPostFee,
@@ -312,12 +293,14 @@ fun RegistrationScreen(
                     .fillMaxWidth(),
                 text = stringResource(register),
                 onClick = { /*TODO*/ },
-                buttonColors = ButtonDefaults.buttonColors().copy(
-                    containerColor = NapzakMarketTheme.colors.purple30,
-                    contentColor = NapzakMarketTheme.colors.white,
-                    disabledContainerColor = NapzakMarketTheme.colors.gray400,
-                    disabledContentColor = NapzakMarketTheme.colors.white,
-                ),
+                buttonColors = with(NapzakMarketTheme.colors) {
+                    ButtonDefaults.buttonColors().copy(
+                        containerColor = purple30,
+                        contentColor = white,
+                        disabledContainerColor = gray400,
+                        disabledContentColor = white,
+                    )
+                },
                 shape = RoundedCornerShape(12.dp),
                 textStyle = NapzakMarketTheme.typography.bodyBold16,
                 contentPadding = PaddingValues(vertical = 15.dp),
@@ -331,6 +314,8 @@ private const val INPUT_TYPE = "image/*"
 private const val MAX_ITEMS = 10
 private const val MIN_ITEMS = 2
 private const val BLANK = ""
+private const val MAX_TITLE_LENGTH = 48
+private const val MAX_DESCRIPTION_LENGTH = 240
 
 @Preview
 @Composable
@@ -339,7 +324,7 @@ private fun RegistrationScreenPreview() {
         RegistrationRoute(
             tradeType = "팔아요",
             navigateUp = { },
-            navigateToGenreSearch = { },
+            onGenreSearchNavigate = { },
         )
     }
 }

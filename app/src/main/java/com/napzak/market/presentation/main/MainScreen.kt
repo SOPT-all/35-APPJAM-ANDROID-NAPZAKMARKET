@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.presentation.chat.chat.navigation.chatGraph
@@ -30,11 +31,11 @@ import com.napzak.market.presentation.marketinfo.navigation.navigateToMarketInfo
 import com.napzak.market.presentation.mypage.navigation.myPageGraph
 import com.napzak.market.presentation.onboarding.navigation.navigateToOnboarding
 import com.napzak.market.presentation.onboarding.navigation.onboardingGraph
+import com.napzak.market.presentation.prepare.navigation.navigateToPrepare
+import com.napzak.market.presentation.prepare.navigation.prepareGraph
 import com.napzak.market.presentation.registration.navigation.navigateToGenreSearch
 import com.napzak.market.presentation.registration.navigation.navigateToRegistration
 import com.napzak.market.presentation.registration.navigation.registrationGraph
-import com.napzak.market.presentation.prepare.navigation.navigateToPrepare
-import com.napzak.market.presentation.prepare.navigation.prepareGraph
 import com.napzak.market.presentation.splash.navigation.splashGraph
 import kotlinx.collections.immutable.toImmutableList
 
@@ -162,8 +163,11 @@ private fun MainNavHost(
         registrationGraph(
             modifier = modifier,
             navigateUp = navigator.navController::navigateUp,
-            navigateToGenreSearch = navigator.navController::navigateToGenreSearch,
-            navController = navigator.navController,
+            onGenreSearchNavigate = navigator.navController::navigateToGenreSearch,
+            getBackStackViewModel = {
+                navigator.navController.previousBackStackEntry?.let { hiltViewModel(it) }
+                    ?: hiltViewModel()
+            },
         )
     }
 }

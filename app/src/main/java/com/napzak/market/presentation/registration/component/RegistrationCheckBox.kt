@@ -29,6 +29,7 @@ fun RegistrationCheckBox(
 ) {
     val checkBox =
         if (isChecked) R.drawable.ic_checkbox_selected_20 else R.drawable.ic_checkbox_unselected_20
+
     Icon(
         modifier = modifier
             .noRippleClickable { onCheckChange(!isChecked) },

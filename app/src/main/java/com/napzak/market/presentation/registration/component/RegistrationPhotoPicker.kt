@@ -45,7 +45,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  *
  * @param imageUrlList
  * @param onPhotoClick
- * @param onLongPress
+ * @param onPress
  * @param onDeleteClick
  * @param modifier
  */
@@ -54,7 +54,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 fun RegistrationPhotoPicker(
     imageUrlList: List<String>,
     onPhotoClick: () -> Unit,
-    onLongPress: (Int) -> Unit,
+    onPress: (Int) -> Unit,
     onDeleteClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -82,7 +82,7 @@ fun RegistrationPhotoPicker(
                         .padding(end = if (index == imageUrlList.lastIndex) 16.dp else 0.dp),
                     index = index,
                     imageUrl = url,
-                    onLongPress = { onLongPress(index) },
+                    onPress = { onPress(index) },
                     onDeleteClick = onDeleteClick,
                 )
                 Spacer(modifier = Modifier.width(3.dp))
@@ -108,7 +108,7 @@ private fun PhotoRegisterButton(
 ) {
     Column(
         modifier = modifier
-            .padding(top = 7.dp)
+            .padding(top = 8.dp)
             .width(80.dp)
             .aspectRatio(1f)
             .clip(RoundedCornerShape(12.dp))
@@ -145,7 +145,7 @@ private fun PhotoRegisterButton(
  *
  * @param index
  * @param onDeleteClick
- * @param onLongPress
+ * @param onPress
  * @param modifier
  */
 
@@ -154,7 +154,7 @@ private fun PhotoContainer(
     index: Int,
     imageUrl: String,
     onDeleteClick: (Int) -> Unit,
-    onLongPress: (Int) -> Unit,
+    onPress: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -162,12 +162,12 @@ private fun PhotoContainer(
     ) {
         Box(
             modifier = Modifier
-                .padding(top = 7.dp, end = 7.dp)
+                .padding(top = 8.dp, end = 8.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(NapzakMarketTheme.colors.gray600)
                 .width(80.dp)
                 .aspectRatio(1f)
-                .noRippleCombineClickable { onLongPress(index) },
+                .noRippleCombineClickable { onPress(index) },
         ) {
             AsyncImage(
                 model = imageUrl,
@@ -205,7 +205,7 @@ private fun RegistrationPhotoPickerPreview() {
         RegistrationPhotoPicker(
             imageUrlList = listOf("1", "2", "3"),
             onPhotoClick = { },
-            onLongPress = { },
+            onPress = { },
             onDeleteClick = { },
         )
     }

@@ -40,7 +40,7 @@ fun ProductConditionGridButton(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        ProductConditionType.entries.chunked(2).forEach { rowItems ->
+        ProductConditionType.entries.chunked(GRID_BUTTON_COLUMN_COUNT).forEach { rowItems ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -84,6 +84,8 @@ fun ProductConditionItem(
         )
     }
 }
+
+private const val GRID_BUTTON_COLUMN_COUNT = 2
 
 @Preview
 @Composable

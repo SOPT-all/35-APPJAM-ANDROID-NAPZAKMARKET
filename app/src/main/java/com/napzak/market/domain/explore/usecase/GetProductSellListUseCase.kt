@@ -11,12 +11,12 @@ class GetProductSellListUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         sortType: String,
-        genreIds: List<Genre>?,
+        genreItems: List<Genre>?,
         isOnSale: Boolean,
         isUnopened: Boolean,
     ): Result<List<ProductItem>> {
-        val genreIds = if (genreIds?.isNotEmpty() == true) {
-            genreIds.map { it.genreId }
+        val genreIds = if (genreItems?.isNotEmpty() == true) {
+            genreItems.map { it.genreId }
         } else {
             null
         }

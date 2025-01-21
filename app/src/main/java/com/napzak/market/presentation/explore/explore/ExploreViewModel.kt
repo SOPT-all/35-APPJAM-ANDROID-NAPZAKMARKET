@@ -179,7 +179,7 @@ class ExploreViewModel @Inject constructor(
                     sortType = sortType.name,
                     isOnSale = isOnSale,
                     isUnopened = isUnopened,
-                    genreIds = selectedGenreList,
+                    genreItems = selectedGenreList,
                 )
                     .onSuccess { response ->
                         if (response.isEmpty()) {
@@ -200,7 +200,7 @@ class ExploreViewModel @Inject constructor(
                 getProductBuyListUseCase(
                     sortType = sortType.name,
                     isOnSale = isOnSale,
-                    genreIds = selectedGenreList,
+                    genreItems = selectedGenreList,
                 )
                     .onSuccess { response ->
                         if (response.isEmpty()) {

@@ -18,12 +18,13 @@ fun NavController.navigateToExplore(
 fun NavGraphBuilder.exploreGraph(
     onSearchNavigate: (String?) -> Unit,
     onBackButtonClick: () -> Unit,
+    onDetailPageNavigate: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     composable<Explore> { backStackEntry ->
         val savedStateHandle = backStackEntry.savedStateHandle
-        val searchTerm: String? = savedStateHandle["searchTerm"]
-        val genreId: Long? = savedStateHandle["genreId"]
+        val searchTerm: String? = savedStateHandle[SEARCH_TERM]
+        val genreId: Long? = savedStateHandle[GENRE_ID]
 
         ExploreRoute(
             searchTerm = searchTerm,
@@ -31,7 +32,7 @@ fun NavGraphBuilder.exploreGraph(
             modifier = modifier,
             onSearchNavigate = onSearchNavigate,
             onBackButtonClick = onBackButtonClick,
-            onProductDetailNavigate = { /* TODO: 상세페이지로 이동 */ },
+            onProductDetailNavigate = onDetailPageNavigate,
         )
     }
 }
@@ -41,3 +42,6 @@ data class Explore(
     val searchTerm: String? = null,
     val genreId: Long? = null,
 ) : MainTabRoute
+
+const val SEARCH_TERM = "searchTerm"
+const val GENRE_ID = "genreId"

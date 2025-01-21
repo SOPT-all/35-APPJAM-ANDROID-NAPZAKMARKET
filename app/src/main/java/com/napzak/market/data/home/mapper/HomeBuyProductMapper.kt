@@ -16,7 +16,7 @@ fun HomeBuyProductResponse.toProductItemList(): List<ProductItem> =
                 tradeType = tradeType,
                 tradeStatus = tradeStatus,
                 isInterested = isInterested,
-                isPriceNegotiable = false,
+                isPriceNegotiable = isPriceNegotiable,
             )
         }
     }

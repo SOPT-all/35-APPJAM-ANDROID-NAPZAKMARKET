@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HomeBuyProductResponse(
-    @SerialName("productSellList")
+    @SerialName("productBuyList")
     val productBuyList: List<ProductBuyItem>,
     @SerialName("nextCursor")
     val nextCursor: Boolean?,

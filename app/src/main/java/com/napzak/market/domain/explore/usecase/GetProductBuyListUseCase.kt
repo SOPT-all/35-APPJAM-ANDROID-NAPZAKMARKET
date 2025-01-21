@@ -25,7 +25,7 @@ class GetProductBuyListUseCase @Inject constructor(
                 sortOption = sortType,
                 genreId = genreIds,
                 isOnSale = isOnSale,
-                isUnopened = false
+                isUnopened = false,
             )
         )
     }

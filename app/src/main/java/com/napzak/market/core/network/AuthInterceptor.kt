@@ -5,6 +5,7 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import timber.log.Timber
 import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(
@@ -15,6 +16,9 @@ class AuthInterceptor @Inject constructor(
 
         val authRequest = runBlocking {
             val token = tokenDataStore.getAccessToken()
+
+            Timber.tag("AuthInterceptor").d("ACCESS TOKEN: $token")
+
             if (token?.isNotBlank() == true) {
                 originalRequest.newBuilder().newAuthBuilder().build()
             } else {

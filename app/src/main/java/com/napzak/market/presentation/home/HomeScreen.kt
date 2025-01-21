@@ -33,6 +33,7 @@ import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.component.snackbar.CommonSnackBar
 import com.napzak.market.core.designsystem.component.topbar.NapzakLogoTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.domain.home.model.HomeBanner
 import com.napzak.market.presentation.home.component.HomeBannerPager
 import com.napzak.market.presentation.home.component.HomeMostSearchedItemGroup
 import com.napzak.market.presentation.home.component.HomePopularItemGroup
@@ -113,9 +114,9 @@ private fun HomeScreen(
                 item {
                     HomeUiStateGroup(
                         uiState = uiState.bannerImages,
-                        success = { uiState ->
+                        success = { list ->
                             HomeBannerPager(
-                                bannerImages = uiState.toImmutableList(),
+                                bannerImages = list.toImmutableList(),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .aspectRatio(360f / 230f),
@@ -208,7 +209,7 @@ private fun HomeScreenPreview() {
             recommendedItems = HomeUiState.dummyData,
             popularItems = HomeUiState.dummyData,
             searchItems = HomeUiState.dummyData,
-            bannerImages = HomeUiState.dummyBanner
+            bannerImages = UiState.Success(listOf<HomeBanner>().toImmutableList()),
         ),
         onLikeClick = {},
         onItemClick = {},

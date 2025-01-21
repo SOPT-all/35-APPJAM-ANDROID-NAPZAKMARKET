@@ -1,24 +1,39 @@
 package com.napzak.market.presentation.home
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.napzak.market.core.common.state.UiState
+import com.napzak.market.domain.home.model.HomeBanner
+import com.napzak.market.domain.home.repository.HomeRepository
 import com.napzak.market.presentation.home.state.HomeUiState
-import com.napzak.market.presentation.home.state.HomeUiState.Companion.dummyBanner
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val homeRepository: HomeRepository
+) : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
-    fun getBannerImages() = _uiState.update { currentState ->
-        currentState.copy(
-            bannerImages = dummyBanner
-        )
+    fun getBannerImages() = viewModelScope.launch {
+        homeRepository.fetchHomeBannerList()
+            .onSuccess { response ->
+                if (response.isEmpty()) {
+                    updateBannerList(UiState.Empty)
+                } else {
+                    updateBannerList(UiState.Success(response))
+                }
+            }
+            .onFailure { response ->
+                Timber.e(response.message)
+            }
     }
 
     fun getRecommendedItems() = _uiState.update { currentState ->
@@ -38,4 +53,11 @@ class HomeViewModel @Inject constructor() : ViewModel() {
             searchItems = HomeUiState.dummyData
         )
     }
+
+    private fun updateBannerList(loadState: UiState<List<HomeBanner>>) =
+        _uiState.update { currentState ->
+            currentState.copy(
+                bannerImages = loadState
+            )
+        }
 }

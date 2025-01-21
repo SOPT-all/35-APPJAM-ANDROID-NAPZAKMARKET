@@ -31,6 +31,6 @@ data class ProductSellListResponse(
         @SerialName("isOwnedByCurrentUser")
         val isOwnedByCurrentUser: Boolean,
         @SerialName("nextCursor") // TODO: 서버측에 확인 필요
-        val nextCursor: String,
+        val nextCursor: String = "",
     )
 }

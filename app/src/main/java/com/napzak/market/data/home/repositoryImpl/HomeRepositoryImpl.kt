@@ -12,22 +12,22 @@ class HomeRepositoryImpl @Inject constructor(
     private val dataSource: HomeDataSource,
 ) : HomeRepository {
     override suspend fun fetchHomeBannerList(): Result<List<HomeBanner>> = runCatching {
-        val response = dataSource.getHomeBannerList()
+        val response = dataSource.getHomeBanners()
         response.data.toHomeBannerList()
     }
 
     override suspend fun fetchRecommendProductList(): Result<List<ProductItem>> = runCatching {
-        val response = dataSource.getRecommendProductList()
+        val response = dataSource.getRecommendProducts()
         response.data.toProductItemList()
     }
 
     override suspend fun fetchPopularProductList(): Result<List<ProductItem>> = runCatching {
-        val response = dataSource.getPopularProductList()
+        val response = dataSource.getPopularProducts()
         response.data.toProductItemList()
     }
 
     override suspend fun fetchBuyProductList(): Result<List<ProductItem>> = runCatching {
-        val response = dataSource.getBuyProductList()
+        val response = dataSource.getBuyProducts()
         response.data.toProductItemList()
     }
 }

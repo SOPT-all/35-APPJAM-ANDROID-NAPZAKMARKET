@@ -12,15 +12,15 @@ class HomeDataSource @Inject constructor(
     private val service: HomeService
 ) {
 
-    suspend fun getHomeBannerList(): BaseResponse<HomeBannerResponse> =
+    suspend fun getHomeBanners(): BaseResponse<HomeBannerResponse> =
         service.getHomeBanner()
 
-    suspend fun getRecommendProductList(): BaseResponse<HomeRecommendProductResponse> =
+    suspend fun getRecommendProducts(): BaseResponse<HomeRecommendProductResponse> =
         service.getHomeRecommendProduct()
 
-    suspend fun getPopularProductList(): BaseResponse<HomePopularProductResponse> =
+    suspend fun getPopularProducts(): BaseResponse<HomePopularProductResponse> =
         service.getHomePopularProduct()
 
-    suspend fun getBuyProductList(): BaseResponse<HomeBuyProductResponse> =
+    suspend fun getBuyProducts(): BaseResponse<HomeBuyProductResponse> =
         service.getHomeBuyProduct()
 }

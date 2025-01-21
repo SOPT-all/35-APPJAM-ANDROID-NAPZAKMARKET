@@ -15,7 +15,7 @@ data class HomeBannerResponse(
         @SerialName("bannerPhoto")
         val bannerPhoto: String,
         @SerialName("bannerUrl")
-        val bannerUrl: String,
+        val bannerUrl: String?,
         @SerialName("bannerSequence")
         val bannerSequence: Int,
     )

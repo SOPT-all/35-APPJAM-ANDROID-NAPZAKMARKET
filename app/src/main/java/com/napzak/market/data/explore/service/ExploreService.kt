@@ -32,4 +32,34 @@ interface ExploreService {
         @Query("cursor")
         cursor: String,
     ): BaseResponse<ProductBuyItemsResponse>
+
+    @GET("products/sell/search")
+    suspend fun getSearchedProductSellItems(
+        @Query("searchWord")
+        searchWord: String,
+        @Query("sortOption")
+        sortOption: String = "RECENT",
+        @Query("isOnSale")
+        isOnSale: Boolean = false,
+        @Query("isUnopened")
+        isUnopened: Boolean = false,
+        @Query("genreId")
+        genreIds: List<Long>? = null,
+        @Query("cursor")
+        cursor: String,
+    )
+
+    @GET("products/buy/search")
+    suspend fun getSearchedProductBuyItems(
+        @Query("searchWord")
+        searchWord: String,
+        @Query("sortOption")
+        sortOption: String = "RECENT",
+        @Query("isOnSale")
+        isOnSale: Boolean = false,
+        @Query("genreId")
+        genreIds: List<Long>? = null,
+        @Query("cursor")
+        cursor: String,
+    )
 }

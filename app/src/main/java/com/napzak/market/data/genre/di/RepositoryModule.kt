@@ -15,6 +15,6 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindGenreRepository(
-        genreRepositoryImpl: GenreRepositoryImpl
+        genreRepositoryImpl: GenreRepositoryImpl,
     ): GenreRepository
 }

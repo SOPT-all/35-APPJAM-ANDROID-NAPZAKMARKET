@@ -16,7 +16,7 @@ import com.napzak.market.domain.home.model.ProductItem
 fun HomeItemRow(
     itemList: List<ProductItem>,
     itemWidth: Dp,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     onItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -30,7 +30,7 @@ fun HomeItemRow(
                 item = item,
                 modifier = Modifier.width(itemWidth),
                 onItemClick = { onItemClick(item.productId) },
-                onLikeClick = { onLikeClick(item.productId) },
+                onLikeClick = { onLikeClick(item.productId, item.isInterested) },
             )
         }
     }

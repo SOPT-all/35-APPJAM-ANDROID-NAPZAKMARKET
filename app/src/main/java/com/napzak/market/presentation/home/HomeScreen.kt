@@ -54,16 +54,14 @@ fun HomeRoute(
 
     LaunchedEffect(Unit) {
         with(viewModel) {
+            loadItems()
             getBannerImages()
-            getRecommendedItems()
-            getPopularItems()
-            getMostSearchedItems()
         }
     }
 
     HomeScreen(
         uiState = uiState,
-        onLikeClick = {},
+        onLikeClick = viewModel::setProductInterest,
         onItemClick = onDetailPageNavigate,
         modifier = modifier,
     )
@@ -73,7 +71,7 @@ fun HomeRoute(
 @Composable
 private fun HomeScreen(
     uiState: HomeUiState,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     onItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -221,7 +219,7 @@ private fun HomeScreenPreview() {
             searchItems = dummyData,
             bannerImages = UiState.Success(listOf<HomeBanner>().toImmutableList()),
         ),
-        onLikeClick = {},
+        onLikeClick = {_, _ ->},
         onItemClick = {},
     )
 }

@@ -6,6 +6,7 @@ import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.home.model.HomeBanner
 import com.napzak.market.domain.home.model.ProductItem
 import com.napzak.market.domain.home.repository.HomeRepository
+import com.napzak.market.domain.interest.repository.InterestRepository
 import com.napzak.market.presentation.home.state.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,11 +16,13 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
+    private val interestRepository: InterestRepository,
 ) : ViewModel() {
     private val _bannerLoadState = MutableStateFlow<UiState<List<HomeBanner>>>(UiState.Loading)
     private val _recommendProductLoadState =
@@ -47,6 +50,12 @@ class HomeViewModel @Inject constructor(
         initialValue = HomeUiState(),
     )
 
+    suspend fun loadItems() {
+        getRecommendedItems()
+        getPopularItems()
+        getMostSearchedItems()
+    }
+
     fun getBannerImages() = viewModelScope.launch {
         homeRepository.fetchHomeBannerList()
             .onSuccess { response ->
@@ -61,7 +70,7 @@ class HomeViewModel @Inject constructor(
             }
     }
 
-    fun getRecommendedItems() = viewModelScope.launch {
+    private suspend fun getRecommendedItems() {
         homeRepository.fetchRecommendProductList()
             .onSuccess { response ->
                 if (response.isEmpty()) {
@@ -75,7 +84,7 @@ class HomeViewModel @Inject constructor(
             }
     }
 
-    fun getPopularItems() = viewModelScope.launch {
+    private suspend fun getPopularItems() {
         homeRepository.fetchPopularProductList()
             .onSuccess { response ->
                 if (response.isEmpty()) {
@@ -89,7 +98,7 @@ class HomeViewModel @Inject constructor(
             }
     }
 
-    fun getMostSearchedItems() = viewModelScope.launch {
+    private suspend fun getMostSearchedItems() {
         homeRepository.fetchBuyProductList()
             .onSuccess { response ->
                 if (response.isEmpty()) {
@@ -100,6 +109,34 @@ class HomeViewModel @Inject constructor(
             }
             .onFailure { response ->
                 UiState.Failure(response.message.toString())
+            }
+    }
+
+    fun setProductInterest(productId: Long, isInterested: Boolean) {
+        if (isInterested) {
+            deleteInterest(productId)
+        } else {
+            postInterest(productId)
+        }
+    }
+
+    private fun postInterest(productId: Long) = viewModelScope.launch {
+        interestRepository.postInterest(productId)
+            .onSuccess {
+                loadItems()
+            }
+            .onFailure {
+                Timber.e("error")
+            }
+    }
+
+    private fun deleteInterest(productId: Long) = viewModelScope.launch {
+        interestRepository.postInterest(productId)
+            .onSuccess {
+                loadItems()
+            }
+            .onFailure {
+                Timber.e("error")
             }
     }
 

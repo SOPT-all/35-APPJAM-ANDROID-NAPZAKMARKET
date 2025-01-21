@@ -51,10 +51,18 @@ class HomeViewModel @Inject constructor(
             }
     }
 
-    fun getPopularItems() = _uiState.update { currentState ->
-        currentState.copy(
-            popularItems = HomeUiState.dummyData
-        )
+    fun getPopularItems() = viewModelScope.launch {
+        homeRepository.fetchPopularProductList()
+            .onSuccess { response ->
+                if (response.isEmpty()) {
+                    updatePopularProductList(UiState.Empty)
+                } else {
+                    updatePopularProductList(UiState.Success(response))
+                }
+            }
+            .onFailure { response ->
+                Timber.e(response.message)
+            }
     }
 
     fun getMostSearchedItems() = _uiState.update { currentState ->
@@ -74,6 +82,13 @@ class HomeViewModel @Inject constructor(
         _uiState.update { currentState ->
             currentState.copy(
                 recommendedItems = loadState
+            )
+        }
+
+    private fun updatePopularProductList(loadState: UiState<List<ProductItem>>) =
+        _uiState.update { currentState ->
+            currentState.copy(
+                popularItems = loadState
             )
         }
 }

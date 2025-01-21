@@ -17,7 +17,7 @@ fun NavController.navigateToMarketInfo(
 
 fun NavGraphBuilder.marketInfoGraph(
     onBackButtonClick: () -> Unit,
-    onProductDetailNavigate: (Long) -> Unit,
+    onDetailPageNavigate: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     composable<MarketInfo> { backStackEntry ->
@@ -26,7 +26,7 @@ fun NavGraphBuilder.marketInfoGraph(
         MarketInfoRoute(
             storeId = marketInfo.storeId,
             onBackButtonClick = onBackButtonClick,
-            onProductDetailNavigate = onProductDetailNavigate,
+            onDetailPageNavigate = onDetailPageNavigate,
             modifier = modifier,
         )
     }

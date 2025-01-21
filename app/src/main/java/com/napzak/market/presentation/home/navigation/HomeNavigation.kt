@@ -12,10 +12,12 @@ import kotlinx.serialization.Serializable
 fun NavController.navigateToHome(navOptions: NavOptions? = null) = navigate(Home, navOptions)
 
 fun NavGraphBuilder.homeGraph(
+    onDetailPageNavigate: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     composable<Home> {
         HomeRoute(
+            onDetailPageNavigate = onDetailPageNavigate,
             modifier = modifier,
         )
     }

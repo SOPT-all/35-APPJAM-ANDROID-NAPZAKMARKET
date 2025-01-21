@@ -1,8 +1,12 @@
-package com.napzak.market.core.network
+package com.napzak.market.core.network.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.napzak.market.BuildConfig
+import com.napzak.market.BuildConfig.BASE_URL
 import com.napzak.market.BuildConfig.TEST_BASE_URL
+import com.napzak.market.core.network.AuthInterceptor
+import com.napzak.market.core.network.isJsonArray
+import com.napzak.market.core.network.isJsonObject
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -57,20 +61,48 @@ object NetworkModule {
         }
     }
 
+    @JWT
+    @Provides
+    @Singleton
+    fun provideJWTHttpLoggingInterceptor(authInterceptor: AuthInterceptor): Interceptor =
+        authInterceptor
+
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        loggingInterceptor: Interceptor
+        loggingInterceptor: Interceptor,
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
+        .build()
+
+    @JWT
+    @Provides
+    @Singleton
+    fun provideJWTOkHttpClient(
+        loggingInterceptor: Interceptor,
+        authInterceptor: AuthInterceptor,
+    ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
+        .addInterceptor(authInterceptor)
         .build()
 
     @Provides
     fun provideRetrofit(
         client: OkHttpClient,
-        factory: Converter.Factory
+        factory: Converter.Factory,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(TEST_BASE_URL)
+        .client(client)
+        .addConverterFactory(factory)
+        .build()
+
+    @JWT
+    @Provides
+    fun provideJWTRetrofit(
+        client: OkHttpClient,
+        factory: Converter.Factory,
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
         .client(client)
         .addConverterFactory(factory)
         .build()

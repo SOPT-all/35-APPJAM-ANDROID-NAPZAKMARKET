@@ -16,7 +16,7 @@ interface ExploreService {
         @Query("isUnopened")
         isUnopened: Boolean = false,
         @Query("genreId")
-        genreIds: List<String>? = null,
+        genreIds: List<Long>? = null,
         @Query("cursor")
         cursor: String,
     ): BaseResponse<ProductSellListResponse>
@@ -28,7 +28,7 @@ interface ExploreService {
         @Query("isOnSale")
         isOnSale: Boolean = false,
         @Query("genreId")
-        genreIds: List<String>? = null,
+        genreIds: List<Long>? = null,
         @Query("cursor")
         cursor: String,
     ): BaseResponse<ProductBuyListResponse>

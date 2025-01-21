@@ -8,6 +8,7 @@ import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.explore.model.ProductListFilter
 import com.napzak.market.domain.explore.repository.ExploreRepository
+import com.napzak.market.domain.explore.usecase.GetGenreIdsUseCase
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.explore.state.ExploreProductInformation
@@ -173,10 +174,13 @@ class ExploreViewModel @Inject constructor(
     }
 
     fun getExploreProductInformation() = viewModelScope.launch {
+        val getGenreIds = GetGenreIdsUseCase()
+        val genreIds = getGenreIds(uiState.value.selectedGenreList)
+
         val productListFilter = with(uiState.value) {
             ProductListFilter(
                 sortOption = sortType.name,
-                genreId = selectedGenreList.getIdFromGenreList(),
+                genreId = genreIds,
                 isOnSale = isOnSale,
                 isUnopened = isUnopened,
             )
@@ -321,8 +325,4 @@ class ExploreViewModel @Inject constructor(
         private const val DEBOUNCE_DELAY = 500L
         private const val MAX_GENRE_SELECTION = 4
     }
-}
-
-private fun List<Genre>.getIdFromGenreList(): List<Long>? {
-    return if (this.isNotEmpty()) this.map { it.genreId } else null
 }

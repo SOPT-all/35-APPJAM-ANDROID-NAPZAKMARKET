@@ -139,6 +139,7 @@ fun SearchSuccessScreen(
                 searchTerm = searchTerm,
                 onTextChange = onTextChange,
                 onSearchButtonClick = onSearchButtonClick,
+                isInitialFocusNeeded = true,
             )
         }
 

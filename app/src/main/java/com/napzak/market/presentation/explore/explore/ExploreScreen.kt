@@ -203,6 +203,7 @@ fun ExploreSuccessScreen(
                     SearchBox(
                         placeholder = stringResource(id = R.string.explore_search_box_placeholder),
                         readOnly = true,
+                        onSearchButtonClick = { onSearchBoxClick(null) },
                         modifier = Modifier
                             .padding(horizontal = 20.dp)
                             .noRippleClickable { onSearchBoxClick(null) },
@@ -231,6 +232,7 @@ fun ExploreSuccessScreen(
                         placeholder = stringResource(R.string.explore_search_box_placeholder),
                         readOnly = true,
                         searchTerm = initSearchTerm.toString(),
+                        onSearchButtonClick = { onSearchBoxClick(initSearchTerm) },
                         modifier = Modifier
                             .noRippleClickable { onSearchBoxClick(initSearchTerm) },
                     )
@@ -257,6 +259,7 @@ fun ExploreSuccessScreen(
                     SearchBox(
                         placeholder = stringResource(R.string.explore_search_box_placeholder),
                         readOnly = true,
+                        onSearchButtonClick = { onSearchBoxClick(selectedGenreList[0].genreName) },
                         modifier = Modifier
                             .noRippleClickable { onSearchBoxClick(selectedGenreList[0].genreName) },
                     )

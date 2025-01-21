@@ -17,6 +17,8 @@ import com.napzak.market.presentation.chat.itemchat.navigation.navigateToItemCha
 import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
 import com.napzak.market.presentation.detailpage.navigation.navigateToDetailPage
 import com.napzak.market.presentation.dummy.navigation.dummyGraph
+import com.napzak.market.presentation.explore.explore.navigation.GENRE_ID
+import com.napzak.market.presentation.explore.explore.navigation.SEARCH_TERM
 import com.napzak.market.presentation.explore.explore.navigation.exploreGraph
 import com.napzak.market.presentation.explore.search.navigation.navigateToSearch
 import com.napzak.market.presentation.explore.search.navigation.searchGraph
@@ -115,11 +117,11 @@ private fun MainNavHost(
             modifier = modifier,
             onExploreNavigate = { searchTerm, genreId ->
                 navigator.navController.previousBackStackEntry?.savedStateHandle?.set(
-                    "searchTerm",
+                    SEARCH_TERM,
                     searchTerm
                 )
                 navigator.navController.previousBackStackEntry?.savedStateHandle?.set(
-                    "genreId",
+                    GENRE_ID,
                     genreId
                 )
                 navigator.navController.popBackStack()

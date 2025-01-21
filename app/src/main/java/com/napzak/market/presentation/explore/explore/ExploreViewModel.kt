@@ -6,7 +6,8 @@ import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.explore.model.ProductItem
+import com.napzak.market.domain.explore.model.ProductListFilter
+import com.napzak.market.domain.explore.repository.ExploreRepository
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.explore.state.ExploreProductInformation
@@ -21,11 +22,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
-    /* TODO: Repository 연결 */
+    private val exploreRepository: ExploreRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ExploreUiState())
     val uiState = _uiState.asStateFlow()
@@ -39,17 +41,19 @@ class ExploreViewModel @Inject constructor(
 
     fun initExploreScreenState(
         searchTerm: String?,
-        genreId: Long?
+        genreId: Long?,
     ) {
         val exploreScreenType = when {
             searchTerm != null && genreId != null -> {
                 initSelectedGenreList(searchTerm, genreId)
                 ExploreScreenType.GENRE_SEARCH_RESULT
             }
+
             searchTerm != null -> {
                 initSearchTerm(searchTerm)
                 ExploreScreenType.WORD_SEARCH_RESULT
             }
+
             else -> {
                 initSelectedGenreList(null, null)
                 initSearchTerm(null)
@@ -60,7 +64,7 @@ class ExploreViewModel @Inject constructor(
         updateUiState(exploreScreenType)
     }
 
-    private fun updateUiState(exploreScreenType: ExploreScreenType) {
+    private fun updateUiState(exploreScreenType: ExploreScreenType) { // TODO: 함수명 변경 필요
         _uiState.update { currentState ->
             currentState.copy(
                 exploreScreenType = exploreScreenType
@@ -70,7 +74,7 @@ class ExploreViewModel @Inject constructor(
 
     private fun initSelectedGenreList(
         genreName: String?,
-        genreId: Long?
+        genreId: Long?,
     ) {
         _uiState.update { currentState ->
             if (genreName == null) {
@@ -168,15 +172,49 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun getExploreProductInformation() {
-        /* TODO: 상품 리스트 조회 API 연결 */
-        updateLoadState(
-            loadState = UiState.Success(
-                ExploreProductInformation(
-                    productList = emptyList()
-                )
+    fun getExploreProductInformation() = viewModelScope.launch {
+        val productListFilter = with(uiState.value) {
+            ProductListFilter(
+                sortOption = sortType.name,
+                genreId = selectedGenreList.getIdFromGenreList(),
+                isOnSale = isOnSale,
+                isUnopened = isUnopened,
             )
-        )
+        }
+
+        if (uiState.value.tradeType == TradeType.SELL) {
+            exploreRepository.fetchSellProductItemList(productListFilter)
+                .onSuccess { response ->
+                    if (response.isEmpty()) {
+                        updateLoadState(UiState.Empty)
+                    } else {
+                        updateLoadState(
+                            UiState.Success(
+                                ExploreProductInformation(productList = response)
+                            )
+                        )
+                    }
+                }
+                .onFailure { response ->
+                    Timber.e(response.message)
+                }
+        } else {
+            exploreRepository.fetchBuyProductItemList(productListFilter)
+                .onSuccess { response ->
+                    if (response.isEmpty()) {
+                        updateLoadState(UiState.Empty)
+                    } else {
+                        updateLoadState(
+                            UiState.Success(
+                                ExploreProductInformation(productList = response)
+                            )
+                        )
+                    }
+                }
+                .onFailure { response ->
+                    Timber.e(response.message)
+                }
+        }
     }
 
     fun changeSearchText(newValue: String) = viewModelScope.launch {
@@ -286,4 +324,8 @@ class ExploreViewModel @Inject constructor(
         private const val DEBOUNCE_DELAY = 500L
         private const val MAX_GENRE_SELECTION = 4
     }
+}
+
+private fun List<Genre>.getIdFromGenreList(): List<Long>? {
+    return if (this.isNotEmpty()) this.map { it.genreId } else null
 }

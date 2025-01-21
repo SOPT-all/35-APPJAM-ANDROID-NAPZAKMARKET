@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ProductBuyListResponse(
-    @SerialName("ProductBuyList")
+    @SerialName("productBuyList")
     val productBuyList: List<ProductBuyItem>,
 ) {
     @Serializable

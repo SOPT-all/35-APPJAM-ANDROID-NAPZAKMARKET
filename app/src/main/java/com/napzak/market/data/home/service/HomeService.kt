@@ -5,7 +5,7 @@ import com.napzak.market.data.home.dto.HomeBannerResponse
 import retrofit2.http.GET
 
 interface HomeService {
-    @GET("banner/home")
+    @GET("banners/home")
     suspend fun getHomeBanner(): BaseResponse<HomeBannerResponse>
 
 }

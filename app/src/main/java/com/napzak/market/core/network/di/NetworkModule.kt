@@ -99,7 +99,7 @@ object NetworkModule {
     @JWT
     @Provides
     fun provideJWTRetrofit(
-        client: OkHttpClient,
+        @JWT client: OkHttpClient,
         factory: Converter.Factory,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)

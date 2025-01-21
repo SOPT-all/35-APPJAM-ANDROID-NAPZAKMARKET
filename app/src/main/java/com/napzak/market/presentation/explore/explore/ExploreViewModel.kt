@@ -71,7 +71,9 @@ class ExploreViewModel @Inject constructor(
     private fun updateUiState(exploreScreenType: ExploreScreenType) { // TODO: 함수명 변경 필요
         _uiState.update { currentState ->
             currentState.copy(
-                exploreScreenType = exploreScreenType
+                exploreScreenType = exploreScreenType,
+                tradeType = TradeType.SELL,
+                sortType = SortType.RECENT,
             )
         }
     }

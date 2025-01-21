@@ -69,7 +69,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        loggingInterceptor: Interceptor
+        loggingInterceptor: Interceptor,
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .build()
@@ -79,7 +79,7 @@ object NetworkModule {
     @Singleton
     fun provideJWTOkHttpClient(
         loggingInterceptor: Interceptor,
-        authInterceptor: AuthInterceptor
+        authInterceptor: AuthInterceptor,
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .addInterceptor(authInterceptor)
@@ -88,7 +88,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(
         client: OkHttpClient,
-        factory: Converter.Factory
+        factory: Converter.Factory,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(TEST_BASE_URL)
         .client(client)
@@ -99,7 +99,7 @@ object NetworkModule {
     @Provides
     fun provideJWTRetrofit(
         client: OkHttpClient,
-        factory: Converter.Factory
+        factory: Converter.Factory,
     ): Retrofit = Retrofit.Builder()
         .baseUrl("") //TODO: 서버 IP 주입
         .client(client)

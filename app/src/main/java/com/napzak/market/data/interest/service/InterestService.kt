@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 interface InterestService {
 
-    @POST("interests/{productId}")
+    @POST("interest/{productId}")
     suspend fun postInterest(@Path("productId") productId: Long): NoContentBaseResponse
 
     @DELETE("interest/{productId}")

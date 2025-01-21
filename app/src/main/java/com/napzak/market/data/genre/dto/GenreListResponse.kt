@@ -1,4 +1,4 @@
-package com.napzak.market.data.genre.service.dto
+package com.napzak.market.data.genre.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

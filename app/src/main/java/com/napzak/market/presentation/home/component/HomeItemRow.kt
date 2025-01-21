@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.napzak.market.domain.explore.model.ProductItem
+import com.napzak.market.domain.home.model.ProductItem
 
 @Composable
 fun HomeItemRow(

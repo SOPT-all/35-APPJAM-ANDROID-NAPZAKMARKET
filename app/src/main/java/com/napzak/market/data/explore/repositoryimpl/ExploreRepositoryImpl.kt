@@ -13,12 +13,12 @@ import javax.inject.Inject
 class ExploreRepositoryImpl @Inject constructor(
     private val dataSource: ExploreDataSource,
 ): ExploreRepository {
-    override suspend fun fetchSellProductItemList(request: ProductListFilter): Result<List<ProductItem>> = runCatching {
+    override suspend fun fetchSellProductItems(request: ProductListFilter): Result<List<ProductItem>> = runCatching {
         val response = dataSource.getProductSellList(request.toProductSellRequest())
         response.data.toProductSellList()
     }
 
-    override suspend fun fetchBuyProductItemList(request: ProductListFilter): Result<List<ProductItem>> = runCatching {
+    override suspend fun fetchBuyProductItems(request: ProductListFilter): Result<List<ProductItem>> = runCatching {
         val response = dataSource.getProductBuyList(request.toProductBuyRequest())
         response.data.toProductBuyList()
     }

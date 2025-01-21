@@ -21,7 +21,7 @@ class GetProductSellListUseCase @Inject constructor(
             null
         }
 
-        return exploreRepository.fetchSellProductItemList(
+        return exploreRepository.fetchSellProductItems(
             ProductListFilter(
                 sortOption = sortType,
                 genreId = genreIds,

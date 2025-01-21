@@ -7,16 +7,17 @@ import kotlinx.serialization.Serializable
 data class HomeBannerResponse(
     @SerialName("bannerList")
     val bannerList: List<BannerItem>
-) {
-    @Serializable
-    data class BannerItem(
-        @SerialName("bannerId")
-        val bannerId: Long,
-        @SerialName("bannerPhoto")
-        val bannerPhoto: String,
-        @SerialName("bannerUrl")
-        val bannerUrl: String?,
-        @SerialName("bannerSequence")
-        val bannerSequence: Int,
-    )
-}
+)
+
+@Serializable
+data class BannerItem(
+    @SerialName("bannerId")
+    val bannerId: Long,
+    @SerialName("bannerPhoto")
+    val bannerPhoto: String,
+    @SerialName("bannerUrl")
+    val bannerUrl: String?,
+    @SerialName("bannerSequence")
+    val bannerSequence: Int,
+)
+

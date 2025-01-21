@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -200,7 +199,6 @@ class ExploreViewModel @Inject constructor(
                     }
                 }
                 .onFailure { response ->
-                    Timber.e(response)
                     updateLoadState(UiState.Failure(response.toString()))
                 }
         } else {
@@ -217,7 +215,6 @@ class ExploreViewModel @Inject constructor(
                     }
                 }
                 .onFailure { response ->
-                    Timber.e(response)
                     updateLoadState(UiState.Failure(response.toString()))
                 }
         }

@@ -112,51 +112,37 @@ private fun HomeScreen(
                 }
 
                 item {
+
                     HomeUiStateGroup(
-                        uiState = uiState.bannerImages,
-                        success = { list ->
+                        uiState = uiState.isLoaded,
+                        success = {
                             HomeBannerPager(
-                                bannerImages = list.toImmutableList(),
+                                bannerImages = (uiState.bannerImages as UiState.Success).data.toImmutableList(),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .aspectRatio(360f / 230f),
                             )
-                        },
-                    )
 
-                    HomeUiStateGroup(
-                        uiState = uiState.recommendedItems,
-                        success = { list ->
                             HomeRecommendationItemGroup(
-                                recommendedItems = list.toImmutableList(),
+                                recommendedItems = (uiState.recommendedItems as UiState.Success).data.toImmutableList(),
                                 onLikeClick = onLikeClick,
                                 onItemClick = onItemClick,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 43.dp),
                             )
-                        },
-                    )
 
-                    HomeUiStateGroup(
-                        uiState = uiState.popularItems,
-                        success = { uiState ->
                             HomePopularItemGroup(
-                                popularItems = uiState.toImmutableList(),
+                                popularItems = (uiState.popularItems as UiState.Success).data.toImmutableList(),
                                 onLikeClick = onLikeClick,
                                 onItemClick = onItemClick,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 43.dp),
                             )
-                        },
-                    )
 
-                    HomeUiStateGroup(
-                        uiState = uiState.searchItems,
-                        success = { uiState ->
                             HomeMostSearchedItemGroup(
-                                searchedItems = uiState.toImmutableList(),
+                                searchedItems = (uiState.searchItems as UiState.Success).data.toImmutableList(),
                                 onLikeClick = onLikeClick,
                                 onItemClick = onItemClick,
                                 modifier = Modifier

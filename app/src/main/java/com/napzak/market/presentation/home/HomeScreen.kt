@@ -43,6 +43,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeRoute(
+    onDetailPageNavigate: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
@@ -60,7 +61,7 @@ fun HomeRoute(
     HomeScreen(
         uiState = uiState,
         onLikeClick = {},
-        onItemClick = {},
+        onItemClick = onDetailPageNavigate,
         modifier = modifier,
     )
 }

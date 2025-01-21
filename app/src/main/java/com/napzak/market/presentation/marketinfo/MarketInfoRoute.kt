@@ -45,7 +45,7 @@ import kotlin.String
 @Composable
 fun MarketInfoRoute(
     storeId: Long,
-    onProductDetailNavigate: (Long) -> Unit,
+    onDetailPageNavigate: (Long) -> Unit,
     onBackButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MarketInfoViewModel = hiltViewModel(),
@@ -74,7 +74,7 @@ fun MarketInfoRoute(
         onSoldOutClick = viewModel::updateSale,
         onUnopenClick = viewModel::updateUnopen,
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(BottomSheetType.SORT) },
-        onItemClick = onProductDetailNavigate,
+        onItemClick = onDetailPageNavigate,
         onLikeClick = viewModel::updateItemLikeButton,
         onDismissRequest = viewModel::updateBottomSheetVisibility,
         onSortItemClick = {

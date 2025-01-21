@@ -18,6 +18,7 @@ fun NavController.navigateToExplore(
 fun NavGraphBuilder.exploreGraph(
     onSearchNavigate: (String?) -> Unit,
     onBackButtonClick: () -> Unit,
+    onDetailPageNavigate: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     composable<Explore> { backStackEntry ->
@@ -31,7 +32,7 @@ fun NavGraphBuilder.exploreGraph(
             modifier = modifier,
             onSearchNavigate = onSearchNavigate,
             onBackButtonClick = onBackButtonClick,
-            onProductDetailNavigate = { /* TODO: 상세페이지로 이동 */ },
+            onProductDetailNavigate = onDetailPageNavigate,
         )
     }
 }

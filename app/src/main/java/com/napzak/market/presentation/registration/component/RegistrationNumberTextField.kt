@@ -22,7 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.napzak.market.R
+import com.napzak.market.R.string.regi_price_range
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**
@@ -92,7 +92,7 @@ fun RegistrationNumberTextField(
         }
         Spacer(modifier = Modifier.width(2.dp))
         Text(
-            text = stringResource(R.string.regi_price_range),
+            text = stringResource(regi_price_range),
             style = NapzakMarketTheme.typography.bodyMedium16,
             color = NapzakMarketTheme.colors.gray900,
         )

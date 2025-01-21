@@ -27,9 +27,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.napzak.market.R
+import com.napzak.market.R.string.regi_description
+import com.napzak.market.R.string.regi_description_placeholder
+import com.napzak.market.R.string.regi_price_placeholder
+import com.napzak.market.R.string.regi_product_image
+import com.napzak.market.R.string.regi_product_image_description
+import com.napzak.market.R.string.regi_title
 import com.napzak.market.R.string.regi_title_placeholder
 import com.napzak.market.R.string.regi_topbar_title
+import com.napzak.market.R.string.register
 import com.napzak.market.core.designsystem.component.button.CommonButton
 import com.napzak.market.core.designsystem.component.topbar.CloseTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
@@ -195,14 +201,14 @@ fun RegistrationScreen(
             Spacer(modifier = Modifier.height(20.dp))
             Text(
                 modifier = paddedModifier,
-                text = stringResource(R.string.regi_product_image),
+                text = stringResource(regi_product_image),
                 style = NapzakMarketTheme.typography.bodySemi16,
                 color = NapzakMarketTheme.colors.gray900,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 modifier = paddedModifier,
-                text = stringResource(R.string.regi_product_image_description),
+                text = stringResource(regi_product_image_description),
                 style = NapzakMarketTheme.typography.bodyMedium14,
                 color = NapzakMarketTheme.colors.gray600,
             )
@@ -227,7 +233,7 @@ fun RegistrationScreen(
             Spacer(modifier = Modifier.height(35.dp))
             Text(
                 modifier = paddedModifier,
-                text = stringResource(R.string.regi_title),
+                text = stringResource(regi_title),
                 style = NapzakMarketTheme.typography.bodySemi16,
                 color = NapzakMarketTheme.colors.gray900,
             )
@@ -245,7 +251,7 @@ fun RegistrationScreen(
         item {
             Text(
                 modifier = paddedModifier,
-                text = stringResource(R.string.regi_description),
+                text = stringResource(regi_description),
                 style = NapzakMarketTheme.typography.bodySemi16,
                 color = NapzakMarketTheme.colors.gray900,
             )
@@ -253,7 +259,7 @@ fun RegistrationScreen(
             RegistrationPlainTextField(
                 modifier = paddedModifier,
                 text = uiState.description,
-                placeholder = stringResource(R.string.regi_description_placeholder),
+                placeholder = stringResource(regi_description_placeholder),
                 onTextChange = onDescriptionChange,
                 isTitle = false,
                 maxLength = 240,
@@ -265,7 +271,7 @@ fun RegistrationScreen(
                 RegistrationSellGroup(
                     modifier = paddedModifier,
                     salePrice = uiState.productSalePrice,
-                    salePricePlaceHolder = stringResource(R.string.regi_price_placeholder),
+                    salePricePlaceHolder = stringResource(regi_price_placeholder),
                     onSalePriceChange = onSalePriceChange,
                     productCondition = uiState.productCondition,
                     onProductConditionChange = onProductConditionChange,
@@ -304,7 +310,7 @@ fun RegistrationScreen(
             CommonButton(
                 modifier = paddedModifier
                     .fillMaxWidth(),
-                text = stringResource(R.string.register),
+                text = stringResource(register),
                 onClick = { /*TODO*/ },
                 buttonColors = ButtonDefaults.buttonColors().copy(
                     containerColor = NapzakMarketTheme.colors.purple30,

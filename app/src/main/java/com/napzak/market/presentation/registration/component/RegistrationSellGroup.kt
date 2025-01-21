@@ -6,7 +6,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
@@ -16,7 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.napzak.market.R
+import com.napzak.market.R.string.regi_half_price_post
+import com.napzak.market.R.string.regi_half_price_post_placeholder
+import com.napzak.market.R.string.regi_normal_post
+import com.napzak.market.R.string.regi_normal_post_placeholder
+import com.napzak.market.R.string.regi_post_fee
+import com.napzak.market.R.string.regi_price
+import com.napzak.market.R.string.regi_product_condition
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.presentation.registration.type.PostFeeType
@@ -44,7 +49,7 @@ fun RegistrationSellGroup(
         modifier = modifier,
     ) {
         Text(
-            text = stringResource(R.string.regi_product_condition),
+            text = stringResource(regi_product_condition),
             style = NapzakMarketTheme.typography.bodySemi16,
             color = NapzakMarketTheme.colors.gray900,
         )
@@ -64,7 +69,7 @@ fun RegistrationSellGroup(
         modifier = modifier,
     ) {
         Text(
-            text = stringResource(R.string.regi_price),
+            text = stringResource(regi_price),
             style = NapzakMarketTheme.typography.bodySemi16,
             color = NapzakMarketTheme.colors.gray900,
         )
@@ -79,7 +84,7 @@ fun RegistrationSellGroup(
         )
         Spacer(modifier = Modifier.height(36.dp))
         Text(
-            text = stringResource(R.string.regi_post_fee),
+            text = stringResource(regi_post_fee),
             style = NapzakMarketTheme.typography.bodySemi16,
             color = NapzakMarketTheme.colors.gray900,
         )
@@ -95,18 +100,18 @@ fun RegistrationSellGroup(
             Column {
                 Spacer(modifier = Modifier.height(12.dp))
                 PostOptionCard(
-                    title = stringResource(R.string.regi_normal_post),
+                    title = stringResource(regi_normal_post),
                     price = normalPostFee,
-                    placeHolder = stringResource(R.string.regi_normal_post_placeholder),
+                    placeHolder = stringResource(regi_normal_post_placeholder),
                     onPriceChange = onNormalPostFeeChange,
                     isChecked = isNormalPostChecked,
                     onCheckedChange = onNormalPostCheckedChange,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 PostOptionCard(
-                    title = stringResource(R.string.regi_half_price_post),
+                    title = stringResource(regi_half_price_post),
                     price = halfPostFee,
-                    placeHolder = stringResource(R.string.regi_half_price_post_placeholder),
+                    placeHolder = stringResource(regi_half_price_post_placeholder),
                     onPriceChange = onHalfPostFeeChange,
                     isChecked = isHalfPostChecked,
                     onCheckedChange = onHalfPostCheckedChange,

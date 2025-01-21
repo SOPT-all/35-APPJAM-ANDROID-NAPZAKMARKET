@@ -16,10 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.napzak.market.R
+import com.napzak.market.R.string.regi_image_number
+import com.napzak.market.R.string.x_circle_button
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.common.extension.noRippleCombineClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
@@ -120,7 +118,7 @@ private fun PhotoRegisterButton(
         verticalArrangement = Arrangement.Center,
     ) {
         Icon(
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_photo_28),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_photo_28),
             contentDescription = null,
             tint = Color.Unspecified,
         )
@@ -130,7 +128,7 @@ private fun PhotoRegisterButton(
                 append(imageNumber.toString())
             }
             withStyle(style = SpanStyle(color = NapzakMarketTheme.colors.gray500)) {
-                append(stringResource(R.string.regi_image_number))
+                append(stringResource(regi_image_number))
             }
         }
         Text(
@@ -194,7 +192,7 @@ private fun PhotoContainer(
                 .align(Alignment.TopEnd)
                 .noRippleClickable { onDeleteClick(index) },
             imageVector = ImageVector.vectorResource(R.drawable.ic_close_circle_28),
-            contentDescription = stringResource(R.string.x_circle_button),
+            contentDescription = stringResource(x_circle_button),
             tint = Color.Unspecified,
         )
     }

@@ -33,7 +33,9 @@ import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.component.snackbar.CommonSnackBar
 import com.napzak.market.core.designsystem.component.topbar.NapzakLogoTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.home.model.HomeBanner
+import com.napzak.market.domain.home.model.ProductItem
 import com.napzak.market.presentation.home.component.HomeBannerPager
 import com.napzak.market.presentation.home.component.HomeMostSearchedItemGroup
 import com.napzak.market.presentation.home.component.HomePopularItemGroup
@@ -112,51 +114,37 @@ private fun HomeScreen(
                 }
 
                 item {
+
                     HomeUiStateGroup(
-                        uiState = uiState.bannerImages,
-                        success = { list ->
+                        uiState = uiState.isLoaded,
+                        success = {
                             HomeBannerPager(
-                                bannerImages = list.toImmutableList(),
+                                bannerImages = (uiState.bannerImages as UiState.Success).data.toImmutableList(),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .aspectRatio(360f / 230f),
                             )
-                        },
-                    )
 
-                    HomeUiStateGroup(
-                        uiState = uiState.recommendedItems,
-                        success = { uiState ->
                             HomeRecommendationItemGroup(
-                                recommendedItems = uiState.toImmutableList(),
+                                recommendedItems = (uiState.recommendedItems as UiState.Success).data.toImmutableList(),
                                 onLikeClick = onLikeClick,
                                 onItemClick = onItemClick,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 43.dp),
                             )
-                        },
-                    )
 
-                    HomeUiStateGroup(
-                        uiState = uiState.popularItems,
-                        success = { uiState ->
                             HomePopularItemGroup(
-                                popularItems = uiState.toImmutableList(),
+                                popularItems = (uiState.popularItems as UiState.Success).data.toImmutableList(),
                                 onLikeClick = onLikeClick,
                                 onItemClick = onItemClick,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 43.dp),
                             )
-                        },
-                    )
 
-                    HomeUiStateGroup(
-                        uiState = uiState.searchItems,
-                        success = { uiState ->
                             HomeMostSearchedItemGroup(
-                                searchedItems = uiState.toImmutableList(),
+                                searchedItems = (uiState.searchItems as UiState.Success).data.toImmutableList(),
                                 onLikeClick = onLikeClick,
                                 onItemClick = onItemClick,
                                 modifier = Modifier
@@ -204,11 +192,33 @@ private fun <T> HomeUiStateGroup(
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
+    val dummyData = UiState.Success(
+        mutableListOf<ProductItem>().apply {
+            repeat(4) {
+                add(
+                    ProductItem(
+                        productId = 1,
+                        productName = "딸기 마이멜로디 마스코트 인형",
+                        genreName = "산리오",
+                        price = 35000,
+                        uploadTime = "1시간전",
+                        photo = "",
+                        isInterested = false,
+                        tradeType = TradeType.SELL.name,
+                        tradeStatus = "판매중",
+                        isOwnedByCurrentUser = false,
+                        isPriceNegotiable = false,
+                    )
+                )
+            }
+        }
+    )
+
     HomeScreen(
         uiState = HomeUiState(
-            recommendedItems = HomeUiState.dummyData,
-            popularItems = HomeUiState.dummyData,
-            searchItems = HomeUiState.dummyData,
+            recommendedItems = dummyData,
+            popularItems = dummyData,
+            searchItems = dummyData,
             bannerImages = UiState.Success(listOf<HomeBanner>().toImmutableList()),
         ),
         onLikeClick = {},

@@ -7,10 +7,10 @@ import retrofit2.http.Query
 
 interface GenreService {
     @GET("genres")
-    suspend fun getInitialGenreList(): BaseResponse<GenreListResponse>
+    suspend fun getInitialGenreItems(): BaseResponse<GenreListResponse>
 
     @GET("genres/search")
-    suspend fun getSearchResultGenreList(
+    suspend fun getSearchResultGenreItems(
         @Query("searchWord")
         searchWord: String,
     ): BaseResponse<GenreListResponse>

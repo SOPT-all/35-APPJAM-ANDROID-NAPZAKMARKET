@@ -9,15 +9,15 @@ import javax.inject.Inject
 class GenreRepositoryImpl @Inject constructor(
     private val dataSource: GenreDataSource,
 ) : GenreRepository {
-    override suspend fun fetchInitialGenreList(): Result<List<Genre>> =
+    override suspend fun fetchInitialGenreItems(): Result<List<Genre>> =
         runCatching {
-            val response = dataSource.getInitialGenreList()
+            val response = dataSource.getInitialGenreItems()
             response.data.toGenreList()
         }
 
-    override suspend fun fetchSearchResultGenreList(searchTerm: String): Result<List<Genre>> =
+    override suspend fun fetchSearchResultGenreItems(searchTerm: String): Result<List<Genre>> =
         runCatching {
-            val response = dataSource.getSearchResultGenreList(searchTerm)
+            val response = dataSource.getSearchResultGenreItems(searchTerm)
             response.data.toGenreList()
         }
 }

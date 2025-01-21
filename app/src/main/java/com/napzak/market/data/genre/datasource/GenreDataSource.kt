@@ -8,9 +8,9 @@ import javax.inject.Inject
 class GenreDataSource @Inject constructor(
     private val service: GenreService,
 ) {
-    suspend fun getInitialGenreList(): BaseResponse<GenreListResponse> =
-        service.getInitialGenreList()
+    suspend fun getInitialGenreItems(): BaseResponse<GenreListResponse> =
+        service.getInitialGenreItems()
 
-    suspend fun getSearchResultGenreList(searchWord: String): BaseResponse<GenreListResponse> =
-        service.getSearchResultGenreList(searchWord)
+    suspend fun getSearchResultGenreItems(searchWord: String): BaseResponse<GenreListResponse> =
+        service.getSearchResultGenreItems(searchWord)
 }

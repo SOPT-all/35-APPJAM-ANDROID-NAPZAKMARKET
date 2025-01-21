@@ -17,7 +17,7 @@ object ServiceModule {
     @Provides
     @Singleton
     fun providesInterestService(
-        @JWT retrofit: Retrofit
+        @JWT retrofit: Retrofit,
     ): InterestService = retrofit.create()
 
 }

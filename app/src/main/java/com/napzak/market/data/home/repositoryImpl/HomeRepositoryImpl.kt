@@ -20,4 +20,10 @@ class HomeRepositoryImpl @Inject constructor(
         val response = dataSource.getRecommendProductList()
         response.data.toProductItemList()
     }
+
+    override suspend fun fetchPopularProductList(): Result<List<ProductItem>> = runCatching {
+        val response = dataSource.getPopularProductList()
+        response.data.toProductItemList()
+
+    }
 }

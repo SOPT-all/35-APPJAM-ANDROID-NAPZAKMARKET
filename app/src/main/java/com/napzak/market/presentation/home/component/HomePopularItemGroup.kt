@@ -35,8 +35,8 @@ fun HomePopularItemGroup(
     onItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context by rememberUpdatedState( LocalContext.current )
-    val density by rememberUpdatedState( LocalDensity.current )
+    val context by rememberUpdatedState(LocalContext.current)
+    val density by rememberUpdatedState(LocalDensity.current)
 
     val itemWidth = remember {
         val metrics = context.resources.displayMetrics
@@ -124,7 +124,7 @@ private fun HomePopularGroupPreview() {
                             price = 35000,
                             uploadTime = "1시간전",
                             photo = "",
-                            isLiked = false,
+                            isInterested = false,
                             tradeType = "팔아요",
                             tradeStatus = "판매중",
                             isPriceNegotiable = false,

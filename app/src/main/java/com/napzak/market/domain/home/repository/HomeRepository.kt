@@ -7,4 +7,6 @@ interface HomeRepository {
     suspend fun fetchHomeBannerList(): Result<List<HomeBanner>>
 
     suspend fun fetchRecommendProductList(): Result<List<ProductItem>>
+
+    suspend fun fetchPopularProductList(): Result<List<ProductItem>>
 }

@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.napzak.market.BuildConfig
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -31,6 +32,6 @@ class TokenDataStore @Inject constructor(
         private const val TOKEN_KEY = "token_key"
         private val preferencesTokenKey = stringPreferencesKey(TOKEN_KEY)
 
-        private const val TEMPORARY_TOKEN = ""
+        private const val TEMPORARY_TOKEN = BuildConfig.ACCESS_TOKEN
     }
 }

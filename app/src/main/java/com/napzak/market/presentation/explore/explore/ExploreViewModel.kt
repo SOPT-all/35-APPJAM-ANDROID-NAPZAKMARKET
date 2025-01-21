@@ -6,9 +6,8 @@ import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.explore.model.ProductListFilter
-import com.napzak.market.domain.explore.repository.ExploreRepository
-import com.napzak.market.domain.explore.usecase.GetGenreIdsUseCase
+import com.napzak.market.domain.explore.usecase.GetProductBuyListUseCase
+import com.napzak.market.domain.explore.usecase.GetProductSellListUseCase
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.explore.state.ExploreProductInformation
@@ -27,7 +26,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
-    private val exploreRepository: ExploreRepository,
+    private val getProductSellListUseCase: GetProductSellListUseCase,
+    private val getProductBuyListUseCase: GetProductBuyListUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ExploreUiState())
     val uiState = _uiState.asStateFlow()
@@ -173,50 +173,50 @@ class ExploreViewModel @Inject constructor(
     }
 
     fun getExploreProductInformation() = viewModelScope.launch {
-        val getGenreIds = GetGenreIdsUseCase()
-        val genreIds = getGenreIds(uiState.value.selectedGenreList)
-
-        val productListFilter = with(uiState.value) {
-            ProductListFilter(
-                sortOption = sortType.name,
-                genreId = genreIds,
-                isOnSale = isOnSale,
-                isUnopened = isUnopened,
-            )
-        }
-
-        if (uiState.value.tradeType == TradeType.SELL) {
-            exploreRepository.fetchSellProductItemList(productListFilter)
-                .onSuccess { response ->
-                    if (response.isEmpty()) {
-                        updateLoadState(UiState.Empty)
-                    } else {
-                        updateLoadState(
-                            UiState.Success(
-                                ExploreProductInformation(productList = response)
+        with(uiState.value) {
+            if (tradeType == TradeType.SELL) {
+                getProductSellListUseCase(
+                    sortType = sortType.name,
+                    isOnSale = isOnSale,
+                    isUnopened = isUnopened,
+                    genreIds = selectedGenreList,
+                )
+                    .onSuccess { response ->
+                        if (response.isEmpty()) {
+                            updateLoadState(UiState.Empty)
+                        } else {
+                            updateLoadState(
+                                UiState.Success(
+                                    ExploreProductInformation(productList = response)
+                                )
                             )
-                        )
+                        }
                     }
-                }
-                .onFailure { response ->
-                    updateLoadState(UiState.Failure(response.toString()))
-                }
-        } else {
-            exploreRepository.fetchBuyProductItemList(productListFilter)
-                .onSuccess { response ->
-                    if (response.isEmpty()) {
-                        updateLoadState(UiState.Empty)
-                    } else {
-                        updateLoadState(
-                            UiState.Success(
-                                ExploreProductInformation(productList = response)
+                    .onFailure { response ->
+                        updateLoadState(UiState.Failure(response.toString()))
+                    }
+
+            } else {
+                getProductBuyListUseCase(
+                    sortType = sortType.name,
+                    isOnSale = isOnSale,
+                    genreIds = selectedGenreList,
+                )
+                    .onSuccess { response ->
+                        if (response.isEmpty()) {
+                            updateLoadState(UiState.Empty)
+                        } else {
+                            updateLoadState(
+                                UiState.Success(
+                                    ExploreProductInformation(productList = response)
+                                )
                             )
-                        )
+                        }
                     }
-                }
-                .onFailure { response ->
-                    updateLoadState(UiState.Failure(response.toString()))
-                }
+                    .onFailure { response ->
+                        updateLoadState(UiState.Failure(response.toString()))
+                    }
+            }
         }
     }
 

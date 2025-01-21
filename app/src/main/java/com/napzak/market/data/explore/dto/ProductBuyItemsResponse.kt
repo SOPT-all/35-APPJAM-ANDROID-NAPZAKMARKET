@@ -32,7 +32,7 @@ data class ProductBuyItemsResponse(
         val isPriceNegotiable: Boolean,
         @SerialName("isOwnedByCurrentUser")
         val isOwnedByCurrentUser: Boolean,
-        @SerialName("nextCursor") // TODO: 서버측에 확인 필요
+        @SerialName("nextCursor")
         val nextCursor: String = "",
     )
 }

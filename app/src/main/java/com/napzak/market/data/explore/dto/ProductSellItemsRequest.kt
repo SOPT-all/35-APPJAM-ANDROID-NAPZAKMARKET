@@ -13,4 +13,6 @@ data class ProductSellItemsRequest(
     val isOnSale: Boolean,
     @SerialName("isUnopened")
     val isUnopened: Boolean,
+    @SerialName("nextCursor")
+    val nextCursor: String = "",
 )

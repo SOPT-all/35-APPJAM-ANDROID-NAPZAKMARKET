@@ -10,6 +10,7 @@ fun ProductListFilter.toProductBuyRequest(): ProductBuyItemsRequest =
         sortOption = this.sortOption,
         isOnSale = this.isOnSale,
         genreIds = this.genreId,
+        nextCursor = "",
     )
 
 fun ProductBuyItemsResponse.toProductBuyList(): List<ProductItem> =

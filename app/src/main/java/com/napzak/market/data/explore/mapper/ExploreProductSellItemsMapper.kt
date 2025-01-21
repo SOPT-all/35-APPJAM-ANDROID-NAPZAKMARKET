@@ -11,6 +11,7 @@ fun ProductListFilter.toProductSellRequest(): ProductSellItemsRequest =
         isOnSale = this.isOnSale,
         isUnopened = this.isUnopened,
         genreIds = this.genreId,
+        nextCursor = "",
     )
 
 fun ProductSellItemsResponse.toProductSellList(): List<ProductItem> =

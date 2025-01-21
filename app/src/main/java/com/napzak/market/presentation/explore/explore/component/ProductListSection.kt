@@ -80,30 +80,7 @@ fun ProductListSection(
 private fun ProductListSectionPreview(modifier: Modifier = Modifier) {
     ProductListSection(
         tradeType = TradeType.BUY,
-        productList = listOf(
-            ProductItem(
-                productId = 201,
-                genreName = "짱구",
-                productName = "피규어",
-                photo = "",
-                price = 120000,
-                uploadTime = "3일",
-                isLiked = true,
-                tradeType = "SELL",
-                tradeStatus = "BEFORE_TRADE",
-            ),
-            ProductItem(
-                productId = 201,
-                genreName = "짱구",
-                productName = "피규어",
-                photo = "",
-                price = 120000,
-                uploadTime = "3일",
-                isLiked = false,
-                tradeType = "SELL",
-                tradeStatus = "BEFORE_TRADE",
-            ),
-        ),
+        productList = emptyList(),
         onItemClick = { },
         onLikeClick = { },
         modifier = modifier,

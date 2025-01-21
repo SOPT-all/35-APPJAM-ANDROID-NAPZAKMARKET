@@ -18,21 +18,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.R
-import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**
@@ -40,6 +33,8 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  *
  * 배송비를 설정하는 card입니다.
  *
+ * @param isChecked
+ * @param onCheckedChange
  * @param title
  * @param price
  * @param placeHolder
@@ -49,14 +44,14 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 @Composable
 fun PostOptionCard(
+    isChecked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     title: String,
-    price: TextFieldValue,
+    price: String,
     placeHolder: String,
-    onPriceChange: (TextFieldValue) -> Unit,
+    onPriceChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var isChecked by remember { mutableStateOf(true) }
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -74,9 +69,7 @@ fun PostOptionCard(
             ) {
                 RegistrationCheckBox(
                     isChecked = isChecked,
-                    onCheckedChange = { newValue ->
-                        isChecked = newValue
-                    },
+                    onCheckChange = onCheckedChange,
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
@@ -119,33 +112,6 @@ fun PostOptionCard(
     }
 }
 
-/**
- * Registration check box
- *
- * 등록 화면에서 사용되는 checkbox
- *
- * @param isChecked
- * @param onCheckedChange
- * @param modifier
- */
-
-@Composable
-private fun RegistrationCheckBox(
-    isChecked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val checkBox =
-        if (isChecked) R.drawable.ic_checkbox_selected_20 else R.drawable.ic_checkbox_unselected_20
-    Icon(
-        modifier = modifier
-            .noRippleClickable { onCheckedChange(!isChecked) },
-        imageVector = ImageVector.vectorResource(checkBox),
-        contentDescription = null,
-        tint = Color.Unspecified,
-    )
-}
-
 private const val ROTATION_ANGLE_CHECKED = 180f
 private const val ROTATION_ANGLE_UNCHECKED = 0f
 private const val ROTATION_ANIMATION_DURATION = 300
@@ -154,19 +120,22 @@ private const val ROTATION_ANIMATION_DURATION = 300
 @Composable
 private fun PostOptionCardPreview() {
     NapzakMarketTheme {
-        var price by remember { mutableStateOf(TextFieldValue("")) }
         Column {
             PostOptionCard(
                 title = "일반 택배",
-                price = price,
+                price = "",
                 placeHolder = "100~30,000",
-                onPriceChange = { price = it }
+                onPriceChange = { },
+                isChecked = true,
+                onCheckedChange = { }
             )
             PostOptionCard(
                 title = "알뜰/반값 택배",
-                price = price,
+                price = "",
                 placeHolder = "0~5,000",
-                onPriceChange = { price = it }
+                onPriceChange = { },
+                isChecked = false,
+                onCheckedChange = { }
             )
         }
     }

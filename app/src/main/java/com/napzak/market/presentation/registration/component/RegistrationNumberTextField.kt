@@ -3,6 +3,7 @@ package com.napzak.market.presentation.registration.component
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
@@ -21,7 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.napzak.market.R
+import com.napzak.market.R.string.regi_price_range
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**
@@ -46,13 +47,13 @@ fun RegistrationNumberTextField(
     val borderColor = NapzakMarketTheme.colors.gray300
 
     Row(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
     ) {
         Box {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 BasicTextField(
                     modifier = Modifier
-                        .width(96.dp)
+                        .fillMaxWidth(BOTTOM_BORDER_WEIGHT)
                         .drawBehind {
                             drawLine(
                                 color = borderColor,
@@ -73,7 +74,7 @@ fun RegistrationNumberTextField(
                     decorationBox = { innerTextField ->
                         Box(
                             modifier = Modifier
-                                .padding(end = 61.dp, bottom = 8.dp),
+                                .padding(bottom = 8.dp),
                         ) {
                             if (number.isEmpty()) {
                                 Text(
@@ -91,12 +92,14 @@ fun RegistrationNumberTextField(
         }
         Spacer(modifier = Modifier.width(2.dp))
         Text(
-            text = stringResource(R.string.regi_price_range),
+            text = stringResource(regi_price_range),
             style = NapzakMarketTheme.typography.bodyMedium16,
             color = NapzakMarketTheme.colors.gray900,
         )
     }
 }
+
+private const val BOTTOM_BORDER_WEIGHT = 90f / 360f
 
 @Preview
 @Composable

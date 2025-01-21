@@ -197,6 +197,7 @@ class ExploreViewModel @Inject constructor(
                 }
                 .onFailure { response ->
                     Timber.e(response)
+                    updateLoadState(UiState.Failure(response.toString()))
                 }
         } else {
             exploreRepository.fetchBuyProductItemList(productListFilter)
@@ -213,6 +214,7 @@ class ExploreViewModel @Inject constructor(
                 }
                 .onFailure { response ->
                     Timber.e(response)
+                    updateLoadState(UiState.Failure(response.toString()))
                 }
         }
     }

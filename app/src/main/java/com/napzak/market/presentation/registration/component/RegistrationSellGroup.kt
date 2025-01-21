@@ -90,7 +90,7 @@ fun RegistrationSellGroup(
         )
         AnimatedVisibility(
             visible = postFeeType == PostFeeType.EXCLUDED,
-            modifier = Modifier.animateContentSize()
+            modifier = Modifier.animateContentSize(),
         ) {
             Column {
                 Spacer(modifier = Modifier.height(12.dp))

@@ -117,7 +117,7 @@ private fun PhotoRegisterButton(
             .background(NapzakMarketTheme.colors.gray100)
             .noRippleClickable { if (imageNumber < 10) onPhotoClick() },
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_photo_28),

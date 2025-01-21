@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.R
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
-import com.napzak.market.domain.explore.model.ProductItem
+import com.napzak.market.domain.home.model.ProductItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 

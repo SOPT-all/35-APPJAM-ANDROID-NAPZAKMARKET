@@ -126,9 +126,9 @@ private fun HomeScreen(
 
                     HomeUiStateGroup(
                         uiState = uiState.recommendedItems,
-                        success = { uiState ->
+                        success = { list ->
                             HomeRecommendationItemGroup(
-                                recommendedItems = uiState.toImmutableList(),
+                                recommendedItems = list.toImmutableList(),
                                 onLikeClick = onLikeClick,
                                 onItemClick = onItemClick,
                                 modifier = Modifier

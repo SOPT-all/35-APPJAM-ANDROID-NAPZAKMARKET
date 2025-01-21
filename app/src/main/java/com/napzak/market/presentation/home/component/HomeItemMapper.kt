@@ -3,7 +3,7 @@ package com.napzak.market.presentation.home.component
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.napzak.market.core.designsystem.component.item.NapzakBuyItem
-import com.napzak.market.domain.explore.model.ProductItem
+import com.napzak.market.domain.home.model.ProductItem
 
 @Composable
 fun HomeItemMapper(

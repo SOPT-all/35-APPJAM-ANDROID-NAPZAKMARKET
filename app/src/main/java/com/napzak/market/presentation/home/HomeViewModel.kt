@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.home.model.HomeBanner
+import com.napzak.market.domain.home.model.ProductItem
 import com.napzak.market.domain.home.repository.HomeRepository
 import com.napzak.market.presentation.home.state.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,10 +37,18 @@ class HomeViewModel @Inject constructor(
             }
     }
 
-    fun getRecommendedItems() = _uiState.update { currentState ->
-        currentState.copy(
-            recommendedItems = HomeUiState.dummyData
-        )
+    fun getRecommendedItems() = viewModelScope.launch {
+        homeRepository.fetchRecommendProductList()
+            .onSuccess { response ->
+                if (response.isEmpty()) {
+                    updateRecommendedProductList(UiState.Empty)
+                } else {
+                    updateRecommendedProductList(UiState.Success(response))
+                }
+            }
+            .onFailure { response ->
+                Timber.e(response.message)
+            }
     }
 
     fun getPopularItems() = _uiState.update { currentState ->
@@ -58,6 +67,13 @@ class HomeViewModel @Inject constructor(
         _uiState.update { currentState ->
             currentState.copy(
                 bannerImages = loadState
+            )
+        }
+
+    private fun updateRecommendedProductList(loadState: UiState<List<ProductItem>>) =
+        _uiState.update { currentState ->
+            currentState.copy(
+                recommendedItems = loadState
             )
         }
 }

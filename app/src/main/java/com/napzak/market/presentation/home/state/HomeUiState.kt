@@ -2,8 +2,8 @@ package com.napzak.market.presentation.home.state
 
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.domain.home.model.HomeBanner
+import com.napzak.market.domain.home.model.ProductItem
 
 data class HomeUiState(
     val bannerImages: UiState<List<HomeBanner>> = UiState.Loading,

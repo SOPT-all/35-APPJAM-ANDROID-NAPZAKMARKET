@@ -16,7 +16,8 @@ fun HomeRecommendProductResponse.toProductItemList(): List<ProductItem> =
                 isInterested = isInterested,
                 tradeType = tradeType,
                 tradeStatus = tradeStatus,
-                isPriceNegotiable = isPriceNegotiable
+                isOwnedByCurrentUser = isOwnedByCurrentUser,
+                isPriceNegotiable = isPriceNegotiable,
             )
         }
     } + productSellList.map { sellItem ->
@@ -31,6 +32,7 @@ fun HomeRecommendProductResponse.toProductItemList(): List<ProductItem> =
                 isInterested = isInterested,
                 tradeType = tradeType,
                 tradeStatus = tradeStatus,
+                isOwnedByCurrentUser = isOwnedByCurrentUser,
                 isPriceNegotiable = false
             )
         }

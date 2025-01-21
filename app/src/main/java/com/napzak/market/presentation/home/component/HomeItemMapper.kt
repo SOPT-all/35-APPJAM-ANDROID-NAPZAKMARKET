@@ -17,33 +17,37 @@ fun HomeItemMapper(
     modifier: Modifier = Modifier,
 ) {
     with(item) {
-        if (item.tradeType == "BUY") {
-            NapzakBuyItem(
-                title = productName,
-                genre = genreName,
-                price = stringResource(home_item_price, price.toString().formatToPriceString()),
-                imgUrl = photo,
-                isLiked = isInterested,
-                isMyItem = false,
-                isOfferPossible = isPriceNegotiable,
-                createdTime = uploadTime,
-                onItemClick = onItemClick,
-                onLikeClick = onLikeClick,
-                modifier = modifier,
-            )
-        } else {
-            NapzakSellItem(
-                title = productName,
-                genre = genreName,
-                price = stringResource(home_item_price, price.toString().formatToPriceString()),
-                imgUrl = photo,
-                isLiked = isInterested,
-                isMyItem = false,
-                createdTime = uploadTime,
-                onItemClick = onItemClick,
-                onLikeClick = onLikeClick,
-                modifier = modifier,
-            )
+        when (tradeType) {
+            "BUY" -> {
+                NapzakBuyItem(
+                    title = productName,
+                    genre = genreName,
+                    price = stringResource(home_item_price, price.toString().formatToPriceString()),
+                    imgUrl = photo,
+                    isLiked = isInterested,
+                    isMyItem = isOwnedByCurrentUser,
+                    isOfferPossible = isPriceNegotiable,
+                    createdTime = uploadTime,
+                    onItemClick = onItemClick,
+                    onLikeClick = onLikeClick,
+                    modifier = modifier,
+                )
+            }
+
+            else -> {
+                NapzakSellItem(
+                    title = productName,
+                    genre = genreName,
+                    price = stringResource(home_item_price, price.toString().formatToPriceString()),
+                    imgUrl = photo,
+                    isLiked = isInterested,
+                    isMyItem = isOwnedByCurrentUser,
+                    createdTime = uploadTime,
+                    onItemClick = onItemClick,
+                    onLikeClick = onLikeClick,
+                    modifier = modifier,
+                )
+            }
         }
     }
 }

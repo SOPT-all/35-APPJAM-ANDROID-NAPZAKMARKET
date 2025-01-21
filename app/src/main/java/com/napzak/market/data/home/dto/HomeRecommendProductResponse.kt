@@ -8,5 +8,5 @@ data class HomeRecommendProductResponse(
     @SerialName("productBuyList")
     val productBuyList: List<ProductBuyItem>,
     @SerialName("productSellList")
-    val productSellList: List<ProductSellItem>
+    val productSellList: List<ProductSellItem>,
 )

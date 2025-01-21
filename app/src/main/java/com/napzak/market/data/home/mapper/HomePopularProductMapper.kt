@@ -16,6 +16,7 @@ fun HomePopularProductResponse.toProductItemList(): List<ProductItem> =
                 tradeType = tradeType,
                 tradeStatus = tradeStatus,
                 isInterested = isInterested,
+                isOwnedByCurrentUser = isOwnedByCurrentUser,
                 isPriceNegotiable = false,
             )
         }

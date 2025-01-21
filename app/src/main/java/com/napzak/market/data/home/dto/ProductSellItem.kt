@@ -24,5 +24,5 @@ data class ProductSellItem(
     @SerialName("tradeStatus")
     val tradeStatus: String,
     @SerialName("isOwnedByCurrentUser")
-    val isOwnedByCurrentUser: Boolean
+    val isOwnedByCurrentUser: Boolean,
 )

@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeRepository: HomeRepository
+    private val homeRepository: HomeRepository,
 ) : ViewModel() {
     private val _bannerLoadState = MutableStateFlow<UiState<List<HomeBanner>>>(UiState.Loading)
     private val _recommendProductLoadState =
@@ -45,7 +45,7 @@ class HomeViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = HomeUiState()
+        initialValue = HomeUiState(),
     )
 
     fun getBannerImages() = viewModelScope.launch {

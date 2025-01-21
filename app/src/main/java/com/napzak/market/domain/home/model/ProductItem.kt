@@ -10,5 +10,6 @@ data class ProductItem(
     val isInterested: Boolean,
     val tradeType: String,
     val tradeStatus: String,
+    val isOwnedByCurrentUser: Boolean,
     val isPriceNegotiable: Boolean = false, /* 팔아요 item에서만 사용 */
 )

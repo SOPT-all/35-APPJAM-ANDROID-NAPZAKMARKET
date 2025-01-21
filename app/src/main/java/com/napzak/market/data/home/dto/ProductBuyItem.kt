@@ -26,5 +26,5 @@ data class ProductBuyItem(
     @SerialName("isPriceNegotiable")
     val isPriceNegotiable: Boolean,
     @SerialName("isOwnedByCurrentUser")
-    val isOwnedByCurrentUser: Boolean
+    val isOwnedByCurrentUser: Boolean,
 )

@@ -8,6 +8,8 @@ import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.explore.usecase.GetProductBuyListUseCase
 import com.napzak.market.domain.explore.usecase.GetProductSellListUseCase
+import com.napzak.market.domain.explore.usecase.GetSearchedProductBuyItemsUseCase
+import com.napzak.market.domain.explore.usecase.GetSearchedProductSellItemsUseCase
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.explore.state.ExploreProductInformation
@@ -28,6 +30,8 @@ import javax.inject.Inject
 class ExploreViewModel @Inject constructor(
     private val getProductSellListUseCase: GetProductSellListUseCase,
     private val getProductBuyListUseCase: GetProductBuyListUseCase,
+    private val getSearchedProductSellItemsUseCase: GetSearchedProductSellItemsUseCase,
+    private val getSearchedProductBuyItemsUseCase: GetSearchedProductBuyItemsUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ExploreUiState())
     val uiState = _uiState.asStateFlow()
@@ -61,13 +65,15 @@ class ExploreViewModel @Inject constructor(
             }
         }
 
-        updateUiState(exploreScreenType)
+        updateScreenType(exploreScreenType)
     }
 
-    private fun updateUiState(exploreScreenType: ExploreScreenType) { // TODO: 함수명 변경 필요
+    private fun updateScreenType(exploreScreenType: ExploreScreenType) {
         _uiState.update { currentState ->
             currentState.copy(
-                exploreScreenType = exploreScreenType
+                exploreScreenType = exploreScreenType,
+                tradeType = TradeType.SELL,
+                sortType = SortType.RECENT,
             )
         }
     }
@@ -174,48 +180,98 @@ class ExploreViewModel @Inject constructor(
 
     fun getExploreProductInformation() = viewModelScope.launch {
         with(uiState.value) {
-            if (tradeType == TradeType.SELL) {
-                getProductSellListUseCase(
-                    sortType = sortType.name,
-                    isOnSale = isOnSale,
-                    isUnopened = isUnopened,
-                    genreItems = selectedGenreList,
-                )
-                    .onSuccess { response ->
-                        if (response.isEmpty()) {
-                            updateLoadState(UiState.Empty)
-                        } else {
-                            updateLoadState(
-                                UiState.Success(
-                                    ExploreProductInformation(productList = response)
+            when {
+                tradeType == TradeType.SELL && initSearchTerm == null -> {
+                    getProductSellListUseCase(
+                        sortType = sortType.name,
+                        isOnSale = isOnSale,
+                        isUnopened = isUnopened,
+                        genreItems = selectedGenreList,
+                    )
+                        .onSuccess { response ->
+                            if (response.isEmpty()) {
+                                updateLoadState(UiState.Empty)
+                            } else {
+                                updateLoadState(
+                                    UiState.Success(
+                                        ExploreProductInformation(productList = response)
+                                    )
                                 )
-                            )
+                            }
                         }
-                    }
-                    .onFailure { response ->
-                        updateLoadState(UiState.Failure(response.toString()))
-                    }
+                        .onFailure { response ->
+                            updateLoadState(UiState.Failure(response.toString()))
+                        }
+                }
 
-            } else {
-                getProductBuyListUseCase(
-                    sortType = sortType.name,
-                    isOnSale = isOnSale,
-                    genreItems = selectedGenreList,
-                )
-                    .onSuccess { response ->
-                        if (response.isEmpty()) {
-                            updateLoadState(UiState.Empty)
-                        } else {
-                            updateLoadState(
-                                UiState.Success(
-                                    ExploreProductInformation(productList = response)
+                tradeType == TradeType.BUY && initSearchTerm == null -> {
+                    getProductBuyListUseCase(
+                        sortType = sortType.name,
+                        isOnSale = isOnSale,
+                        genreItems = selectedGenreList,
+                    )
+                        .onSuccess { response ->
+                            if (response.isEmpty()) {
+                                updateLoadState(UiState.Empty)
+                            } else {
+                                updateLoadState(
+                                    UiState.Success(
+                                        ExploreProductInformation(productList = response)
+                                    )
                                 )
-                            )
+                            }
                         }
-                    }
-                    .onFailure { response ->
-                        updateLoadState(UiState.Failure(response.toString()))
-                    }
+                        .onFailure { response ->
+                            updateLoadState(UiState.Failure(response.toString()))
+                        }
+                }
+
+                tradeType == TradeType.SELL && initSearchTerm != null -> {
+                    getSearchedProductSellItemsUseCase(
+                        searchTerm = initSearchTerm,
+                        sortType = sortType.name,
+                        isOnSale = isOnSale,
+                        isUnopened = isUnopened,
+                        genreItems = selectedGenreList,
+                    )
+                        .onSuccess { response ->
+                            if (response.isEmpty()) {
+                                updateLoadState(UiState.Empty)
+                            } else {
+                                updateLoadState(
+                                    UiState.Success(
+                                        ExploreProductInformation(productList = response)
+                                    )
+                                )
+                            }
+                        }
+                        .onFailure { response ->
+                            updateLoadState(UiState.Failure(response.toString()))
+                        }
+                }
+
+                tradeType == TradeType.BUY && initSearchTerm != null -> {
+                    getSearchedProductBuyItemsUseCase(
+                        searchTerm = initSearchTerm,
+                        sortType = sortType.name,
+                        isOnSale = isOnSale,
+                        genreItems = selectedGenreList,
+                    )
+                        .onSuccess { response ->
+                            if (response.isEmpty()) {
+                                updateLoadState(UiState.Empty)
+                            } else {
+                                updateLoadState(
+                                    UiState.Success(
+                                        ExploreProductInformation(productList = response)
+                                    )
+                                )
+                            }
+                        }
+                        .onFailure { response ->
+                            updateLoadState(UiState.Failure(response.toString()))
+                        }
+                }
             }
         }
     }

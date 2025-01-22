@@ -26,7 +26,7 @@ class DetailPageViewModel @Inject constructor(
     private val detailPageRepository: DetailPageRepository,
     private val interestRepository: InterestRepository,
 ) : ViewModel() {
-    private val productId = savedStateHandle.toRoute<DetailPage>().productId // productId를 가져옴
+    private val productId = savedStateHandle.toRoute<DetailPage>().productId
 
     private val _uiState = MutableStateFlow(DetailPageUiState())
     val uiState: StateFlow<DetailPageUiState> = _uiState
@@ -81,15 +81,15 @@ class DetailPageViewModel @Inject constructor(
         }
     }
 
-    fun setProductInterest() {
+    fun updateProductInterest() {
         if (_uiState.value.isInterest) {
             deleteInterest(productId)
         } else {
-            postInterest(productId)
+            addInterest(productId)
         }
     }
 
-    private fun postInterest(productId: Long) = viewModelScope.launch {
+    private fun addInterest(productId: Long) = viewModelScope.launch {
         interestRepository.postInterest(productId)
             .onSuccess {
                 _sideEffect.emit(DetailPageSideEffect.ShowLikeSnackBar)

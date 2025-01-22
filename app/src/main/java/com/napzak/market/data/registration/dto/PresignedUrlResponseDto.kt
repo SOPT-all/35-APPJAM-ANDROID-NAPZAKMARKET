@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PresignedUrlResponseDto(
     @SerialName("productPresignedUrls")
-    val presignedUrls: Map<String, String>,
+    val presignedUrls: LinkedHashMap<String, String>,
 )

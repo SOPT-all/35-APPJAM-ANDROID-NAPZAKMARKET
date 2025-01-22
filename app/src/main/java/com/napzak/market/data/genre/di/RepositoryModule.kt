@@ -1,7 +1,9 @@
 package com.napzak.market.data.genre.di
 
+import com.napzak.market.data.genre.repositoryimpl.GenreManagementRepositoryImpl
 import com.napzak.market.data.genre.repositoryimpl.GenreRepositoryImpl
 import com.napzak.market.data.genre.repositoryimpl.ImageGenreRepositoryImpl
+import com.napzak.market.domain.genre.respository.GenreManagementRepository
 import com.napzak.market.domain.genre.respository.GenreRepository
 import com.napzak.market.domain.genre.respository.ImageGenreRepository
 import dagger.Binds
@@ -25,4 +27,10 @@ abstract class RepositoryModule {
     abstract fun bindImageGenreRepository(
         imageGenreRepositoryImpl: ImageGenreRepositoryImpl,
     ): ImageGenreRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindGenreManagementRepository(
+        genreManagementRepositoryImpl: GenreManagementRepositoryImpl,
+    ): GenreManagementRepository
 }

@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.napzak.market.R
+import com.napzak.market.R.string.napzak_item_price
+import com.napzak.market.core.common.extension.formatToPriceString
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
@@ -89,7 +91,7 @@ fun NapzakBaseItem(
         )
 
         PriceGroup(
-            price = price,
+            price = stringResource(napzak_item_price, price.formatToPriceString()),
             isOfferPossible = isOfferPossible,
             modifier = Modifier.padding(top = 4.dp)
         )

@@ -38,7 +38,7 @@
     <string name="home_popular_body1">놓치면 아쉬운 인기 아이템들을 구경해볼까요?</string>
     <string name="home_search_title1">다른 유저들은 뭘 찾고 있을까요?</string>
     <string name="home_search_body1">덕심 가득한 리스트에서 취향을 나눠보세요.</string>
-    <string name="home_item_price">%s원</string>
+    <string name="napzak_item_price">%s원</string>
 
     <!-- ChatScreen-->
     <string name="chat_background_image_description">채팅 화면 배경 캐릭터</string>
@@ -82,7 +82,8 @@
     <string name="regi_price_range_placeholder">000</string>
     <string name="regi_price_range">,000원대</string>
     <string name="regi_post_fee">배송비</string>
-\    <string name="regi_normal_post">일반 택배</string>
+    \
+    <string name="regi_normal_post">일반 택배</string>
     <string name="regi_normal_post_placeholder">100~30,000</string>
     <string name="regi_half_price_post">알뜰/반값 택배</string>
     <string name="regi_half_price_post_placeholder">0~5,000</string>

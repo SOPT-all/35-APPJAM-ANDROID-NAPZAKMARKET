@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -15,5 +16,5 @@ object DetailPageServiceModule {
     @Provides
     @Singleton
     fun provideDetailPageService(@JWT retrofit: Retrofit): DetailPageService =
-        retrofit.create(DetailPageService::class.java)
+        retrofit.create()
 }

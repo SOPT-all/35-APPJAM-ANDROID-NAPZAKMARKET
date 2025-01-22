@@ -85,15 +85,11 @@ class MarketInfoViewModel @Inject constructor(
                         genreItems = selectedGenreList,
                     )
                         .onSuccess { response ->
-                            if (response.isEmpty()) {
-                                updateLoadProductItemsState(UiState.Empty)
-                            } else {
-                                updateLoadProductItemsState(
-                                    UiState.Success(
-                                        MarketProductItemsInformation(productList = response)
-                                    )
+                            updateLoadProductItemsState(
+                                UiState.Success(
+                                    MarketProductItemsInformation(productList = response)
                                 )
-                            }
+                            )
                         }
                         .onFailure { response ->
                             updateLoadProductItemsState(UiState.Failure(response.toString()))
@@ -108,15 +104,11 @@ class MarketInfoViewModel @Inject constructor(
                         genreItems = selectedGenreList,
                     )
                         .onSuccess { response ->
-                            if (response.isEmpty()) {
-                                updateLoadProductItemsState(UiState.Empty)
-                            } else {
-                                updateLoadProductItemsState(
-                                    UiState.Success(
-                                        MarketProductItemsInformation(productList = response)
-                                    )
+                            updateLoadProductItemsState(
+                                UiState.Success(
+                                    MarketProductItemsInformation(productList = response)
                                 )
-                            }
+                            )
                         }
                         .onFailure { response ->
                             updateLoadProductItemsState(UiState.Failure(response.toString()))

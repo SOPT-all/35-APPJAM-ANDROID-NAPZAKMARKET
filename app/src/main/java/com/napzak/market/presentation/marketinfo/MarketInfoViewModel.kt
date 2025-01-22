@@ -122,21 +122,17 @@ class MarketInfoViewModel @Inject constructor(
     fun getMarketInformation() = viewModelScope.launch {
         marketInfoRepository.fetchMarketInfo(uiState.value.storeId)
             .onSuccess { marketInfo ->
-                if (marketInfo.storeId==null) {
-                    updateLoadMarketInfoState(UiState.Empty)
-                } else {
-                    updateLoadMarketInfoState(
-                        UiState.Success(
-                            MarketUiInformation(
-                                storeNickname = marketInfo.storeNickname,
-                                storeDescription = marketInfo.storeDescription,
-                                storePhoto = marketInfo.storePhoto,
-                                storeCover = marketInfo.storeCover,
-                                genrePreferenceList = marketInfo.genrePreferenceList,
-                            )
+                updateLoadMarketInfoState(
+                    UiState.Success(
+                        MarketUiInformation(
+                            storeNickname = marketInfo.storeNickname,
+                            storeDescription = marketInfo.storeDescription,
+                            storePhoto = marketInfo.storePhoto,
+                            storeCover = marketInfo.storeCover,
+                            genrePreferenceList = marketInfo.genrePreferenceList,
                         )
                     )
-                }
+                )
             }
             .onFailure { response ->
                 updateLoadMarketInfoState(UiState.Failure(response.toString()))

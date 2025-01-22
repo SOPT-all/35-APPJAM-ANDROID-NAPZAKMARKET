@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.component.GenreChipButtonGroup
 import com.napzak.market.core.designsystem.component.button.EnableDisableTextButton
 import com.napzak.market.core.designsystem.component.item.GenreSearchItem
@@ -43,8 +44,8 @@ import com.napzak.market.presentation.explore.explore.component.GenreSearchNotic
 @Composable
 fun GenreSearchBottomSheet(
     initialSelectedGenreList: List<Genre>,
-    initialGenreList: List<Genre>,
-    genreList: List<Genre>,
+    genreItems: UiState<List<Genre>>,
+    debounce: () -> Unit,
     onDismissRequest: () -> Unit,
     onTextChange: (String) -> Unit,
     onButtonClick: (List<Genre>) -> Unit,
@@ -57,6 +58,11 @@ fun GenreSearchBottomSheet(
             initialSelectedGenreList
         )
     }
+
+    LaunchedEffect(true) {
+        debounce()
+    }
+
     LaunchedEffect(searchTerm) {
         onTextChange(searchTerm)
     }
@@ -106,25 +112,32 @@ fun GenreSearchBottomSheet(
                     .fillMaxWidth()
                     .weight(1f),
             ) {
-                val list = if (searchTerm.isEmpty()) initialGenreList else genreList
-
-                LazyColumn(
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                ) {
-                    itemsIndexed(
-                        items = list,
-                        key = { _, genreItem -> genreItem.genreId },
-                    ) { index, genreItem ->
-                        GenreSearchItem(
-                            genreName = genreItem.genreName,
-                            onGenreItemClick = {
-                                if (selectedGenreList.size < MAX_GENRE_SELECTION) {
-                                    selectedGenreList = selectedGenreList + genreItem
+                when (genreItems) {
+                    is UiState.Loading -> {}
+                    is UiState.Empty -> {}
+                    is UiState.Failure -> {}
+                    is UiState.Success -> {
+                        with(genreItems) {
+                            LazyColumn(
+                                modifier = Modifier.padding(horizontal = 20.dp),
+                            ) {
+                                itemsIndexed(
+                                    items = data,
+                                    key = { _, genreItem -> genreItem.genreId },
+                                ) { index, genreItem ->
+                                    GenreSearchItem(
+                                        genreName = genreItem.genreName,
+                                        onGenreItemClick = {
+                                            if (selectedGenreList.size < MAX_GENRE_SELECTION) {
+                                                selectedGenreList = selectedGenreList + genreItem
+                                            }
+                                            focusManager.clearFocus()
+                                        },
+                                        isLastItem = index == selectedGenreList.size - 1,
+                                    )
                                 }
-                                focusManager.clearFocus()
-                            },
-                            isLastItem = index == selectedGenreList.size - 1,
-                        )
+                            }
+                        }
                     }
                 }
 

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GenreRegisterUseCase @Inject constructor(
     private val repository: GenreManagementRepository
 ) {
-    suspend fun invoke(genres: List<Genre>): Result<Int> {
+    suspend operator fun invoke(genres: List<Genre>): Result<Int> {
         val genreIds = genres.map { it.genreId }
         return repository.postGenre(genreIds)
     }

@@ -22,7 +22,7 @@ fun MarketProductListSection(
     tradeType: MarketTab,
     productList: List<ProductItem>,
     onItemClick: (Long) -> Unit,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
@@ -45,7 +45,7 @@ fun MarketProductListSection(
                         isMyItem = isOwnedByCurrentUser,
                         createdTime = uploadTime,
                         onItemClick = { onItemClick(productId) },
-                        onLikeClick = { onLikeClick(productId) },
+                        onLikeClick = { onLikeClick(productId, isInterested) },
                     )
                 }
             }
@@ -62,7 +62,7 @@ fun MarketProductListSection(
                         isOfferPossible = isPriceNegotiable,
                         createdTime = uploadTime,
                         onItemClick = { onItemClick(productId) },
-                        onLikeClick = { onLikeClick(productId) },
+                        onLikeClick = { onLikeClick(productId, isInterested) },
                     )
                 }
             }
@@ -101,7 +101,7 @@ private fun ProductListSectionPreview(modifier: Modifier = Modifier) {
             ),
         ),
         onItemClick = { },
-        onLikeClick = { },
+        onLikeClick = { _, _ -> },
         modifier = modifier,
     )
 }

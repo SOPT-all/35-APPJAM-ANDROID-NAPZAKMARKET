@@ -9,6 +9,7 @@ import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.domain.genre.usecase.GenreSearchUseCase
+import com.napzak.market.domain.interest.repository.InterestRepository
 import com.napzak.market.domain.marketinfo.repository.MarketInfoRepository
 import com.napzak.market.domain.marketinfo.usecase.MarketProductBuyItemsUseCase
 import com.napzak.market.domain.marketinfo.usecase.MarketProductSellItemsUseCase
@@ -34,6 +35,7 @@ class MarketInfoViewModel @Inject constructor(
     private val marketProductSellItemsUseCase: MarketProductSellItemsUseCase,
     private val marketProductBuyItemsUseCase: MarketProductBuyItemsUseCase,
     private val genreSearchUseCase: GenreSearchUseCase,
+    private val interestRepository: InterestRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MarketInfoUiState())
     val uiState = _uiState.asStateFlow()
@@ -53,7 +55,10 @@ class MarketInfoViewModel @Inject constructor(
         }
     }
 
-    fun initScrollState(coroutineScope: CoroutineScope, gridState: LazyGridState) {
+    fun initScrollState(
+        coroutineScope: CoroutineScope,
+        gridState: LazyGridState,
+    ) {
         coroutineScope.launch {
             gridState.scrollToItem(0)
         }
@@ -207,8 +212,29 @@ class MarketInfoViewModel @Inject constructor(
         }
     }
 
-    fun updateItemLikeButton(productId: Long) {
-        /* TODO: 좋아요 API 연결 및 기능 연결 */
+    fun setProductInterest(
+        productId: Long,
+        isInterested: Boolean,
+    ) {
+        if (isInterested) {
+            deleteInterest(productId)
+        } else {
+            postInterest(productId)
+        }
+    }
+
+    private fun postInterest(productId: Long) = viewModelScope.launch {
+        interestRepository.postInterest(productId)
+            .onSuccess {
+                getMarketProductInformation()
+            }
+    }
+
+    private fun deleteInterest(productId: Long) = viewModelScope.launch {
+        interestRepository.deleteInterest(productId)
+            .onSuccess {
+                getMarketProductInformation()
+            }
     }
 
     fun updateBottomSheetVisibility(type: BottomSheetType) {

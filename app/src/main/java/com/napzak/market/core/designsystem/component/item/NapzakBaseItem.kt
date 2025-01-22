@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +29,7 @@ import com.napzak.market.R
 import com.napzak.market.R.string.napzak_item_price
 import com.napzak.market.core.common.extension.formatToPriceString
 import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.common.extension.throttledNoRippleClickable
 import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.component.text.SingleLineText
@@ -115,6 +117,8 @@ private fun ItemImageGroup(
     typeTag: @Composable (BoxScope.() -> Unit)? = null,
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
     Box(modifier = modifier) {
         if (imgUrl.isNotBlank()) {
             AsyncImage(
@@ -144,7 +148,10 @@ private fun ItemImageGroup(
                 contentDescription = stringResource(R.string.napzak_item_content_description),
                 tint = Color.Unspecified,
                 modifier = Modifier
-                    .noRippleClickable(onLikeClick)
+                    .throttledNoRippleClickable(
+                        coroutineScope = coroutineScope,
+                        onClick = onLikeClick
+                    )
                     .padding(top = 4.dp, end = 6.dp)
                     .align(Alignment.TopEnd)
             )

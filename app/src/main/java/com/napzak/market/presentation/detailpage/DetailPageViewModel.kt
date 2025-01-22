@@ -3,8 +3,10 @@ package com.napzak.market.presentation.detailpage
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.detailpage.repository.DetailPageRepository
+import com.napzak.market.presentation.detailpage.navigation.DetailPage
 import com.napzak.market.presentation.detailpage.state.DetailPageUiState
 import com.napzak.market.presentation.detailpage.state.MarketInfoUiState
 import com.napzak.market.presentation.detailpage.state.MarketReviewUiState
@@ -26,9 +28,8 @@ class DetailPageViewModel @Inject constructor(
 
 
     init {
-        val productId = savedStateHandle.get<Long>("productId")
-            ?: throw IllegalArgumentException("Product ID is missing or invalid")
-        loadDetailPageData(productId)
+        val detailPage = savedStateHandle.toRoute<DetailPage>().productId // productId를 가져옴
+        loadDetailPageData(detailPage)
     }
 
     private fun loadDetailPageData(productId: Long) {

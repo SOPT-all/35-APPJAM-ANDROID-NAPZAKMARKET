@@ -13,7 +13,7 @@ data class MarketInfoUiState(
     val marketTab: MarketTab = MarketTab.SELL,
     val initGenreList: List<Genre> = emptyList(),
     val selectedGenreList: List<Genre> = emptyList(),
-    val genreList: List<Genre> = emptyList(),
+    val genreList: UiState<List<Genre>> = UiState.Loading,
     val isOnSale: Boolean = false,
     val isUnopened: Boolean = false,
     val sortType: SortType = SortType.RECENT,

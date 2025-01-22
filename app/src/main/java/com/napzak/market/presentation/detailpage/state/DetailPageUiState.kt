@@ -17,6 +17,7 @@ data class DetailPageUiState(
     val productCondition: String = "",
     val standardDeliveryFee: Int = 0,
     val halfDeliveryFee: Int = 0,
+    val isInterest: Boolean = false,
     val isPriceNegotiable: Boolean = false,
     val tradeStatus: String = "",
     val productPhotoUrls: List<String> = emptyList(),

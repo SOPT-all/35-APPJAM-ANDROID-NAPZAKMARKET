@@ -44,6 +44,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.napzak.market.R
@@ -71,13 +73,39 @@ fun DetailPageRoute(
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
+    val lifecycle = LocalLifecycleOwner.current
     val uiState by viewModel.uiState.collectAsState()
+    var isSnackBarVisible by remember { mutableStateOf(false) }
+
+    val coroutine = rememberCoroutineScope()
+    LaunchedEffect(viewModel.sideEffect, lifecycle) {
+        viewModel.sideEffect.flowWithLifecycle(lifecycle.lifecycle).collect { sideEffect ->
+            when (sideEffect) {
+                DetailPageSideEffect.ShowLikeSnackBar -> {
+                    if (isSnackBarVisible) {
+                        coroutine.launch {
+                            delay(SNACK_BAR_DURATION)
+                            isSnackBarVisible = false
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.loadDetailPageData()
+    }
 
     DetailPageScreen(
         uiState = uiState,
+        isSnackBarVisible = isSnackBarVisible,
         onChatNavigate = onItemChatNavigate,
         onBackClick = onNavigateUp,
+        onLikeClick = {
+            viewModel.setProductInterest()
+            if (!isSnackBarVisible) isSnackBarVisible = true
+        },
         modifier = modifier,
     )
 }
@@ -85,24 +113,14 @@ fun DetailPageRoute(
 @Composable
 fun DetailPageScreen(
     uiState: DetailPageUiState,
+    isSnackBarVisible: Boolean,
     onChatNavigate: () -> Unit,
     onBackClick: () -> Unit,
+    onLikeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val parsedTradeType = TradeType.fromName(uiState.tradeType)
     val conditionEnum = ProductConditionType.fromCondition(uiState.productCondition)
-    var isSnackBarVisible by remember { mutableStateOf(false) }
-    val snackBarMessage = stringResource(id = R.string.detail_snackbar_message)
-
-    val coroutine = rememberCoroutineScope()
-    LaunchedEffect(isSnackBarVisible) {
-        if (isSnackBarVisible) {
-            coroutine.launch {
-                delay(SNACK_BAR_DURATION)
-                isSnackBarVisible = false
-            }
-        }
-    }
 
     Scaffold(
         topBar = {
@@ -114,7 +132,7 @@ fun DetailPageScreen(
         snackbarHost = {
             if (isSnackBarVisible) {
                 CommonSnackBar(
-                    message = snackBarMessage,
+                    message = stringResource(id = R.string.detail_snackbar_message),
                     icon = ImageVector.vectorResource(id = R.drawable.ic_heart_toast_18),
                     backgroundColor = NapzakMarketTheme.colors.black70,
                     textColor = NapzakMarketTheme.colors.white,
@@ -129,8 +147,11 @@ fun DetailPageScreen(
         },
         bottomBar = {
             BottomBar(
-                onHeartClick = { isSnackBarVisible = true },
+                onHeartClick = {
+                    onLikeClick()
+                },
                 onChatClick = onChatNavigate,
+                isLiked = uiState.isInterest,
             )
         },
         modifier = modifier,
@@ -421,7 +442,14 @@ fun DetailPageScreen(
 fun BottomBar(
     onHeartClick: () -> Unit,
     onChatClick: () -> Unit,
+    isLiked: Boolean,
 ) {
+    val icon = if (isLiked) {
+        R.drawable.ic_heart_select_24
+    } else {
+        R.drawable.ic_heart_24
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -450,7 +478,7 @@ fun BottomBar(
             contentAlignment = Alignment.Center,
         ) {
             Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_heart_24),
+                imageVector = ImageVector.vectorResource(icon),
                 contentDescription = stringResource(id = R.string.detail_like_button_description),
                 tint = Color.Unspecified,
                 modifier = Modifier
@@ -507,7 +535,9 @@ fun DetailPageScreenSellPreview() {
         DetailPageScreen(
             uiState = mockUiState,
             onChatNavigate = {},
-            onBackClick = {}
+            onBackClick = {},
+            onLikeClick = {},
+            isSnackBarVisible = false
         )
     }
 }
@@ -535,7 +565,9 @@ fun DetailPageScreenBuyPreview() {
         DetailPageScreen(
             uiState = mockUiState,
             onChatNavigate = {},
-            onBackClick = {}
+            onBackClick = {},
+            onLikeClick = {},
+            isSnackBarVisible = false
         )
     }
 }

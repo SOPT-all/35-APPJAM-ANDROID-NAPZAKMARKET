@@ -6,35 +6,37 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.detailpage.repository.DetailPageRepository
+import com.napzak.market.domain.interest.repository.InterestRepository
 import com.napzak.market.presentation.detailpage.navigation.DetailPage
 import com.napzak.market.presentation.detailpage.state.DetailPageUiState
 import com.napzak.market.presentation.detailpage.state.MarketInfoUiState
 import com.napzak.market.presentation.detailpage.state.MarketReviewUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class DetailPageViewModel @Inject constructor(
-    private val detailPageRepository: DetailPageRepository,
     savedStateHandle: SavedStateHandle,
+    private val detailPageRepository: DetailPageRepository,
+    private val interestRepository: InterestRepository,
 ) : ViewModel() {
+    private val detailPage = savedStateHandle.toRoute<DetailPage>().productId // productId를 가져옴
 
     private val _uiState = MutableStateFlow(DetailPageUiState())
     val uiState: StateFlow<DetailPageUiState> = _uiState
 
+    private val _sideEffect = MutableSharedFlow<DetailPageSideEffect>()
+    val sideEffect = _sideEffect.asSharedFlow()
 
-    init {
-        val detailPage = savedStateHandle.toRoute<DetailPage>().productId // productId를 가져옴
-        loadDetailPageData(detailPage)
-    }
-
-    private fun loadDetailPageData(productId: Long) {
+    fun loadDetailPageData() {
         viewModelScope.launch {
-            detailPageRepository.getProductDetail(productId)
+            detailPageRepository.getProductDetail(detailPage)
                 .onSuccess { productDetail ->
                     _uiState.value = DetailPageUiState(
                         profileImageUrl = productDetail.store.storePhoto,
@@ -50,6 +52,7 @@ class DetailPageViewModel @Inject constructor(
                         productCondition = productDetail.detail.productCondition,
                         standardDeliveryFee = productDetail.detail.standardDeliveryFee,
                         halfDeliveryFee = productDetail.detail.halfDeliveryFee,
+                        isInterest = productDetail.isInterested,
                         isPriceNegotiable = productDetail.detail.isPriceNegotiable,
                         tradeStatus = productDetail.detail.tradeStatus,
                         productPhotoUrls = productDetail.photos.map { it.photoUrl },
@@ -76,4 +79,28 @@ class DetailPageViewModel @Inject constructor(
                 }
         }
     }
+
+    fun setProductInterest() {
+        if (_uiState.value.isInterest) {
+            deleteInterest(detailPage)
+        } else {
+            postInterest(detailPage)
+        }
+    }
+
+    private fun postInterest(productId: Long) = viewModelScope.launch {
+        interestRepository.postInterest(productId)
+            .onSuccess {
+                _sideEffect.emit(DetailPageSideEffect.ShowLikeSnackBar)
+                loadDetailPageData()
+            }
+    }
+
+    private fun deleteInterest(productId: Long) = viewModelScope.launch {
+        interestRepository.deleteInterest(productId)
+            .onSuccess {
+                loadDetailPageData()
+            }
+    }
+
 }

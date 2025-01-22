@@ -60,13 +60,13 @@ fun RegistrationRoute(
     viewModel: RegistrationViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val currentImageListSize = (MAX_ITEMS - uiState.imageUrlList.size).coerceAtLeast(MIN_ITEMS)
+    val currentImageListSize = (MAX_ITEMS - uiState.imageUrl.size).coerceAtLeast(MIN_ITEMS)
     val getImageStorageLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetMultipleContents()
     ) { uris: List<Uri> ->
         handleUris(uris, currentImageListSize, viewModel::updatePhotoList)
     }
-    val getPhotoPickerLauncher = when (uiState.imageUrlList.size) {
+    val getPhotoPickerLauncher = when (uiState.imageUrl.size) {
         MAX_ITEMS - 1 -> rememberLauncherForActivityResult(
             ActivityResultContracts.PickVisualMedia()
         ) { uri: Uri? ->
@@ -87,7 +87,7 @@ fun RegistrationRoute(
         registrationType = if (tradeType == TradeType.SELL.label) TradeType.SELL else TradeType.BUY,
         onCloseClick = navigateUp,
         onPhotoClick = {
-            val remainImageSize = MAX_ITEMS - uiState.imageUrlList.size
+            val remainImageSize = MAX_ITEMS - uiState.imageUrl.size
 
             when {
                 remainImageSize <= 0 -> { /* TODO: 최대 개수 초과 시 스낵바 처리 */ }
@@ -114,21 +114,21 @@ fun RegistrationRoute(
         onOfferCheckChange = viewModel::updateOfferAvailability,
         onPurchasePriceChange = { purchasePrice -> viewModel.updateNumericValue(purchasePrice, NumeralInputType.ProductPurchasePrice) },
         updateButtonState = viewModel::updateButtonState,
+        onRegistrationClick = viewModel::getPresignedUrl,
         modifier = modifier,
     )
 }
 
 private fun handleUris(
     uris: List<Uri>,
-    currentImageListSize: Int,
-    updatePhotoList: (List<String>) -> Unit,
+    remainingSlots: Int,
+    updatePhoto: (List<String>) -> Unit,
 ) {
-    val updatedListSize = currentImageListSize + uris.size
-    if (updatedListSize <= MAX_ITEMS) {
-        updatePhotoList(uris.map { it.toString() })
+    if (uris.size <= remainingSlots) {
+        updatePhoto(uris.map { it.toString() })
     } else {
-        val remainingUris = uris.take(MAX_ITEMS - currentImageListSize)
-        updatePhotoList(remainingUris.map { it.toString() })
+        val limitedUris = uris.take(remainingSlots)
+        updatePhoto(limitedUris.map { it.toString() })
     }
 }
 
@@ -154,6 +154,7 @@ fun RegistrationScreen(
     onPurchasePriceChange: (String) -> Unit,
     onOfferCheckChange: (Boolean) -> Unit,
     updateButtonState: () -> Unit,
+    onRegistrationClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val paddedModifier = Modifier.padding(horizontal = 20.dp)
@@ -196,7 +197,7 @@ fun RegistrationScreen(
             Spacer(modifier = Modifier.height(16.dp))
             RegistrationPhotoPicker(
                 modifier = Modifier,
-                imageUrlList = uiState.imageUrlList,
+                imageUrlList = uiState.imageUrl,
                 onPhotoClick = onPhotoClick,
                 onPress = onPhotoPress,
                 onDeleteClick = onDeleteClick,
@@ -292,7 +293,7 @@ fun RegistrationScreen(
                 modifier = paddedModifier
                     .fillMaxWidth(),
                 text = stringResource(register),
-                onClick = { /*TODO*/ },
+                onClick = onRegistrationClick,
                 buttonColors = with(NapzakMarketTheme.colors) {
                     ButtonDefaults.buttonColors().copy(
                         containerColor = purple30,

@@ -39,6 +39,7 @@ import com.napzak.market.presentation.marketinfo.component.MarketProductListSect
 import com.napzak.market.presentation.marketinfo.component.MarketTradeTypeTab
 import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
 import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
+import com.napzak.market.presentation.marketinfo.state.MarketProductItemsInformation
 import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
 import kotlin.String
 
@@ -55,10 +56,11 @@ fun MarketInfoRoute(
 
     LaunchedEffect(Unit) {
         viewModel.setStoreId(storeId)
+        viewModel.getMarketInformation()
     }
 
     LaunchedEffect(uiState) {
-        viewModel.getMarketInformation()
+        viewModel.getMarketProductInformation()
     }
 
     MarketInfoScreen(
@@ -104,15 +106,12 @@ fun MarketInfoScreen(
     onGenreSelectButtonClick: (List<Genre>) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    when (uiState.loadState) {
-        is UiState.Loading -> {
-        }
+    when (uiState.loadMarketInfoState) {
+        is UiState.Loading -> {}
 
-        is UiState.Empty -> {
-        }
+        is UiState.Empty -> {}
 
-        is UiState.Failure -> {
-        }
+        is UiState.Failure -> {}
 
         is UiState.Success -> {
             with(uiState) {
@@ -125,7 +124,8 @@ fun MarketInfoScreen(
                     initialGenreList = initGenreList,
                     isOnSale = isOnSale,
                     isUnopened = isUnopened,
-                    marketInfo = uiState.loadState.data,
+                    marketInfo = uiState.loadMarketInfoState.data,
+                    loadProductState = uiState.loadProductItemsState,
                     sortType = sortType,
                     onBackButtonClick = onBackButtonClick,
                     onTradeTypeClick = onTradeTypeClick,
@@ -155,6 +155,7 @@ fun MarketInfoSuccessScreen(
     isOnSale: Boolean,
     isUnopened: Boolean,
     marketInfo: MarketUiInformation,
+    loadProductState: UiState<MarketProductItemsInformation>,
     sortType: SortType,
     onBackButtonClick: () -> Unit,
     onTradeTypeClick: (MarketTab) -> Unit,
@@ -169,7 +170,7 @@ fun MarketInfoSuccessScreen(
     onTextChange: (String) -> Unit,
     onGenreSelectButtonClick: (List<Genre>) -> Unit,
     modifier: Modifier = Modifier,
-) {
+    ) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -197,62 +198,69 @@ fun MarketInfoSuccessScreen(
                 onUnopenClick = onUnopenClick,
             )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        start = 20.dp,
-                        top = 16.dp,
-                        end = 20.dp,
-                        bottom = 20.dp
-                    ),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = stringResource(id = R.string.explore_product),
-                    style = NapzakMarketTheme.typography.bodySemi14,
-                    color = NapzakMarketTheme.colors.gray900,
-                )
+            when (loadProductState) {
+                is UiState.Empty -> {}
+                is UiState.Loading -> {}
+                is UiState.Failure -> {}
+                is UiState.Success -> {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 20.dp,
+                                top = 16.dp,
+                                end = 20.dp,
+                                bottom = 20.dp
+                            ),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.explore_product),
+                            style = NapzakMarketTheme.typography.bodySemi14,
+                            color = NapzakMarketTheme.colors.gray900,
+                        )
 
-                Spacer(Modifier.width(4.dp))
+                        Spacer(Modifier.width(4.dp))
 
-                Text(
-                    text = stringResource(
-                        id = R.string.explore_product_count,
-                        marketInfo.productList.size,
-                    ),
-                    style = NapzakMarketTheme.typography.bodySemi14,
-                    color = NapzakMarketTheme.colors.purple30,
-                )
 
-                Spacer(Modifier.weight(1f))
+                        Text(
+                            text = stringResource(
+                                id = R.string.explore_product_count,
+                                loadProductState.data.productList.size,
+                            ),
+                            style = NapzakMarketTheme.typography.bodySemi14,
+                            color = NapzakMarketTheme.colors.purple30,
+                        )
 
-                Row(
-                    modifier = Modifier.noRippleClickable(onSortButtonClick),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = sortType.label,
-                        style = NapzakMarketTheme.typography.capMedium12,
-                        color = NapzakMarketTheme.colors.gray600,
+                        Spacer(Modifier.weight(1f))
+
+                        Row(
+                            modifier = Modifier.noRippleClickable(onSortButtonClick),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                text = sortType.label,
+                                style = NapzakMarketTheme.typography.capMedium12,
+                                color = NapzakMarketTheme.colors.gray600,
+                            )
+                            Icon(
+                                imageVector = ImageVector.vectorResource(R.drawable.ic_down_chevron_16),
+                                contentDescription = stringResource(R.string.down_chevron_button),
+                                tint = NapzakMarketTheme.colors.gray500,
+                            )
+                        }
+                    }
+
+                    MarketProductListSection(
+                        tradeType = marketTab,
+                        productList = loadProductState.data.productList,
+                        onItemClick = onItemClick,
+                        onLikeClick = onLikeClick,
                     )
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_down_chevron_16),
-                        contentDescription = stringResource(R.string.down_chevron_button),
-                        tint = NapzakMarketTheme.colors.gray500,
-                    )
+
+                    Spacer(Modifier.height(20.dp))
                 }
             }
-
-            MarketProductListSection(
-                tradeType = marketTab,
-                productList = marketInfo.productList,
-                onItemClick = onItemClick,
-                onLikeClick = onLikeClick,
-            )
-
-            Spacer(Modifier.height(20.dp))
-
         } else {
             EmptyImage(
                 modifier = Modifier
@@ -290,9 +298,10 @@ private fun MarketPreview(modifier: Modifier = Modifier) {
             storeNickname = "123",
             storeDescription = "asdf",
             storePhoto = "",
-            storeBackgroundPhoto = "",
+            storeCover = "",
             genrePreferenceList = emptyList(),
         ),
+        loadProductState = UiState.Empty,
         sortType = SortType.RECENT,
         onBackButtonClick = { },
         onTradeTypeClick = { },

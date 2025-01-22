@@ -141,13 +141,15 @@ fun DetailPageScreen(
             )
         },
         bottomBar = {
-            BottomBar(
-                onHeartClick = {
-                    onLikeClick()
-                },
-                onChatClick = onChatNavigate,
-                isLiked = uiState.isInterest,
-            )
+            if(!uiState.isOwnedByCurrentUser) {
+                BottomBar(
+                    onHeartClick = {
+                        onLikeClick()
+                    },
+                    onChatClick = onChatNavigate,
+                    isLiked = uiState.isInterest,
+                )
+            }
         },
         modifier = modifier,
     ) { innerPadding ->

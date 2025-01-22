@@ -54,6 +54,7 @@ class DetailPageViewModel @Inject constructor(
                         halfDeliveryFee = productDetail.detail.halfDeliveryFee,
                         isInterest = productDetail.isInterested,
                         isPriceNegotiable = productDetail.detail.isPriceNegotiable,
+                        isOwnedByCurrentUser = productDetail.detail.isOwnedByCurrentUser,
                         tradeStatus = productDetail.detail.tradeStatus,
                         productPhotoUrls = productDetail.photos.map { it.photoUrl },
                         marketInfo = MarketInfoUiState(

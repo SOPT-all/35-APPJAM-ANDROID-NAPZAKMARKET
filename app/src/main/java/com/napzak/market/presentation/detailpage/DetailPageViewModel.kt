@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailPageViewModel @Inject constructor(
-    private val repository: DetailPageRepository,
+    private val detailPageRepository: DetailPageRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -33,7 +33,7 @@ class DetailPageViewModel @Inject constructor(
 
     private fun loadDetailPageData(productId: Long) {
         viewModelScope.launch {
-            repository.getProductDetail(productId)
+            detailPageRepository.getProductDetail(productId)
                 .onSuccess { productDetail ->
                     _uiState.value = DetailPageUiState(
                         profileImageUrl = productDetail.store.storePhoto,

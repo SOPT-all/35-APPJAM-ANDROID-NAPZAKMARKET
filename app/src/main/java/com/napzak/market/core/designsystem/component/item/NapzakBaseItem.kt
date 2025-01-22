@@ -63,7 +63,7 @@ fun NapzakBaseItem(
 ) {
     Column(
         modifier = modifier
-            .noRippleClickable(onItemClick)
+            .noRippleClickable(onItemClick),
     ) {
         ItemImageGroup(
             imgUrl = imgUrl,
@@ -73,36 +73,35 @@ fun NapzakBaseItem(
             onLikeClick = onLikeClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(1f)
+                .aspectRatio(1f),
         )
 
         SingleLineText(
             text = genre,
             style = NapzakMarketTheme.typography.capBold12,
             color = NapzakMarketTheme.colors.gray900,
-            modifier = Modifier.padding(top = 6.dp)
+            modifier = Modifier.padding(top = 6.dp),
         )
 
         SingleLineText(
             text = title,
             style = NapzakMarketTheme.typography.bodyMedium14,
             color = NapzakMarketTheme.colors.gray800,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = 4.dp),
         )
 
         PriceGroup(
             price = stringResource(napzak_item_price, price.formatToPriceString()),
             isOfferPossible = isOfferPossible,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = 4.dp),
         )
 
         SingleLineText(
             text = createdTime,
             style = NapzakMarketTheme.typography.capMedium12,
             color = NapzakMarketTheme.colors.gray400,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = 4.dp),
         )
-
     }
 }
 

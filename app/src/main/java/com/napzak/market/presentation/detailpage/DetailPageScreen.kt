@@ -104,7 +104,7 @@ fun DetailPageRoute(
         onChatNavigate = onItemChatNavigate,
         onBackClick = onNavigateUp,
         onLikeClick = {
-            viewModel.setProductInterest()
+            viewModel.updateProductInterest()
         },
         modifier = modifier,
     )
@@ -282,7 +282,7 @@ fun DetailPageScreen(
                             Row {
                                 uiState.standardDeliveryFee.takeIf { it > 0 }?.let {
                                     Row(
-                                        verticalAlignment = Alignment.CenterVertically
+                                        verticalAlignment = Alignment.CenterVertically,
                                     ) {
                                         Text(
                                             text = stringResource(id = R.string.detail_delivery_normal),
@@ -294,8 +294,7 @@ fun DetailPageScreen(
 
                                         Text(
                                             text = stringResource(
-                                                id = R.string.detail_delivery_fee_normal,
-                                                it
+                                                id = R.string.detail_delivery_fee_normal, it
                                             ),
                                             style = NapzakMarketTheme.typography.bodySemi16,
                                             color = NapzakMarketTheme.colors.gray900,
@@ -499,7 +498,7 @@ fun BottomBar(
                         throttleTime = 100L,
                         coroutineScope = coroutineScope,
                         onClick = onHeartClick
-                    )
+                    ),
             )
         }
 
@@ -547,7 +546,7 @@ fun DetailPageScreenSellPreview() {
             onChatNavigate = {},
             onBackClick = {},
             onLikeClick = {},
-            snackBarHostState = SnackbarHostState()
+            snackBarHostState = SnackbarHostState(),
         )
     }
 }

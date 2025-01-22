@@ -1,6 +1,6 @@
 package com.napzak.market.data.home.di
 
-import com.napzak.market.data.home.repositoryImpl.HomeRepositoryImpl
+import com.napzak.market.data.home.repositoryimpl.HomeRepositoryImpl
 import com.napzak.market.domain.home.repository.HomeRepository
 import dagger.Binds
 import dagger.Module

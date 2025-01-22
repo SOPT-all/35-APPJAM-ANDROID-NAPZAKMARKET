@@ -27,7 +27,7 @@ import kotlinx.collections.immutable.toImmutableList
 @Composable
 fun HomeRecommendationItemGroup(
     recommendedItems: ImmutableList<ProductItem>,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     onItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -99,7 +99,7 @@ fun HomeRecommendationItemGroup(
 private fun HomeRecommendationGroupPreview() {
     NapzakMarketTheme {
         HomeRecommendationItemGroup(
-            onLikeClick = {},
+            onLikeClick = {_, _ ->},
             onItemClick = {},
             recommendedItems = mutableListOf<ProductItem>().apply {
                 repeat(4) {

@@ -9,11 +9,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -54,6 +57,9 @@ fun MarketInfoRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val bottomSheetState by viewModel.bottomSheetState.collectAsStateWithLifecycle()
 
+    val gridState = rememberLazyGridState()
+    val coroutineScope = rememberCoroutineScope()
+
     LaunchedEffect(Unit) {
         viewModel.setStoreId(storeId)
         viewModel.getMarketInformation()
@@ -67,14 +73,24 @@ fun MarketInfoRoute(
         modifier = modifier,
         uiState = uiState,
         bottomSheetState = bottomSheetState,
+        gridState = gridState,
         debounce = viewModel::debounce,
         onBackButtonClick = onBackButtonClick,
-        onTradeTypeClick = viewModel::updateMarketTab,
+        onTradeTypeClick = { tradeType ->
+            viewModel.updateMarketTab(tradeType)
+            viewModel.initScrollState(coroutineScope, gridState)
+        },
         onGenreListClick = {
             viewModel.updateBottomSheetVisibility(BottomSheetType.GENRE_SEARCHING)
         },
-        onSoldOutClick = viewModel::updateSale,
-        onUnopenClick = viewModel::updateUnopen,
+        onSoldOutClick = {
+            viewModel.updateSale()
+            viewModel.initScrollState(coroutineScope, gridState)
+        },
+        onUnopenClick = {
+            viewModel.updateUnopen()
+            viewModel.initScrollState(coroutineScope, gridState)
+        },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(BottomSheetType.SORT) },
         onItemClick = onDetailPageNavigate,
         onLikeClick = viewModel::updateItemLikeButton,
@@ -82,6 +98,7 @@ fun MarketInfoRoute(
         onSortItemClick = {
             viewModel.updateSortType(it)
             viewModel.updateBottomSheetVisibility(BottomSheetType.SORT)
+            viewModel.initScrollState(coroutineScope, gridState)
         },
         onTextChange = viewModel::changeSearchText,
         onGenreSelectButtonClick = viewModel::updateSelectedGenreList,
@@ -92,6 +109,7 @@ fun MarketInfoRoute(
 fun MarketInfoScreen(
     uiState: MarketInfoUiState,
     bottomSheetState: MarketInfoBottomSheetState,
+    gridState: LazyGridState,
     debounce: () -> Unit,
     onBackButtonClick: () -> Unit,
     onTradeTypeClick: (MarketTab) -> Unit,
@@ -119,6 +137,7 @@ fun MarketInfoScreen(
                 MarketInfoSuccessScreen(
                     modifier = modifier,
                     bottomSheetState = bottomSheetState,
+                    gridState = gridState,
                     marketTab = marketTab,
                     selectedGenreList = selectedGenreList,
                     genreItems = genreItems,
@@ -149,6 +168,7 @@ fun MarketInfoScreen(
 @Composable
 fun MarketInfoSuccessScreen(
     bottomSheetState: MarketInfoBottomSheetState,
+    gridState: LazyGridState,
     marketTab: MarketTab,
     selectedGenreList: List<Genre>,
     genreItems: UiState<List<Genre>>,
@@ -253,6 +273,7 @@ fun MarketInfoSuccessScreen(
                     }
 
                     MarketProductListSection(
+                        gridState = gridState,
                         tradeType = marketTab,
                         productList = loadProductState.data.productList,
                         onItemClick = onItemClick,

@@ -21,6 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,24 +33,32 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.napzak.market.R
+import com.napzak.market.core.common.extension.formatToPriceString
 import com.napzak.market.core.common.util.NoRippleInteractionSource
 import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.core.type.TradeType
 import com.napzak.market.presentation.chat.itemchat.component.ChatInfoSection
-import com.napzak.market.presentation.chat.itemchat.type.ChatType
+import com.napzak.market.presentation.chat.itemchat.type.ChatUiState
 
 @Composable
 fun ItemChatRoute(
+    viewModel: ChatViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
     onNavigateUp: () -> Unit = {},
-    ) {
+    productId: Long,
+) {
+
+    LaunchedEffect(productId) {
+        viewModel.loadChatInfo(productId)
+    }
+
+    val uiState by viewModel.uiState.collectAsState()
+
     ItemChatScreen(
-        chatType = ChatType.BUY,
-        title = stringResource(id = R.string.chat_screen_title_buy),
-        description = stringResource(id = R.string.chat_screen_description_buy),
-        price = stringResource(id = R.string.chat_screen_price_buy),
-        showPriceLabel = true,
+        uiState = uiState,
         onBackClick = onNavigateUp,
         modifier = modifier,
     )
@@ -55,11 +66,7 @@ fun ItemChatRoute(
 
 @Composable
 fun ItemChatScreen(
-    chatType: ChatType,
-    title: String,
-    description: String,
-    price: String,
-    showPriceLabel: Boolean,
+    uiState: ChatUiState,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -70,7 +77,7 @@ fun ItemChatScreen(
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             BackTopBar(
-                title = title,
+                nickname = uiState.nickname,
                 onBackClick = onBackClick,
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = NapzakMarketTheme.typography.titleSemi18,
@@ -79,14 +86,15 @@ fun ItemChatScreen(
             )
 
             ChatInfoSection(
-                title = when (chatType) {
-                    ChatType.BUY -> stringResource(id = R.string.chat_buy_title)
-                    ChatType.SELL -> stringResource(id = R.string.chat_sell_title)
+                tradeType = uiState.tradeType,
+                title = uiState.title,
+                firstPhoto = uiState.firstPhoto,
+                price = "${uiState.price.toString().formatToPriceString()}원",
+                isPriceNegotiable = uiState.isPriceNegotiable,
+                titleColor = when (TradeType.fromName(uiState.tradeType)) {
+                    TradeType.BUY -> NapzakMarketTheme.colors.gray900
+                    TradeType.SELL -> NapzakMarketTheme.colors.purple30
                 },
-                description = description,
-                price = price,
-                showPriceLabel = showPriceLabel,
-                titleColor = if (chatType == ChatType.BUY) NapzakMarketTheme.colors.gray900 else NapzakMarketTheme.colors.purple30
             )
 
             Box(
@@ -125,7 +133,7 @@ fun ItemChatScreen(
                             color = NapzakMarketTheme.colors.gray100,
                             shape = CircleShape,
                         ),
-                    interactionSource = NoRippleInteractionSource
+                    interactionSource = NoRippleInteractionSource,
                 ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_add_13),
@@ -161,7 +169,7 @@ fun ItemChatScreen(
                         unfocusedIndicatorColor = Color.Transparent,
                         cursorColor = NapzakMarketTheme.colors.purple30,
                     ),
-                    singleLine = true
+                    singleLine = true,
                 )
             }
         }
@@ -170,26 +178,21 @@ fun ItemChatScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun ChatScreenBuyPreview() {
-    ItemChatScreen(
-        chatType = ChatType.BUY,
-        title = "납작한 외계인",
-        description = "양스타 토모에 히요리 이츠누이 함께",
-        price = "100,000원대",
-        showPriceLabel = true,
-        onBackClick = {}
+fun ItemChatScreenPreview() {
+    val mockUiState = ChatUiState(
+        nickname = "Seller123",
+        firstPhoto = "",
+        tradeType = "BUY",
+        title = "Product Title",
+        price = 150000,
+        isPriceNegotiable = true
     )
+
+    NapzakMarketTheme {
+        ItemChatScreen(
+            uiState = mockUiState,
+            onBackClick = {}
+        )
+    }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ChatScreenSellPreview() {
-    ItemChatScreen(
-        chatType = ChatType.SELL,
-        title = "납작한 외계인",
-        description = "딸기 마이멜로디 마스코트 인형",
-        price = "35,000원",
-        showPriceLabel = false,
-        onBackClick = {}
-    )
-}

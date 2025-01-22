@@ -22,7 +22,7 @@ fun ProductListSection(
     tradeType: TradeType,
     productList: List<ProductItem>,
     onItemClick: (Long) -> Unit,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (tradeType == TradeType.SELL) {
@@ -45,13 +45,14 @@ fun ProductListSection(
                         isMyItem = isOwnedByCurrentUser,
                         createdTime = uploadTime,
                         onItemClick = { onItemClick(productId) },
-                        onLikeClick = { onLikeClick(productId) },
+                        onLikeClick = { onLikeClick(productId, isInterested) },
                     )
                 }
             }
         }
     } else {
         LazyVerticalGrid(
+            state = gridState,
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(20.dp),
             modifier = modifier.fillMaxWidth(),
@@ -70,7 +71,7 @@ fun ProductListSection(
                         isOfferPossible = isPriceNegotiable,
                         createdTime = uploadTime,
                         onItemClick = { onItemClick(productId) },
-                        onLikeClick = { onLikeClick(productId) },
+                        onLikeClick = { onLikeClick(productId, isInterested) },
                     )
                 }
             }
@@ -86,7 +87,7 @@ private fun ProductListSectionPreview(modifier: Modifier = Modifier) {
         tradeType = TradeType.BUY,
         productList = emptyList(),
         onItemClick = { },
-        onLikeClick = { },
+        onLikeClick = { _, _ -> },
         modifier = modifier,
     )
 }

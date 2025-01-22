@@ -78,7 +78,6 @@ fun ExploreRoute(
 
     LaunchedEffect(uiState) {
         viewModel.getExploreProductInformation()
-        viewModel.initScrollState(coroutineScope, gridState)
     }
 
     ExploreScreen(
@@ -89,19 +88,29 @@ fun ExploreRoute(
         debounce = viewModel::debounce,
         onResultBackButtonClick = onSearchNavigate,
         onSearchBoxClick = onSearchNavigate,
-        onTradeTypeClick = viewModel::updateTradeType,
+        onTradeTypeClick = { tradeType ->
+            viewModel.updateTradeType(tradeType)
+            viewModel.initScrollState(coroutineScope, gridState)
+        },
         onGenreListClick = {
             viewModel.updateBottomSheetVisibility(BottomSheetType.GENRE_SEARCHING)
         },
-        onSoldOutClick = { viewModel.updateSale() },
-        onUnopenClick = { viewModel.updateUnopen() },
+        onSoldOutClick = {
+            viewModel.updateSale()
+            viewModel.initScrollState(coroutineScope, gridState)
+        },
+        onUnopenClick = {
+            viewModel.updateUnopen()
+            viewModel.initScrollState(coroutineScope, gridState)
+        },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(BottomSheetType.SORT) },
         onItemClick = onProductDetailNavigate,
-        onLikeClick = { /*viewModel::updateItemLikeButton*/ },
+        onLikeClick = viewModel::setProductInterest,
         onDismissRequest = { viewModel.updateBottomSheetVisibility(it) },
         onSortItemClick = {
             viewModel.updateSortType(it)
             viewModel.updateBottomSheetVisibility(BottomSheetType.SORT)
+            viewModel.initScrollState(coroutineScope, gridState)
         },
         onTextChange = { viewModel.changeSearchText(it) },
         onGenreSelectButtonClick = viewModel::updateSelectedGenreList,
@@ -122,7 +131,7 @@ fun ExploreScreen(
     onUnopenClick: () -> Unit,
     onSortButtonClick: () -> Unit,
     onItemClick: (Long) -> Unit,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     onDismissRequest: (BottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
@@ -197,7 +206,7 @@ fun ExploreSuccessScreen(
     onUnopenClick: () -> Unit,
     onSortButtonClick: () -> Unit,
     onItemClick: (Long) -> Unit,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     onDismissRequest: (BottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
@@ -391,7 +400,7 @@ private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
         onUnopenClick = { },
         onSortButtonClick = { },
         onItemClick = { },
-        onLikeClick = { },
+        onLikeClick = { _, _ -> },
         onDismissRequest = { },
         onSortItemClick = { },
         onTextChange = { },

@@ -281,8 +281,26 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun updateItemLikeButton(productId: Long) {
-        /* TODO: 좋아요 API 연결 및 기능 연결 */
+    fun setProductInterest(productId: Long, isInterested: Boolean) {
+        if (isInterested) {
+            deleteInterest(productId)
+        } else {
+            postInterest(productId)
+        }
+    }
+
+    private fun postInterest(productId: Long) = viewModelScope.launch {
+        interestRepository.postInterest(productId)
+            .onSuccess {
+                getExploreProductInformation()
+            }
+    }
+
+    private fun deleteInterest(productId: Long) = viewModelScope.launch {
+        interestRepository.deleteInterest(productId)
+            .onSuccess {
+                getExploreProductInformation()
+            }
     }
 
     fun updateBottomSheetVisibility(type: BottomSheetType) {

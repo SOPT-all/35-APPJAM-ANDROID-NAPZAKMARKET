@@ -2,28 +2,36 @@ package com.napzak.market.presentation.mypage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.napzak.market.domain.mypage.repository.MyPageRepository
 import com.napzak.market.presentation.mypage.state.MyPageUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPageViewModel @Inject constructor() : ViewModel() {
-    private val _uiState = MutableStateFlow(MyPageUiState())
-    val uiState: StateFlow<MyPageUiState> = _uiState
+class MyPageViewModel @Inject constructor(
+    private val repository: MyPageRepository
+) : ViewModel() {
+    private val _uiState = MutableStateFlow<MyPageUiState?>(null)
+    val uiState: StateFlow<MyPageUiState?> = _uiState
 
-    init {
-        loadMyPageData()
-    }
-
-    private fun loadMyPageData() {
+    fun loadMyPage() {
         viewModelScope.launch {
-            _uiState.value = MyPageUiState(
-                profileImageUrl = "https://example.com/profile_image.png",
-                nickname = "납자기님"
-            )
+            repository.fetchMyPageData()
+                .onSuccess { response ->
+                    _uiState.value = MyPageUiState(
+                        storeId = response.storeId,
+                        profileImageUrl = response.storePhoto,
+                        nickname = response.storeNickname,
+                    )
+                }
+                .onFailure {
+                    Timber.e(it)
+                }
+
         }
     }
 }

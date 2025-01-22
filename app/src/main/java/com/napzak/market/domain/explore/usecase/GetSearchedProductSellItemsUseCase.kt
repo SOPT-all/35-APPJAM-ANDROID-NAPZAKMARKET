@@ -6,7 +6,7 @@ import com.napzak.market.domain.explore.repository.ExploreRepository
 import com.napzak.market.domain.genre.model.Genre
 import javax.inject.Inject
 
-class GetSearchedProductSellItemsUseCas @Inject constructor(
+class GetSearchedProductSellItemsUseCase @Inject constructor(
     private val exploreRepository: ExploreRepository,
 ) {
     suspend operator fun invoke(

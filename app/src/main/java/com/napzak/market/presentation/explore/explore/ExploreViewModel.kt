@@ -9,7 +9,7 @@ import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.explore.usecase.GetProductBuyListUseCase
 import com.napzak.market.domain.explore.usecase.GetProductSellListUseCase
 import com.napzak.market.domain.explore.usecase.GetSearchedProductBuyItemsUseCase
-import com.napzak.market.domain.explore.usecase.GetSearchedProductSellItemsUseCas
+import com.napzak.market.domain.explore.usecase.GetSearchedProductSellItemsUseCase
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.explore.state.ExploreProductInformation
@@ -30,7 +30,7 @@ import javax.inject.Inject
 class ExploreViewModel @Inject constructor(
     private val getProductSellListUseCase: GetProductSellListUseCase,
     private val getProductBuyListUseCase: GetProductBuyListUseCase,
-    private val getSearchedProductSellItemsUseCas: GetSearchedProductSellItemsUseCas,
+    private val getSearchedProductSellItemsUseCase: GetSearchedProductSellItemsUseCase,
     private val getSearchedProductBuyItemsUseCase: GetSearchedProductBuyItemsUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ExploreUiState())
@@ -227,7 +227,7 @@ class ExploreViewModel @Inject constructor(
                 }
 
                 tradeType == TradeType.SELL && initSearchTerm != null -> {
-                    getSearchedProductSellItemsUseCas(
+                    getSearchedProductSellItemsUseCase(
                         searchTerm = initSearchTerm,
                         sortType = sortType.name,
                         isOnSale = isOnSale,

@@ -8,6 +8,6 @@ import retrofit2.http.Path
 interface DetailPageService {
     @GET("products/{productId}")
     suspend fun getProductDetail(
-        @Path("productId") productId: Long
+        @Path("productId") productId: Long,
     ): BaseResponse<ProductDetailResponse>
 }

@@ -28,13 +28,13 @@ class SearchViewModel @Inject constructor(
 
     fun changeSearchText(newValue: String) = viewModelScope.launch {
         updateSearchValue(newValue)
-        debounceSearch()
+        debounce()
     }
 
     fun updateSearchValue(newValue: String) = _searchTerm.update { newValue }
 
     @OptIn(FlowPreview::class)
-    fun debounceSearch() = viewModelScope.launch {
+    fun debounce() = viewModelScope.launch {
         _searchTerm.debounce(DEBOUNCE_DELAY)
             .collectLatest { debounced ->
                 getGenreList(debounced)

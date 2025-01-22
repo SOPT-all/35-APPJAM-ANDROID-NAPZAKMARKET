@@ -199,7 +199,7 @@ class ExploreViewModel @Inject constructor(
     private fun updateSearchValue(newValue: String) = _searchTerm.update { newValue }
 
     @OptIn(FlowPreview::class)
-    fun debounceSearch() = viewModelScope.launch {
+    fun debounce() = viewModelScope.launch {
         _searchTerm.debounce(DEBOUNCE_DELAY)
             .collectLatest { debounced ->
                 getGenreList(debounced)

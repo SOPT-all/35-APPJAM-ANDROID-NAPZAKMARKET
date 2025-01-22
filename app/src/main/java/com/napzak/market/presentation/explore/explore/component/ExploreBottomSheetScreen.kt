@@ -20,7 +20,7 @@ fun ExploreBottomSheetScreen(
     selectedGenreList: List<Genre>,
     genreList: UiState<List<Genre>>,
     sortType: SortType,
-    debounceSearch: () -> Unit,
+    debounce: () -> Unit,
     onDismissRequest: (BottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
@@ -60,7 +60,7 @@ fun ExploreBottomSheetScreen(
                 GenreSearchBottomSheet(
                     initialSelectedGenreList = selectedGenreList,
                     genreList = genreList,
-                    debounceSearch = debounceSearch,
+                    debounce = debounce,
                     onDismissRequest = { onDismissRequest(BottomSheetType.GENRE_SEARCHING) },
                     onTextChange = onTextChange,
                     onButtonClick = {

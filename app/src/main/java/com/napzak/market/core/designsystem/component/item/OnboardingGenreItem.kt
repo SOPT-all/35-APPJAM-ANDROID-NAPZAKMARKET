@@ -37,7 +37,8 @@ fun OnboardingGenreItem(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val itemColor = if (isSelected) NapzakMarketTheme.colors.purple30 else NapzakMarketTheme.colors.gray900
+    val itemColor =
+        if (isSelected) NapzakMarketTheme.colors.purple30 else NapzakMarketTheme.colors.gray900
 
     Column(
         modifier = modifier
@@ -51,15 +52,16 @@ fun OnboardingGenreItem(
                 .clip(RoundedCornerShape(12.dp))
                 .background(color = NapzakMarketTheme.colors.gray200),
         ) {
-            if(imgUrl.isNotBlank()) {
+            if (imgUrl.isNotBlank()) {
                 AsyncImage(
                     model = ImageRequest.Builder(context).data(imgUrl).build(),
                     contentDescription = genreName,
                     clipToBounds = true,
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
-            if(isSelected) {
+            if (isSelected) {
                 Image(
                     imageVector = ImageVector.vectorResource(id = com.napzak.market.R.drawable.ic_checkbox_select_16),
                     contentDescription = genreName,

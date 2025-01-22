@@ -3,7 +3,7 @@ package com.napzak.market.domain.registration.usecase
 import com.napzak.market.domain.registration.repository.RegistrationRepository
 import javax.inject.Inject
 
-class GetPresignedUrlUseCase @Inject constructor(
+class PresignedUrlUseCase @Inject constructor(
     private val registrationRepository: RegistrationRepository,
 ) {
     suspend operator fun invoke(

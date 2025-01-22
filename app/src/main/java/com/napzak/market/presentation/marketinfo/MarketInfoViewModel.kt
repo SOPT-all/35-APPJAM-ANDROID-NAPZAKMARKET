@@ -7,7 +7,7 @@ import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.domain.marketinfo.usecase.GetMarketInfoUseCase
+import com.napzak.market.domain.marketinfo.repository.MarketInfoRepository
 import com.napzak.market.domain.marketinfo.usecase.GetMarketProductBuyItemsUseCase
 import com.napzak.market.domain.marketinfo.usecase.GetMarketProductSellItemsUseCase
 import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
@@ -27,7 +27,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MarketInfoViewModel @Inject constructor(
-    private val getMarketInfoUseCase: GetMarketInfoUseCase,
+    private val marketInfoRepository: MarketInfoRepository,
     private val getMarketProductSellItemsUseCase: GetMarketProductSellItemsUseCase,
     private val getMarketProductBuyItemsUseCase: GetMarketProductBuyItemsUseCase,
 ) : ViewModel() {
@@ -120,9 +120,11 @@ class MarketInfoViewModel @Inject constructor(
     }
 
     fun getMarketInformation() = viewModelScope.launch {
-        with(uiState.value) {
-            getMarketInfoUseCase(storeId = storeId)
-                .onSuccess { marketInfo ->
+        marketInfoRepository.fetchMarketInfo(uiState.value.storeId)
+            .onSuccess { marketInfo ->
+                if (marketInfo.storeId==null) {
+                    updateLoadMarketInfoState(UiState.Empty)
+                } else {
                     updateLoadMarketInfoState(
                         UiState.Success(
                             MarketUiInformation(
@@ -135,10 +137,10 @@ class MarketInfoViewModel @Inject constructor(
                         )
                     )
                 }
-                .onFailure { response ->
-                    updateLoadMarketInfoState(UiState.Failure(response.toString()))
-                }
-        }
+            }
+            .onFailure { response ->
+                updateLoadMarketInfoState(UiState.Failure(response.toString()))
+            }
     }
 
     fun getMarketProductInformation() = viewModelScope.launch {

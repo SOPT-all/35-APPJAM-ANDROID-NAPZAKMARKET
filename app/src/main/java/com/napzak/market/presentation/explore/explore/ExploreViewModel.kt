@@ -202,16 +202,16 @@ class ExploreViewModel @Inject constructor(
     fun debounce() = viewModelScope.launch {
         _searchTerm.debounce(DEBOUNCE_DELAY)
             .collectLatest { debounced ->
-                getGenreList(debounced)
+                getGenres(debounced)
             }
     }
 
-    private fun getGenreList(searchTerm: String) = viewModelScope.launch {
+    private fun getGenres(searchTerm: String) = viewModelScope.launch {
         genreSearchUseCase.invoke(searchTerm)
             .onSuccess { response ->
                 _uiState.update { currentState ->
                     currentState.copy(
-                        genreList = UiState.Success(
+                        genreItems = UiState.Success(
                             response
                         )
                     )
@@ -220,7 +220,7 @@ class ExploreViewModel @Inject constructor(
             .onFailure { response ->
                 _uiState.update { currentState ->
                     currentState.copy(
-                        genreList = UiState.Failure(
+                        genreItems = UiState.Failure(
                             response.message.toString()
                         )
                     )

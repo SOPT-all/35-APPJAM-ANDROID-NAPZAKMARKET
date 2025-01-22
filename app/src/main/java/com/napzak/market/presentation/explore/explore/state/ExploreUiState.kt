@@ -15,7 +15,7 @@ data class ExploreUiState(
     val initSearchTerm: String? = null,
     val tradeType: TradeType = TradeType.SELL,
     val selectedGenreList: List<Genre> = emptyList(),
-    val genreList: UiState<List<Genre>> = UiState.Loading,
+    val genreItems: UiState<List<Genre>> = UiState.Loading,
     val isOnSale: Boolean = false,
     val isUnopened: Boolean = false,
     val sortType: SortType = SortType.RECENT,

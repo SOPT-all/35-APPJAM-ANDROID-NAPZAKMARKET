@@ -44,7 +44,7 @@ import com.napzak.market.presentation.explore.explore.component.GenreSearchNotic
 @Composable
 fun GenreSearchBottomSheet(
     initialSelectedGenreList: List<Genre>,
-    genreList: UiState<List<Genre>>,
+    genreItems: UiState<List<Genre>>,
     debounce: () -> Unit,
     onDismissRequest: () -> Unit,
     onTextChange: (String) -> Unit,
@@ -112,12 +112,12 @@ fun GenreSearchBottomSheet(
                     .fillMaxWidth()
                     .weight(1f),
             ) {
-                when (genreList) {
+                when (genreItems) {
                     is UiState.Loading -> {}
                     is UiState.Empty -> {}
                     is UiState.Failure -> {}
                     is UiState.Success -> {
-                        with(genreList) {
+                        with(genreItems) {
                             LazyColumn(
                                 modifier = Modifier.padding(horizontal = 20.dp),
                             ) {

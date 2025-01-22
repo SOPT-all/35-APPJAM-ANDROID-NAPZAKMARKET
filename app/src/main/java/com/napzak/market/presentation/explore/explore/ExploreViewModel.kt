@@ -114,7 +114,10 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun initScrollState(coroutineScope: CoroutineScope, gridState: LazyGridState) {
+    fun initScrollState(
+        coroutineScope: CoroutineScope,
+        gridState: LazyGridState,
+    ) {
         coroutineScope.launch {
             gridState.scrollToItem(0)
         }
@@ -281,7 +284,10 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun setProductInterest(productId: Long, isInterested: Boolean) {
+    fun setProductInterest(
+        productId: Long,
+        isInterested: Boolean,
+    ) {
         if (isInterested) {
             deleteInterest(productId)
         } else {

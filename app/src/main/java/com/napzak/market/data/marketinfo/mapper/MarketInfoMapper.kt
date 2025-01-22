@@ -14,7 +14,7 @@ fun MarketInfoResponse.toMarketInfo(): MarketInfo =
         genrePreferenceList = this.genrePreferences.map { genreItem ->
             Genre(
                 genreId = genreItem.genreId,
-                genreName = genreItem.genreName
+                genreName = genreItem.genreName,
             )
         }
     )

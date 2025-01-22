@@ -15,8 +15,10 @@ interface MarketInfoService {
         storeId: Long,
     ): BaseResponse<MarketInfoResponse>
 
-    @GET("sell/stores/{storeOwnerId}")
+    @GET("products/sell/stores/{storeOwnerId}")
     suspend fun getMarketProductSellItems(
+        @Path("storeOwnerId")
+        storeOwnerId: Long,
         @Query("sortOption")
         sortOption: String = "RECENT",
         @Query("isOnSale")
@@ -26,13 +28,13 @@ interface MarketInfoService {
         @Query("genreId")
         genreIds: List<Long>? = null,
         @Query("cursor")
-        cursor: String,
-        @Path("storeOwnerId")
-        storeOwnerId: Long,
+        cursor: String = "",
     ): BaseResponse<MarketProductSellItemsResponse>
 
-    @GET("buy/stores/{storeOwnerId}")
+    @GET("products/buy/stores/{storeOwnerId}")
     suspend fun getMarketProductBuyItems(
+        @Path("storeOwnerId")
+        storeOwnerId: Long,
         @Query("sortOption")
         sortOption: String = "RECENT",
         @Query("isOnSale")
@@ -42,8 +44,6 @@ interface MarketInfoService {
         @Query("genreId")
         genreIds: List<Long>? = null,
         @Query("cursor")
-        cursor: String,
-        @Path("storeOwnerId")
-        storeOwnerId: Long,
+        cursor: String = "",
     ): BaseResponse<MarketProductBuyItemsResponse>
 }

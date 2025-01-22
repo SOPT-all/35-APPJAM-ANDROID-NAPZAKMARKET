@@ -1,6 +1,7 @@
 package com.napzak.market.data.genre.di
 
 import com.napzak.market.core.network.di.JWT
+import com.napzak.market.data.genre.service.GenreManagementService
 import com.napzak.market.data.genre.service.GenreService
 import com.napzak.market.data.genre.service.ImageGenreService
 import dagger.Module
@@ -27,5 +28,9 @@ object ServiceModule {
         @JWT retrofit: Retrofit
     ): ImageGenreService = retrofit.create()
 
-
+    @Provides
+    @Singleton
+    fun providesGenreManagementService(
+        @JWT retrofit: Retrofit,
+    ): GenreManagementService = retrofit.create()
 }

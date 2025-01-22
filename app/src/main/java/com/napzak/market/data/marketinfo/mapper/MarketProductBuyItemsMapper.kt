@@ -14,7 +14,7 @@ fun ProductListFilter.toMarketProductBuyRequest(): MarketProductBuyItemsRequest 
     )
 
 fun MarketProductBuyItemsResponse.toMarketProductBuyItems(): List<ProductItem> =
-    productBuyList.map { productItem ->
+    productBuyItems.map { productItem ->
         with(productItem) {
             ProductItem(
                 productId = productId,

@@ -10,11 +10,11 @@ data class ProductDetailResponse(
     @SerialName("productDetail")
     val productDetail: ProductDetail,
     @SerialName("productPhotoList")
-    val productPhoto: List<ProductPhoto>,
+    val productPhotoItems: List<ProductPhoto>,
     @SerialName("storeInfo")
     val storeInfo: StoreInfo,
     @SerialName("storeReviewList")
-    val storeReview: List<StoreReview>,
+    val storeReviewItems: List<StoreReview>,
 ) {
     @Serializable
     data class ProductDetail(

@@ -8,10 +8,10 @@ fun MarketInfoResponse.toMarketInfo(): MarketInfo =
     MarketInfo(
         storeId = this.storeId,
         storeNickname = this.storeNickname,
-        storeDescription =this.storeDescription,
+        storeDescription = this.storeDescription,
         storePhoto = this.storePhoto,
         storeCover = this.storeCover,
-        genrePreferenceList = this.genrePreferenceList.map { genreItem ->
+        genrePreferenceList = this.genrePreferences.map { genreItem ->
             Genre(
                 genreId = genreItem.genreId,
                 genreName = genreItem.genreName

@@ -12,7 +12,6 @@ fun ProductListFilter.toMarketProductSellRequest(): MarketProductSellItemsReques
         isOnSale = this.isOnSale,
         isUnopened = this.isUnopened,
         genreIds = this.genreId,
-        nextCursor = "",
     )
 
 fun MarketProductSellItemsResponse.toMarketProductSellItems(): List<ProductItem> =

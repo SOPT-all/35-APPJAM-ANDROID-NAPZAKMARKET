@@ -13,6 +13,4 @@ data class MarketProductBuyItemsRequest(
     val genreIds: List<Long>?,
     @SerialName("isOnSale")
     val isOnSale: Boolean,
-    @SerialName("nextCursor")
-    val nextCursor: String = "",
 )

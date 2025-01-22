@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class MarketInfoResponse(
     @SerialName("storeId")
     val storeId: Long,
-    @SerialName("storeNickname")
+    @SerialName("storeNickName")
     val storeNickname: String,
     @SerialName("storeDescription")
     val storeDescription: String,
@@ -15,6 +15,6 @@ data class MarketInfoResponse(
     val storePhoto: String,
     @SerialName("storeCover")
     val storeCover: String,
-    @SerialName("genrePreferenceList")
-    val genrePreferenceList: List<GenrePreference>,
+    @SerialName("genrePreferences")
+    val genrePreferences: List<GenrePreference>,
 )

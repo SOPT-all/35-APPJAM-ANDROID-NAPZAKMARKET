@@ -7,8 +7,6 @@ import kotlinx.serialization.Serializable
 data class MarketProductSellItemsResponse(
     @SerialName("productSellList")
     val productSellList: List<ProductSellItem>,
-    @SerialName("nextCursor")
-    val nextCursor: String = "",
 ) {
     @Serializable
     data class ProductSellItem(

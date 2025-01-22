@@ -22,7 +22,6 @@ class MarketInfoDataSource @Inject constructor(
             isOnSale = request.isOnSale,
             isUnopened = request.isUnopened,
             genreIds = request.genreIds,
-            cursor = "",
         )
 
     suspend fun getMarketProductBuyItems(request: MarketProductBuyItemsRequest): BaseResponse<MarketProductBuyItemsResponse> =
@@ -31,6 +30,5 @@ class MarketInfoDataSource @Inject constructor(
             sortOption = request.sortOption,
             isOnSale = request.isOnSale,
             genreIds = request.genreIds,
-            cursor = "",
         )
 }

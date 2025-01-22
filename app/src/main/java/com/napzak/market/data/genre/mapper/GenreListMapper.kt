@@ -1,4 +1,4 @@
-package com.napzak.market.data.genre.di
+package com.napzak.market.data.genre.mapper
 
 import com.napzak.market.data.genre.dto.GenreListResponse
 import com.napzak.market.domain.genre.model.Genre

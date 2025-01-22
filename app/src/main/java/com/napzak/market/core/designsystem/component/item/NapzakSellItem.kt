@@ -1,4 +1,5 @@
 package com.napzak.market.core.designsystem.component.item
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +30,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.flowWithLifecycle
 import com.napzak.market.R
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.component.GenreChipButtonGroup
@@ -51,15 +54,31 @@ fun OnboardingRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val searchTerm by viewModel.searchTerm.collectAsStateWithLifecycle()
 
+    val lifecycle = LocalLifecycleOwner.current
+
+    LaunchedEffect(true) {
+        viewModel.debounceSearch()
+    }
+
+    LaunchedEffect(viewModel.sideEffect, lifecycle) {
+        viewModel.sideEffect.flowWithLifecycle(lifecycle.lifecycle)
+            .collect { sideEffect ->
+                when (sideEffect) {
+                    is OnboardingSideEffect.NavigateToHome -> {
+                        navigateToHome()
+                    }
+                }
+            }
+    }
+
     OnboardingScreen(
         uiState = uiState,
         searchTerm = searchTerm,
         onResetClick = viewModel::clearSelectedGenre,
         onGenreClick = viewModel::selectGenre,
-        onCompleteButtonClick = navigateToHome,
-        onSkipButtonClick = navigateToHome,
+        onCompleteButtonClick = viewModel::registerInterestGenres,
+        onSkipButtonClick = viewModel::skipRegisterGenres,
         onTextFieldChange = viewModel::changeSearchText,
-        onSearchButtonClick = {},
         modifier = modifier,
     )
 }
@@ -68,7 +87,6 @@ fun OnboardingRoute(
 private fun OnboardingScreen(
     uiState: OnboardingUiState,
     searchTerm: String,
-    onSearchButtonClick: () -> Unit,
     onTextFieldChange: (String) -> Unit,
     onGenreClick: (Genre) -> Unit,
     onResetClick: () -> Unit,
@@ -95,7 +113,7 @@ private fun OnboardingScreen(
             placeholder = stringResource(R.string.onboarding_text_field_placeholder),
             searchTerm = searchTerm,
             onTextChange = onTextFieldChange,
-            onSearchButtonClick = onSearchButtonClick,
+            onSearchButtonClick = { },
             modifier = Modifier
                 .padding(horizontal = 20.dp)
                 .padding(top = 32.dp)
@@ -103,7 +121,7 @@ private fun OnboardingScreen(
         )
 
         GenreChipButtonGroup(
-            genreList = uiState.selectedGenreList,
+            genreList = uiState.selectedGenres,
             onGenreClick = onGenreClick,
             onResetClick = onResetClick,
             contentPaddingValues = PaddingValues(end = 20.dp),
@@ -118,14 +136,14 @@ private fun OnboardingScreen(
                 .weight(1f)
                 .zIndex(-1f)
         ) {
-            when (uiState.genreList) {
+            when (uiState.genres) {
                 is UiState.Loading -> {}
                 is UiState.Empty -> {}
                 is UiState.Failure -> {}
                 is UiState.Success -> {
                     SuccessScreen(
-                        genreList = uiState.genreList.data,
-                        selectedGenreList = uiState.selectedGenreList,
+                        genreList = uiState.genres.data,
+                        selectedGenreList = uiState.selectedGenres,
                         onGenreClick = onGenreClick,
                     )
                 }
@@ -134,7 +152,7 @@ private fun OnboardingScreen(
         }
 
         OnboardingBottomBar(
-            isButtonEnabled = uiState.selectedGenreList.isNotEmpty(),
+            isButtonEnabled = uiState.selectedGenres.isNotEmpty(),
             onCompleteClick = onCompleteButtonClick,
             onSkipClick = onSkipButtonClick,
             modifier = Modifier.fillMaxWidth(),
@@ -210,7 +228,6 @@ private fun OnboardingScreenPreview() {
             onSkipButtonClick = {},
             onResetClick = {},
             onTextFieldChange = {},
-            onSearchButtonClick = {},
         )
     }
 }

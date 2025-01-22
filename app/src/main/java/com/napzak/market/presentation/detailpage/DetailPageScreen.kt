@@ -48,6 +48,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.napzak.market.R
 import com.napzak.market.R.string.profile_image_description
+import com.napzak.market.core.common.extension.formatToPriceString
 import com.napzak.market.core.common.util.NoRippleInteractionSource
 import com.napzak.market.core.designsystem.component.button.CommonButton
 import com.napzak.market.core.designsystem.component.chip.TextChip
@@ -169,7 +170,7 @@ fun DetailPageScreen(
                 likeCount = uiState.interestCount,
                 title = uiState.genreName,
                 subtitle = uiState.productName,
-                price = "${uiState.price}원",
+                price = "${uiState.price.toString().formatToPriceString()}원",
             )
 
             Spacer(modifier = Modifier.height(20.dp))

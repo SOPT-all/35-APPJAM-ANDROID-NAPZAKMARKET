@@ -50,7 +50,7 @@ class OnboardingViewModel @Inject constructor(
     }
 
     private fun getGenreList(searchTerm: String) = viewModelScope.launch {
-        genreSearchUseCase.invoke(searchTerm)
+        genreSearchUseCase(searchTerm)
             .onSuccess { response ->
                 _uiState.update { currentState ->
                     currentState.copy(genres = UiState.Success(response))
@@ -101,7 +101,7 @@ class OnboardingViewModel @Inject constructor(
     }
 
     fun registerInterestGenres() = viewModelScope.launch {
-        genreRegisterUseCase.invoke(_uiState.value.selectedGenres)
+        genreRegisterUseCase(_uiState.value.selectedGenres)
             .onSuccess {
                 _sideEffect.emit(OnboardingSideEffect.NavigateToHome)
             }

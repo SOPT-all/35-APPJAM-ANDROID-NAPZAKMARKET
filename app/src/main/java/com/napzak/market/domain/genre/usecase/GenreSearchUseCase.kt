@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GenreSearchUseCase @Inject constructor(
     private val genreRepository: GenreRepository,
 ) {
-    suspend fun invoke(searchTerm: String): Result<List<Genre>> =
+    suspend operator fun invoke(searchTerm: String): Result<List<Genre>> =
         if (searchTerm.isBlank()) {
             genreRepository.fetchInitialGenreItems()
         } else {

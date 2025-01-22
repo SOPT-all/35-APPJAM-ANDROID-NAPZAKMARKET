@@ -135,7 +135,7 @@ class MarketInfoViewModel @Inject constructor(
     }
 
     private fun getGenres(searchTerm: String) = viewModelScope.launch {
-        genreSearchUseCase.invoke(searchTerm)
+        genreSearchUseCase(searchTerm)
             .onSuccess { response ->
                 _uiState.update { currentState ->
                     currentState.copy(

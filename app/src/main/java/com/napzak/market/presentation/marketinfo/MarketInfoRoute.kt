@@ -310,6 +310,7 @@ fun MarketInfoSuccessScreen(
 private fun MarketPreview(modifier: Modifier = Modifier) {
     MarketInfoSuccessScreen(
         bottomSheetState = MarketInfoBottomSheetState(),
+        gridState = LazyGridState(),
         marketTab = MarketTab.BUY,
         selectedGenreList = emptyList(),
         genreItems = UiState.Empty,

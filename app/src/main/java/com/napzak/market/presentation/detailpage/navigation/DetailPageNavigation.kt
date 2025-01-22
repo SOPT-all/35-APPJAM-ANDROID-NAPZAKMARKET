@@ -15,13 +15,15 @@ fun NavController.navigateToDetailPage(productId: Long = 0, navOptions: NavOptio
 }
 
 fun NavGraphBuilder.detailPageGraph(
-    onChatNavigate: () -> Unit,
+    onChatNavigate: (Long) -> Unit,
     onNavigateUp: () -> Unit,
 ) {
-    composable<DetailPage> {
+    composable<DetailPage> { backStackEntry ->
+        val productId = backStackEntry.arguments?.getLong("productId") ?: 0L
+
         DetailPageRoute(
             modifier = Modifier.systemBarsPadding(),
-            onItemChatNavigate = onChatNavigate,
+            onItemChatNavigate = { onChatNavigate(productId) },
             onNavigateUp = onNavigateUp,
         )
     }

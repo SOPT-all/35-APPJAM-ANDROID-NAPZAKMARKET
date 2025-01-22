@@ -60,13 +60,13 @@ fun RegistrationRoute(
     viewModel: RegistrationViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val currentImageListSize = (MAX_ITEMS - uiState.imageUrl.size).coerceAtLeast(MIN_ITEMS)
-    val getImageStorageLauncher = rememberLauncherForActivityResult(
+    val currentImageSize = (MAX_ITEMS - uiState.imageUri.size).coerceAtLeast(MIN_ITEMS)
+    val imageStorageLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetMultipleContents()
     ) { uris: List<Uri> ->
-        handleUris(uris, currentImageListSize, viewModel::updatePhotoList)
+        handleUris(uris, currentImageSize, viewModel::updatePhotoList)
     }
-    val getPhotoPickerLauncher = when (uiState.imageUrl.size) {
+    val photoPickerLauncher = when (uiState.imageUri.size) {
         MAX_ITEMS - 1 -> rememberLauncherForActivityResult(
             ActivityResultContracts.PickVisualMedia()
         ) { uri: Uri? ->
@@ -74,8 +74,8 @@ fun RegistrationRoute(
         }
 
         else -> rememberLauncherForActivityResult(
-            ActivityResultContracts.PickMultipleVisualMedia(maxItems = currentImageListSize)
-        ) { uris: List<Uri> -> handleUris(uris, currentImageListSize, viewModel::updatePhotoList) }
+            ActivityResultContracts.PickMultipleVisualMedia(maxItems = currentImageSize)
+        ) { uris: List<Uri> -> handleUris(uris, currentImageSize, viewModel::updatePhotoList) }
     }
 
     LaunchedEffect(Unit) {
@@ -87,14 +87,14 @@ fun RegistrationRoute(
         registrationType = if (tradeType == TradeType.SELL.label) TradeType.SELL else TradeType.BUY,
         onCloseClick = navigateUp,
         onPhotoClick = {
-            val remainImageSize = MAX_ITEMS - uiState.imageUrl.size
+            val remainImageSize = MAX_ITEMS - uiState.imageUri.size
 
             when {
-                remainImageSize <= 0 -> { /* TODO: 최대 개수 초과 시 스낵바 처리 */ }
+                remainImageSize <= ZERO -> { /* TODO: 최대 개수 초과 시 스낵바 처리 */ }
 
-                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU -> getImageStorageLauncher.launch(INPUT_TYPE)
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU -> imageStorageLauncher.launch(INPUT_TYPE)
 
-                else -> getPhotoPickerLauncher.launch(
+                else -> photoPickerLauncher.launch(
                     PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                 )
             }
@@ -113,7 +113,7 @@ fun RegistrationRoute(
         onHalfPostFeeChange = { halfPostFee -> viewModel.updateNumericValue(halfPostFee, NumeralInputType.HalfPostFee) },
         onOfferCheckChange = viewModel::updateOfferAvailability,
         onPurchasePriceChange = { purchasePrice -> viewModel.updateNumericValue(purchasePrice, NumeralInputType.ProductPurchasePrice) },
-        updateButtonState = viewModel::updateButtonState,
+        onButtonStateChange = viewModel::updateButtonState,
         onRegistrationClick = viewModel::getPresignedUrl,
         modifier = modifier,
     )
@@ -121,13 +121,13 @@ fun RegistrationRoute(
 
 private fun handleUris(
     uris: List<Uri>,
-    remainingSlots: Int,
+    remainSlots: Int,
     updatePhoto: (List<String>) -> Unit,
 ) {
-    if (uris.size <= remainingSlots) {
+    if (uris.size <= remainSlots) {
         updatePhoto(uris.map { it.toString() })
     } else {
-        val limitedUris = uris.take(remainingSlots)
+        val limitedUris = uris.take(remainSlots)
         updatePhoto(limitedUris.map { it.toString() })
     }
 }
@@ -153,7 +153,7 @@ fun RegistrationScreen(
     onHalfPostFeeChange: (String) -> Unit,
     onPurchasePriceChange: (String) -> Unit,
     onOfferCheckChange: (Boolean) -> Unit,
-    updateButtonState: () -> Unit,
+    onButtonStateChange: () -> Unit,
     onRegistrationClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -167,7 +167,7 @@ fun RegistrationScreen(
         }
     }
 
-    LaunchedEffect(uiState) { updateButtonState() }
+    LaunchedEffect(uiState) { onButtonStateChange() }
 
     LazyColumn(
         modifier = modifier.background(NapzakMarketTheme.colors.white),
@@ -197,7 +197,7 @@ fun RegistrationScreen(
             Spacer(modifier = Modifier.height(16.dp))
             RegistrationPhotoPicker(
                 modifier = Modifier,
-                imageUrlList = uiState.imageUrl,
+                imageUrlList = uiState.imageUri,
                 onPhotoClick = onPhotoClick,
                 onPress = onPhotoPress,
                 onDeleteClick = onDeleteClick,
@@ -314,6 +314,7 @@ fun RegistrationScreen(
 private const val INPUT_TYPE = "image/*"
 private const val MAX_ITEMS = 10
 private const val MIN_ITEMS = 2
+private const val ZERO = 0
 private const val BLANK = ""
 private const val MAX_TITLE_LENGTH = 48
 private const val MAX_DESCRIPTION_LENGTH = 240

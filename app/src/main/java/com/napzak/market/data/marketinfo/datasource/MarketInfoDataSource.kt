@@ -17,7 +17,7 @@ class MarketInfoDataSource @Inject constructor(
 
     suspend fun getMarketProductSellItems(request: MarketProductSellItemsRequest): BaseResponse<MarketProductSellItemsResponse> =
         service.getMarketProductSellItems(
-            storeOwnerId = request.storeOwnerId,
+            storeId = request.storeId,
             sortOption = request.sortOption,
             isOnSale = request.isOnSale,
             isUnopened = request.isUnopened,
@@ -26,7 +26,7 @@ class MarketInfoDataSource @Inject constructor(
 
     suspend fun getMarketProductBuyItems(request: MarketProductBuyItemsRequest): BaseResponse<MarketProductBuyItemsResponse> =
         service.getMarketProductBuyItems(
-            storeOwnerId = request.storeOwnerId,
+            storeId = request.storeId,
             sortOption = request.sortOption,
             isOnSale = request.isOnSale,
             genreIds = request.genreIds,

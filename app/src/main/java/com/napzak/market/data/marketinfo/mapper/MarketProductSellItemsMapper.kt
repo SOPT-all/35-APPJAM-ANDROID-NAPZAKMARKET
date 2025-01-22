@@ -7,7 +7,7 @@ import com.napzak.market.domain.marketinfo.model.ProductListFilter
 
 fun ProductListFilter.toMarketProductSellRequest(): MarketProductSellItemsRequest =
     MarketProductSellItemsRequest(
-        storeOwnerId = this.storeId,
+        storeId = this.storeId,
         sortOption = this.sortOption,
         isOnSale = this.isOnSale,
         isUnopened = this.isUnopened,

@@ -35,11 +35,10 @@ class DetailPageViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getProductDetail(productId)
                 .onSuccess { productDetail ->
-                    val tradeType = TradeType.fromName(productDetail.detail.tradeType)
                     _uiState.value = DetailPageUiState(
                         profileImageUrl = productDetail.store.storePhoto,
                         productId = productDetail.detail.productId,
-                        tradeType = tradeType.name,
+                        tradeType = TradeType.fromName(productDetail.detail.tradeType).name, // 변수 없이 직접 사용
                         genreName = productDetail.detail.genreName,
                         productName = productDetail.detail.productName,
                         price = productDetail.detail.price,

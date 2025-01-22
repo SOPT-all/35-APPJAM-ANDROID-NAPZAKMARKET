@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,6 +51,10 @@ fun OnboardingRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val searchTerm by viewModel.searchTerm.collectAsStateWithLifecycle()
+
+    LaunchedEffect(true) {
+        viewModel.debounceSearch()
+    }
 
     OnboardingScreen(
         uiState = uiState,

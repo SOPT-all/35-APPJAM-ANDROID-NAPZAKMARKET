@@ -17,10 +17,12 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
     private val genreSearchUseCase: ImageGenreSearchUseCase,
 ) : ViewModel() {
+
     private val _searchTerm: MutableStateFlow<String> = MutableStateFlow("")
     val searchTerm = _searchTerm.asStateFlow()
 
@@ -28,34 +30,24 @@ class OnboardingViewModel @Inject constructor(
         MutableStateFlow(OnboardingUiState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        getGenreList("")
-    }
-
     fun changeSearchText(newValue: String) = viewModelScope.launch {
         updateSearchValue(newValue)
-        debounceSearch()
     }
 
     private fun updateSearchValue(newValue: String) = _searchTerm.update { newValue }
 
-    @OptIn(FlowPreview::class)
-    private suspend fun debounceSearch() = _searchTerm.debounce(DEBOUNCE_DELAY)
-        .collectLatest { debounced ->
-            getGenreList(debounced)
-        }
+    fun debounceSearch() = viewModelScope.launch {
+        _searchTerm.debounce(DEBOUNCE_DELAY)
+            .collectLatest { debounced ->
+                getGenreList(debounced)
+            }
+    }
 
-    // TODO: 서버 통신으로 대체
     private fun getGenreList(searchTerm: String) = viewModelScope.launch {
-        Timber.tag("getGenreList").d("searchTerm: $searchTerm")
         genreSearchUseCase.invoke(searchTerm)
             .onSuccess { response ->
                 _uiState.update { currentState ->
-                    currentState.copy(
-                        genreList = UiState.Success(
-                            response
-                        )
-                    )
+                    currentState.copy(genreList = UiState.Success(response))
                 }
             }
             .onFailure {
@@ -68,21 +60,6 @@ class OnboardingViewModel @Inject constructor(
                 }
             }
     }
-    /*{
-        _uiState.update { currentState ->
-            currentState.copy(
-                genreList = UiState.Success(
-                    if (searchTerm.isEmpty()) {
-                        OnboardingUiState.initialGenreList.data
-                    } else {
-                        OnboardingUiState.initialGenreList.data.filter {
-                            it.genreName.contains(searchTerm)
-                        }
-                    }
-                ),
-            )
-        }
-    }*/
 
     fun selectGenre(genre: Genre) {
         if (_uiState.value.selectedGenreList.map { it.genreId }.contains(genre.genreId)) {

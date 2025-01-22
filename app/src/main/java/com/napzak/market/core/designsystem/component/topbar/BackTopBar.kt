@@ -15,7 +15,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 /**
  * 뒤로 가기 버튼과 타이틀을 포함한 상단 바 컴포넌트.
  *
- * @param title TopBar에 표시될 제목
+ * @param nickname TopBar에 표시될 제목
  * @param onBackClick 뒤로 가기 버튼 클릭 시 수행할 동작.
  * @param textStyle 제목 텍스트 스타일
  * @param backgroundColor TopBar의 배경색
@@ -25,7 +25,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 @Composable
 fun BackTopBar(
-    title: String,
+    nickname: String,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = NapzakMarketTheme.typography.titleSemi18,
@@ -35,7 +35,7 @@ fun BackTopBar(
     CommonTopBar(
         modifier = modifier
             .padding(top = 2.dp, bottom = 4.dp),
-        title = title,
+        title = nickname,
         navigationIcon = ImageVector.vectorResource(R.drawable.ic_back_48),
         onNavigationClick = onBackClick,
         textStyle = textStyle,
@@ -49,7 +49,7 @@ fun BackTopBar(
 fun PreviewGenreTopBar() {
     NapzakMarketTheme {
         BackTopBar(
-            title = "장르",
+            nickname = "장르",
             onBackClick = { /* Preview Action */ }
         )
     }

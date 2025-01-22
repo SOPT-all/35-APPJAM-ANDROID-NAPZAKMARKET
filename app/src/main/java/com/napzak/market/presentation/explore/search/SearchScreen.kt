@@ -48,9 +48,9 @@ fun SearchRoute(
     LaunchedEffect(true) {
         if (initSearchTerm != null) {
             viewModel.updateSearchValue(initSearchTerm)
-            viewModel.getGenreList(initSearchTerm)
+            viewModel.getGenres(initSearchTerm)
         } else {
-            viewModel.getGenreList("")
+            viewModel.getGenres("")
         }
     }
 
@@ -87,7 +87,7 @@ fun SearchScreen(
                 SearchSuccessScreen(
                     modifier = modifier,
                     searchTerm = searchTerm,
-                    genreList = genreList,
+                    genreItems = genreItems,
                     onBackButtonClick = onBackButtonClick,
                     onTextChange = onTextChange,
                     onSearchButtonClick = onSearchButtonClick,
@@ -101,7 +101,7 @@ fun SearchScreen(
 @Composable
 fun SearchSuccessScreen(
     searchTerm: String,
-    genreList: List<Genre>,
+    genreItems: List<Genre>,
     onBackButtonClick: () -> Unit,
     onTextChange: (String) -> Unit,
     onSearchButtonClick: () -> Unit,
@@ -146,7 +146,7 @@ fun SearchSuccessScreen(
         Spacer(Modifier.height(20.dp))
 
         SearchGenreListSection(
-            genreList = genreList,
+            genreItems = genreItems,
             onGenreItemClick = onGenreItemClick,
         )
     }
@@ -157,7 +157,7 @@ fun SearchSuccessScreen(
 private fun SearchSuccessScreenPreview(modifier: Modifier = Modifier) {
     SearchSuccessScreen(
         searchTerm = "",
-        genreList = emptyList(),
+        genreItems = emptyList(),
         onBackButtonClick = { },
         onTextChange = { },
         onSearchButtonClick = { },

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.genre.respository.GenreRepository
-import com.napzak.market.presentation.explore.search.state.RelatedGenreList
+import com.napzak.market.presentation.explore.search.state.RelatedGenreItems
 import com.napzak.market.presentation.explore.search.state.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
@@ -37,15 +37,15 @@ class SearchViewModel @Inject constructor(
     fun debounce() = viewModelScope.launch {
         _searchTerm.debounce(DEBOUNCE_DELAY)
             .collectLatest { debounced ->
-                getGenreList(debounced)
+                getGenres(debounced)
             }
     }
 
-    fun getGenreList(searchTerm: String) = viewModelScope.launch {
+    fun getGenres(searchTerm: String) = viewModelScope.launch {
         if (searchTerm.isBlank()) {
             updateLoadState(
                 UiState.Success(
-                    RelatedGenreList(genreList = emptyList())
+                    RelatedGenreItems(genreItems = emptyList())
                 )
             )
         } else {
@@ -53,7 +53,7 @@ class SearchViewModel @Inject constructor(
                 .onSuccess { response ->
                     updateLoadState(
                         UiState.Success(
-                            RelatedGenreList(genreList = response)
+                            RelatedGenreItems(genreItems = response)
                         )
                     )
                 }
@@ -68,7 +68,7 @@ class SearchViewModel @Inject constructor(
     }
 
 
-    private fun updateLoadState(loadState: UiState<RelatedGenreList>) =
+    private fun updateLoadState(loadState: UiState<RelatedGenreItems>) =
         _uiState.update { currentState ->
             currentState.copy(
                 loadState = loadState

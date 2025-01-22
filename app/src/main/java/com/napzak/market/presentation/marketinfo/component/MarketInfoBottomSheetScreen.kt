@@ -18,7 +18,7 @@ fun MarketInfoBottomSheetScreen(
     modifier: Modifier = Modifier,
     bottomSheetState: MarketInfoBottomSheetState,
     selectedGenreList: List<Genre>,
-    genreList: UiState<List<Genre>>,
+    genreItems: UiState<List<Genre>>,
     sortType: SortType,
     debounce: () -> Unit,
     onDismissRequest: (BottomSheetType) -> Unit,
@@ -59,7 +59,7 @@ fun MarketInfoBottomSheetScreen(
             ) {
                 GenreSearchBottomSheet(
                     initialSelectedGenreList = selectedGenreList,
-                    genreList = genreList,
+                    genreItems = genreItems,
                     debounce = debounce,
                     onDismissRequest = { onDismissRequest(BottomSheetType.GENRE_SEARCHING) },
                     onTextChange = onTextChange,

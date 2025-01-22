@@ -65,10 +65,10 @@ class ExploreViewModel @Inject constructor(
             }
         }
 
-        updateUiState(exploreScreenType)
+        updateScreenType(exploreScreenType)
     }
 
-    private fun updateUiState(exploreScreenType: ExploreScreenType) { // TODO: 함수명 변경 필요
+    private fun updateScreenType(exploreScreenType: ExploreScreenType) {
         _uiState.update { currentState ->
             currentState.copy(
                 exploreScreenType = exploreScreenType,

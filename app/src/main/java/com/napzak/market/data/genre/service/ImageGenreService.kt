@@ -7,13 +7,10 @@ import retrofit2.http.Query
 
 interface ImageGenreService {
     @GET("onboarding/genres")
-    suspend fun getInitialImageGenres(
-        @Query("cursor") cursor: Long = 0,
-    ): BaseResponse<ImageGenreListResponse>
+    suspend fun getInitialImageGenres(): BaseResponse<ImageGenreListResponse>
 
     @GET("onboarding/genres/search")
     suspend fun getSearchResultImageGenres(
         @Query("searchWord") searchWord: String,
-        @Query("cursor") cursor: Long = 0,
     ): BaseResponse<ImageGenreListResponse>
 }

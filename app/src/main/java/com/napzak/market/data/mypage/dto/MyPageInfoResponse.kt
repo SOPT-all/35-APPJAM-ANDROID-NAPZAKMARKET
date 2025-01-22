@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class MyPageInfoResponse(
     @SerialName("storeId")
     val storeId: Long,
-    @SerialName("storeNickname")
+    @SerialName("storeNickName")
     val storeNickname: String,
     @SerialName("storePhoto")
     val storePhoto: String,

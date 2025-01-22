@@ -121,7 +121,7 @@ private fun OnboardingScreen(
         )
 
         GenreChipButtonGroup(
-            genreList = uiState.selectedGenreList,
+            genreList = uiState.selectedGenres,
             onGenreClick = onGenreClick,
             onResetClick = onResetClick,
             contentPaddingValues = PaddingValues(end = 20.dp),
@@ -136,14 +136,14 @@ private fun OnboardingScreen(
                 .weight(1f)
                 .zIndex(-1f)
         ) {
-            when (uiState.genreList) {
+            when (uiState.genres) {
                 is UiState.Loading -> {}
                 is UiState.Empty -> {}
                 is UiState.Failure -> {}
                 is UiState.Success -> {
                     SuccessScreen(
-                        genreList = uiState.genreList.data,
-                        selectedGenreList = uiState.selectedGenreList,
+                        genreList = uiState.genres.data,
+                        selectedGenreList = uiState.selectedGenres,
                         onGenreClick = onGenreClick,
                     )
                 }
@@ -152,7 +152,7 @@ private fun OnboardingScreen(
         }
 
         OnboardingBottomBar(
-            isButtonEnabled = uiState.selectedGenreList.isNotEmpty(),
+            isButtonEnabled = uiState.selectedGenres.isNotEmpty(),
             onCompleteClick = onCompleteButtonClick,
             onSkipClick = onSkipButtonClick,
             modifier = Modifier.fillMaxWidth(),

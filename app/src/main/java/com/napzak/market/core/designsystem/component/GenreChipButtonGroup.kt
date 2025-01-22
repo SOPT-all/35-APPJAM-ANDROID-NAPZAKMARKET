@@ -88,8 +88,8 @@ fun GenreChipButtonGroup(
                                 onClick = { onGenreClick(genre) },
                                 modifier = Modifier
                                     .animateItem(
-                                        fadeInSpec = tween(200),
-                                        fadeOutSpec = tween(200),
+                                        fadeInSpec = tween(CHIP_ANIMATION_DURATION),
+                                        fadeOutSpec = tween(CHIP_ANIMATION_DURATION),
                                     )
                             )
                         }
@@ -99,6 +99,8 @@ fun GenreChipButtonGroup(
         }
     )
 }
+
+private const val CHIP_ANIMATION_DURATION = 200
 
 @Preview(showBackground = true)
 @Composable

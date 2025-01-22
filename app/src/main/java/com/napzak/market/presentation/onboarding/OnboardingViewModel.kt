@@ -53,13 +53,13 @@ class OnboardingViewModel @Inject constructor(
         genreSearchUseCase.invoke(searchTerm)
             .onSuccess { response ->
                 _uiState.update { currentState ->
-                    currentState.copy(genreList = UiState.Success(response))
+                    currentState.copy(genres = UiState.Success(response))
                 }
             }
             .onFailure {
                 _uiState.update { currentState ->
                     currentState.copy(
-                        genreList = UiState.Failure(
+                        genres = UiState.Failure(
                             it.message.toString()
                         )
                     )
@@ -68,23 +68,23 @@ class OnboardingViewModel @Inject constructor(
     }
 
     fun selectGenre(genre: Genre) {
-        if (_uiState.value.selectedGenreList.map { it.genreId }.contains(genre.genreId)) {
+        if (_uiState.value.selectedGenres.map { it.genreId }.contains(genre.genreId)) {
             removeSelectedGenre(genre)
-        } else if (_uiState.value.selectedGenreList.size < MAX_CHOICE) {
+        } else if (_uiState.value.selectedGenres.size < MAX_CHOICE) {
             addSelectedGenre(genre)
         }
     }
 
     fun clearSelectedGenre() = _uiState.update { currentState ->
         currentState.copy(
-            selectedGenreList = emptyList(),
+            selectedGenres = emptyList(),
         )
     }
 
     private fun removeSelectedGenre(genre: Genre) {
         _uiState.update { currentState ->
             currentState.copy(
-                selectedGenreList = currentState.selectedGenreList.filter {
+                selectedGenres = currentState.selectedGenres.filter {
                     it.genreId != genre.genreId
                 },
             )
@@ -94,14 +94,14 @@ class OnboardingViewModel @Inject constructor(
     private fun addSelectedGenre(genre: Genre) {
         _uiState.update { currentState ->
             currentState.copy(
-                selectedGenreList = currentState.selectedGenreList + genre
+                selectedGenres = currentState.selectedGenres + genre
 
             )
         }
     }
 
     fun registerInterestGenres() = viewModelScope.launch {
-        genreRegisterUseCase.invoke(_uiState.value.selectedGenreList)
+        genreRegisterUseCase.invoke(_uiState.value.selectedGenres)
             .onSuccess {
                 _sideEffect.emit(OnboardingSideEffect.NavigateToHome)
             }

@@ -58,7 +58,7 @@ fun OnboardingGenreItem(
                     contentDescription = genreName,
                     clipToBounds = true,
                     contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
             if (isSelected) {

@@ -5,7 +5,7 @@ import com.napzak.market.domain.genre.respository.ImageGenreRepository
 import javax.inject.Inject
 
 class ImageGenreSearchUseCase @Inject constructor(
-    private val repository: ImageGenreRepository
+    private val repository: ImageGenreRepository,
 ) {
     suspend fun invoke(searchTerm: String): Result<List<Genre>> =
         if (searchTerm.isBlank()) {

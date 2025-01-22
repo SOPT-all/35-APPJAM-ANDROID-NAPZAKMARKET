@@ -74,6 +74,7 @@ fun DetailPageRoute(
     modifier: Modifier = Modifier,
 ) {
     val lifecycle = LocalLifecycleOwner.current
+    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
     val snackBarHostState = remember { SnackbarHostState() }
 
@@ -82,8 +83,8 @@ fun DetailPageRoute(
             when (sideEffect) {
                 DetailPageSideEffect.ShowLikeSnackBar -> {
                     snackBarHostState.showSnackbar(
-                        message = "상품을 찜했어요!",
-                        duration = SnackbarDuration.Short
+                        message = context.getString(R.string.detail_snackbar_message),
+                        duration = SnackbarDuration.Short,
                     )
                 }
 

@@ -30,7 +30,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.flowWithLifecycle
 import com.napzak.market.R
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.component.GenreChipButtonGroup
@@ -52,8 +54,21 @@ fun OnboardingRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val searchTerm by viewModel.searchTerm.collectAsStateWithLifecycle()
 
+    val lifecycle = LocalLifecycleOwner.current
+
     LaunchedEffect(true) {
         viewModel.debounceSearch()
+    }
+
+    LaunchedEffect(viewModel.sideEffect, lifecycle) {
+        viewModel.sideEffect.flowWithLifecycle(lifecycle.lifecycle)
+            .collect { sideEffect ->
+                when (sideEffect) {
+                    is OnboardingSideEffect.NavigateToHome -> {
+                        navigateToHome()
+                    }
+                }
+            }
     }
 
     OnboardingScreen(
@@ -61,10 +76,9 @@ fun OnboardingRoute(
         searchTerm = searchTerm,
         onResetClick = viewModel::clearSelectedGenre,
         onGenreClick = viewModel::selectGenre,
-        onCompleteButtonClick = navigateToHome,
-        onSkipButtonClick = navigateToHome,
+        onCompleteButtonClick = viewModel::registerInterestGenres,
+        onSkipButtonClick = viewModel::skipRegisterGenres,
         onTextFieldChange = viewModel::changeSearchText,
-        onSearchButtonClick = {},
         modifier = modifier,
     )
 }
@@ -73,7 +87,6 @@ fun OnboardingRoute(
 private fun OnboardingScreen(
     uiState: OnboardingUiState,
     searchTerm: String,
-    onSearchButtonClick: () -> Unit,
     onTextFieldChange: (String) -> Unit,
     onGenreClick: (Genre) -> Unit,
     onResetClick: () -> Unit,
@@ -100,7 +113,7 @@ private fun OnboardingScreen(
             placeholder = stringResource(R.string.onboarding_text_field_placeholder),
             searchTerm = searchTerm,
             onTextChange = onTextFieldChange,
-            onSearchButtonClick = onSearchButtonClick,
+            onSearchButtonClick = { },
             modifier = Modifier
                 .padding(horizontal = 20.dp)
                 .padding(top = 32.dp)
@@ -215,7 +228,6 @@ private fun OnboardingScreenPreview() {
             onSkipButtonClick = {},
             onResetClick = {},
             onTextFieldChange = {},
-            onSearchButtonClick = {},
         )
     }
 }

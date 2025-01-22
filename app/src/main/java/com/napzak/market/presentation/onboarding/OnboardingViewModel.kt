@@ -4,11 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.genre.model.Genre
+import com.napzak.market.domain.genre.usecase.GenreRegisterUseCase
 import com.napzak.market.domain.genre.usecase.ImageGenreSearchUseCase
 import com.napzak.market.presentation.onboarding.state.OnboardingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
@@ -20,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
     private val genreSearchUseCase: ImageGenreSearchUseCase,
+    private val genreRegisterUseCase: GenreRegisterUseCase,
 ) : ViewModel() {
 
     private val _searchTerm: MutableStateFlow<String> = MutableStateFlow("")
@@ -28,6 +32,9 @@ class OnboardingViewModel @Inject constructor(
     private val _uiState: MutableStateFlow<OnboardingUiState> =
         MutableStateFlow(OnboardingUiState())
     val uiState = _uiState.asStateFlow()
+
+    private val _sideEffect: MutableSharedFlow<OnboardingSideEffect> = MutableSharedFlow()
+    val sideEffect = _sideEffect.asSharedFlow()
 
     fun changeSearchText(newValue: String) = viewModelScope.launch {
         updateSearchValue(newValue)
@@ -91,6 +98,17 @@ class OnboardingViewModel @Inject constructor(
 
             )
         }
+    }
+
+    fun registerInterestGenres() = viewModelScope.launch {
+        genreRegisterUseCase.invoke(_uiState.value.selectedGenreList)
+            .onSuccess {
+                _sideEffect.emit(OnboardingSideEffect.NavigateToHome)
+            }
+    }
+
+    fun skipRegisterGenres() = viewModelScope.launch {
+        _sideEffect.emit(OnboardingSideEffect.NavigateToHome)
     }
 
     companion object {

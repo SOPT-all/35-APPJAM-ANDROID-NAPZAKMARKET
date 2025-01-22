@@ -11,10 +11,6 @@ class DetailPageRepositoryImpl @Inject constructor(
 ) : DetailPageRepository {
     override suspend fun getProductDetail(productId: Long): Result<ProductDetail> = runCatching {
         val response = dataSource.fetchProductDetail(productId)
-        if (response.status == 200) {
-            response.data.toDomain()
-        } else {
-            throw IllegalStateException("Unexpected status code: ${response.status}")
-        }
+        response.data.toDomain()
     }
 }

@@ -3,14 +3,15 @@ package com.napzak.market.presentation.registration.state
 import androidx.compose.runtime.Immutable
 import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
+import com.napzak.market.domain.genre.model.Genre
 
 @Immutable
 data class RegistrationUiState(
     val tradeType: TradeType? = null,
     val imageUri: List<String> = emptyList(),
-    val searchTerm: String = "",
+//    val searchTerm: String = "",
     val genre: String = "",
-    val genreList: List<String> = emptyList(),
+    val genreList: List<Genre> = emptyList(),
     val title: String = "",
     val description: String = "",
     val isButtonEnabled: Boolean = false,

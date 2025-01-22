@@ -31,7 +31,7 @@ import kotlinx.collections.immutable.toImmutableList
 @Composable
 fun HomePopularItemGroup(
     popularItems: ImmutableList<ProductItem>,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     onItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -97,7 +97,7 @@ fun HomePopularItemGroup(
                     HomeItemMapper(
                         item = item,
                         onItemClick = { onItemClick(item.productId) },
-                        onLikeClick = { onLikeClick(item.productId) },
+                        onLikeClick = { onLikeClick(item.productId, item.isInterested) },
                         modifier = Modifier.width(itemWidth),
                     )
                 }
@@ -112,7 +112,7 @@ private fun HomePopularGroupPreview() {
     NapzakMarketTheme {
         HomePopularItemGroup(
             modifier = Modifier.fillMaxWidth(),
-            onLikeClick = {},
+            onLikeClick = { _, _ -> },
             onItemClick = {},
             popularItems = mutableListOf<ProductItem>().apply {
                 repeat(4) {

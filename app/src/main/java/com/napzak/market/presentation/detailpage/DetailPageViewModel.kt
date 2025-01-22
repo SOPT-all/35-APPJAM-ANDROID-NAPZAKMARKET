@@ -100,7 +100,6 @@ class DetailPageViewModel @Inject constructor(
     private fun deleteInterest(productId: Long) = viewModelScope.launch {
         interestRepository.deleteInterest(productId)
             .onSuccess {
-                _sideEffect.emit(DetailPageSideEffect.DismissLikeSnackBar)
                 loadDetailPageData()
             }
     }

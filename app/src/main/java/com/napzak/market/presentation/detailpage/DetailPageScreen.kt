@@ -23,6 +23,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -87,10 +88,6 @@ fun DetailPageRoute(
                         duration = SnackbarDuration.Short,
                     )
                 }
-
-                DetailPageSideEffect.DismissLikeSnackBar -> {
-                    snackBarHostState.currentSnackbarData?.dismiss()
-                }
             }
         }
     }
@@ -106,6 +103,7 @@ fun DetailPageRoute(
         onBackClick = onNavigateUp,
         onLikeClick = {
             viewModel.updateProductInterest()
+            if(uiState.isInterest) snackBarHostState.currentSnackbarData?.dismiss()
         },
         modifier = modifier,
     )
@@ -134,6 +132,7 @@ fun DetailPageScreen(
             SnackbarHost(
                 hostState = snackBarHostState,
                 snackbar = {
+
                     CommonSnackBar(
                         message = it.visuals.message,
                         icon = ImageVector.vectorResource(id = R.drawable.ic_heart_toast_18),

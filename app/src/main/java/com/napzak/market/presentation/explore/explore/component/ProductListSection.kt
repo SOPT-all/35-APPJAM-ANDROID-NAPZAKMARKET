@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import com.napzak.market.domain.explore.model.ProductItem
 
 @Composable
 fun ProductListSection(
+    gridState: LazyGridState,
     tradeType: TradeType,
     productList: List<ProductItem>,
     onItemClick: (Long) -> Unit,
@@ -25,6 +27,7 @@ fun ProductListSection(
 ) {
     if (tradeType == TradeType.SELL) {
         LazyVerticalGrid(
+            state = gridState,
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(20.dp),
             modifier = modifier.fillMaxWidth(),
@@ -79,6 +82,7 @@ fun ProductListSection(
 @Composable
 private fun ProductListSectionPreview(modifier: Modifier = Modifier) {
     ProductListSection(
+        gridState = LazyGridState(),
         tradeType = TradeType.BUY,
         productList = emptyList(),
         onItemClick = { },

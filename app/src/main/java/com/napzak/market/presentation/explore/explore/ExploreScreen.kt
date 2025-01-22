@@ -12,11 +12,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -58,6 +61,9 @@ fun ExploreRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val bottomSheetState by viewModel.bottomSheetState.collectAsStateWithLifecycle()
 
+    val gridState = rememberLazyGridState()
+    val coroutineScope = rememberCoroutineScope()
+
     BackHandler {
         if (uiState.exploreScreenType == ExploreScreenType.BASIC) {
             onBackButtonClick()
@@ -72,12 +78,14 @@ fun ExploreRoute(
 
     LaunchedEffect(uiState) {
         viewModel.getExploreProductInformation()
+        viewModel.initScrollState(coroutineScope, gridState)
     }
 
     ExploreScreen(
         modifier = modifier,
         uiState = uiState,
         bottomSheetState = bottomSheetState,
+        gridState = gridState,
         debounce = viewModel::debounce,
         onResultBackButtonClick = onSearchNavigate,
         onSearchBoxClick = onSearchNavigate,
@@ -89,7 +97,7 @@ fun ExploreRoute(
         onUnopenClick = { viewModel.updateUnopen() },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(BottomSheetType.SORT) },
         onItemClick = onProductDetailNavigate,
-        onLikeClick = viewModel::updateItemLikeButton,
+        onLikeClick = { /*viewModel::updateItemLikeButton*/ },
         onDismissRequest = { viewModel.updateBottomSheetVisibility(it) },
         onSortItemClick = {
             viewModel.updateSortType(it)
@@ -104,6 +112,7 @@ fun ExploreRoute(
 fun ExploreScreen(
     uiState: ExploreUiState,
     bottomSheetState: ExploreBottomSheetState,
+    gridState: LazyGridState,
     debounce: () -> Unit,
     onResultBackButtonClick: (String?) -> Unit,
     onSearchBoxClick: (String?) -> Unit,
@@ -135,6 +144,7 @@ fun ExploreScreen(
                 ExploreSuccessScreen(
                     modifier = modifier,
                     bottomSheetState = bottomSheetState,
+                    gridState = gridState,
                     exploreScreenType = exploreScreenType,
                     initSearchTerm = initSearchTerm,
                     tradeType = tradeType,
@@ -168,6 +178,7 @@ fun ExploreScreen(
 fun ExploreSuccessScreen(
     modifier: Modifier = Modifier,
     bottomSheetState: ExploreBottomSheetState,
+    gridState: LazyGridState,
     exploreScreenType: ExploreScreenType,
     initSearchTerm: String?,
     tradeType: TradeType,
@@ -330,6 +341,7 @@ fun ExploreSuccessScreen(
         }
 
         ProductListSection(
+            gridState = gridState,
             tradeType = tradeType,
             productList = productList,
             onItemClick = onItemClick,
@@ -360,6 +372,7 @@ private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
             isSortBottomSheetVisible = false,
             isGenreSearchingBottomSheetVisible = false
         ),
+        gridState = LazyGridState(),
         tradeType = TradeType.SELL,
         exploreScreenType = ExploreScreenType.BASIC,
         initSearchTerm = "",

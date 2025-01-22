@@ -1,5 +1,6 @@
 package com.napzak.market.presentation.explore.explore
 
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
@@ -12,11 +13,13 @@ import com.napzak.market.domain.explore.usecase.GetSearchedProductBuyItemsUseCas
 import com.napzak.market.domain.explore.usecase.GetSearchedProductSellItemsUseCase
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.domain.genre.usecase.GenreSearchUseCase
+import com.napzak.market.domain.interest.repository.InterestRepository
 import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.explore.state.ExploreProductInformation
 import com.napzak.market.presentation.explore.explore.state.ExploreUiState
 import com.napzak.market.presentation.explore.explore.type.ExploreScreenType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,6 +37,7 @@ class ExploreViewModel @Inject constructor(
     private val getSearchedProductSellItemsUseCase: GetSearchedProductSellItemsUseCase,
     private val getSearchedProductBuyItemsUseCase: GetSearchedProductBuyItemsUseCase,
     private val genreSearchUseCase: GenreSearchUseCase,
+    private val interestRepository: InterestRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ExploreUiState())
     val uiState = _uiState.asStateFlow()
@@ -107,6 +111,12 @@ class ExploreViewModel @Inject constructor(
             currentState.copy(
                 initSearchTerm = searchTerm,
             )
+        }
+    }
+
+    fun initScrollState(coroutineScope: CoroutineScope, gridState: LazyGridState) {
+        coroutineScope.launch {
+            gridState.scrollToItem(0)
         }
     }
 

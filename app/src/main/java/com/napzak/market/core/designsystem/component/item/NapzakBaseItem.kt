@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -118,6 +119,7 @@ private fun ItemImageGroup(
             AsyncImage(
                 model = ImageRequest.Builder(context).data(imgUrl).build(),
                 contentDescription = stringResource(R.string.napzak_item_content_description),
+                contentScale = ContentScale.FillHeight,
                 modifier = Modifier.matchParentSize()
             )
         } else {
@@ -155,11 +157,11 @@ private fun PriceGroup(
     isOfferPossible: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    Row (
+    Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp)
-    ){
+    ) {
         if (isOfferPossible) {
             TextChip(
                 text = stringResource(R.string.napzak_item_suggest),

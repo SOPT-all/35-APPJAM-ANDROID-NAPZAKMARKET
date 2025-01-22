@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -167,6 +168,7 @@ fun DetailPageScreen(
                     AsyncImage(
                         model = it,
                         contentDescription = stringResource(id = R.string.detail_image_placeholder),
+                        contentScale = ContentScale.FillHeight,
                         modifier = Modifier.fillMaxSize(),
                     )
                 } ?: Text(

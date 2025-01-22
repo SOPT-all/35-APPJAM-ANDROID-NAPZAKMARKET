@@ -26,7 +26,7 @@ class DetailPageViewModel @Inject constructor(
     private val detailPageRepository: DetailPageRepository,
     private val interestRepository: InterestRepository,
 ) : ViewModel() {
-    private val detailPage = savedStateHandle.toRoute<DetailPage>().productId // productId를 가져옴
+    private val productId = savedStateHandle.toRoute<DetailPage>().productId // productId를 가져옴
 
     private val _uiState = MutableStateFlow(DetailPageUiState())
     val uiState: StateFlow<DetailPageUiState> = _uiState
@@ -36,7 +36,7 @@ class DetailPageViewModel @Inject constructor(
 
     fun loadDetailPageData() {
         viewModelScope.launch {
-            detailPageRepository.getProductDetail(detailPage)
+            detailPageRepository.getProductDetail(productId)
                 .onSuccess { productDetail ->
                     _uiState.value = DetailPageUiState(
                         profileImageUrl = productDetail.store.storePhoto,
@@ -82,9 +82,9 @@ class DetailPageViewModel @Inject constructor(
 
     fun setProductInterest() {
         if (_uiState.value.isInterest) {
-            deleteInterest(detailPage)
+            deleteInterest(productId)
         } else {
-            postInterest(detailPage)
+            postInterest(productId)
         }
     }
 

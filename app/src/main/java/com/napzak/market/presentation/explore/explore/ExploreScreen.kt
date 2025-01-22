@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.component.textField.SearchBox
 import com.napzak.market.domain.explore.model.ProductItem
@@ -48,7 +47,6 @@ import com.napzak.market.presentation.explore.explore.component.TradeTypeTab
 import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.explore.state.ExploreUiState
 import com.napzak.market.presentation.explore.explore.type.ExploreScreenType
-import kotlinx.coroutines.coroutineScope
 
 @Composable
 fun ExploreRoute(

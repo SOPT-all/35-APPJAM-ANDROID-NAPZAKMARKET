@@ -124,13 +124,15 @@ class MarketInfoViewModel @Inject constructor(
             .onSuccess { marketInfo ->
                 updateLoadMarketInfoState(
                     UiState.Success(
-                        MarketUiInformation(
-                            storeNickname = marketInfo.storeNickname,
-                            storeDescription = marketInfo.storeDescription,
-                            storePhoto = marketInfo.storePhoto,
-                            storeCover = marketInfo.storeCover,
-                            genrePreferenceList = marketInfo.genrePreferenceList,
-                        )
+                        with(marketInfo) {
+                            MarketUiInformation(
+                                storeNickname = marketInfo.storeNickname,
+                                storeDescription = marketInfo.storeDescription,
+                                storePhoto = marketInfo.storePhoto,
+                                storeCover = marketInfo.storeCover,
+                                genrePreferenceList = marketInfo.genrePreferenceList,
+                            )
+                        }
                     )
                 )
             }

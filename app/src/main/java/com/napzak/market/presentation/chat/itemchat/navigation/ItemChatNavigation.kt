@@ -9,16 +9,18 @@ import com.napzak.market.core.common.navigation.Route
 import com.napzak.market.presentation.chat.itemchat.ItemChatRoute
 import kotlinx.serialization.Serializable
 
-fun NavController.navigateToItemChat(navOptions: NavOptions? = null) {
-    navigate(ItemChat, navOptions)
+fun NavController.navigateToItemChat(productId: Long, navOptions: NavOptions? = null) {
+    navigate(ItemChat(productId), navOptions)
 }
 
 fun NavGraphBuilder.itemChatGraph(
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    composable<ItemChat> {
+    composable<ItemChat> { backStackEntry ->
+        val productId = backStackEntry.arguments?.getLong("productId") ?: 0L
         ItemChatRoute(
+            productId = productId,
             modifier = modifier,
             onNavigateUp = onNavigateUp,
         )
@@ -26,4 +28,6 @@ fun NavGraphBuilder.itemChatGraph(
 }
 
 @Serializable
-data object ItemChat : Route
+data class ItemChat(
+    val productId: Long,
+) : Route

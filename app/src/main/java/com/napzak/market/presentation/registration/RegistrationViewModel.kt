@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
+import com.napzak.market.domain.genre.usecase.GenreSearchUseCase
 import com.napzak.market.domain.registration.usecase.PresignedUrlUseCase
 import com.napzak.market.domain.registration.usecase.ImageUriUseCase
 import com.napzak.market.presentation.registration.state.RegistrationUiState
@@ -11,10 +12,14 @@ import com.napzak.market.presentation.registration.type.NumeralInputType
 import com.napzak.market.presentation.registration.type.PlainTextInputType
 import com.napzak.market.presentation.registration.type.PostFeeType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.DecimalFormat
 import javax.inject.Inject
 
@@ -22,18 +27,22 @@ import javax.inject.Inject
 class RegistrationViewModel @Inject constructor(
     private val presignedUrlUseCase: PresignedUrlUseCase,
     private val imageUriUseCase: ImageUriUseCase,
+    private val genreSearchUseCase: GenreSearchUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(RegistrationUiState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        // TODO: 더미 데이터
-        _uiState.update {
-            it.copy(
-                genreList = listOf("건담")
-            )
-        }
-    }
+    private val _searchTerm: MutableStateFlow<String> = MutableStateFlow("")
+    val searchTerm = _searchTerm.asStateFlow()
+
+//    init {
+//        // TODO: 더미 데이터
+//        _uiState.update {
+//            it.copy(
+//                genreList = listOf("건담")
+//            )
+//        }
+//    }
 
     fun updateTradeType(newTradeType: TradeType) = _uiState.update { currentState ->
         currentState.copy(tradeType = newTradeType)
@@ -103,23 +112,53 @@ class RegistrationViewModel @Inject constructor(
         return DecimalFormat("#,###").format(limitedValue)
     }
 
-    fun fetchGenreList() = _uiState.update { currentState ->
-        currentState.copy(genreList = currentState.genreList)
-    }
+//    fun fetchGenreList() = _uiState.update { currentState ->
+//        currentState.copy(genreList = currentState.genreList)
+//    }
 
     fun updateGenre(newGenre: String) = _uiState.update { currentState ->
         currentState.copy(genre = newGenre)
     }
 
-    fun updateSearchTerm(newSearchTerm: String) = _uiState.update { currentState ->
-        currentState.copy(searchTerm = newSearchTerm)
+    private fun updateSearchValue(newValue: String) = _searchTerm.update { newValue }
+
+    fun updateSearchTerm(newValue: String) = viewModelScope.launch {
+        updateSearchValue(newValue)
     }
+
+//    fun updateSearchTerm(newSearchTerm: String) = _uiState.update { currentState ->
+//        currentState.copy(searchTerm = newSearchTerm)
+//    }
+
+    @OptIn(FlowPreview::class)
+    fun debounce() = viewModelScope.launch {
+        _searchTerm.debounce(DEBOUNCE_DELAY)
+            .collectLatest { debounced ->
+                getGenres(debounced)
+            }
+    }
+
+    private fun getGenres(searchTerm: String) = viewModelScope.launch {
+        genreSearchUseCase(searchTerm)
+            .onSuccess { response ->
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        genreList = response
+                    )
+                }
+            }
+            .onFailure { response ->
+                Timber.d(response.message.toString())
+            }
+    }
+
 
     fun searchGenre() = viewModelScope.launch { }
 
-    fun updateProductCondition(newCondition: ProductConditionType) = _uiState.update { currentState ->
-        currentState.copy(productCondition = newCondition)
-    }
+    fun updateProductCondition(newCondition: ProductConditionType) =
+        _uiState.update { currentState ->
+            currentState.copy(productCondition = newCondition)
+        }
 
     fun updatePostFeeType(newPostFeeType: PostFeeType) = _uiState.update { currentState ->
         currentState.copy(isPostFeeIncluded = newPostFeeType == PostFeeType.INCLUDED)
@@ -198,5 +237,6 @@ class RegistrationViewModel @Inject constructor(
         private const val MAX_SALE_PRICE = 1_000_000
         private const val MAX_NORMAL_POST_FEE = 30_000
         private const val MAX_HALF_POST_FEE = 5_000
+        private const val DEBOUNCE_DELAY = 500L
     }
 }

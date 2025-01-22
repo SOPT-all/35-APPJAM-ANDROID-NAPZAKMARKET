@@ -48,7 +48,6 @@ import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetSt
 import com.napzak.market.presentation.explore.explore.state.ExploreUiState
 import com.napzak.market.presentation.explore.explore.type.ExploreScreenType
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @Composable

@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -43,6 +44,10 @@ fun MyPageScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadMyPage()
+    }
 
     Column(
         modifier = modifier
@@ -89,7 +94,7 @@ fun MyPageScreen(
                         ) {
                             AsyncImage(
                                 model = ImageRequest.Builder(LocalContext.current)
-                                    .data(uiState.profileImageUrl)
+                                    .data(uiState?.profileImageUrl)
                                     .placeholder(R.drawable.ic_profile_basic_60)
                                     .error(R.drawable.ic_profile_basic_60)
                                     .build(),
@@ -101,7 +106,7 @@ fun MyPageScreen(
                         Spacer(modifier = Modifier.width(14.dp))
 
                         Text(
-                            text = uiState.nickname,
+                            text = uiState?.nickname ?: "", // 닉네임 표시
                             style = NapzakMarketTheme.typography.titleBold20,
                             color = NapzakMarketTheme.colors.gray900,
                         )
@@ -110,7 +115,7 @@ fun MyPageScreen(
                     CommonButton(
                         text = stringResource(id = view_my_market),
                         onClick = {
-                            onMyMarketNavigate(1) /* TODO: 인자값 사용자 storeID로 변경 필요 */
+                            onMyMarketNavigate(uiState?.storeId ?: 0)
                         },
                         buttonColors = ButtonDefaults.buttonColors(containerColor = NapzakMarketTheme.colors.purple30),
                         shape = RoundedCornerShape(12.dp),

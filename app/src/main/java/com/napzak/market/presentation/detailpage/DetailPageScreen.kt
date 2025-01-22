@@ -23,6 +23,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -31,6 +32,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,7 +53,7 @@ import coil.request.ImageRequest
 import com.napzak.market.R
 import com.napzak.market.R.string.profile_image_description
 import com.napzak.market.core.common.extension.formatToPriceString
-import com.napzak.market.core.common.util.NoRippleInteractionSource
+import com.napzak.market.core.common.extension.throttledNoRippleClickable
 import com.napzak.market.core.designsystem.component.button.CommonButton
 import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
@@ -79,7 +81,14 @@ fun DetailPageRoute(
         viewModel.sideEffect.flowWithLifecycle(lifecycle.lifecycle).collect { sideEffect ->
             when (sideEffect) {
                 DetailPageSideEffect.ShowLikeSnackBar -> {
-                    snackBarHostState.showSnackbar("상품을 찜했어요!")
+                    snackBarHostState.showSnackbar(
+                        message = "상품을 찜했어요!",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+
+                DetailPageSideEffect.DismissLikeSnackBar -> {
+                    snackBarHostState.currentSnackbarData?.dismiss()
                 }
             }
         }
@@ -124,7 +133,6 @@ fun DetailPageScreen(
             SnackbarHost(
                 hostState = snackBarHostState,
                 snackbar = {
-
                     CommonSnackBar(
                         message = it.visuals.message,
                         icon = ImageVector.vectorResource(id = R.drawable.ic_heart_toast_18),
@@ -141,7 +149,7 @@ fun DetailPageScreen(
             )
         },
         bottomBar = {
-            if(!uiState.isOwnedByCurrentUser) {
+            if (!uiState.isOwnedByCurrentUser) {
                 BottomBar(
                     onHeartClick = {
                         onLikeClick()
@@ -452,6 +460,7 @@ fun BottomBar(
     } else {
         R.drawable.ic_heart_detail_24
     }
+    val coroutineScope = rememberCoroutineScope()
 
     Row(
         modifier = Modifier
@@ -478,6 +487,7 @@ fun BottomBar(
                     color = NapzakMarketTheme.colors.gray200,
                     shape = RoundedCornerShape(12.dp),
                 ),
+
             contentAlignment = Alignment.Center,
         ) {
             Icon(
@@ -485,12 +495,11 @@ fun BottomBar(
                 contentDescription = stringResource(id = R.string.detail_like_button_description),
                 tint = Color.Unspecified,
                 modifier = Modifier
-                    .clickable(
-                        indication = null,
-                        interactionSource = NoRippleInteractionSource,
-                    ) {
-                        onHeartClick()
-                    },
+                    .throttledNoRippleClickable(
+                        throttleTime = 100L,
+                        coroutineScope = coroutineScope,
+                        onClick = onHeartClick
+                    )
             )
         }
 

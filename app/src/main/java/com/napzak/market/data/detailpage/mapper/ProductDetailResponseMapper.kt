@@ -6,9 +6,9 @@ import com.napzak.market.domain.detailpage.model.ProductDetail
 fun ProductDetailResponse.toDomain(): ProductDetail = ProductDetail(
     isInterested = isInterested,
     detail = productDetail.toDomain(),
-    photos = productPhotoList.map { it.toDomain() },
+    photos = productPhoto.map { it.toDomain() },
     store = storeInfo.toDomain(),
-    reviews = storeReviewList.map { it.toDomain() },
+    reviews = storeReview.map { it.toDomain() },
 )
 
 fun ProductDetailResponse.ProductDetail.toDomain(): ProductDetail.Detail = ProductDetail.Detail(

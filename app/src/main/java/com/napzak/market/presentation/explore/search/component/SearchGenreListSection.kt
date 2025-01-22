@@ -12,19 +12,19 @@ import com.napzak.market.domain.genre.model.Genre
 
 @Composable
 fun SearchGenreListSection(
-    genreList: List<Genre>,
+    genreItems: List<Genre>,
     onGenreItemClick: (Genre) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier.padding(horizontal = 20.dp)
     ) {
-        itemsIndexed(genreList) { index, genreItem ->
+        itemsIndexed(genreItems) { index, genreItem ->
             GenreSearchItem(
                 genreName = genreItem.genreName,
                 onGenreItemClick = { onGenreItemClick(genreItem) },
                 isGenreChipVisible = true,
-                isLastItem = index == genreList.size - 1,
+                isLastItem = index == genreItems.size - 1,
             )
         }
     }
@@ -34,7 +34,7 @@ fun SearchGenreListSection(
 @Composable
 private fun SearchGenreListSectionPreview(modifier: Modifier = Modifier) {
     SearchGenreListSection(
-        genreList = emptyList(),
+        genreItems = emptyList(),
         onGenreItemClick = { },
         modifier = modifier
     )

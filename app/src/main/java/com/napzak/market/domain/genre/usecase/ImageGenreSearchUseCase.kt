@@ -7,7 +7,7 @@ import javax.inject.Inject
 class ImageGenreSearchUseCase @Inject constructor(
     private val repository: ImageGenreRepository,
 ) {
-    suspend fun invoke(searchTerm: String): Result<List<Genre>> =
+    suspend operator fun invoke(searchTerm: String): Result<List<Genre>> =
         if (searchTerm.isBlank()) {
             repository.fetchInitialImageGenres()
         } else {

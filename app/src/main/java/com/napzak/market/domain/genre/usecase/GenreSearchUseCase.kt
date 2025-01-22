@@ -5,12 +5,12 @@ import com.napzak.market.domain.genre.respository.GenreRepository
 import javax.inject.Inject
 
 class GenreSearchUseCase @Inject constructor(
-    private val repository: GenreRepository,
+    private val genreRepository: GenreRepository,
 ) {
     suspend fun invoke(searchTerm: String): Result<List<Genre>> =
         if (searchTerm.isBlank()) {
-            repository.fetchInitialGenreItems()
+            genreRepository.fetchInitialGenreItems()
         } else {
-            repository.fetchSearchResultGenreItems(searchTerm)
+            genreRepository.fetchSearchResultGenreItems(searchTerm)
         }
 }

@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -16,5 +17,5 @@ object MyPageServiceModule {
     @Singleton
     fun provideMyPageService(
         @JWT retrofit: Retrofit,
-    ): MyPageService = retrofit.create(MyPageService::class.java)
+    ): MyPageService = retrofit.create()
 }

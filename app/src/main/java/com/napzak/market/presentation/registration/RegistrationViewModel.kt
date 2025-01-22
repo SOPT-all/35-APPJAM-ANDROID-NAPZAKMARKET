@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.registration.usecase.GetPresignedUrlUseCase
+import com.napzak.market.domain.registration.usecase.PresignedUrlUseCase
+import com.napzak.market.domain.registration.usecase.ImageUriUseCase
 import com.napzak.market.presentation.registration.state.RegistrationUiState
 import com.napzak.market.presentation.registration.type.NumeralInputType
 import com.napzak.market.presentation.registration.type.PlainTextInputType
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
-    private val getPresignedUrlUseCase: GetPresignedUrlUseCase,
+    private val presignedUrlUseCase: PresignedUrlUseCase,
+    private val imageUriUseCase: ImageUriUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(RegistrationUiState())
     val uiState = _uiState.asStateFlow()
@@ -38,17 +40,17 @@ class RegistrationViewModel @Inject constructor(
     }
 
     fun updatePhotoList(newImageUrlList: List<String>) = _uiState.update { currentState ->
-        currentState.copy(imageUrl = currentState.imageUrl + newImageUrlList)
+        currentState.copy(imageUri = currentState.imageUri + newImageUrlList)
     }
 
     fun deletePhoto(photoIndex: Int) = _uiState.update { currentState ->
-        currentState.copy(imageUrl = currentState.imageUrl.filterIndexed { index, _ -> index != photoIndex })
+        currentState.copy(imageUri = currentState.imageUri.filterIndexed { index, _ -> index != photoIndex })
     }
 
     fun changeRepresentPhoto(newPhoto: Int) = _uiState.update { currentState ->
-        val newImageUrlList = currentState.imageUrl.toMutableList()
+        val newImageUrlList = currentState.imageUri.toMutableList()
         newImageUrlList.add(0, newImageUrlList.removeAt(newPhoto))
-        currentState.copy(imageUrl = newImageUrlList)
+        currentState.copy(imageUri = newImageUrlList)
     }
 
     fun updatePlainTextValue(
@@ -137,7 +139,7 @@ class RegistrationViewModel @Inject constructor(
     fun updateButtonState() {
         val isCommonFieldsValid = _uiState.value.title.isNotEmpty()
                 && _uiState.value.description.isNotEmpty()
-                && _uiState.value.imageUrl.isNotEmpty()
+                && _uiState.value.imageUri.isNotEmpty()
 
         val isPurchaseConditionValid = _uiState.value.tradeType == TradeType.BUY
                 && _uiState.value.productPurchasePrice.isNotEmpty()
@@ -164,7 +166,29 @@ class RegistrationViewModel @Inject constructor(
     }
 
     fun getPresignedUrl() = viewModelScope.launch {
-        val presignedUrlMap = getPresignedUrlUseCase(_uiState.value.imageUrl)
+        val result = presignedUrlUseCase(_uiState.value.imageUri)
+
+        result.onSuccess { presignedUrlMap ->
+            uploadImageToS3(urlMap = presignedUrlMap)
+        }.onFailure {
+            /* TODO: presignedUrl 받아 오기 실패 로직 */
+        }
+    }
+
+    private fun uploadImageToS3(urlMap: LinkedHashMap<String, String>) = viewModelScope.launch {
+        val imageUris = _uiState.value.imageUri
+        val sortedPresignedUrls = urlMap.entries.sortedBy {
+            it.key.substringAfter("image_").toInt()
+        }
+
+        val urlFilePairs = sortedPresignedUrls.zip(imageUris) { urlEntry, uri ->
+            urlEntry.value to uri
+        }
+        urlFilePairs.forEach { (presignedUrl, imageUri) ->
+            val result2 = imageUriUseCase(presignedUrl, imageUri)
+            result2.onSuccess {
+            }
+        }
     }
 
     companion object {

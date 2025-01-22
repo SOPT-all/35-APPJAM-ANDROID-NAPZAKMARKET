@@ -64,9 +64,17 @@ fun MainScreen(
             )
 
             MainRegisterDialog(
-                onSellRegisterClick = { navigator.navController.navigateToRegistration(tradeType = TradeType.SELL.label) },
-                onBuyRegisterClick = { navigator.navController.navigateToRegistration(tradeType = TradeType.BUY.label) },
-                onDismissRequest = { navigator.navigate(MainTab.REGISTER) },
+                onSellRegisterClick = {
+                    navigator.navController.navigateToRegistration(tradeType = TradeType.SELL.label)
+                    navigator.navigate(MainTab.REGISTER)
+                },
+                onBuyRegisterClick = {
+                    navigator.navController.navigateToRegistration(tradeType = TradeType.BUY.label)
+                    navigator.navigate(MainTab.REGISTER)
+                },
+                onDismissRequest = {
+                    navigator.navigate(MainTab.REGISTER)
+                },
                 visibility = navigator.registerDialogVisibility,
             )
         }

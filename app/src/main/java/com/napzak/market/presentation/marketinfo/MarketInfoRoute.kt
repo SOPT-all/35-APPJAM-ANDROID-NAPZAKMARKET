@@ -44,6 +44,8 @@ import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetStat
 import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
 import com.napzak.market.presentation.marketinfo.state.MarketProductItemsInformation
 import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import kotlin.String
 
 @Composable
@@ -78,18 +80,18 @@ fun MarketInfoRoute(
         onBackButtonClick = onBackButtonClick,
         onTradeTypeClick = { tradeType ->
             viewModel.updateMarketTab(tradeType)
-            viewModel.updateScrollState(coroutineScope, gridState)
+            updateScrollState(coroutineScope, gridState)
         },
         onGenreListClick = {
             viewModel.updateBottomSheetVisibility(BottomSheetType.GENRE_SEARCHING)
         },
         onSoldOutClick = {
             viewModel.updateSale()
-            viewModel.updateScrollState(coroutineScope, gridState)
+            updateScrollState(coroutineScope, gridState)
         },
         onUnopenClick = {
             viewModel.updateUnopen()
-            viewModel.updateScrollState(coroutineScope, gridState)
+            updateScrollState(coroutineScope, gridState)
         },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(BottomSheetType.SORT) },
         onItemClick = onDetailPageNavigate,
@@ -98,7 +100,7 @@ fun MarketInfoRoute(
         onSortItemClick = {
             viewModel.updateSortType(it)
             viewModel.updateBottomSheetVisibility(BottomSheetType.SORT)
-            viewModel.updateScrollState(coroutineScope, gridState)
+            updateScrollState(coroutineScope, gridState)
         },
         onTextChange = viewModel::changeSearchText,
         onGenreSelectButtonClick = viewModel::updateSelectedGenreList,
@@ -303,6 +305,15 @@ fun MarketInfoSuccessScreen(
         onTextChange = onTextChange,
         onGenreSelectButtonClick = onGenreSelectButtonClick,
     )
+}
+
+private fun updateScrollState(
+    coroutineScope: CoroutineScope,
+    gridState: LazyGridState,
+) {
+    coroutineScope.launch {
+        gridState.scrollToItem(0)
+    }
 }
 
 @Preview

@@ -1,6 +1,5 @@
 package com.napzak.market.presentation.explore.explore
 
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
@@ -19,7 +18,6 @@ import com.napzak.market.presentation.explore.explore.state.ExploreProductInform
 import com.napzak.market.presentation.explore.explore.state.ExploreUiState
 import com.napzak.market.presentation.explore.explore.type.ExploreScreenType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -111,15 +109,6 @@ class ExploreViewModel @Inject constructor(
             currentState.copy(
                 initSearchTerm = searchTerm,
             )
-        }
-    }
-
-    fun updateScrollState(
-        coroutineScope: CoroutineScope,
-        gridState: LazyGridState,
-    ) {
-        coroutineScope.launch {
-            gridState.scrollToItem(0)
         }
     }
 

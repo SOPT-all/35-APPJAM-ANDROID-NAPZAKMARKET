@@ -47,6 +47,9 @@ import com.napzak.market.presentation.explore.explore.component.TradeTypeTab
 import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.explore.state.ExploreUiState
 import com.napzak.market.presentation.explore.explore.type.ExploreScreenType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun ExploreRoute(
@@ -90,18 +93,18 @@ fun ExploreRoute(
         onSearchBoxClick = onSearchNavigate,
         onTradeTypeClick = { tradeType ->
             viewModel.updateTradeType(tradeType)
-            viewModel.updateScrollState(coroutineScope, gridState)
+            updateScrollState(coroutineScope, gridState)
         },
         onGenreListClick = {
             viewModel.updateBottomSheetVisibility(BottomSheetType.GENRE_SEARCHING)
         },
         onSoldOutClick = {
             viewModel.updateSale()
-            viewModel.updateScrollState(coroutineScope, gridState)
+            updateScrollState(coroutineScope, gridState)
         },
         onUnopenClick = {
             viewModel.updateUnopen()
-            viewModel.updateScrollState(coroutineScope, gridState)
+            updateScrollState(coroutineScope, gridState)
         },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(BottomSheetType.SORT) },
         onItemClick = onProductDetailNavigate,
@@ -110,7 +113,7 @@ fun ExploreRoute(
         onSortItemClick = {
             viewModel.updateSortType(it)
             viewModel.updateBottomSheetVisibility(BottomSheetType.SORT)
-            viewModel.updateScrollState(coroutineScope, gridState)
+            updateScrollState(coroutineScope, gridState)
         },
         onTextChange = viewModel::changeSearchText,
         onGenreSelectButtonClick = viewModel::updateSelectedGenreList,
@@ -371,6 +374,15 @@ fun ExploreSuccessScreen(
         onTextChange = onTextChange,
         onGenreSelectButtonClick = onGenreSelectButtonClick,
     )
+}
+
+private fun updateScrollState(
+    coroutineScope: CoroutineScope,
+    gridState: LazyGridState,
+) {
+    coroutineScope.launch {
+        gridState.scrollToItem(0)
+    }
 }
 
 @Preview(showBackground = true)

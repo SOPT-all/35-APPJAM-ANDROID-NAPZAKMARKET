@@ -1,6 +1,5 @@
 package com.napzak.market.presentation.marketinfo
 
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
@@ -18,7 +17,6 @@ import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
 import com.napzak.market.presentation.marketinfo.state.MarketProductItemsInformation
 import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -52,15 +50,6 @@ class MarketInfoViewModel @Inject constructor(
             currentState.copy(
                 storeId = storeId
             )
-        }
-    }
-
-    fun updateScrollState(
-        coroutineScope: CoroutineScope,
-        gridState: LazyGridState,
-    ) {
-        coroutineScope.launch {
-            gridState.scrollToItem(0)
         }
     }
 

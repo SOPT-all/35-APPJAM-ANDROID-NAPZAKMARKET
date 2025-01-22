@@ -4,27 +4,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.registration.usecase.GetPresignedUrlUseCase
-import com.napzak.market.domain.registration.usecase.PutImageUriUseCase
+import com.napzak.market.domain.registration.usecase.PresignedUrlUseCase
+import com.napzak.market.domain.registration.usecase.ImageUriUseCase
 import com.napzak.market.presentation.registration.state.RegistrationUiState
 import com.napzak.market.presentation.registration.type.NumeralInputType
 import com.napzak.market.presentation.registration.type.PlainTextInputType
 import com.napzak.market.presentation.registration.type.PostFeeType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.text.DecimalFormat
 import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
-    private val getPresignedUrlUseCase: GetPresignedUrlUseCase,
-    private val putImageUriUseCase: PutImageUriUseCase,
+    private val presignedUrlUseCase: PresignedUrlUseCase,
+    private val imageUriUseCase: ImageUriUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(RegistrationUiState())
     val uiState = _uiState.asStateFlow()
@@ -169,7 +166,7 @@ class RegistrationViewModel @Inject constructor(
     }
 
     fun getPresignedUrl() = viewModelScope.launch {
-        val result = getPresignedUrlUseCase(_uiState.value.imageUri)
+        val result = presignedUrlUseCase(_uiState.value.imageUri)
 
         result.onSuccess { presignedUrlMap ->
             uploadImageToS3(urlMap = presignedUrlMap)
@@ -188,7 +185,7 @@ class RegistrationViewModel @Inject constructor(
             urlEntry.value to uri
         }
         urlFilePairs.forEach { (presignedUrl, imageUri) ->
-            val result2 = putImageUriUseCase(presignedUrl, imageUri)
+            val result2 = imageUriUseCase(presignedUrl, imageUri)
             result2.onSuccess {
             }
         }

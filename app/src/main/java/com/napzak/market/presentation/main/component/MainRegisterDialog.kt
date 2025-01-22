@@ -56,7 +56,7 @@ fun BoxScope.MainRegisterDialog(
         visible = visibility,
         modifier = Modifier.align(Alignment.BottomCenter),
         enter = fadeIn(),
-        exit = fadeOut()
+        exit = fadeOut(),
     ) {
         Box(
             modifier = Modifier
@@ -92,8 +92,8 @@ fun MainRegisterDialog(
             .width(IntrinsicSize.Max)
             .clip(RoundedCornerShape(12.dp))
             .background(color = NapzakMarketTheme.colors.white)
-            .padding(vertical = 15.dp),
-        verticalArrangement = Arrangement.spacedBy(15.dp),
+            .padding(vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         RegisterTab.entries.forEachIndexed { index, tab ->
             val onClick = when (tab) {

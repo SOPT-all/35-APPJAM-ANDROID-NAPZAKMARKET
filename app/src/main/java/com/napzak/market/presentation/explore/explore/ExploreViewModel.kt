@@ -123,7 +123,7 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun getExploreProductInformation() = viewModelScope.launch {
+    fun updateExploreProductInformation() = viewModelScope.launch {
         with(uiState.value) {
             when {
                 tradeType == TradeType.SELL && initSearchTerm == null -> {
@@ -298,14 +298,14 @@ class ExploreViewModel @Inject constructor(
     private fun addInterest(productId: Long) = viewModelScope.launch {
         interestRepository.postInterest(productId)
             .onSuccess {
-                getExploreProductInformation()
+                updateExploreProductInformation()
             }
     }
 
     private fun deleteInterest(productId: Long) = viewModelScope.launch {
         interestRepository.deleteInterest(productId)
             .onSuccess {
-                getExploreProductInformation()
+                updateExploreProductInformation()
             }
     }
 

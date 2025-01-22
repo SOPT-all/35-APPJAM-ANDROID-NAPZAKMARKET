@@ -62,11 +62,11 @@ fun MarketInfoRoute(
 
     LaunchedEffect(Unit) {
         viewModel.setStoreId(storeId)
-        viewModel.getMarketInformation()
+        viewModel.updateMarketInformation()
     }
 
     LaunchedEffect(uiState) {
-        viewModel.getMarketProductInformation()
+        viewModel.updateMarketProductInformation()
     }
 
     MarketInfoScreen(

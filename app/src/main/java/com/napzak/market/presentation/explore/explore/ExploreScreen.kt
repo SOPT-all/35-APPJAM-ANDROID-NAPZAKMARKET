@@ -77,7 +77,7 @@ fun ExploreRoute(
     }
 
     LaunchedEffect(uiState) {
-        viewModel.getExploreProductInformation()
+        viewModel.updateExploreProductInformation()
     }
 
     ExploreScreen(

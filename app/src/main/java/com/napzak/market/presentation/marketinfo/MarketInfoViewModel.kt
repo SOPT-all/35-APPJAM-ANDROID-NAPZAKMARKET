@@ -64,7 +64,7 @@ class MarketInfoViewModel @Inject constructor(
         }
     }
 
-    fun getMarketInformation() = viewModelScope.launch {
+    fun updateMarketInformation() = viewModelScope.launch {
         marketInfoRepository.fetchMarketInfo(uiState.value.storeId)
             .onSuccess { marketInfo ->
                 updateLoadMarketInfoState(
@@ -86,7 +86,7 @@ class MarketInfoViewModel @Inject constructor(
             }
     }
 
-    fun getMarketProductInformation() = viewModelScope.launch {
+    fun updateMarketProductInformation() = viewModelScope.launch {
         with(uiState.value) {
             when (marketTab) {
                 MarketTab.SELL -> {
@@ -226,14 +226,14 @@ class MarketInfoViewModel @Inject constructor(
     private fun addInterest(productId: Long) = viewModelScope.launch {
         interestRepository.postInterest(productId)
             .onSuccess {
-                getMarketProductInformation()
+                updateMarketProductInformation()
             }
     }
 
     private fun deleteInterest(productId: Long) = viewModelScope.launch {
         interestRepository.deleteInterest(productId)
             .onSuccess {
-                getMarketProductInformation()
+                updateMarketProductInformation()
             }
     }
 

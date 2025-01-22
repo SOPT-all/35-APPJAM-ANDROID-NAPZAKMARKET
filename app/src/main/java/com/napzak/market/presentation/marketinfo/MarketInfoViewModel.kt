@@ -7,8 +7,12 @@ import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.genre.model.Genre
+import com.napzak.market.domain.marketinfo.usecase.GetMarketInfoUseCase
+import com.napzak.market.domain.marketinfo.usecase.GetMarketProductBuyItemsUseCase
+import com.napzak.market.domain.marketinfo.usecase.GetMarketProductSellItemsUseCase
 import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
 import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
+import com.napzak.market.presentation.marketinfo.state.MarketProductItemsInformation
 import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
@@ -23,7 +27,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MarketInfoViewModel @Inject constructor(
-    /* TODO: Repository 연결 */
+    private val getMarketInfoUseCase: GetMarketInfoUseCase,
+    private val getMarketProductSellItemsUseCase: GetMarketProductSellItemsUseCase,
+    private val getMarketProductBuyItemsUseCase: GetMarketProductBuyItemsUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MarketInfoUiState())
     val uiState = _uiState.asStateFlow()
@@ -113,36 +119,81 @@ class MarketInfoViewModel @Inject constructor(
         }
     }
 
-    fun getMarketInformation() {
-        /* TODO: 마켓정보 조회 API 연결 */
-        updateLoadState(
-            loadState = UiState.Success(
-                MarketUiInformation(
-                    storeNickname = "납자기",
-                    storeDescription = "마이멜로디, 시나모롤 제일 좋아합니다 :) 해당 장르 상품들 판매 및 제시 채팅 언제든 환영합니다!",
-                    storePhoto = "",
-                    storeCover = "",
-                    genrePreferenceList = listOf(
-                        Genre(
-                            genreId = 1,
-                            genreName = "나루토",
-                        ),
-                        Genre(
-                            genreId = 2,
-                            genreName = "원피스",
-                        ),
-                        Genre(
-                            genreId = 3,
-                            genreName = "블리치",
-                        ),
-                        Genre(
-                            genreId = 4,
-                            genreName = "귀멸의 칼날",
-                        ),
+    fun getMarketInformation() = viewModelScope.launch {
+        with(uiState.value) {
+            getMarketInfoUseCase(storeId = storeId)
+                .onSuccess { marketInfo ->
+                    updateLoadMarketInfoState(
+                        UiState.Success(
+                            MarketUiInformation(
+                                storeNickname = marketInfo.storeNickname,
+                                storeDescription = marketInfo.storeDescription,
+                                storePhoto = marketInfo.storePhoto,
+                                storeCover = marketInfo.storeCover,
+                                genrePreferenceList = marketInfo.genrePreferenceList,
+                            )
+                        )
                     )
-                )
-            )
-        )
+                }
+                .onFailure { response ->
+                    updateLoadMarketInfoState(UiState.Failure(response.toString()))
+                }
+        }
+    }
+
+    fun getMarketProductInformation() = viewModelScope.launch {
+        with(uiState.value) {
+            when (marketTab) {
+                MarketTab.SELL -> {
+                    getMarketProductSellItemsUseCase(
+                        storeId = storeId,
+                        sortType = sortType.name,
+                        isOnSale = isOnSale,
+                        isUnopened = isUnopened,
+                        genreItems = selectedGenreList,
+                    )
+                        .onSuccess { response ->
+                            if (response.isEmpty()) {
+                                updateLoadProductItemsState(UiState.Empty)
+                            } else {
+                                updateLoadProductItemsState(
+                                    UiState.Success(
+                                        MarketProductItemsInformation(productList = response)
+                                    )
+                                )
+                            }
+                        }
+                        .onFailure { response ->
+                            updateLoadProductItemsState(UiState.Failure(response.toString()))
+                        }
+                }
+
+                MarketTab.BUY -> {
+                    getMarketProductBuyItemsUseCase(
+                        storeId = storeId,
+                        sortType = sortType.name,
+                        isOnSale = isOnSale,
+                        genreItems = selectedGenreList,
+                    )
+                        .onSuccess { response ->
+                            if (response.isEmpty()) {
+                                updateLoadProductItemsState(UiState.Empty)
+                            } else {
+                                updateLoadProductItemsState(
+                                    UiState.Success(
+                                        MarketProductItemsInformation(productList = response)
+                                    )
+                                )
+                            }
+                        }
+                        .onFailure { response ->
+                            updateLoadProductItemsState(UiState.Failure(response.toString()))
+                        }
+                }
+
+                MarketTab.REVIEW -> {}
+            }
+        }
     }
 
     fun changeSearchText(newValue: String) = viewModelScope.launch {
@@ -236,10 +287,17 @@ class MarketInfoViewModel @Inject constructor(
         }
     }
 
-    private fun updateLoadState(loadState: UiState<MarketUiInformation>) =
+    private fun updateLoadMarketInfoState(loadState: UiState<MarketUiInformation>) =
         _uiState.update { currentState ->
             currentState.copy(
-                loadState = loadState
+                loadMarketInfoState = loadState
+            )
+        }
+
+    private fun updateLoadProductItemsState(loadState: UiState<MarketProductItemsInformation>) =
+        _uiState.update { currentState ->
+            currentState.copy(
+                loadProductItemsState = loadState
             )
         }
 

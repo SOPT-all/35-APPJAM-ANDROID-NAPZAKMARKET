@@ -39,6 +39,7 @@ import com.napzak.market.presentation.marketinfo.component.MarketProductListSect
 import com.napzak.market.presentation.marketinfo.component.MarketTradeTypeTab
 import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
 import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
+import com.napzak.market.presentation.marketinfo.state.MarketProductItemsInformation
 import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
 import kotlin.String
 
@@ -55,10 +56,11 @@ fun MarketInfoRoute(
 
     LaunchedEffect(Unit) {
         viewModel.setStoreId(storeId)
+        viewModel.getMarketInformation()
     }
 
     LaunchedEffect(uiState) {
-        viewModel.getMarketInformation()
+        viewModel.getMarketProductInformation()
     }
 
     MarketInfoScreen(
@@ -104,15 +106,26 @@ fun MarketInfoScreen(
     onGenreSelectButtonClick: (List<Genre>) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    when (uiState.loadState) {
-        is UiState.Loading -> {
-        }
+    var productItems: MarketProductItemsInformation =
+        MarketProductItemsInformation(
+            productList = emptyList()
+        )
 
-        is UiState.Empty -> {
-        }
+    when (uiState.loadProductItemsState) {
+        is UiState.Loading -> {}
+        is UiState.Empty -> {}
+        is UiState.Failure -> {}
 
-        is UiState.Failure -> {
+        is UiState.Success -> {
+            productItems = uiState.loadProductItemsState.data
         }
+    }
+    when (uiState.loadMarketInfoState) {
+        is UiState.Loading -> {}
+
+        is UiState.Empty -> {}
+
+        is UiState.Failure -> {}
 
         is UiState.Success -> {
             with(uiState) {
@@ -125,7 +138,8 @@ fun MarketInfoScreen(
                     initialGenreList = initGenreList,
                     isOnSale = isOnSale,
                     isUnopened = isUnopened,
-                    marketInfo = uiState.loadState.data,
+                    marketInfo = uiState.loadMarketInfoState.data,
+                    productItems = productItems,
                     sortType = sortType,
                     onBackButtonClick = onBackButtonClick,
                     onTradeTypeClick = onTradeTypeClick,
@@ -155,6 +169,7 @@ fun MarketInfoSuccessScreen(
     isOnSale: Boolean,
     isUnopened: Boolean,
     marketInfo: MarketUiInformation,
+    productItems: MarketProductItemsInformation,
     sortType: SortType,
     onBackButtonClick: () -> Unit,
     onTradeTypeClick: (MarketTab) -> Unit,
@@ -219,7 +234,7 @@ fun MarketInfoSuccessScreen(
                 Text(
                     text = stringResource(
                         id = R.string.explore_product_count,
-                        marketInfo.productList.size,
+                        productItems.productList.size,
                     ),
                     style = NapzakMarketTheme.typography.bodySemi14,
                     color = NapzakMarketTheme.colors.purple30,
@@ -246,7 +261,7 @@ fun MarketInfoSuccessScreen(
 
             MarketProductListSection(
                 tradeType = marketTab,
-                productList = marketInfo.productList,
+                productList = productItems.productList,
                 onItemClick = onItemClick,
                 onLikeClick = onLikeClick,
             )
@@ -292,6 +307,9 @@ private fun MarketPreview(modifier: Modifier = Modifier) {
             storePhoto = "",
             storeCover = "",
             genrePreferenceList = emptyList(),
+        ),
+        productItems = MarketProductItemsInformation(
+            productList = emptyList(),
         ),
         sortType = SortType.RECENT,
         onBackButtonClick = { },

@@ -5,6 +5,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
+import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.core.type.SortType
 import com.napzak.market.domain.genre.model.Genre
@@ -17,9 +18,9 @@ fun ExploreBottomSheetScreen(
     modifier: Modifier = Modifier,
     bottomSheetState: ExploreBottomSheetState,
     selectedGenreList: List<Genre>,
-    initialGenreList: List<Genre>,
-    genreList: List<Genre>,
+    genreList: UiState<List<Genre>>,
     sortType: SortType,
+    debounceSearch: () -> Unit,
     onDismissRequest: (BottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
@@ -58,8 +59,8 @@ fun ExploreBottomSheetScreen(
             ) {
                 GenreSearchBottomSheet(
                     initialSelectedGenreList = selectedGenreList,
-                    initialGenreList = initialGenreList,
                     genreList = genreList,
+                    debounceSearch = debounceSearch,
                     onDismissRequest = { onDismissRequest(BottomSheetType.GENRE_SEARCHING) },
                     onTextChange = onTextChange,
                     onButtonClick = {

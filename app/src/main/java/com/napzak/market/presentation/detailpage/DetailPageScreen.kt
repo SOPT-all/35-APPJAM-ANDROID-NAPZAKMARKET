@@ -226,6 +226,7 @@ fun DetailPageScreen(
                         modifier = Modifier
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = stringResource(id = R.string.detail_product_status_label),
@@ -274,7 +275,9 @@ fun DetailPageScreen(
                         if (uiState.standardDeliveryFee > 0 || uiState.halfDeliveryFee > 0) {
                             Row {
                                 uiState.standardDeliveryFee.takeIf { it > 0 }?.let {
-                                    Row {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
                                         Text(
                                             text = stringResource(id = R.string.detail_delivery_normal),
                                             style = NapzakMarketTheme.typography.bodySemi14,
@@ -295,7 +298,9 @@ fun DetailPageScreen(
                                 }
                                 uiState.halfDeliveryFee.takeIf { it > 0 }?.let {
                                     Spacer(modifier = Modifier.width(8.dp))
-                                    Row {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
                                         Text(
                                             text = stringResource(id = R.string.detail_delivery_discounted),
                                             style = NapzakMarketTheme.typography.bodySemi14,

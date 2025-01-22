@@ -14,6 +14,6 @@ abstract class DetailPageRepositoryModule {
     @Binds
     @Singleton
     abstract fun bindDetailPageRepository(
-        impl: DetailPageRepositoryImpl,
+        detailPageRepositoryImpl: DetailPageRepositoryImpl,
     ): DetailPageRepository
 }

@@ -7,6 +7,7 @@ import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.genre.model.Genre
+import com.napzak.market.domain.genre.usecase.GenreSearchUseCase
 import com.napzak.market.domain.marketinfo.repository.MarketInfoRepository
 import com.napzak.market.domain.marketinfo.usecase.GetMarketProductBuyItemsUseCase
 import com.napzak.market.domain.marketinfo.usecase.GetMarketProductSellItemsUseCase
@@ -30,6 +31,7 @@ class MarketInfoViewModel @Inject constructor(
     private val marketInfoRepository: MarketInfoRepository,
     private val getMarketProductSellItemsUseCase: GetMarketProductSellItemsUseCase,
     private val getMarketProductBuyItemsUseCase: GetMarketProductBuyItemsUseCase,
+    private val genreSearchUseCase: GenreSearchUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MarketInfoUiState())
     val uiState = _uiState.asStateFlow()
@@ -45,76 +47,6 @@ class MarketInfoViewModel @Inject constructor(
         _uiState.update { currentState ->
             currentState.copy(
                 storeId = storeId
-            )
-        }
-    }
-
-    fun initGenreList() {
-        /* TODO: 장르 리스트 조회 API 연결 */
-        _uiState.update { currentState ->
-            currentState.copy(
-                initGenreList = listOf(
-                    Genre(
-                        genreId = 1,
-                        genreName = "나루토",
-                    ),
-                    Genre(
-                        genreId = 2,
-                        genreName = "원피스",
-                    ),
-                    Genre(
-                        genreId = 3,
-                        genreName = "블리치",
-                    ),
-                    Genre(
-                        genreId = 4,
-                        genreName = "귀멸의 칼날",
-                    ),
-                    Genre(
-                        genreId = 5,
-                        genreName = "주술회전",
-                    ),
-                    Genre(
-                        genreId = 6,
-                        genreName = "진격의 거인",
-                    ),
-                    Genre(
-                        genreId = 7,
-                        genreName = "데스노트",
-                    ),
-                    Genre(
-                        genreId = 8,
-                        genreName = "짱구는 못말려",
-                    ),
-                    Genre(
-                        genreId = 9,
-                        genreName = "도라에몽",
-                    ),
-                    Genre(
-                        genreId = 10,
-                        genreName = "강철의 연금술사",
-                    ),
-                    Genre(
-                        genreId = 11,
-                        genreName = "체인소맨",
-                    ),
-                    Genre(
-                        genreId = 12,
-                        genreName = "원펀맨",
-                    ),
-                    Genre(
-                        genreId = 13,
-                        genreName = "드래곤볼",
-                    ),
-                    Genre(
-                        genreId = 14,
-                        genreName = "명탐정 코난",
-                    ),
-                    Genre(
-                        genreId = 15,
-                        genreName = "슬램덩크",
-                    )
-                )
             )
         }
     }
@@ -198,30 +130,38 @@ class MarketInfoViewModel @Inject constructor(
 
     fun changeSearchText(newValue: String) = viewModelScope.launch {
         updateSearchValue(newValue)
-        debounceSearch()
     }
 
     private fun updateSearchValue(newValue: String) = _searchTerm.update { newValue }
 
     @OptIn(FlowPreview::class)
-    private suspend fun debounceSearch() = _searchTerm.debounce(DEBOUNCE_DELAY)
-        .collectLatest { debounced ->
-            getGenreList(debounced)
-        }
+    fun debounceSearch() = viewModelScope.launch {
+        _searchTerm.debounce(DEBOUNCE_DELAY)
+            .collectLatest { debounced ->
+                getGenreList(debounced)
+            }
+    }
 
-    // TODO: 서버 통신으로 대체
-    private fun getGenreList(searchTerm: String) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                genreList = if (searchTerm.isEmpty()) {
-                    uiState.value.initGenreList
-                } else {
-                    uiState.value.initGenreList.filter {
-                        it.genreName.contains(searchTerm)
-                    }
+    private fun getGenreList(searchTerm: String) = viewModelScope.launch {
+        genreSearchUseCase.invoke(searchTerm)
+            .onSuccess { response ->
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        genreList = UiState.Success(
+                            response
+                        )
+                    )
                 }
-            )
-        }
+            }
+            .onFailure { response ->
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        genreList = UiState.Failure(
+                            response.message.toString()
+                        )
+                    )
+                }
+            }
     }
 
     fun updateMarketTab(newMarketTab: MarketTab) {

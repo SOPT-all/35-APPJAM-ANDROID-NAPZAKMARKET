@@ -67,10 +67,10 @@ fun MarketInfoRoute(
         modifier = modifier,
         uiState = uiState,
         bottomSheetState = bottomSheetState,
+        debounceSearch = viewModel::debounceSearch,
         onBackButtonClick = onBackButtonClick,
         onTradeTypeClick = viewModel::updateMarketTab,
         onGenreListClick = {
-            viewModel.initGenreList()
             viewModel.updateBottomSheetVisibility(BottomSheetType.GENRE_SEARCHING)
         },
         onSoldOutClick = viewModel::updateSale,
@@ -92,6 +92,7 @@ fun MarketInfoRoute(
 fun MarketInfoScreen(
     uiState: MarketInfoUiState,
     bottomSheetState: MarketInfoBottomSheetState,
+    debounceSearch: () -> Unit,
     onBackButtonClick: () -> Unit,
     onTradeTypeClick: (MarketTab) -> Unit,
     onGenreListClick: () -> Unit,
@@ -121,12 +122,12 @@ fun MarketInfoScreen(
                     marketTab = marketTab,
                     selectedGenreList = selectedGenreList,
                     genreList = genreList,
-                    initialGenreList = initGenreList,
                     isOnSale = isOnSale,
                     isUnopened = isUnopened,
                     marketInfo = uiState.loadMarketInfoState.data,
                     loadProductState = uiState.loadProductItemsState,
                     sortType = sortType,
+                    debounceSearch = debounceSearch,
                     onBackButtonClick = onBackButtonClick,
                     onTradeTypeClick = onTradeTypeClick,
                     onGenreListClick = onGenreListClick,
@@ -150,13 +151,13 @@ fun MarketInfoSuccessScreen(
     bottomSheetState: MarketInfoBottomSheetState,
     marketTab: MarketTab,
     selectedGenreList: List<Genre>,
-    initialGenreList: List<Genre>,
-    genreList: List<Genre>,
+    genreList: UiState<List<Genre>>,
     isOnSale: Boolean,
     isUnopened: Boolean,
     marketInfo: MarketUiInformation,
     loadProductState: UiState<MarketProductItemsInformation>,
     sortType: SortType,
+    debounceSearch: () -> Unit,
     onBackButtonClick: () -> Unit,
     onTradeTypeClick: (MarketTab) -> Unit,
     onGenreListClick: () -> Unit,
@@ -170,7 +171,7 @@ fun MarketInfoSuccessScreen(
     onTextChange: (String) -> Unit,
     onGenreSelectButtonClick: (List<Genre>) -> Unit,
     modifier: Modifier = Modifier,
-    ) {
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -273,9 +274,9 @@ fun MarketInfoSuccessScreen(
     MarketInfoBottomSheetScreen(
         bottomSheetState = bottomSheetState,
         selectedGenreList = selectedGenreList,
-        initialGenreList = initialGenreList,
         genreList = genreList,
         sortType = sortType,
+        debounceSearch = debounceSearch,
         onDismissRequest = onDismissRequest,
         onSortItemClick = onSortItemClick,
         onTextChange = onTextChange,
@@ -290,8 +291,7 @@ private fun MarketPreview(modifier: Modifier = Modifier) {
         bottomSheetState = MarketInfoBottomSheetState(),
         marketTab = MarketTab.BUY,
         selectedGenreList = emptyList(),
-        initialGenreList = emptyList(),
-        genreList = emptyList(),
+        genreList = UiState.Empty,
         isOnSale = false,
         isUnopened = false,
         marketInfo = MarketUiInformation(
@@ -303,6 +303,7 @@ private fun MarketPreview(modifier: Modifier = Modifier) {
         ),
         loadProductState = UiState.Empty,
         sortType = SortType.RECENT,
+        debounceSearch = { },
         onBackButtonClick = { },
         onTradeTypeClick = { },
         onGenreListClick = {},

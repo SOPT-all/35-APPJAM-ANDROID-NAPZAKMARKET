@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -66,7 +65,7 @@ class HomeViewModel @Inject constructor(
                 }
             }
             .onFailure { response ->
-                UiState.Failure(response.message.toString())
+                _bannerLoadState.update { UiState.Failure(response.message.toString()) }
             }
     }
 
@@ -80,7 +79,7 @@ class HomeViewModel @Inject constructor(
                 }
             }
             .onFailure { response ->
-                UiState.Failure(response.message.toString())
+                _recommendProductLoadState.update { UiState.Failure(response.message.toString()) }
             }
     }
 
@@ -94,7 +93,7 @@ class HomeViewModel @Inject constructor(
                 }
             }
             .onFailure { response ->
-                UiState.Failure(response.message.toString())
+                _popularProductLoadState.update { UiState.Failure(response.message.toString()) }
             }
     }
 
@@ -108,7 +107,7 @@ class HomeViewModel @Inject constructor(
                 }
             }
             .onFailure { response ->
-                UiState.Failure(response.message.toString())
+                _buyProductLoadState.update { UiState.Failure(response.message.toString()) }
             }
     }
 
@@ -125,18 +124,12 @@ class HomeViewModel @Inject constructor(
             .onSuccess {
                 loadItems()
             }
-            .onFailure {
-                Timber.e("error")
-            }
     }
 
     private fun deleteInterest(productId: Long) = viewModelScope.launch {
         interestRepository.deleteInterest(productId)
             .onSuccess {
                 loadItems()
-            }
-            .onFailure {
-                Timber.e("error")
             }
     }
 

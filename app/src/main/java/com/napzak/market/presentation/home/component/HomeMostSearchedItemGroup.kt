@@ -28,7 +28,7 @@ import kotlinx.collections.immutable.toImmutableList
 @Composable
 fun HomeMostSearchedItemGroup(
     searchedItems: ImmutableList<ProductItem>,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     onItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -91,7 +91,7 @@ fun HomeMostSearchedItemGroup(
 private fun HomeRecommendationGroupPreview() {
     NapzakMarketTheme {
         HomeMostSearchedItemGroup(
-            onLikeClick = {},
+            onLikeClick = {_, _ -> },
             onItemClick = {},
             searchedItems = mutableListOf<ProductItem>().apply {
                 repeat(4) {

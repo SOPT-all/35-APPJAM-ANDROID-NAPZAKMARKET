@@ -1,4 +1,4 @@
-package com.napzak.market.data.home.repositoryImpl
+package com.napzak.market.data.home.repositoryimpl
 
 import com.napzak.market.data.home.datasource.HomeDataSource
 import com.napzak.market.data.home.mapper.toHomeBannerList

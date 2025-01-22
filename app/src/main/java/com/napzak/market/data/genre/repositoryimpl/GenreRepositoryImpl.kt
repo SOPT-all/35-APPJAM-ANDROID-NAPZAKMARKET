@@ -1,7 +1,7 @@
 package com.napzak.market.data.genre.repositoryimpl
 
 import com.napzak.market.data.genre.datasource.GenreDataSource
-import com.napzak.market.data.genre.di.toGenreList
+import com.napzak.market.data.genre.mapper.toGenreList
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.domain.genre.respository.GenreRepository
 import javax.inject.Inject

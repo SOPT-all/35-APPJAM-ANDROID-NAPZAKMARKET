@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class Genre (
     val genreId: Long,
     val genreName: String,
-    val genreImgUrl: String? = null, // TODO: 추후 삭제 예정
+    val genreImgUrl: String? = null,
 ) : Parcelable

@@ -114,7 +114,7 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun initScrollState(
+    fun updateScrollState(
         coroutineScope: CoroutineScope,
         gridState: LazyGridState,
     ) {
@@ -284,18 +284,18 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun setProductInterest(
+    fun updateProductInterest(
         productId: Long,
         isInterested: Boolean,
     ) {
         if (isInterested) {
             deleteInterest(productId)
         } else {
-            postInterest(productId)
+            addInterest(productId)
         }
     }
 
-    private fun postInterest(productId: Long) = viewModelScope.launch {
+    private fun addInterest(productId: Long) = viewModelScope.launch {
         interestRepository.postInterest(productId)
             .onSuccess {
                 getExploreProductInformation()

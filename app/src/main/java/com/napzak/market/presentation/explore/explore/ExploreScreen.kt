@@ -90,27 +90,27 @@ fun ExploreRoute(
         onSearchBoxClick = onSearchNavigate,
         onTradeTypeClick = { tradeType ->
             viewModel.updateTradeType(tradeType)
-            viewModel.initScrollState(coroutineScope, gridState)
+            viewModel.updateScrollState(coroutineScope, gridState)
         },
         onGenreListClick = {
             viewModel.updateBottomSheetVisibility(BottomSheetType.GENRE_SEARCHING)
         },
         onSoldOutClick = {
             viewModel.updateSale()
-            viewModel.initScrollState(coroutineScope, gridState)
+            viewModel.updateScrollState(coroutineScope, gridState)
         },
         onUnopenClick = {
             viewModel.updateUnopen()
-            viewModel.initScrollState(coroutineScope, gridState)
+            viewModel.updateScrollState(coroutineScope, gridState)
         },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(BottomSheetType.SORT) },
         onItemClick = onProductDetailNavigate,
-        onLikeClick = viewModel::setProductInterest,
+        onLikeClick = viewModel::updateProductInterest,
         onDismissRequest = viewModel::updateBottomSheetVisibility,
         onSortItemClick = {
             viewModel.updateSortType(it)
             viewModel.updateBottomSheetVisibility(BottomSheetType.SORT)
-            viewModel.initScrollState(coroutineScope, gridState)
+            viewModel.updateScrollState(coroutineScope, gridState)
         },
         onTextChange = viewModel::changeSearchText,
         onGenreSelectButtonClick = viewModel::updateSelectedGenreList,

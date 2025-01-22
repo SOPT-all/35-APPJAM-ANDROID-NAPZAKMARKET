@@ -45,7 +45,7 @@ import com.napzak.market.presentation.explore.explore.component.GenreSearchNotic
 fun GenreSearchBottomSheet(
     initialSelectedGenreList: List<Genre>,
     genreList: UiState<List<Genre>>,
-    debounceSearch: () -> Unit,
+    debounce: () -> Unit,
     onDismissRequest: () -> Unit,
     onTextChange: (String) -> Unit,
     onButtonClick: (List<Genre>) -> Unit,
@@ -60,7 +60,7 @@ fun GenreSearchBottomSheet(
     }
 
     LaunchedEffect(true) {
-        debounceSearch()
+        debounce()
     }
 
     LaunchedEffect(searchTerm) {

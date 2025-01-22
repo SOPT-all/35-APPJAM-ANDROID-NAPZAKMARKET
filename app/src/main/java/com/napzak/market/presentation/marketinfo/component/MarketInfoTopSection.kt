@@ -43,7 +43,7 @@ fun MarketInfoTopSection(
     Box {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(marketInfo.storeBackgroundPhoto)
+                .data(marketInfo.storeCover)
                 .placeholder(R.drawable.img_market_bg)
                 .error(R.drawable.img_market_bg)
                 .build(),
@@ -146,7 +146,7 @@ private fun MarketInfoTopSectionPreview() {
             storeNickname = "납자기",
             storeDescription = "마이멜로디, 시나모롤 제일 좋아합니다 :) 해당 장르 상품들 판매 및 제시 채팅 언제든 환영합니다!",
             storePhoto = "",
-            storeBackgroundPhoto = "",
+            storeCover = "",
             genrePreferenceList = listOf(
                 Genre(
                     genreId = 1,

@@ -15,6 +15,6 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindInterestRepository(
-        interestRepositoryImpl: InterestRepositoryImpl
+        interestRepositoryImpl: InterestRepositoryImpl,
     ): InterestRepository
 }

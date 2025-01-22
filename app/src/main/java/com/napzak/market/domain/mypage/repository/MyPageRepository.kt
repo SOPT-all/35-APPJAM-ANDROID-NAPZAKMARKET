@@ -1,7 +1,7 @@
 package com.napzak.market.domain.mypage.repository
 
-import com.napzak.market.domain.mypage.model.MyPageData
+import com.napzak.market.domain.mypage.model.StoreInfo
 
 interface MyPageRepository {
-    suspend fun fetchMyPageData(): Result<MyPageData>
+    suspend fun fetchMyPageData(): Result<StoreInfo>
 }

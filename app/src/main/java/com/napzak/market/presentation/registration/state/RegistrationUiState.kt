@@ -7,7 +7,7 @@ import com.napzak.market.core.type.TradeType
 @Immutable
 data class RegistrationUiState(
     val tradeType: TradeType? = null,
-    val imageUrl: List<String> = emptyList(),
+    val imageUri: List<String> = emptyList(),
     val searchTerm: String = "",
     val genre: String = "",
     val genreList: List<String> = emptyList(),

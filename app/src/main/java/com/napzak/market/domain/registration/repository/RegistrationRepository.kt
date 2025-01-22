@@ -1,8 +1,15 @@
 package com.napzak.market.domain.registration.repository
 
-import com.napzak.market.domain.registration.model.PresignedUrlMap
-
 interface RegistrationRepository {
 
-    suspend fun getPresignedUrl(imageTitles: String): Result<PresignedUrlMap>
+    suspend fun getPresignedUrl(imageTitles: List<String>): Result<LinkedHashMap<String, String>>
+
+    suspend fun putImageUri(
+        presignedUrl: String,
+        imageUri: String,
+    ): Result<String>
+
+    suspend fun postRegistration(
+        /* TODO: 게시물 등록 API 연동 */
+    )
 }

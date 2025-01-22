@@ -38,17 +38,17 @@ class RegistrationViewModel @Inject constructor(
     }
 
     fun updatePhotoList(newImageUrlList: List<String>) = _uiState.update { currentState ->
-        currentState.copy(imageUrl = currentState.imageUrl + newImageUrlList)
+        currentState.copy(imageUri = currentState.imageUri + newImageUrlList)
     }
 
     fun deletePhoto(photoIndex: Int) = _uiState.update { currentState ->
-        currentState.copy(imageUrl = currentState.imageUrl.filterIndexed { index, _ -> index != photoIndex })
+        currentState.copy(imageUri = currentState.imageUri.filterIndexed { index, _ -> index != photoIndex })
     }
 
     fun changeRepresentPhoto(newPhoto: Int) = _uiState.update { currentState ->
-        val newImageUrlList = currentState.imageUrl.toMutableList()
+        val newImageUrlList = currentState.imageUri.toMutableList()
         newImageUrlList.add(0, newImageUrlList.removeAt(newPhoto))
-        currentState.copy(imageUrl = newImageUrlList)
+        currentState.copy(imageUri = newImageUrlList)
     }
 
     fun updatePlainTextValue(
@@ -137,7 +137,7 @@ class RegistrationViewModel @Inject constructor(
     fun updateButtonState() {
         val isCommonFieldsValid = _uiState.value.title.isNotEmpty()
                 && _uiState.value.description.isNotEmpty()
-                && _uiState.value.imageUrl.isNotEmpty()
+                && _uiState.value.imageUri.isNotEmpty()
 
         val isPurchaseConditionValid = _uiState.value.tradeType == TradeType.BUY
                 && _uiState.value.productPurchasePrice.isNotEmpty()

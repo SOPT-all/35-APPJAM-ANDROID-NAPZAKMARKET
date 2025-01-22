@@ -60,13 +60,13 @@ fun RegistrationRoute(
     viewModel: RegistrationViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val currentImageListSize = (MAX_ITEMS - uiState.imageUrl.size).coerceAtLeast(MIN_ITEMS)
+    val currentImageListSize = (MAX_ITEMS - uiState.imageUri.size).coerceAtLeast(MIN_ITEMS)
     val getImageStorageLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetMultipleContents()
     ) { uris: List<Uri> ->
         handleUris(uris, currentImageListSize, viewModel::updatePhotoList)
     }
-    val getPhotoPickerLauncher = when (uiState.imageUrl.size) {
+    val getPhotoPickerLauncher = when (uiState.imageUri.size) {
         MAX_ITEMS - 1 -> rememberLauncherForActivityResult(
             ActivityResultContracts.PickVisualMedia()
         ) { uri: Uri? ->
@@ -87,7 +87,7 @@ fun RegistrationRoute(
         registrationType = if (tradeType == TradeType.SELL.label) TradeType.SELL else TradeType.BUY,
         onCloseClick = navigateUp,
         onPhotoClick = {
-            val remainImageSize = MAX_ITEMS - uiState.imageUrl.size
+            val remainImageSize = MAX_ITEMS - uiState.imageUri.size
 
             when {
                 remainImageSize <= 0 -> { /* TODO: 최대 개수 초과 시 스낵바 처리 */ }
@@ -197,7 +197,7 @@ fun RegistrationScreen(
             Spacer(modifier = Modifier.height(16.dp))
             RegistrationPhotoPicker(
                 modifier = Modifier,
-                imageUrlList = uiState.imageUrl,
+                imageUrlList = uiState.imageUri,
                 onPhotoClick = onPhotoClick,
                 onPress = onPhotoPress,
                 onDeleteClick = onDeleteClick,

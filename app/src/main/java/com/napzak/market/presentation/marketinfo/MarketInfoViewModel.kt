@@ -9,8 +9,8 @@ import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.domain.genre.usecase.GenreSearchUseCase
 import com.napzak.market.domain.marketinfo.repository.MarketInfoRepository
-import com.napzak.market.domain.marketinfo.usecase.GetMarketProductBuyItemsUseCase
-import com.napzak.market.domain.marketinfo.usecase.GetMarketProductSellItemsUseCase
+import com.napzak.market.domain.marketinfo.usecase.MarketProductBuyItemsUseCase
+import com.napzak.market.domain.marketinfo.usecase.MarketProductSellItemsUseCase
 import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
 import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
 import com.napzak.market.presentation.marketinfo.state.MarketProductItemsInformation
@@ -29,8 +29,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MarketInfoViewModel @Inject constructor(
     private val marketInfoRepository: MarketInfoRepository,
-    private val getMarketProductSellItemsUseCase: GetMarketProductSellItemsUseCase,
-    private val getMarketProductBuyItemsUseCase: GetMarketProductBuyItemsUseCase,
+    private val marketProductSellItemsUseCase: MarketProductSellItemsUseCase,
+    private val marketProductBuyItemsUseCase: MarketProductBuyItemsUseCase,
     private val genreSearchUseCase: GenreSearchUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MarketInfoUiState())
@@ -77,7 +77,7 @@ class MarketInfoViewModel @Inject constructor(
         with(uiState.value) {
             when (marketTab) {
                 MarketTab.SELL -> {
-                    getMarketProductSellItemsUseCase(
+                    marketProductSellItemsUseCase(
                         storeId = storeId,
                         sortType = sortType.name,
                         isOnSale = isOnSale,
@@ -101,7 +101,7 @@ class MarketInfoViewModel @Inject constructor(
                 }
 
                 MarketTab.BUY -> {
-                    getMarketProductBuyItemsUseCase(
+                    marketProductBuyItemsUseCase(
                         storeId = storeId,
                         sortType = sortType.name,
                         isOnSale = isOnSale,

@@ -6,7 +6,7 @@ import com.napzak.market.domain.marketinfo.model.ProductListFilter
 import com.napzak.market.domain.marketinfo.repository.MarketInfoRepository
 import javax.inject.Inject
 
-class GetMarketProductBuyItemsUseCase @Inject constructor(
+class MarketProductSellItemsUseCase @Inject constructor(
     private val marketInfoRepository: MarketInfoRepository,
 ) {
     suspend operator fun invoke(
@@ -14,6 +14,7 @@ class GetMarketProductBuyItemsUseCase @Inject constructor(
         sortType: String,
         genreItems: List<Genre>?,
         isOnSale: Boolean,
+        isUnopened: Boolean,
     ): Result<List<ProductItem>> {
         val genreIds = if (genreItems?.isNotEmpty() == true) {
             genreItems.map { it.genreId }
@@ -21,13 +22,13 @@ class GetMarketProductBuyItemsUseCase @Inject constructor(
             null
         }
 
-        return marketInfoRepository.fetchMarketProductBuyItems(
+        return marketInfoRepository.fetchMarketProductSellItems(
             ProductListFilter(
                 storeId = storeId,
                 sortOption = sortType,
                 genreId = genreIds,
                 isOnSale = isOnSale,
-                isUnopened = false,
+                isUnopened = isUnopened,
             )
         )
     }

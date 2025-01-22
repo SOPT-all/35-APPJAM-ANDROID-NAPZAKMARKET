@@ -74,7 +74,6 @@ fun DetailPageRoute(
     val uiState by viewModel.uiState.collectAsState()
 
     DetailPageScreen(
-        tradeType = uiState.tradeType,
         uiState = uiState,
         onChatNavigate = onItemChatNavigate,
         onBackClick = onNavigateUp,
@@ -84,14 +83,12 @@ fun DetailPageRoute(
 
 @Composable
 fun DetailPageScreen(
-    tradeType: String,
     uiState: DetailPageUiState,
     onChatNavigate: () -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
-    snackBarDuration: Long = 3000L,
 ) {
-    val parsedTradeType = TradeType.fromName(tradeType)
+    val parsedTradeType = TradeType.fromName(uiState.tradeType)
     val conditionEnum = ProductConditionType.fromCondition(uiState.productCondition)
     var isSnackBarVisible by remember { mutableStateOf(false) }
     val snackBarMessage = stringResource(id = R.string.detail_snackbar_message)
@@ -100,7 +97,7 @@ fun DetailPageScreen(
     LaunchedEffect(isSnackBarVisible) {
         if (isSnackBarVisible) {
             coroutine.launch {
-                delay(snackBarDuration)
+                delay(SNACK_BAR_DURATION)
                 isSnackBarVisible = false
             }
         }
@@ -154,7 +151,7 @@ fun DetailPageScreen(
                     AsyncImage(
                         model = it,
                         contentDescription = stringResource(id = R.string.detail_image_placeholder),
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                 } ?: Text(
                     text = stringResource(id = R.string.detail_image_placeholder),
@@ -482,6 +479,8 @@ fun BottomBar(
     }
 }
 
+private const val SNACK_BAR_DURATION = 3000L
+
 @Preview(showBackground = true)
 @Composable
 fun DetailPageScreenSellPreview() {
@@ -505,7 +504,6 @@ fun DetailPageScreenSellPreview() {
 
     NapzakMarketTheme {
         DetailPageScreen(
-            tradeType = mockUiState.tradeType,
             uiState = mockUiState,
             onChatNavigate = {},
             onBackClick = {}
@@ -534,7 +532,6 @@ fun DetailPageScreenBuyPreview() {
 
     NapzakMarketTheme {
         DetailPageScreen(
-            tradeType = mockUiState.tradeType,
             uiState = mockUiState,
             onChatNavigate = {},
             onBackClick = {}

@@ -33,11 +33,13 @@ class MainNavigator(
     val startDestination = Splash
 
     val currentTab: MainTab?
-        @Composable get() = MainTab.find { tab ->
+        @Composable get() = if (registerDialogVisibility) MainTab.REGISTER else MainTab.find { tab ->
             currentDestination?.hasRoute(tab::class) == true
         }
 
     fun navigate(tab: MainTab) {
+        if (tab != MainTab.REGISTER) registerDialogVisibilityState = false
+
         val navOptions = navOptions {
             popUpTo(Home) {
                 saveState = true

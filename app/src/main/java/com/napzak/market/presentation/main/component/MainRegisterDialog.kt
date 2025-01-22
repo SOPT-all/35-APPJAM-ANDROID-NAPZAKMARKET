@@ -10,10 +10,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -65,7 +68,10 @@ fun BoxScope.MainRegisterDialog(
 
     AnimatedVisibility(
         visible = visibility,
-        modifier = Modifier.align(Alignment.BottomCenter),
+        modifier = Modifier
+            .align(Alignment.BottomCenter)
+            .padding(86.dp)
+            .navigationBarsPadding(),
         enter = slideInVertically { fullHeight -> fullHeight },
         exit = slideOutVertically { fullHeight -> fullHeight }
     ) {
@@ -83,8 +89,7 @@ fun MainRegisterDialog(
 ) {
     Column(
         modifier = Modifier
-            .padding(bottom = 14.dp)
-            .width(160.dp)
+            .width(IntrinsicSize.Max)
             .clip(RoundedCornerShape(12.dp))
             .background(color = NapzakMarketTheme.colors.white)
             .padding(vertical = 15.dp),
@@ -122,7 +127,9 @@ private fun RegisterNavigationButton(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.noRippleClickable { onClick() },
+        modifier = Modifier
+            .noRippleClickable(onClick)
+            .then(modifier),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {

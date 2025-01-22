@@ -189,15 +189,11 @@ class ExploreViewModel @Inject constructor(
                         genreItems = selectedGenreList,
                     )
                         .onSuccess { response ->
-                            if (response.isEmpty()) {
-                                updateLoadState(UiState.Empty)
-                            } else {
-                                updateLoadState(
-                                    UiState.Success(
-                                        ExploreProductInformation(productList = response)
-                                    )
+                            updateLoadState(
+                                UiState.Success(
+                                    ExploreProductInformation(productList = response)
                                 )
-                            }
+                            )
                         }
                         .onFailure { response ->
                             updateLoadState(UiState.Failure(response.toString()))
@@ -211,15 +207,11 @@ class ExploreViewModel @Inject constructor(
                         genreItems = selectedGenreList,
                     )
                         .onSuccess { response ->
-                            if (response.isEmpty()) {
-                                updateLoadState(UiState.Empty)
-                            } else {
-                                updateLoadState(
-                                    UiState.Success(
-                                        ExploreProductInformation(productList = response)
-                                    )
+                            updateLoadState(
+                                UiState.Success(
+                                    ExploreProductInformation(productList = response)
                                 )
-                            }
+                            )
                         }
                         .onFailure { response ->
                             updateLoadState(UiState.Failure(response.toString()))
@@ -235,15 +227,11 @@ class ExploreViewModel @Inject constructor(
                         genreItems = selectedGenreList,
                     )
                         .onSuccess { response ->
-                            if (response.isEmpty()) {
-                                updateLoadState(UiState.Empty)
-                            } else {
-                                updateLoadState(
-                                    UiState.Success(
-                                        ExploreProductInformation(productList = response)
-                                    )
+                            updateLoadState(
+                                UiState.Success(
+                                    ExploreProductInformation(productList = response)
                                 )
-                            }
+                            )
                         }
                         .onFailure { response ->
                             updateLoadState(UiState.Failure(response.toString()))
@@ -258,15 +246,11 @@ class ExploreViewModel @Inject constructor(
                         genreItems = selectedGenreList,
                     )
                         .onSuccess { response ->
-                            if (response.isEmpty()) {
-                                updateLoadState(UiState.Empty)
-                            } else {
-                                updateLoadState(
-                                    UiState.Success(
-                                        ExploreProductInformation(productList = response)
-                                    )
+                            updateLoadState(
+                                UiState.Success(
+                                    ExploreProductInformation(productList = response)
                                 )
-                            }
+                            )
                         }
                         .onFailure { response ->
                             updateLoadState(UiState.Failure(response.toString()))

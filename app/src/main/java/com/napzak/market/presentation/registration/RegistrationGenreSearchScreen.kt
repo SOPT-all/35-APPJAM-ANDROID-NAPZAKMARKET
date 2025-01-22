@@ -74,7 +74,7 @@ fun RegistrationGenreSearchScreen(
     ) {
         stickyHeader {
             BackTopBar(
-                title = stringResource(search_genre),
+                nickname = stringResource(search_genre),
                 onBackClick = onBackClick,
             )
             Spacer(modifier = Modifier.height(20.dp))

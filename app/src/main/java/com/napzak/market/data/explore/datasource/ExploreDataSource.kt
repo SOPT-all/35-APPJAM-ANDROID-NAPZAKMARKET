@@ -5,6 +5,8 @@ import com.napzak.market.data.explore.dto.ProductBuyItemsRequest
 import com.napzak.market.data.explore.dto.ProductBuyItemsResponse
 import com.napzak.market.data.explore.dto.ProductSellItemsRequest
 import com.napzak.market.data.explore.dto.ProductSellItemsResponse
+import com.napzak.market.data.explore.dto.SearchedProductBuyItemsRequest
+import com.napzak.market.data.explore.dto.SearchedProductSellItemsRequest
 import com.napzak.market.data.explore.service.ExploreService
 import javax.inject.Inject
 
@@ -22,6 +24,25 @@ class ExploreDataSource @Inject constructor(
 
     suspend fun getProductBuyItems(request: ProductBuyItemsRequest): BaseResponse<ProductBuyItemsResponse> =
         service.getProductBuyItems(
+            sortOption = request.sortOption,
+            isOnSale = request.isOnSale,
+            genreIds = request.genreIds,
+            cursor = "",
+        )
+
+    suspend fun getSearchedProductSellItems(request: SearchedProductSellItemsRequest): BaseResponse<ProductSellItemsResponse> =
+        service.getSearchedProductSellItems(
+            searchWord = request.searchWord,
+            sortOption = request.sortOption,
+            isOnSale = request.isOnSale,
+            isUnopened = request.isUnopened,
+            genreIds = request.genreIds,
+            cursor = "",
+        )
+
+    suspend fun getSearchedProductBuyItems(request: SearchedProductBuyItemsRequest): BaseResponse<ProductBuyItemsResponse> =
+        service.getSearchedProductBuyItems(
+            searchWord = request.searchWord,
             sortOption = request.sortOption,
             isOnSale = request.isOnSale,
             genreIds = request.genreIds,

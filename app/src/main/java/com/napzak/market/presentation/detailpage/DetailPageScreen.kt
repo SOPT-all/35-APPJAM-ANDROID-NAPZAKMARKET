@@ -107,7 +107,7 @@ fun DetailPageScreen(
     Scaffold(
         topBar = {
             BackTopBar(
-                title = "",
+                nickname = "",
                 onBackClick = onBackClick,
             )
         },

@@ -165,9 +165,11 @@ fun DetailPageScreen(
     ) { innerPadding ->
         Column(
             modifier = Modifier
+                .background(NapzakMarketTheme.colors.white)
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState()),
+
         ) {
             ImageBannerPager(
                 bannerImages = uiState.productPhotoUrls.toImmutableList(),

@@ -15,6 +15,6 @@ abstract class ChatRepositoryModule {
     @Binds
     @Singleton
     abstract fun bindChatRepository(
-        impl: ChatRepositoryImpl,
+        chatRepositoryImpl: ChatRepositoryImpl,
     ): ChatRepository
 }

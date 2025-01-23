@@ -18,7 +18,7 @@ fun BuyProduct.toBuyRegistrationRequestDto() = ProductBuyRegistrationRequestDto(
     genreId = genreId,
     title = title,
     description = description,
-    price = price,
+    price = price * 1000,
     isPriceNegotiable = isPriceNegotiable,
 )
 

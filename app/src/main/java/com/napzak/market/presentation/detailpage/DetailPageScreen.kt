@@ -2,7 +2,6 @@ package com.napzak.market.presentation.detailpage
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,6 +52,7 @@ import coil.request.ImageRequest
 import com.napzak.market.R
 import com.napzak.market.R.string.profile_image_description
 import com.napzak.market.core.common.extension.formatToPriceString
+import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.common.extension.throttledNoRippleClickable
 import com.napzak.market.core.designsystem.component.button.CommonButton
 import com.napzak.market.core.designsystem.component.chip.TextChip
@@ -71,6 +71,7 @@ fun DetailPageRoute(
     viewModel: DetailPageViewModel = hiltViewModel(),
     onItemChatNavigate: () -> Unit,
     onNavigateUp: () -> Unit,
+    onMarketInfoNavigate: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val lifecycle = LocalLifecycleOwner.current
@@ -104,6 +105,7 @@ fun DetailPageRoute(
             viewModel.updateProductInterest()
             if (uiState.isInterest) snackBarHostState.currentSnackbarData?.dismiss()
         },
+        onMarketInfoClick = { onMarketInfoNavigate(uiState.marketInfo.userId) },
         modifier = modifier,
     )
 }
@@ -115,6 +117,7 @@ fun DetailPageScreen(
     onChatNavigate: () -> Unit,
     onBackClick: () -> Unit,
     onLikeClick: () -> Unit,
+    onMarketInfoClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val parsedTradeType = TradeType.fromName(uiState.tradeType)
@@ -363,9 +366,7 @@ fun DetailPageScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable(
-                            onClick = {/* TODO: 내 마켓 보기로 이동하는 네비게이션 추가 */ }
-                        ),
+                        .noRippleClickable(onMarketInfoClick),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Box(
@@ -546,6 +547,7 @@ fun DetailPageScreenSellPreview() {
             onBackClick = {},
             onLikeClick = {},
             snackBarHostState = SnackbarHostState(),
+            onMarketInfoClick = {}
         )
     }
 }
@@ -575,7 +577,8 @@ fun DetailPageScreenBuyPreview() {
             onChatNavigate = {},
             onBackClick = {},
             onLikeClick = {},
-            snackBarHostState = SnackbarHostState()
+            snackBarHostState = SnackbarHostState(),
+            onMarketInfoClick = {}
         )
     }
 }

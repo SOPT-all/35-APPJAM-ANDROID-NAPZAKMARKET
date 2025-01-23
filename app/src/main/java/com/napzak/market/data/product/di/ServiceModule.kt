@@ -1,7 +1,7 @@
-package com.napzak.market.data.explore.di
+package com.napzak.market.data.product.di
 
 import com.napzak.market.core.network.di.JWT
-import com.napzak.market.data.explore.service.ExploreService
+import com.napzak.market.data.product.service.ExploreService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

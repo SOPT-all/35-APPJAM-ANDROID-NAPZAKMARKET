@@ -1,6 +1,6 @@
-package com.napzak.market.data.explore.di
+package com.napzak.market.data.product.di
 
-import com.napzak.market.data.explore.repositoryimpl.ExploreRepositoryImpl
+import com.napzak.market.data.product.repositoryimpl.ExploreRepositoryImpl
 import com.napzak.market.domain.explore.repository.ExploreRepository
 import dagger.Binds
 import dagger.Module

@@ -1,7 +1,7 @@
-package com.napzak.market.data.explore.mapper
+package com.napzak.market.data.product.mapper
 
-import com.napzak.market.data.explore.dto.request.ProductBuyItemsRequest
-import com.napzak.market.data.explore.dto.response.ProductBuyItemsResponse
+import com.napzak.market.data.product.dto.request.ProductBuyItemsRequest
+import com.napzak.market.data.product.dto.response.ProductBuyItemsResponse
 import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.domain.explore.model.ProductListFilter
 

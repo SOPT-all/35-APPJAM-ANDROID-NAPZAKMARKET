@@ -1,6 +1,6 @@
-package com.napzak.market.data.explore.dto.response
+package com.napzak.market.data.product.dto.response
 
-import com.napzak.market.data.explore.dto.ProductItem
+import com.napzak.market.data.product.dto.ProductItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

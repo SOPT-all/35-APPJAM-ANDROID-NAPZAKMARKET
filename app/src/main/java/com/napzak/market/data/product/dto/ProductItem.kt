@@ -1,4 +1,4 @@
-package com.napzak.market.data.explore.dto
+package com.napzak.market.data.product.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

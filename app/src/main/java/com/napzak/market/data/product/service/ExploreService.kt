@@ -1,8 +1,8 @@
-package com.napzak.market.data.explore.service
+package com.napzak.market.data.product.service
 
 import com.napzak.market.core.network.BaseResponse
-import com.napzak.market.data.explore.dto.response.ProductBuyItemsResponse
-import com.napzak.market.data.explore.dto.response.ProductSellItemsResponse
+import com.napzak.market.data.product.dto.response.ProductBuyItemsResponse
+import com.napzak.market.data.product.dto.response.ProductSellItemsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

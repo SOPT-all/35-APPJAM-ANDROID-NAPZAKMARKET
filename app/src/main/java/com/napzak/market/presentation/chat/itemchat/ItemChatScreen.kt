@@ -89,7 +89,7 @@ fun ItemChatScreen(
                 tradeType = uiState.tradeType,
                 title = uiState.title,
                 firstPhoto = uiState.firstPhoto,
-                price = "${uiState.price.toString().formatToPriceString()}원",
+                price = "${uiState.price.toString().formatToPriceString()}${stringResource(id = R.string.chat_price_unit)}",
                 isPriceNegotiable = uiState.isPriceNegotiable,
                 titleColor = when (TradeType.fromName(uiState.tradeType)) {
                     TradeType.BUY -> NapzakMarketTheme.colors.gray900

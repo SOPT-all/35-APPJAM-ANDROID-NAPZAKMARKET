@@ -47,12 +47,8 @@
     <string name="chat_buy_title">구해요</string>
     <string name="chat_sell_title">팔아요</string>
     <string name="chat_price_label">가격제시</string>
-    <string name="chat_screen_title_buy">납작한 외계인</string>
-    <string name="chat_screen_description_buy">양스타 토모에 히요리 이츠누이 함께</string>
-    <string name="chat_screen_price_buy">100,000원대</string>
-    <string name="chat_screen_title_sell">딸기 마이멜로디 마스코트 인형</string>
-    <string name="chat_screen_price_sell">35,000원</string>
     <string name="chat_message_placeholder">메시지를 입력하세요.</string>
+    <string name="chat_price_unit">원</string>
 
     <!-- LoadingScreen -->
     <string name="loading_ready_image_description">준비중 상태를 나타내는 캐릭터</string>

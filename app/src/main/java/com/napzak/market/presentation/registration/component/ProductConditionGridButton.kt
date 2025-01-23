@@ -92,7 +92,7 @@ private const val GRID_BUTTON_COLUMN_COUNT = 2
 private fun ProductConditionGridButtonPreview() {
     NapzakMarketTheme {
         ProductConditionGridButton(
-            selectedCondition = ProductConditionType.GOOD,
+            selectedCondition = ProductConditionType.LIKE_NEW,
             onConditionSelected = {}
         )
     }

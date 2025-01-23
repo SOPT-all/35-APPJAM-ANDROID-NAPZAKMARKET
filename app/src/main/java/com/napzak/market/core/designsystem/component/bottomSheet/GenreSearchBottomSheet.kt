@@ -119,7 +119,8 @@ fun GenreSearchBottomSheet(
                     is UiState.Success -> {
                         with(genreItems) {
                             LazyColumn(
-                                modifier = Modifier.padding(horizontal = 20.dp),
+                                modifier = Modifier
+                                    .padding(horizontal = 20.dp),
                             ) {
                                 itemsIndexed(
                                     items = data,
@@ -135,6 +136,12 @@ fun GenreSearchBottomSheet(
                                         },
                                         isLastItem = index == selectedGenreList.size - 1,
                                     )
+                                }
+
+                                item {
+                                    if (selectedGenreList.isNotEmpty()) {
+                                        Spacer(Modifier.height(58.dp))
+                                    }
                                 }
                             }
                         }

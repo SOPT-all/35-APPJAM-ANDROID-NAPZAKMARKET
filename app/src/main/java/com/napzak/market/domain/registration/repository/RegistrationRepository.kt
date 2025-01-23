@@ -7,7 +7,7 @@ interface RegistrationRepository {
     suspend fun putImageUri(
         presignedUrl: String,
         imageUri: String,
-    ): Result<String>
+    ): Result<Unit>
 
     suspend fun postRegistration(
         /* TODO: 게시물 등록 API 연동 */

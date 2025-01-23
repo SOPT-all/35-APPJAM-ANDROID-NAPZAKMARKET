@@ -24,7 +24,7 @@ class RegistrationRepositoryImpl @Inject constructor(
     override suspend fun putImageUri(
         presignedUrl: String,
         imageUri: String,
-    ): Result<String> = runCatching {
+    ): Result<Unit> = runCatching {
         registrationRemoteDataSource.uploadImage(presignedUrl, imageUri)
     }
 }

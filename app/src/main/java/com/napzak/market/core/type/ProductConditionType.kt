@@ -16,5 +16,15 @@ enum class ProductConditionType(val label: String) {
                 else -> NEW
             }
         }
+
+        fun fromConditionByName(condition: String?): ProductConditionType {
+            return when (condition) {
+                LIKE_NEW.name -> LIKE_NEW
+                NEW.name -> NEW
+                SLIGHTLY_USED.name -> SLIGHTLY_USED
+                USED.name -> USED
+                else -> NEW
+            }
+        }
     }
 }

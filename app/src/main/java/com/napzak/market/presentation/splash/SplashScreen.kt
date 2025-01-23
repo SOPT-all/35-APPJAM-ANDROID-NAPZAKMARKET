@@ -121,8 +121,6 @@ private fun SplashScreen(
                 contentPadding = PaddingValues(
                     top = 14.dp,
                     bottom = 16.dp,
-                    start = 103.dp,
-                    end = 105.dp
                 ),
                 shape = RoundedCornerShape(12.dp),
                 textStyle = NapzakMarketTheme.typography.bodyBold16,

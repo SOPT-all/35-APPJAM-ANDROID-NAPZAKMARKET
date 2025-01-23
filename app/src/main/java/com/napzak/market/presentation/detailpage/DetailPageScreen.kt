@@ -36,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -53,6 +54,7 @@ import com.napzak.market.core.common.extension.formatToPriceString
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.common.extension.throttledNoRippleClickable
 import com.napzak.market.core.designsystem.component.button.CommonButton
+import com.napzak.market.core.designsystem.component.chip.BasicChip
 import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.component.snackbar.CommonSnackBar
@@ -235,22 +237,22 @@ fun DetailPageScreen(
                             style = NapzakMarketTheme.typography.bodySemi16,
                             color = NapzakMarketTheme.colors.gray800,
                         )
-                        val conditionLabel = conditionEnum.label
-                        TextChip(
-                            text = conditionLabel,
-                            textStyle = NapzakMarketTheme.typography.bodySemi14,
-                            chipColors = CustomChipColors(
-                                contentColor = NapzakMarketTheme.colors.gray900,
-                                containerColor = NapzakMarketTheme.colors.gray100,
-                            ),
-                            innerPadding = PaddingValues(
-                                horizontal = 12.dp,
-                                vertical = 6.dp,
-                            ),
-                            shape = RoundedCornerShape(4.dp),
-                        )
+                        Row(
+                            modifier = Modifier
+                                .background(
+                                    NapzakMarketTheme.colors.gray100,
+                                    shape = RoundedCornerShape(4.dp)
+                                )
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = conditionEnum.label,
+                                style = NapzakMarketTheme.typography.bodySemi14,
+                                color = NapzakMarketTheme.colors.gray900
+                            )
+                        }
                     }
-
                     Spacer(modifier = Modifier.height(20.dp))
 
                     Box(

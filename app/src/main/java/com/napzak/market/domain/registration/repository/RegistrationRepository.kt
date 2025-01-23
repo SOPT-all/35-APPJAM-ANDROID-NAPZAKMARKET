@@ -1,5 +1,8 @@
 package com.napzak.market.domain.registration.repository
 
+import com.napzak.market.domain.registration.model.BuyProduct
+import com.napzak.market.domain.registration.model.SellProduct
+
 interface RegistrationRepository {
 
     suspend fun getPresignedUrl(imageTitles: List<String>): Result<LinkedHashMap<String, String>>
@@ -9,7 +12,7 @@ interface RegistrationRepository {
         imageUri: String,
     ): Result<Unit>
 
-    suspend fun postRegistration(
-        /* TODO: 게시물 등록 API 연동 */
-    )
+    suspend fun postBuyRegistration(buyProduct: BuyProduct): Result<Long>
+
+    suspend fun postSellRegistration(sellProduct: SellProduct): Result<Long>
 }

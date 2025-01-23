@@ -63,7 +63,7 @@ fun ImageBannerPager(
                 AsyncImage(
                     model = ImageRequest.Builder(context).data(currentBanner).build(),
                     contentDescription = null,
-                    contentScale = ContentScale.FillHeight,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize(),
                 )
             }

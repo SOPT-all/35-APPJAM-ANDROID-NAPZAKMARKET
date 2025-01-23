@@ -26,6 +26,7 @@ fun NavController.navigateToGenreSearch(
 fun NavGraphBuilder.registrationGraph(
     navigateUp: () -> Unit,
     onGenreSearchNavigate: () -> Unit,
+    onDetailNavigate: (Long) -> Unit,
     getBackStackViewModel: @Composable (NavBackStackEntry) -> RegistrationViewModel,
     modifier: Modifier = Modifier,
 ) {
@@ -36,6 +37,7 @@ fun NavGraphBuilder.registrationGraph(
             tradeType = registration.tradeType,
             navigateUp = navigateUp,
             onGenreSearchNavigate = onGenreSearchNavigate,
+            onDetailNavigate = onDetailNavigate,
             modifier = modifier,
         )
     }

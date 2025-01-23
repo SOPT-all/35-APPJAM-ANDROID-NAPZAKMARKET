@@ -12,11 +12,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,6 +47,8 @@ import com.napzak.market.presentation.explore.explore.component.TradeTypeTab
 import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.explore.state.ExploreUiState
 import com.napzak.market.presentation.explore.explore.type.ExploreScreenType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun ExploreRoute(
@@ -58,6 +63,9 @@ fun ExploreRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val bottomSheetState by viewModel.bottomSheetState.collectAsStateWithLifecycle()
 
+    val gridState = rememberLazyGridState()
+    val coroutineScope = rememberCoroutineScope()
+
     BackHandler {
         if (uiState.exploreScreenType == ExploreScreenType.BASIC) {
             onBackButtonClick()
@@ -71,31 +79,42 @@ fun ExploreRoute(
     }
 
     LaunchedEffect(uiState) {
-        viewModel.getExploreProductInformation()
+        viewModel.updateExploreProductInformation()
     }
 
     ExploreScreen(
         modifier = modifier,
         uiState = uiState,
         bottomSheetState = bottomSheetState,
+        gridState = gridState,
         debounce = viewModel::debounce,
         onResultBackButtonClick = onSearchNavigate,
         onSearchBoxClick = onSearchNavigate,
-        onTradeTypeClick = viewModel::updateTradeType,
+        onTradeTypeClick = { tradeType ->
+            viewModel.updateTradeType(tradeType)
+            updateScrollState(coroutineScope, gridState)
+        },
         onGenreListClick = {
             viewModel.updateBottomSheetVisibility(BottomSheetType.GENRE_SEARCHING)
         },
-        onSoldOutClick = { viewModel.updateSale() },
-        onUnopenClick = { viewModel.updateUnopen() },
+        onSoldOutClick = {
+            viewModel.updateSale()
+            updateScrollState(coroutineScope, gridState)
+        },
+        onUnopenClick = {
+            viewModel.updateUnopen()
+            updateScrollState(coroutineScope, gridState)
+        },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(BottomSheetType.SORT) },
         onItemClick = onProductDetailNavigate,
-        onLikeClick = viewModel::updateItemLikeButton,
-        onDismissRequest = { viewModel.updateBottomSheetVisibility(it) },
+        onLikeClick = viewModel::updateProductInterest,
+        onDismissRequest = viewModel::updateBottomSheetVisibility,
         onSortItemClick = {
             viewModel.updateSortType(it)
             viewModel.updateBottomSheetVisibility(BottomSheetType.SORT)
+            updateScrollState(coroutineScope, gridState)
         },
-        onTextChange = { viewModel.changeSearchText(it) },
+        onTextChange = viewModel::changeSearchText,
         onGenreSelectButtonClick = viewModel::updateSelectedGenreList,
     )
 }
@@ -104,6 +123,7 @@ fun ExploreRoute(
 fun ExploreScreen(
     uiState: ExploreUiState,
     bottomSheetState: ExploreBottomSheetState,
+    gridState: LazyGridState,
     debounce: () -> Unit,
     onResultBackButtonClick: (String?) -> Unit,
     onSearchBoxClick: (String?) -> Unit,
@@ -113,7 +133,7 @@ fun ExploreScreen(
     onUnopenClick: () -> Unit,
     onSortButtonClick: () -> Unit,
     onItemClick: (Long) -> Unit,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     onDismissRequest: (BottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
@@ -135,6 +155,7 @@ fun ExploreScreen(
                 ExploreSuccessScreen(
                     modifier = modifier,
                     bottomSheetState = bottomSheetState,
+                    gridState = gridState,
                     exploreScreenType = exploreScreenType,
                     initSearchTerm = initSearchTerm,
                     tradeType = tradeType,
@@ -168,6 +189,7 @@ fun ExploreScreen(
 fun ExploreSuccessScreen(
     modifier: Modifier = Modifier,
     bottomSheetState: ExploreBottomSheetState,
+    gridState: LazyGridState,
     exploreScreenType: ExploreScreenType,
     initSearchTerm: String?,
     tradeType: TradeType,
@@ -186,7 +208,7 @@ fun ExploreSuccessScreen(
     onUnopenClick: () -> Unit,
     onSortButtonClick: () -> Unit,
     onItemClick: (Long) -> Unit,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     onDismissRequest: (BottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
@@ -330,6 +352,7 @@ fun ExploreSuccessScreen(
         }
 
         ProductListSection(
+            gridState = gridState,
             tradeType = tradeType,
             productList = productList,
             onItemClick = onItemClick,
@@ -352,6 +375,15 @@ fun ExploreSuccessScreen(
     )
 }
 
+private fun updateScrollState(
+    coroutineScope: CoroutineScope,
+    gridState: LazyGridState,
+) {
+    coroutineScope.launch {
+        gridState.scrollToItem(0)
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
@@ -360,6 +392,7 @@ private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
             isSortBottomSheetVisible = false,
             isGenreSearchingBottomSheetVisible = false
         ),
+        gridState = LazyGridState(),
         tradeType = TradeType.SELL,
         exploreScreenType = ExploreScreenType.BASIC,
         initSearchTerm = "",
@@ -378,7 +411,7 @@ private fun ExploreSuccessScreenPreview(modifier: Modifier = Modifier) {
         onUnopenClick = { },
         onSortButtonClick = { },
         onItemClick = { },
-        onLikeClick = { },
+        onLikeClick = { _, _ -> },
         onDismissRequest = { },
         onSortItemClick = { },
         onTextChange = { },

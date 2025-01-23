@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
@@ -17,20 +18,22 @@ import com.napzak.market.domain.explore.model.ProductItem
 
 @Composable
 fun ProductListSection(
+    gridState: LazyGridState,
     tradeType: TradeType,
     productList: List<ProductItem>,
     onItemClick: (Long) -> Unit,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (tradeType == TradeType.SELL) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(20.dp),
-            modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-        ) {
+    LazyVerticalGrid(
+        state = gridState,
+        columns = GridCells.Fixed(2),
+        contentPadding = PaddingValues(20.dp),
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(20.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+    ) {
+        if (tradeType == TradeType.SELL) {
             items(productList) { productItem ->
                 with(productItem) {
                     NapzakSellItem(
@@ -42,19 +45,12 @@ fun ProductListSection(
                         isMyItem = isOwnedByCurrentUser,
                         createdTime = uploadTime,
                         onItemClick = { onItemClick(productId) },
-                        onLikeClick = { onLikeClick(productId) },
+                        onLikeClick = { onLikeClick(productId, isInterested) },
                     )
                 }
             }
-        }
-    } else {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(20.dp),
-            modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-        ) {
+
+        } else {
             items(productList) { productItem ->
                 with(productItem) {
                     NapzakBuyItem(
@@ -67,10 +63,11 @@ fun ProductListSection(
                         isOfferPossible = isPriceNegotiable,
                         createdTime = uploadTime,
                         onItemClick = { onItemClick(productId) },
-                        onLikeClick = { onLikeClick(productId) },
+                        onLikeClick = { onLikeClick(productId, isInterested) },
                     )
                 }
             }
+
         }
     }
 }
@@ -79,10 +76,11 @@ fun ProductListSection(
 @Composable
 private fun ProductListSectionPreview(modifier: Modifier = Modifier) {
     ProductListSection(
+        gridState = LazyGridState(),
         tradeType = TradeType.BUY,
         productList = emptyList(),
         onItemClick = { },
-        onLikeClick = { },
+        onLikeClick = { _, _ -> },
         modifier = modifier,
     )
 }

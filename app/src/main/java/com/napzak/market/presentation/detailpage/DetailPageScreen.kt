@@ -118,7 +118,7 @@ fun DetailPageScreen(
     modifier: Modifier = Modifier,
 ) {
     val parsedTradeType = TradeType.fromName(uiState.tradeType)
-    val conditionEnum = ProductConditionType.fromCondition(uiState.productCondition)
+    val conditionEnum = ProductConditionType.fromConditionByName(uiState.productCondition)
 
     Scaffold(
         topBar = {

@@ -1,5 +1,6 @@
 package com.napzak.market.data.registration.dto
 
+import com.napzak.market.core.type.ProductConditionType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -16,7 +17,7 @@ data class ProductSellRegistrationRequestDto(
     @SerialName("price")
     val price: Int,
     @SerialName("productCondition")
-    val productCondition: String,
+    val productCondition: ProductConditionType,
     @SerialName("isDeliveryIncluded")
     val isDeliveryIncluded: Boolean,
     @SerialName("standardDeliveryFee")

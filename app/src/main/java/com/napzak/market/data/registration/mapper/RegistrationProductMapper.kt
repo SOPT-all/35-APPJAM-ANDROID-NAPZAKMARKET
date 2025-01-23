@@ -1,5 +1,6 @@
 package com.napzak.market.data.registration.mapper
 
+import com.napzak.market.core.type.ProductConditionType.Companion.fromCondition
 import com.napzak.market.data.registration.dto.ProductBuyRegistrationRequestDto
 import com.napzak.market.data.registration.dto.ProductPhotoDto
 import com.napzak.market.data.registration.dto.ProductSellRegistrationRequestDto
@@ -27,7 +28,7 @@ fun SellProduct.toSellRegistrationRequestDto() = ProductSellRegistrationRequestD
     title = title,
     description = description,
     price = price,
-    productCondition = productCondition.toString(),
+    productCondition = fromCondition(productCondition),
     isDeliveryIncluded = isDeliveryIncluded,
     standardDeliveryFee = standardDeliveryFee,
     halfDeliveryFee = halfDeliveryFee,

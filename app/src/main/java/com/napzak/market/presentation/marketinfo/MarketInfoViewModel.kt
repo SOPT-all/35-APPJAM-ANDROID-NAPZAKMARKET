@@ -8,6 +8,7 @@ import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.MarketTab
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.domain.genre.usecase.GenreSearchUseCase
+import com.napzak.market.domain.interest.repository.InterestRepository
 import com.napzak.market.domain.marketinfo.repository.MarketInfoRepository
 import com.napzak.market.domain.marketinfo.usecase.MarketProductBuyItemsUseCase
 import com.napzak.market.domain.marketinfo.usecase.MarketProductSellItemsUseCase
@@ -32,6 +33,7 @@ class MarketInfoViewModel @Inject constructor(
     private val marketProductSellItemsUseCase: MarketProductSellItemsUseCase,
     private val marketProductBuyItemsUseCase: MarketProductBuyItemsUseCase,
     private val genreSearchUseCase: GenreSearchUseCase,
+    private val interestRepository: InterestRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MarketInfoUiState())
     val uiState = _uiState.asStateFlow()
@@ -51,7 +53,7 @@ class MarketInfoViewModel @Inject constructor(
         }
     }
 
-    fun getMarketInformation() = viewModelScope.launch {
+    fun updateMarketInformation() = viewModelScope.launch {
         marketInfoRepository.fetchMarketInfo(uiState.value.storeId)
             .onSuccess { marketInfo ->
                 updateLoadMarketInfoState(
@@ -73,7 +75,7 @@ class MarketInfoViewModel @Inject constructor(
             }
     }
 
-    fun getMarketProductInformation() = viewModelScope.launch {
+    fun updateMarketProductInformation() = viewModelScope.launch {
         with(uiState.value) {
             when (marketTab) {
                 MarketTab.SELL -> {
@@ -199,8 +201,29 @@ class MarketInfoViewModel @Inject constructor(
         }
     }
 
-    fun updateItemLikeButton(productId: Long) {
-        /* TODO: 좋아요 API 연결 및 기능 연결 */
+    fun updateProductInterest(
+        productId: Long,
+        isInterested: Boolean,
+    ) {
+        if (isInterested) {
+            deleteInterest(productId)
+        } else {
+            addInterest(productId)
+        }
+    }
+
+    private fun addInterest(productId: Long) = viewModelScope.launch {
+        interestRepository.postInterest(productId)
+            .onSuccess {
+                updateMarketProductInformation()
+            }
+    }
+
+    private fun deleteInterest(productId: Long) = viewModelScope.launch {
+        interestRepository.deleteInterest(productId)
+            .onSuccess {
+                updateMarketProductInformation()
+            }
     }
 
     fun updateBottomSheetVisibility(type: BottomSheetType) {

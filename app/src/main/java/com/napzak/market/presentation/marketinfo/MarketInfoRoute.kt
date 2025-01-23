@@ -9,11 +9,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -41,6 +44,8 @@ import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetStat
 import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
 import com.napzak.market.presentation.marketinfo.state.MarketProductItemsInformation
 import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import kotlin.String
 
 @Composable
@@ -54,34 +59,48 @@ fun MarketInfoRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val bottomSheetState by viewModel.bottomSheetState.collectAsStateWithLifecycle()
 
+    val gridState = rememberLazyGridState()
+    val coroutineScope = rememberCoroutineScope()
+
     LaunchedEffect(Unit) {
         viewModel.setStoreId(storeId)
-        viewModel.getMarketInformation()
+        viewModel.updateMarketInformation()
     }
 
     LaunchedEffect(uiState) {
-        viewModel.getMarketProductInformation()
+        viewModel.updateMarketProductInformation()
     }
 
     MarketInfoScreen(
         modifier = modifier,
         uiState = uiState,
         bottomSheetState = bottomSheetState,
+        gridState = gridState,
         debounce = viewModel::debounce,
         onBackButtonClick = onBackButtonClick,
-        onTradeTypeClick = viewModel::updateMarketTab,
+        onTradeTypeClick = { tradeType ->
+            viewModel.updateMarketTab(tradeType)
+            updateScrollState(coroutineScope, gridState)
+        },
         onGenreListClick = {
             viewModel.updateBottomSheetVisibility(BottomSheetType.GENRE_SEARCHING)
         },
-        onSoldOutClick = viewModel::updateSale,
-        onUnopenClick = viewModel::updateUnopen,
+        onSoldOutClick = {
+            viewModel.updateSale()
+            updateScrollState(coroutineScope, gridState)
+        },
+        onUnopenClick = {
+            viewModel.updateUnopen()
+            updateScrollState(coroutineScope, gridState)
+        },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(BottomSheetType.SORT) },
         onItemClick = onDetailPageNavigate,
-        onLikeClick = viewModel::updateItemLikeButton,
+        onLikeClick = viewModel::updateProductInterest,
         onDismissRequest = viewModel::updateBottomSheetVisibility,
         onSortItemClick = {
             viewModel.updateSortType(it)
             viewModel.updateBottomSheetVisibility(BottomSheetType.SORT)
+            updateScrollState(coroutineScope, gridState)
         },
         onTextChange = viewModel::changeSearchText,
         onGenreSelectButtonClick = viewModel::updateSelectedGenreList,
@@ -92,6 +111,7 @@ fun MarketInfoRoute(
 fun MarketInfoScreen(
     uiState: MarketInfoUiState,
     bottomSheetState: MarketInfoBottomSheetState,
+    gridState: LazyGridState,
     debounce: () -> Unit,
     onBackButtonClick: () -> Unit,
     onTradeTypeClick: (MarketTab) -> Unit,
@@ -100,7 +120,7 @@ fun MarketInfoScreen(
     onUnopenClick: () -> Unit,
     onSortButtonClick: () -> Unit,
     onItemClick: (Long) -> Unit,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     onDismissRequest: (BottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
@@ -119,6 +139,7 @@ fun MarketInfoScreen(
                 MarketInfoSuccessScreen(
                     modifier = modifier,
                     bottomSheetState = bottomSheetState,
+                    gridState = gridState,
                     marketTab = marketTab,
                     selectedGenreList = selectedGenreList,
                     genreItems = genreItems,
@@ -149,6 +170,7 @@ fun MarketInfoScreen(
 @Composable
 fun MarketInfoSuccessScreen(
     bottomSheetState: MarketInfoBottomSheetState,
+    gridState: LazyGridState,
     marketTab: MarketTab,
     selectedGenreList: List<Genre>,
     genreItems: UiState<List<Genre>>,
@@ -165,7 +187,7 @@ fun MarketInfoSuccessScreen(
     onUnopenClick: () -> Unit,
     onSortButtonClick: () -> Unit,
     onItemClick: (Long) -> Unit,
-    onLikeClick: (Long) -> Unit,
+    onLikeClick: (Long, Boolean) -> Unit,
     onDismissRequest: (BottomSheetType) -> Unit,
     onSortItemClick: (SortType) -> Unit,
     onTextChange: (String) -> Unit,
@@ -253,6 +275,7 @@ fun MarketInfoSuccessScreen(
                     }
 
                     MarketProductListSection(
+                        gridState = gridState,
                         tradeType = marketTab,
                         productList = loadProductState.data.productList,
                         onItemClick = onItemClick,
@@ -284,11 +307,21 @@ fun MarketInfoSuccessScreen(
     )
 }
 
+private fun updateScrollState(
+    coroutineScope: CoroutineScope,
+    gridState: LazyGridState,
+) {
+    coroutineScope.launch {
+        gridState.scrollToItem(0)
+    }
+}
+
 @Preview
 @Composable
 private fun MarketPreview(modifier: Modifier = Modifier) {
     MarketInfoSuccessScreen(
         bottomSheetState = MarketInfoBottomSheetState(),
+        gridState = LazyGridState(),
         marketTab = MarketTab.BUY,
         selectedGenreList = emptyList(),
         genreItems = UiState.Empty,
@@ -311,7 +344,7 @@ private fun MarketPreview(modifier: Modifier = Modifier) {
         onUnopenClick = { },
         onSortButtonClick = { },
         onItemClick = { },
-        onLikeClick = { },
+        onLikeClick = { _, _ -> },
         onDismissRequest = { },
         onSortItemClick = {},
         onTextChange = {},

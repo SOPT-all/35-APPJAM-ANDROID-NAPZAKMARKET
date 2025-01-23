@@ -12,6 +12,7 @@ import com.napzak.market.domain.explore.usecase.GetSearchedProductBuyItemsUseCas
 import com.napzak.market.domain.explore.usecase.GetSearchedProductSellItemsUseCase
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.domain.genre.usecase.GenreSearchUseCase
+import com.napzak.market.domain.interest.repository.InterestRepository
 import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.explore.state.ExploreProductInformation
 import com.napzak.market.presentation.explore.explore.state.ExploreUiState
@@ -34,6 +35,7 @@ class ExploreViewModel @Inject constructor(
     private val getSearchedProductSellItemsUseCase: GetSearchedProductSellItemsUseCase,
     private val getSearchedProductBuyItemsUseCase: GetSearchedProductBuyItemsUseCase,
     private val genreSearchUseCase: GenreSearchUseCase,
+    private val interestRepository: InterestRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ExploreUiState())
     val uiState = _uiState.asStateFlow()
@@ -110,7 +112,7 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun getExploreProductInformation() = viewModelScope.launch {
+    fun updateExploreProductInformation() = viewModelScope.launch {
         with(uiState.value) {
             when {
                 tradeType == TradeType.SELL && initSearchTerm == null -> {
@@ -271,8 +273,29 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun updateItemLikeButton(productId: Long) {
-        /* TODO: 좋아요 API 연결 및 기능 연결 */
+    fun updateProductInterest(
+        productId: Long,
+        isInterested: Boolean,
+    ) {
+        if (isInterested) {
+            deleteInterest(productId)
+        } else {
+            addInterest(productId)
+        }
+    }
+
+    private fun addInterest(productId: Long) = viewModelScope.launch {
+        interestRepository.postInterest(productId)
+            .onSuccess {
+                updateExploreProductInformation()
+            }
+    }
+
+    private fun deleteInterest(productId: Long) = viewModelScope.launch {
+        interestRepository.deleteInterest(productId)
+            .onSuccess {
+                updateExploreProductInformation()
+            }
     }
 
     fun updateBottomSheetVisibility(type: BottomSheetType) {

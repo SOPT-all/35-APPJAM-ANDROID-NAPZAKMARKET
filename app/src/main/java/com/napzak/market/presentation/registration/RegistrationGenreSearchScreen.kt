@@ -2,7 +2,10 @@ package com.napzak.market.presentation.registration
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,6 +15,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,10 +25,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.napzak.market.R.string.genre_search_genre_example
 import com.napzak.market.R.string.search_genre
-import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.designsystem.component.item.GenreSearchItem
 import com.napzak.market.core.designsystem.component.textField.SearchBox
 import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.domain.genre.model.Genre
 
 @Composable
 fun RegistrationGenreSearchRoute(
@@ -33,6 +38,7 @@ fun RegistrationGenreSearchRoute(
     viewModel: RegistrationViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val searchTerm by viewModel.searchTerm.collectAsStateWithLifecycle()
 
     DisposableEffect(Unit) {
         onDispose {
@@ -40,10 +46,14 @@ fun RegistrationGenreSearchRoute(
         }
     }
 
+    LaunchedEffect(true) {
+        viewModel.debounce()
+    }
+
     RegistrationGenreSearchScreen(
         onBackClick = navigateUp,
         genreList = uiState.genreList,
-        searchValue = uiState.searchTerm,
+        searchValue = searchTerm,
         onSearchValueChange = viewModel::updateSearchTerm,
         onSearchButtonClick = viewModel::searchGenre,
         onGenreSelect = {
@@ -59,51 +69,52 @@ fun RegistrationGenreSearchRoute(
 @Composable
 fun RegistrationGenreSearchScreen(
     onBackClick: () -> Unit,
-    genreList: List<String>,
+    genreList: List<Genre>,
     searchValue: String,
     onSearchValueChange: (String) -> Unit,
     onSearchButtonClick: () -> Unit,
-    onGenreSelect: (String) -> Unit,
+    onGenreSelect: (Genre) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val paddedModifier = Modifier.padding(horizontal = 20.dp)
 
-    LazyColumn(
-        modifier = modifier
-            .background(NapzakMarketTheme.colors.white),
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = NapzakMarketTheme.colors.white),
     ) {
-        stickyHeader {
-            BackTopBar(
-                title = stringResource(search_genre),
-                onBackClick = onBackClick,
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            SearchBox(
-                modifier = paddedModifier,
-                searchTerm = searchValue,
-                placeholder = stringResource(genre_search_genre_example),
-                onTextChange = onSearchValueChange,
-                onSearchButtonClick = onSearchButtonClick,
-            )
-        }
-        itemsIndexed(
-            items = genreList,
-            key = { _, item -> item }
-        ) { index, genre ->
-            Text(
-                modifier = paddedModifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp)
-                    .noRippleClickable { onGenreSelect(genre) },
-                text = genre,
-                style = NapzakMarketTheme.typography.bodySemi14,
-                color = NapzakMarketTheme.colors.gray800,
-            )
-            if (index != genreList.lastIndex) {
-                HorizontalDivider(
+        LazyColumn(
+            modifier = modifier
+                .background(NapzakMarketTheme.colors.white),
+        ) {
+            stickyHeader {
+                Column(
+                    modifier = Modifier.background(color = NapzakMarketTheme.colors.white)
+                ) {
+                    BackTopBar(
+                        title = stringResource(search_genre),
+                        onBackClick = onBackClick,
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    SearchBox(
+                        modifier = paddedModifier,
+                        searchTerm = searchValue,
+                        placeholder = stringResource(genre_search_genre_example),
+                        onTextChange = onSearchValueChange,
+                        onSearchButtonClick = onSearchButtonClick,
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+            }
+            itemsIndexed(
+                items = genreList,
+                key = { _, item -> item }
+            ) { index, genre ->
+                GenreSearchItem(
+                    genreName = genre.genreName,
+                    onGenreItemClick = { onGenreSelect(genre) },
+                    isLastItem = index == genreList.size - 1,
                     modifier = paddedModifier,
-                    color = NapzakMarketTheme.colors.gray100,
-                    thickness = 10.dp,
                 )
             }
         }
@@ -117,29 +128,7 @@ private const val BLANK = ""
 private fun RegistrationGenreSearchScreenPreview() {
     NapzakMarketTheme {
         RegistrationGenreSearchScreen(
-            genreList = listOf(
-                "건담",
-                "산리오",
-                "주술회전",
-                "건담",
-                "산리오",
-                "주술회전",
-                "건담",
-                "산리오",
-                "주술회전",
-                "건담",
-                "산리오",
-                "주술회전",
-                "건담",
-                "산리오",
-                "주술회전",
-                "건담",
-                "산리오",
-                "주술회전",
-                "건담",
-                "산리오",
-                "주술회전"
-            ),
+            genreList = emptyList(),
             onBackClick = {},
             searchValue = "",
             onSearchValueChange = {},

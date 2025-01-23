@@ -3,6 +3,7 @@ package com.napzak.market.data.registration.service
 import com.napzak.market.core.network.BaseResponse
 import com.napzak.market.data.registration.dto.PresignedUrlResponseDto
 import okhttp3.RequestBody
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
@@ -20,5 +21,5 @@ interface ImageRegistrationService {
     suspend fun putImageUri(
         @Url presignedUrl: String,
         @Body requestBody: RequestBody,
-    ): BaseResponse<String>
+    ): Response<Unit>
 }

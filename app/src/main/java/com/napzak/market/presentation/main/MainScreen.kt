@@ -11,7 +11,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
+import androidx.navigation.navOptions
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.presentation.chat.chat.navigation.chatGraph
 import com.napzak.market.presentation.chat.itemchat.navigation.itemChatGraph
@@ -161,6 +163,7 @@ private fun MainNavHost(
         detailPageGraph(
             onChatNavigate = navigator.navController::navigateToItemChat,
             onNavigateUp = navigator.navController::navigateUp,
+            onMarketInfoNavigate = navigator.navController::navigateToMarketInfo,
         )
 
         itemChatGraph(
@@ -176,6 +179,16 @@ private fun MainNavHost(
             modifier = modifier,
             navigateUp = navigator.navController::navigateUp,
             onGenreSearchNavigate = navigator.navController::navigateToGenreSearch,
+            onDetailNavigate = {  productId ->
+                navigator.navController.navigateToDetailPage(
+                    productId = productId,
+                    navOptions = navOptions {
+                        popUpTo(navigator.navController.currentDestination?.id ?: 0) {
+                            inclusive = true
+                        }
+                    },
+                )
+           },
             getBackStackViewModel = {
                 navigator.navController.previousBackStackEntry?.let { hiltViewModel(it) }
                     ?: hiltViewModel()

@@ -2,7 +2,6 @@ package com.napzak.market.presentation.detailpage
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,14 +36,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
@@ -53,6 +50,7 @@ import coil.request.ImageRequest
 import com.napzak.market.R
 import com.napzak.market.R.string.profile_image_description
 import com.napzak.market.core.common.extension.formatToPriceString
+import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.common.extension.throttledNoRippleClickable
 import com.napzak.market.core.designsystem.component.button.CommonButton
 import com.napzak.market.core.designsystem.component.chip.TextChip
@@ -62,15 +60,18 @@ import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
+import com.napzak.market.presentation.detailpage.component.ImageBannerPager
 import com.napzak.market.presentation.detailpage.component.ProductInfoSection
 import com.napzak.market.presentation.detailpage.state.DetailPageUiState
 import com.napzak.market.presentation.detailpage.state.MarketInfoUiState
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun DetailPageRoute(
     viewModel: DetailPageViewModel = hiltViewModel(),
     onItemChatNavigate: () -> Unit,
     onNavigateUp: () -> Unit,
+    onMarketInfoNavigate: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val lifecycle = LocalLifecycleOwner.current
@@ -104,6 +105,7 @@ fun DetailPageRoute(
             viewModel.updateProductInterest()
             if (uiState.isInterest) snackBarHostState.currentSnackbarData?.dismiss()
         },
+        onMarketInfoClick = { onMarketInfoNavigate(uiState.marketInfo.userId) },
         modifier = modifier,
     )
 }
@@ -115,10 +117,11 @@ fun DetailPageScreen(
     onChatNavigate: () -> Unit,
     onBackClick: () -> Unit,
     onLikeClick: () -> Unit,
+    onMarketInfoClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val parsedTradeType = TradeType.fromName(uiState.tradeType)
-    val conditionEnum = ProductConditionType.fromCondition(uiState.productCondition)
+    val conditionEnum = ProductConditionType.fromConditionByName(uiState.productCondition)
 
     Scaffold(
         topBar = {
@@ -166,26 +169,18 @@ fun DetailPageScreen(
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState()),
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(360.dp)
-                    .background(NapzakMarketTheme.colors.gray200),
-                contentAlignment = Alignment.Center,
-            ) {
-                uiState.productPhotoUrls.firstOrNull()?.let {
-                    AsyncImage(
-                        model = it,
-                        contentDescription = stringResource(id = R.string.detail_image_placeholder),
-                        contentScale = ContentScale.FillHeight,
-                        modifier = Modifier.fillMaxSize(),
-                    )
-                } ?: Text(
-                    text = stringResource(id = R.string.detail_image_placeholder),
-                    fontSize = 16.sp,
-                    color = NapzakMarketTheme.colors.gray500,
+            ImageBannerPager(
+                bannerImages = uiState.productPhotoUrls.toImmutableList(),
+            )
+            /*uiState.productPhotoUrls.let {
+                AsyncImage(
+                    model = it,
+                    contentDescription = stringResource(id = R.string.detail_image_placeholder),
+                    contentScale = ContentScale.FillHeight,
+                    modifier = Modifier.fillMaxSize(),
                 )
-            }
+            }*/
+
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -363,9 +358,7 @@ fun DetailPageScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable(
-                            onClick = {/* TODO: 내 마켓 보기로 이동하는 네비게이션 추가 */ }
-                        ),
+                        .noRippleClickable(onMarketInfoClick),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Box(
@@ -546,6 +539,7 @@ fun DetailPageScreenSellPreview() {
             onBackClick = {},
             onLikeClick = {},
             snackBarHostState = SnackbarHostState(),
+            onMarketInfoClick = {}
         )
     }
 }
@@ -575,7 +569,8 @@ fun DetailPageScreenBuyPreview() {
             onChatNavigate = {},
             onBackClick = {},
             onLikeClick = {},
-            snackBarHostState = SnackbarHostState()
+            snackBarHostState = SnackbarHostState(),
+            onMarketInfoClick = {}
         )
     }
 }

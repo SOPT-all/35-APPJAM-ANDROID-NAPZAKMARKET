@@ -9,7 +9,7 @@ class ImageUriUseCase @Inject constructor(
     suspend operator fun invoke(
         presignedUrl: String,
         imageUri: String,
-    ): Result<String> = registrationRepository.putImageUri(
+    ): Result<Unit> = registrationRepository.putImageUri(
         presignedUrl = presignedUrl,
         imageUri = imageUri,
     )

@@ -25,3 +25,7 @@ fun priceSeparatorTransformation(): VisualTransformation {
         TransformedText(AnnotatedString(formattedText), offsetMapping)
     }
 }
+
+fun String.priceToNumericTransformation(): Int {
+    return this.replace(",", "").toIntOrNull() ?: 0
+}

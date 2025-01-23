@@ -4,6 +4,9 @@ import android.content.ContentResolver
 import android.net.Uri
 import com.napzak.market.core.common.util.ContentUriRequestBody
 import com.napzak.market.data.registration.dto.PresignedUrlResponseDto
+import com.napzak.market.data.registration.dto.ProductBuyRegistrationRequestDto
+import com.napzak.market.data.registration.dto.ProductIdDto
+import com.napzak.market.data.registration.dto.ProductSellRegistrationRequestDto
 import com.napzak.market.data.registration.service.ImageRegistrationService
 import com.napzak.market.data.registration.service.PostRegistrationService
 import javax.inject.Inject
@@ -20,12 +23,15 @@ class RegistrationRemoteDataSource @Inject constructor(
     suspend fun uploadImage(
         presignedUrl: String,
         imageUri: String,
-    ): String {
-        val requestBody = ContentUriRequestBody(contentResolver, Uri.parse(imageUri))
-        return imageRegistrationService.putImageUri(presignedUrl, requestBody).data
-    }
+    ) = imageRegistrationService.putImageUri(presignedUrl, ContentUriRequestBody(contentResolver, Uri.parse(imageUri)))
 
-    suspend fun postRegistration() {
-        /* TODO: 상품 등록 API 연동 */
-    }
+    suspend fun postBuyRegistration(
+        productBuyRegistrationRequestDto: ProductBuyRegistrationRequestDto,
+    ): ProductIdDto = postRegistrationService
+        .postBuyRegistration(productBuyRegistrationRequestDto).data
+
+    suspend fun postSellRegistration(
+        productSellRegistrationRequestDto: ProductSellRegistrationRequestDto,
+    ): ProductIdDto = postRegistrationService
+        .postSellRegistration(productSellRegistrationRequestDto).data
 }

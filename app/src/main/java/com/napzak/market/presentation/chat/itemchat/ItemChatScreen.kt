@@ -77,7 +77,7 @@ fun ItemChatScreen(
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             BackTopBar(
-                nickname = uiState.nickname,
+                title = uiState.nickname,
                 onBackClick = onBackClick,
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = NapzakMarketTheme.typography.titleSemi18,

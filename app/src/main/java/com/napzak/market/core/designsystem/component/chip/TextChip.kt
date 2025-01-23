@@ -30,6 +30,7 @@ fun TextChip(
     chipColors: CustomChipColors = CustomChipColors(),
     innerPadding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 5.dp),
     shape: Shape = RectangleShape,
+    onClick: () -> Unit = {},
 ) {
     BasicChip(
         text = text,
@@ -39,6 +40,7 @@ fun TextChip(
         borderWidth = 0.dp,
         innerPaddingValues = innerPadding,
         modifier = modifier,
+        onClick = onClick,
     )
 }
 

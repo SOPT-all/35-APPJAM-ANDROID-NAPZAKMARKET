@@ -2,7 +2,6 @@ package com.napzak.market.core.designsystem.component.chip
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -24,6 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
@@ -69,7 +69,7 @@ fun BasicChip(
                     )
                     .takeIf { borderWidth > 0.dp } ?: Modifier
             )
-            .clickable { onClick() }
+            .noRippleClickable(onClick)
             .padding(innerPaddingValues),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)

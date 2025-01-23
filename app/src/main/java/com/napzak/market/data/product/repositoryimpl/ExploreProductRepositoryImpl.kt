@@ -13,7 +13,7 @@ import com.napzak.market.domain.explore.model.ProductListFilterWithSearchTerm
 import com.napzak.market.domain.explore.repository.ExploreProductRepository
 import javax.inject.Inject
 
-class ExploreProductProductRepositoryImpl @Inject constructor(
+class ExploreProductRepositoryImpl @Inject constructor(
     private val dataSource: ExploreProductDataSource,
 ) : ExploreProductRepository {
     override suspend fun fetchSellProductItems(request: ProductListFilter): Result<List<ProductItem>> =

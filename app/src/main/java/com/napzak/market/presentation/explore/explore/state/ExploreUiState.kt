@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.explore.model.ProductItem
+import com.napzak.market.domain.explore.model.Product
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.explore.type.ExploreScreenType
 
@@ -22,5 +22,5 @@ data class ExploreUiState(
 )
 
 data class ExploreProductInformation(
-    val productList: List<ProductItem>,
+    val productList: List<Product>,
 )

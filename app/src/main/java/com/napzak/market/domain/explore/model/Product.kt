@@ -1,6 +1,6 @@
 package com.napzak.market.domain.explore.model
 
-data class ProductItem(
+data class Product(
     val productId: Long,
     val genreName: String,
     val productName: String,

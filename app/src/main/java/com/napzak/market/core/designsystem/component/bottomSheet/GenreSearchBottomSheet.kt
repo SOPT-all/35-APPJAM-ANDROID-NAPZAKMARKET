@@ -166,9 +166,6 @@ fun GenreSearchBottomSheet(
                     }
                 }
             }
-
-            Spacer(Modifier.height(20.dp))
-
             EnableDisableTextButton(
                 text = stringResource(R.string.genre_search_apply_button),
                 isEnabled = true,
@@ -177,8 +174,6 @@ fun GenreSearchBottomSheet(
                     .fillMaxWidth()
                     .padding(20.dp),
             )
-
-            Spacer(Modifier.height(20.dp))
         }
     }
 }

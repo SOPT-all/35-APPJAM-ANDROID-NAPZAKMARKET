@@ -2,19 +2,33 @@ package com.napzak.market.presentation.registration
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.napzak.market.core.common.util.priceToNumericTransformation
 import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
+import com.napzak.market.domain.genre.model.Genre
+import com.napzak.market.domain.genre.usecase.GenreSearchUseCase
+import com.napzak.market.domain.registration.model.BuyProduct
+import com.napzak.market.domain.registration.model.ProductImage
+import com.napzak.market.domain.registration.model.SellProduct
 import com.napzak.market.domain.registration.usecase.PresignedUrlUseCase
 import com.napzak.market.domain.registration.usecase.ImageUriUseCase
-import com.napzak.market.presentation.registration.state.RegistrationUiState
+import com.napzak.market.domain.registration.usecase.ProductRegistrationUseCase
+import com.napzak.market.presentation.registration.state.RegistrationContract.RegistrationSideEffect
+import com.napzak.market.presentation.registration.state.RegistrationContract.RegistrationUiState
 import com.napzak.market.presentation.registration.type.NumeralInputType
 import com.napzak.market.presentation.registration.type.PlainTextInputType
 import com.napzak.market.presentation.registration.type.PostFeeType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.DecimalFormat
 import javax.inject.Inject
 
@@ -22,18 +36,17 @@ import javax.inject.Inject
 class RegistrationViewModel @Inject constructor(
     private val presignedUrlUseCase: PresignedUrlUseCase,
     private val imageUriUseCase: ImageUriUseCase,
+    private val productRegistrationUseCase: ProductRegistrationUseCase,
+    private val genreSearchUseCase: GenreSearchUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(RegistrationUiState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        // TODO: 더미 데이터
-        _uiState.update {
-            it.copy(
-                genreList = listOf("건담")
-            )
-        }
-    }
+    private val _sideEffect = MutableSharedFlow<RegistrationSideEffect>()
+    val sideEffect = _sideEffect.asSharedFlow()
+
+    private val _searchTerm: MutableStateFlow<String> = MutableStateFlow("")
+    val searchTerm = _searchTerm.asStateFlow()
 
     fun updateTradeType(newTradeType: TradeType) = _uiState.update { currentState ->
         currentState.copy(tradeType = newTradeType)
@@ -103,23 +116,44 @@ class RegistrationViewModel @Inject constructor(
         return DecimalFormat("#,###").format(limitedValue)
     }
 
-    fun fetchGenreList() = _uiState.update { currentState ->
-        currentState.copy(genreList = currentState.genreList)
-    }
-
-    fun updateGenre(newGenre: String) = _uiState.update { currentState ->
+    fun updateGenre(newGenre: Genre) = _uiState.update { currentState ->
         currentState.copy(genre = newGenre)
     }
 
-    fun updateSearchTerm(newSearchTerm: String) = _uiState.update { currentState ->
-        currentState.copy(searchTerm = newSearchTerm)
+    private fun updateSearchValue(newValue: String) = _searchTerm.update { newValue }
+
+    fun updateSearchTerm(newValue: String) = viewModelScope.launch {
+        updateSearchValue(newValue)
+    }
+
+    @OptIn(FlowPreview::class)
+    fun debounce() = viewModelScope.launch {
+        _searchTerm.debounce(DEBOUNCE_DELAY)
+            .collectLatest { debounced ->
+                getGenres(debounced)
+            }
+    }
+
+    private fun getGenres(searchTerm: String) = viewModelScope.launch {
+        genreSearchUseCase(searchTerm)
+            .onSuccess { response ->
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        genreList = response
+                    )
+                }
+            }
+            .onFailure { response ->
+                Timber.d(response.message.toString())
+            }
     }
 
     fun searchGenre() = viewModelScope.launch { }
 
-    fun updateProductCondition(newCondition: ProductConditionType) = _uiState.update { currentState ->
-        currentState.copy(productCondition = newCondition)
-    }
+    fun updateProductCondition(newCondition: ProductConditionType) =
+        _uiState.update { currentState ->
+            currentState.copy(productCondition = newCondition)
+        }
 
     fun updatePostFeeType(newPostFeeType: PostFeeType) = _uiState.update { currentState ->
         currentState.copy(isPostFeeIncluded = newPostFeeType == PostFeeType.INCLUDED)
@@ -140,6 +174,7 @@ class RegistrationViewModel @Inject constructor(
         val isCommonFieldsValid = _uiState.value.title.isNotEmpty()
                 && _uiState.value.description.isNotEmpty()
                 && _uiState.value.imageUri.isNotEmpty()
+                && _uiState.value.genre?.genreName?.isNotEmpty() == true
 
         val isPurchaseConditionValid = _uiState.value.tradeType == TradeType.BUY
                 && _uiState.value.productPurchasePrice.isNotEmpty()
@@ -184,10 +219,68 @@ class RegistrationViewModel @Inject constructor(
         val urlFilePairs = sortedPresignedUrls.zip(imageUris) { urlEntry, uri ->
             urlEntry.value to uri
         }
+
+        var count = 0
+
         urlFilePairs.forEach { (presignedUrl, imageUri) ->
             val result2 = imageUriUseCase(presignedUrl, imageUri)
             result2.onSuccess {
+                count++
+                if (count == imageUris.size) {
+                    uploadProduct(sortedPresignedUrls)
+                }
+            }.onFailure { error ->
+                Timber.e("이미지 업로드 실패: ${error.message}")
             }
+        }
+    }
+
+    private fun uploadProduct(
+        sortedPresignedUrls: List<Map.Entry<String, String>>
+    ) = viewModelScope.launch {
+        with(_uiState.value) {
+            val product = when (tradeType) {
+                TradeType.BUY -> BuyProduct(
+                    imageUrls = sortedPresignedUrls.map { (key, value) ->
+                        ProductImage(
+                            imageUrl = value.substringBefore("?"),
+                            sequence = key.substringAfter("image_").toInt()
+                        )
+                    },
+                    genreId = genre?.genreId ?: 0L,
+                    title = title,
+                    description = description,
+                    price = productPurchasePrice.priceToNumericTransformation(),
+                    isPriceNegotiable = isOfferAvailable,
+                )
+
+                TradeType.SELL -> SellProduct(
+                    imageUrls = sortedPresignedUrls.map { (key, value) ->
+                        ProductImage(
+                            imageUrl = value.substringBefore("?"),
+                            sequence = key.substringAfter("image_").toInt()
+                        )
+                    },
+                    genreId = genre?.genreId ?: 0L,
+                    title = title,
+                    description = description,
+                    price = productSalePrice.priceToNumericTransformation(),
+                    productCondition = productCondition?.label,
+                    isDeliveryIncluded = isPostFeeIncluded,
+                    standardDeliveryFee = normalPostFee.priceToNumericTransformation(),
+                    halfDeliveryFee = halfPostFee.priceToNumericTransformation(),
+                )
+
+                else -> throw IllegalArgumentException("Invalid trade type")
+            }
+            productRegistrationUseCase(product)
+                .onSuccess { productId ->
+                    _sideEffect.emit(RegistrationSideEffect.OnDetailNavigate(productId))
+                }
+                .onFailure { error ->
+                    // 상품 등록 실패 처리
+                    Timber.e("상품 등록 실패: ${error.message} ${product}")
+                }
         }
     }
 
@@ -198,5 +291,6 @@ class RegistrationViewModel @Inject constructor(
         private const val MAX_SALE_PRICE = 1_000_000
         private const val MAX_NORMAL_POST_FEE = 30_000
         private const val MAX_HALF_POST_FEE = 5_000
+        private const val DEBOUNCE_DELAY = 500L
     }
 }

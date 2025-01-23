@@ -26,7 +26,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.napzak.market.R.string.regi_description
 import com.napzak.market.R.string.regi_description_placeholder
 import com.napzak.market.R.string.regi_price_placeholder
@@ -46,7 +49,8 @@ import com.napzak.market.presentation.registration.component.RegistrationGenreBu
 import com.napzak.market.presentation.registration.component.RegistrationPhotoPicker
 import com.napzak.market.presentation.registration.component.RegistrationPlainTextField
 import com.napzak.market.presentation.registration.component.RegistrationSellGroup
-import com.napzak.market.presentation.registration.state.RegistrationUiState
+import com.napzak.market.presentation.registration.state.RegistrationContract.RegistrationSideEffect.OnDetailNavigate
+import com.napzak.market.presentation.registration.state.RegistrationContract.RegistrationUiState
 import com.napzak.market.presentation.registration.type.NumeralInputType
 import com.napzak.market.presentation.registration.type.PlainTextInputType
 import com.napzak.market.presentation.registration.type.PostFeeType
@@ -56,10 +60,23 @@ fun RegistrationRoute(
     tradeType: String,
     navigateUp: () -> Unit,
     onGenreSearchNavigate: () -> Unit,
+    onDetailNavigate: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RegistrationViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel.sideEffect.collect { sideEffect ->
+                when (sideEffect) {
+                    is OnDetailNavigate -> onDetailNavigate(sideEffect.productId)
+                }
+            }
+        }
+    }
+
     val currentImageSize = (MAX_ITEMS - uiState.imageUri.size).coerceAtLeast(MIN_ITEMS)
     val imageStorageLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetMultipleContents()
@@ -207,7 +224,7 @@ fun RegistrationScreen(
             Spacer(modifier = Modifier.height(40.dp))
             RegistrationGenreButton(
                 modifier = paddedModifier,
-                genre = uiState.genre,
+                genre = uiState.genre?.genreName ?: "",
                 onGenreClick = onGenreClick,
             )
         }
@@ -327,6 +344,7 @@ private fun RegistrationScreenPreview() {
             tradeType = "팔아요",
             navigateUp = { },
             onGenreSearchNavigate = { },
+            onDetailNavigate = { },
         )
     }
 }

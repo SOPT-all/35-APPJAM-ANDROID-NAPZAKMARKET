@@ -11,7 +11,7 @@ interface MarketProductService {
     @GET("products/sell/stores/{storeOwnerId}")
     suspend fun getMarketProductSellItems(
         @Path("storeOwnerId")
-        storeId: Long,
+        storeId: Long?,
         @Query("sortOption")
         sortOption: String = "RECENT",
         @Query("isOnSale")
@@ -27,7 +27,7 @@ interface MarketProductService {
     @GET("products/buy/stores/{storeOwnerId}")
     suspend fun getMarketProductBuyItems(
         @Path("storeOwnerId")
-        storeId: Long,
+        storeId: Long?,
         @Query("sortOption")
         sortOption: String = "RECENT",
         @Query("isOnSale")

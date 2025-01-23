@@ -6,7 +6,7 @@ import com.napzak.market.data.product.dto.response.ProductSellItemsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ExploreService {
+interface ExploreProductService {
     @GET("products/sell")
     suspend fun getProductSellItems(
         @Query("sortOption")

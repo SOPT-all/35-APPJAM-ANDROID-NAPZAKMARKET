@@ -7,11 +7,11 @@ import com.napzak.market.data.product.dto.request.ProductSellItemsRequest
 import com.napzak.market.data.product.dto.response.ProductSellItemsResponse
 import com.napzak.market.data.product.dto.request.SearchedProductBuyItemsRequest
 import com.napzak.market.data.product.dto.request.SearchedProductSellItemsRequest
-import com.napzak.market.data.product.service.ExploreService
+import com.napzak.market.data.product.service.ExploreProductService
 import javax.inject.Inject
 
 class ExploreDataSource @Inject constructor(
-    private val service: ExploreService,
+    private val service: ExploreProductService,
 ) {
     suspend fun getProductSellItems(request: ProductSellItemsRequest): BaseResponse<ProductSellItemsResponse> =
         service.getProductSellItems(

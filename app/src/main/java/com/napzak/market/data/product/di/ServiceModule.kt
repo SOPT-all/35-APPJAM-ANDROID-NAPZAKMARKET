@@ -2,6 +2,7 @@ package com.napzak.market.data.product.di
 
 import com.napzak.market.core.network.di.JWT
 import com.napzak.market.data.product.service.ExploreProductService
+import com.napzak.market.data.product.service.MarketProductService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,4 +20,10 @@ object ServiceModule {
     fun providesExploreService(
         @JWT retrofit: Retrofit
     ): ExploreProductService = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun providesMarketProductService(
+        @JWT retrofit: Retrofit,
+    ): MarketProductService = retrofit.create()
 }

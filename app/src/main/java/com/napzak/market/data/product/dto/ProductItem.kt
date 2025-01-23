@@ -6,27 +6,27 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ProductItem(
     @SerialName("productId")
-    val productId: Long,
+    val productId: Long?,
     @SerialName("genreName")
-    val genreName: String,
+    val genreName: String?,
     @SerialName("productName")
-    val productName: String,
+    val productName: String?,
     @SerialName("photo")
-    val photo: String,
+    val photo: String?,
     @SerialName("price")
-    val price: Int,
+    val price: Int?,
     @SerialName("uploadTime")
-    val uploadTime: String,
+    val uploadTime: String?,
     @SerialName("isInterested")
-    val isInterested: Boolean,
+    val isInterested: Boolean?,
     @SerialName("tradeType")
-    val tradeType: String,
+    val tradeType: String?,
     @SerialName("tradeStatus")
-    val tradeStatus: String,
+    val tradeStatus: String?,
     @SerialName("isPriceNegotiable")
-    val isPriceNegotiable: Boolean,
+    val isPriceNegotiable: Boolean? = null,
     @SerialName("isOwnedByCurrentUser")
-    val isOwnedByCurrentUser: Boolean,
+    val isOwnedByCurrentUser: Boolean?,
     @SerialName("nextCursor")
     val nextCursor: String = "",
 )

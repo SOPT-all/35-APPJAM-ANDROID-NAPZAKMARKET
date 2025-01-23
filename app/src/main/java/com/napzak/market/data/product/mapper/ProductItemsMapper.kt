@@ -7,17 +7,17 @@ fun List<ProductItem>.toProductItems(): List<Product> =
     map { productItem ->
         with(productItem) {
             Product(
-                productId = productId,
-                genreName = genreName,
-                productName = productName,
-                photo = photo,
-                price = price,
-                uploadTime = uploadTime,
-                isInterested = isInterested,
-                tradeType = tradeType,
-                tradeStatus = tradeStatus,
-                isPriceNegotiable = isPriceNegotiable,
-                isOwnedByCurrentUser = isOwnedByCurrentUser,
+                productId = productId ?: -1,
+                genreName = genreName ?: "",
+                productName = productName ?: "",
+                photo = photo ?: "",
+                price = price ?: 0,
+                uploadTime = uploadTime ?: "",
+                isInterested = isInterested ?: false,
+                tradeType = tradeType ?: "",
+                tradeStatus = tradeStatus ?: "",
+                isPriceNegotiable = isPriceNegotiable ?: false,
+                isOwnedByCurrentUser = isOwnedByCurrentUser ?: false,
             )
         }
     }

@@ -1,12 +1,10 @@
-package com.napzak.market.data.explore.dto
+package com.napzak.market.data.explore.dto.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SearchedProductBuyItemsRequest(
-    @SerialName("searchWord")
-    val searchWord: String,
+data class ProductBuyItemsRequest(
     @SerialName("sortOption")
     val sortOption: String,
     @SerialName("genreId")

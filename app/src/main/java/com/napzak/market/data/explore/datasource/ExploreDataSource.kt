@@ -1,12 +1,12 @@
 package com.napzak.market.data.explore.datasource
 
 import com.napzak.market.core.network.BaseResponse
-import com.napzak.market.data.explore.dto.ProductBuyItemsRequest
-import com.napzak.market.data.explore.dto.ProductBuyItemsResponse
-import com.napzak.market.data.explore.dto.ProductSellItemsRequest
-import com.napzak.market.data.explore.dto.ProductSellItemsResponse
-import com.napzak.market.data.explore.dto.SearchedProductBuyItemsRequest
-import com.napzak.market.data.explore.dto.SearchedProductSellItemsRequest
+import com.napzak.market.data.explore.dto.request.ProductBuyItemsRequest
+import com.napzak.market.data.explore.dto.response.ProductBuyItemsResponse
+import com.napzak.market.data.explore.dto.request.ProductSellItemsRequest
+import com.napzak.market.data.explore.dto.response.ProductSellItemsResponse
+import com.napzak.market.data.explore.dto.request.SearchedProductBuyItemsRequest
+import com.napzak.market.data.explore.dto.request.SearchedProductSellItemsRequest
 import com.napzak.market.data.explore.service.ExploreService
 import javax.inject.Inject
 

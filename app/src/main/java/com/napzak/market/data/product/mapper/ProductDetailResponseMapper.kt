@@ -1,7 +1,7 @@
-package com.napzak.market.data.detailpage.mapper
+package com.napzak.market.data.product.mapper
 
-import com.napzak.market.data.detailpage.dto.ProductDetailResponse
-import com.napzak.market.domain.detailpage.model.ProductDetail
+import com.napzak.market.data.product.dto.response.ProductDetailResponse
+import com.napzak.market.domain.product.model.ProductDetail
 
 fun ProductDetailResponse.toDomain(): ProductDetail = ProductDetail(
     isInterested = isInterested,

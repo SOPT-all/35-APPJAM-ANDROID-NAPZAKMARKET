@@ -1,8 +1,10 @@
 package com.napzak.market.data.product.di
 
+import com.napzak.market.data.product.repositoryimpl.DetailProductRepositoryImpl
 import com.napzak.market.data.product.repositoryimpl.ExploreProductRepositoryImpl
 import com.napzak.market.data.product.repositoryimpl.HomeProductRepositoryImpl
 import com.napzak.market.data.product.repositoryimpl.MarketProductRepositoryImpl
+import com.napzak.market.domain.product.repository.DetailProductRepository
 import com.napzak.market.domain.product.repository.ExploreProductRepository
 import com.napzak.market.domain.product.repository.HomeProductRepository
 import com.napzak.market.domain.product.repository.MarketProductRepository
@@ -33,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindMarketProductRepository(
         marketProductRepositoryImpl: MarketProductRepositoryImpl
     ): MarketProductRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindDetailPageRepository(
+        detailPageRepositoryImpl: DetailProductRepositoryImpl,
+    ): DetailProductRepository
 }

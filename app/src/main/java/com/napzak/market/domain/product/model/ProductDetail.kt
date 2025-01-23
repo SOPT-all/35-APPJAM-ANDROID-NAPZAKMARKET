@@ -1,4 +1,4 @@
-package com.napzak.market.domain.detailpage.model
+package com.napzak.market.domain.product.model
 
 data class ProductDetail(
     val isInterested: Boolean,

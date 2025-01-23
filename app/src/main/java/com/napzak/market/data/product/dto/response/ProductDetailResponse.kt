@@ -1,4 +1,4 @@
-package com.napzak.market.data.detailpage.dto
+package com.napzak.market.data.product.dto.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

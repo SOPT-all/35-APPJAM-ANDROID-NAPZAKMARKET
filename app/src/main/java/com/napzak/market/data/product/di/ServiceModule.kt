@@ -1,6 +1,7 @@
 package com.napzak.market.data.product.di
 
 import com.napzak.market.core.network.di.JWT
+import com.napzak.market.data.product.service.DetailProductService
 import com.napzak.market.data.product.service.ExploreProductService
 import com.napzak.market.data.product.service.HomeProductService
 import com.napzak.market.data.product.service.MarketProductService
@@ -34,4 +35,9 @@ object ServiceModule {
     fun providesMarketProductService(
         @JWT retrofit: Retrofit,
     ): MarketProductService = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun provideDetailProductService(@JWT retrofit: Retrofit): DetailProductService =
+        retrofit.create()
 }

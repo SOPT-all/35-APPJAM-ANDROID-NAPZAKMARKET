@@ -13,10 +13,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -24,7 +26,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.napzak.market.R
+import com.napzak.market.R.string.napzak_item_price
+import com.napzak.market.core.common.extension.formatToPriceString
 import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.common.extension.throttledNoRippleClickable
 import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.component.text.SingleLineText
@@ -60,7 +65,7 @@ fun NapzakBaseItem(
 ) {
     Column(
         modifier = modifier
-            .noRippleClickable(onItemClick)
+            .noRippleClickable(onItemClick),
     ) {
         ItemImageGroup(
             imgUrl = imgUrl,
@@ -70,36 +75,35 @@ fun NapzakBaseItem(
             onLikeClick = onLikeClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(1f)
+                .aspectRatio(1f),
         )
 
         SingleLineText(
             text = genre,
             style = NapzakMarketTheme.typography.capBold12,
             color = NapzakMarketTheme.colors.gray900,
-            modifier = Modifier.padding(top = 6.dp)
+            modifier = Modifier.padding(top = 6.dp),
         )
 
         SingleLineText(
             text = title,
             style = NapzakMarketTheme.typography.bodyMedium14,
             color = NapzakMarketTheme.colors.gray800,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = 4.dp),
         )
 
         PriceGroup(
-            price = price,
+            price = stringResource(napzak_item_price, price.formatToPriceString()),
             isOfferPossible = isOfferPossible,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = 4.dp),
         )
 
         SingleLineText(
             text = createdTime,
             style = NapzakMarketTheme.typography.capMedium12,
             color = NapzakMarketTheme.colors.gray400,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = 4.dp),
         )
-
     }
 }
 
@@ -113,11 +117,14 @@ private fun ItemImageGroup(
     typeTag: @Composable (BoxScope.() -> Unit)? = null,
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
     Box(modifier = modifier) {
         if (imgUrl.isNotBlank()) {
             AsyncImage(
                 model = ImageRequest.Builder(context).data(imgUrl).build(),
                 contentDescription = stringResource(R.string.napzak_item_content_description),
+                contentScale = ContentScale.FillHeight,
                 modifier = Modifier.matchParentSize()
             )
         } else {
@@ -141,7 +148,10 @@ private fun ItemImageGroup(
                 contentDescription = stringResource(R.string.napzak_item_content_description),
                 tint = Color.Unspecified,
                 modifier = Modifier
-                    .noRippleClickable(onLikeClick)
+                    .throttledNoRippleClickable(
+                        coroutineScope = coroutineScope,
+                        onClick = onLikeClick
+                    )
                     .padding(top = 4.dp, end = 6.dp)
                     .align(Alignment.TopEnd)
             )
@@ -155,11 +165,11 @@ private fun PriceGroup(
     isOfferPossible: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    Row (
+    Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp)
-    ){
+    ) {
         if (isOfferPossible) {
             TextChip(
                 text = stringResource(R.string.napzak_item_suggest),

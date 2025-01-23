@@ -64,8 +64,10 @@ private fun TradeTypeTabItem(
     onTradeTypeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val borderColor = if (isSelected) NapzakMarketTheme.colors.purple30 else NapzakMarketTheme.colors.gray300
-    val textColor = if (isSelected) NapzakMarketTheme.colors.purple30 else NapzakMarketTheme.colors.gray600
+    val borderColor =
+        if (isSelected) NapzakMarketTheme.colors.purple30 else NapzakMarketTheme.colors.gray300
+    val textColor =
+        if (isSelected) NapzakMarketTheme.colors.purple30 else NapzakMarketTheme.colors.gray600
 
     Column(
         modifier = modifier

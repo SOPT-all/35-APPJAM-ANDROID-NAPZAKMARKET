@@ -1,7 +1,15 @@
 package com.napzak.market.presentation.detailpage.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -14,14 +22,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.napzak.market.R
+import com.napzak.market.R.string.detail_like_icon_description
+import com.napzak.market.R.string.detail_price_suggest_chip
+import com.napzak.market.R.string.detail_view_icon_description
 import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
-import com.napzak.market.R
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.R.string.detail_view_icon_description
-import com.napzak.market.R.string.detail_like_icon_description
-import com.napzak.market.R.string.detail_price_suggest_chip
 
 
 /**

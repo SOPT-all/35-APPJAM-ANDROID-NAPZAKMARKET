@@ -30,7 +30,7 @@ val Black = Color(0xFF010101)
 val Black70 = Color(0xB3000000)
 
 @Immutable
-data class NapzakMarketColors (
+data class NapzakMarketColors(
     // Purple
     val purple10: Color,
     val purple20: Color,

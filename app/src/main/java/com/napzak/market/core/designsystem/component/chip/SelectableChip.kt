@@ -16,10 +16,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.napzak.market.core.designsystem.component.chip.type.SelectableChipType
-import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.designsystem.component.chip.type.SelectableChipType
+import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.domain.genre.model.Genre
 
 /**
@@ -86,6 +86,7 @@ private fun generateChipText(type: SelectableChipType, genreList: List<Genre>): 
                 )
             }
         }
+
         else -> type.label
     }
 

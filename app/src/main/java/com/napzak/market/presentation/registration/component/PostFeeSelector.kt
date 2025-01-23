@@ -59,8 +59,10 @@ private fun PostFeeSelectorIndicator(
     title: String,
     modifier: Modifier = Modifier,
 ) {
-    val textColor = if (isSelected) NapzakMarketTheme.colors.gray900 else NapzakMarketTheme.colors.gray600
-    val backgroundColor = if (isSelected) NapzakMarketTheme.colors.white else NapzakMarketTheme.colors.white0
+    val textColor =
+        if (isSelected) NapzakMarketTheme.colors.gray900 else NapzakMarketTheme.colors.gray600
+    val backgroundColor =
+        if (isSelected) NapzakMarketTheme.colors.white else NapzakMarketTheme.colors.white0
 
     Text(
         modifier = modifier

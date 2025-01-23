@@ -14,13 +14,13 @@ import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.component.item.NapzakBuyItem
 import com.napzak.market.core.designsystem.component.item.NapzakSellItem
 import com.napzak.market.core.type.MarketTab
-import com.napzak.market.domain.marketinfo.model.ProductItem
+import com.napzak.market.domain.product.model.Product
 
 @Composable
 fun MarketProductListSection(
     gridState: LazyGridState,
     tradeType: MarketTab,
-    productList: List<ProductItem>,
+    productList: List<Product>,
     onItemClick: (Long) -> Unit,
     onLikeClick: (Long, Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -76,30 +76,7 @@ private fun ProductListSectionPreview(modifier: Modifier = Modifier) {
     MarketProductListSection(
         gridState = LazyGridState(),
         tradeType = MarketTab.BUY,
-        productList = listOf(
-            ProductItem(
-                productId = 201,
-                genreName = "짱구",
-                productName = "피규어",
-                photo = "",
-                price = 120000,
-                uploadTime = "3일",
-                isInterested = true,
-                tradeType = "SELL",
-                tradeStatus = "BEFORE_TRADE",
-            ),
-            ProductItem(
-                productId = 201,
-                genreName = "짱구",
-                productName = "피규어",
-                photo = "",
-                price = 120000,
-                uploadTime = "3일",
-                isInterested = false,
-                tradeType = "SELL",
-                tradeStatus = "BEFORE_TRADE",
-            ),
-        ),
+        productList = emptyList(),
         onItemClick = { },
         onLikeClick = { _, _ -> },
         modifier = modifier,

@@ -6,11 +6,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.napzak.market.core.common.state.UiState
+import com.napzak.market.core.designsystem.component.bottomSheet.GenreSearchBottomSheet
+import com.napzak.market.core.designsystem.component.bottomSheet.SortBottomSheet
 import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.core.type.SortType
 import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.core.designsystem.component.bottomSheet.GenreSearchBottomSheet
-import com.napzak.market.core.designsystem.component.bottomSheet.SortBottomSheet
 import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
 
 @Composable

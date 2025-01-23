@@ -20,14 +20,14 @@ class MyPageViewModel @Inject constructor(
     fun loadMyPage() {
         viewModelScope.launch {
             repository.fetchMyPageData().onSuccess { response ->
-                    _uiState.value = MyPageUiState(
-                        storeId = response.storeId,
-                        profileImageUrl = response.storePhoto,
-                        nickname = response.storeNickname,
-                    )
-                }.onFailure {
-                    //TODO: 실패 시..
-                }
+                _uiState.value = MyPageUiState(
+                    storeId = response.storeId,
+                    profileImageUrl = response.storePhoto,
+                    nickname = response.storeNickname,
+                )
+            }.onFailure {
+                //TODO: 실패 시..
+            }
         }
     }
 }

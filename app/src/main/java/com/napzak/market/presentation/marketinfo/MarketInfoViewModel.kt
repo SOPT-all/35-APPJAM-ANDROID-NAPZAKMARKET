@@ -4,14 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.BottomSheetType
-import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.MarketTab
+import com.napzak.market.core.type.SortType
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.domain.genre.usecase.GenreSearchUseCase
 import com.napzak.market.domain.interest.repository.InterestRepository
 import com.napzak.market.domain.marketinfo.repository.MarketInfoRepository
-import com.napzak.market.domain.marketinfo.usecase.MarketProductBuyItemsUseCase
-import com.napzak.market.domain.marketinfo.usecase.MarketProductSellItemsUseCase
+import com.napzak.market.domain.product.usecase.MarketProductBuyItemsUseCase
+import com.napzak.market.domain.product.usecase.MarketProductSellItemsUseCase
 import com.napzak.market.presentation.marketinfo.state.MarketInfoBottomSheetState
 import com.napzak.market.presentation.marketinfo.state.MarketInfoUiState
 import com.napzak.market.presentation.marketinfo.state.MarketProductItemsInformation

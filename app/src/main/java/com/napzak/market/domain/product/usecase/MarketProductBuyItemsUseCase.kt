@@ -1,0 +1,34 @@
+package com.napzak.market.domain.product.usecase
+
+import com.napzak.market.domain.genre.model.Genre
+import com.napzak.market.domain.product.model.Product
+import com.napzak.market.domain.product.model.ProductListFilter
+import com.napzak.market.domain.product.repository.MarketProductRepository
+import javax.inject.Inject
+
+class MarketProductBuyItemsUseCase @Inject constructor(
+    private val marketProductRepository: MarketProductRepository,
+) {
+    suspend operator fun invoke(
+        storeId: Long,
+        sortType: String,
+        genreItems: List<Genre>?,
+        isOnSale: Boolean,
+    ): Result<List<Product>> {
+        val genreIds = if (genreItems?.isNotEmpty() == true) {
+            genreItems.map { it.genreId }
+        } else {
+            null
+        }
+
+        return marketProductRepository.fetchMarketProductBuyItems(
+            ProductListFilter(
+                storeId = storeId,
+                sortOption = sortType,
+                genreId = genreIds,
+                isOnSale = isOnSale,
+                isUnopened = false,
+            )
+        )
+    }
+}

@@ -20,7 +20,6 @@ import com.napzak.market.presentation.chat.itemchat.navigation.itemChatGraph
 import com.napzak.market.presentation.chat.itemchat.navigation.navigateToItemChat
 import com.napzak.market.presentation.detailpage.navigation.detailPageGraph
 import com.napzak.market.presentation.detailpage.navigation.navigateToDetailPage
-import com.napzak.market.presentation.dummy.navigation.dummyGraph
 import com.napzak.market.presentation.explore.explore.navigation.GENRE_ID
 import com.napzak.market.presentation.explore.explore.navigation.SEARCH_TERM
 import com.napzak.market.presentation.explore.explore.navigation.exploreGraph
@@ -104,7 +103,6 @@ private fun MainNavHost(
         navController = navigator.navController,
         startDestination = navigator.startDestination,
     ) {
-        dummyGraph(modifier = modifier)
 
         splashGraph(
             modifier = Modifier.navigationBarsPadding(),

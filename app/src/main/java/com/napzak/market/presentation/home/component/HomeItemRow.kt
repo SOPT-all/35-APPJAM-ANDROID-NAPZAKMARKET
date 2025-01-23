@@ -10,11 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.napzak.market.domain.home.model.ProductItem
+import com.napzak.market.domain.product.model.Product
 
 @Composable
 fun HomeItemRow(
-    itemList: List<ProductItem>,
+    itemList: List<Product>,
     itemWidth: Dp,
     onLikeClick: (Long, Boolean) -> Unit,
     onItemClick: (Long) -> Unit,

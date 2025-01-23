@@ -27,7 +27,8 @@ class ContentUriRequestBody(
         )?.use { cursor ->
             if (cursor.moveToFirst()) {
                 size = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE))
-                fileName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
+                fileName =
+                    cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
             }
         }
     }
@@ -42,7 +43,8 @@ class ContentUriRequestBody(
         contentResolver.openInputStream(uri)?.source()?.use { source -> sink.writeAll(source) }
     }
 
-    fun toFormData(name: String = IMAGE) = MultipartBody.Part.createFormData(name, getFileName(), this)
+    fun toFormData(name: String = IMAGE) =
+        MultipartBody.Part.createFormData(name, getFileName(), this)
 }
 
 private const val IMAGE = "image"

@@ -35,8 +35,8 @@ import com.napzak.market.core.designsystem.component.snackbar.CommonSnackBar
 import com.napzak.market.core.designsystem.component.topbar.NapzakLogoTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.home.model.HomeBanner
-import com.napzak.market.domain.home.model.ProductItem
+import com.napzak.market.domain.banner.model.HomeBanner
+import com.napzak.market.domain.product.model.Product
 import com.napzak.market.presentation.home.component.HomeBannerPager
 import com.napzak.market.presentation.home.component.HomeMostSearchedItemGroup
 import com.napzak.market.presentation.home.component.HomePopularItemGroup
@@ -191,10 +191,10 @@ private fun <T> HomeUiStateGroup(
 @Composable
 private fun HomeScreenPreview() {
     val dummyData = UiState.Success(
-        mutableListOf<ProductItem>().apply {
+        mutableListOf<Product>().apply {
             repeat(4) {
                 add(
-                    ProductItem(
+                    Product(
                         productId = 1,
                         productName = "딸기 마이멜로디 마스코트 인형",
                         genreName = "산리오",

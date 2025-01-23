@@ -122,7 +122,8 @@ private fun PhotoRegisterButton(
             contentDescription = null,
             tint = Color.Unspecified,
         )
-        val textColor = if (imageNumber > 0) NapzakMarketTheme.colors.gray700 else NapzakMarketTheme.colors.gray500
+        val textColor =
+            if (imageNumber > 0) NapzakMarketTheme.colors.gray700 else NapzakMarketTheme.colors.gray500
         val imageNumberText = buildAnnotatedString {
             withStyle(style = SpanStyle(color = textColor)) {
                 append(imageNumber.toString())

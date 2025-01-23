@@ -51,7 +51,7 @@ fun RemovableChip(
         modifier = modifier,
         onClick = onClick,
 
-    )
+        )
 }
 
 @Preview

@@ -398,6 +398,9 @@ fun DetailPageScreen(
                                 style = NapzakMarketTheme.typography.capMedium12,
                                 color = NapzakMarketTheme.colors.gray700,
                             )
+
+                            Spacer(modifier = Modifier.width(2.dp))
+
                             Text(
                                 text = stringResource(
                                     id = R.string.detail_market_products_count,
@@ -422,6 +425,9 @@ fun DetailPageScreen(
                                 style = NapzakMarketTheme.typography.capMedium12,
                                 color = NapzakMarketTheme.colors.gray700,
                             )
+
+                            Spacer(modifier = Modifier.width(2.dp))
+
                             Text(
                                 text = stringResource(
                                     id = R.string.detail_market_transactions_count,

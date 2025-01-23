@@ -37,14 +37,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
@@ -62,9 +60,11 @@ import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
+import com.napzak.market.presentation.detailpage.component.ImageBannerPager
 import com.napzak.market.presentation.detailpage.component.ProductInfoSection
 import com.napzak.market.presentation.detailpage.state.DetailPageUiState
 import com.napzak.market.presentation.detailpage.state.MarketInfoUiState
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun DetailPageRoute(
@@ -166,26 +166,18 @@ fun DetailPageScreen(
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState()),
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(360.dp)
-                    .background(NapzakMarketTheme.colors.gray200),
-                contentAlignment = Alignment.Center,
-            ) {
-                uiState.productPhotoUrls.firstOrNull()?.let {
-                    AsyncImage(
-                        model = it,
-                        contentDescription = stringResource(id = R.string.detail_image_placeholder),
-                        contentScale = ContentScale.FillHeight,
-                        modifier = Modifier.fillMaxSize(),
-                    )
-                } ?: Text(
-                    text = stringResource(id = R.string.detail_image_placeholder),
-                    fontSize = 16.sp,
-                    color = NapzakMarketTheme.colors.gray500,
+            ImageBannerPager(
+                bannerImages = uiState.productPhotoUrls.toImmutableList(),
+            )
+            /*uiState.productPhotoUrls.let {
+                AsyncImage(
+                    model = it,
+                    contentDescription = stringResource(id = R.string.detail_image_placeholder),
+                    contentScale = ContentScale.FillHeight,
+                    modifier = Modifier.fillMaxSize(),
                 )
-            }
+            }*/
+
 
             Spacer(modifier = Modifier.height(20.dp))
 

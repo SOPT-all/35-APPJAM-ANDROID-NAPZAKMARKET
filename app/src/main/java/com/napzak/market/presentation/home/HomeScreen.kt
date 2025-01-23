@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.napzak.market.R.string.home_snack_bar_finish
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.component.snackbar.CommonSnackBar
 import com.napzak.market.core.designsystem.component.topbar.NapzakLogoTopBar
@@ -89,7 +90,7 @@ private fun HomeScreen(
             backPressedState = true
             coroutineScope.launch {
                 snackBarHostState.showSnackbar(
-                    message = "버튼을 한 번 더 누르면 종료돼요",
+                    message = context.getString(home_snack_bar_finish),
                     duration = SnackbarDuration.Short
                 )
             }
@@ -112,7 +113,6 @@ private fun HomeScreen(
                 }
 
                 item {
-
                     HomeUiStateGroup(
                         uiState = uiState.isLoaded,
                         success = {
@@ -219,7 +219,7 @@ private fun HomeScreenPreview() {
             searchItems = dummyData,
             bannerImages = UiState.Success(listOf<HomeBanner>().toImmutableList()),
         ),
-        onLikeClick = {_, _ ->},
+        onLikeClick = { _, _ -> },
         onItemClick = {},
     )
 }

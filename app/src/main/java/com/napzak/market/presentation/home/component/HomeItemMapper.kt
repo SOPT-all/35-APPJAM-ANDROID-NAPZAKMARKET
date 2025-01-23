@@ -2,9 +2,6 @@ package com.napzak.market.presentation.home.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import com.napzak.market.R.string.home_item_price
-import com.napzak.market.core.common.extension.formatToPriceString
 import com.napzak.market.core.designsystem.component.item.NapzakBuyItem
 import com.napzak.market.core.designsystem.component.item.NapzakSellItem
 import com.napzak.market.domain.home.model.ProductItem
@@ -22,7 +19,7 @@ fun HomeItemMapper(
                 NapzakBuyItem(
                     title = productName,
                     genre = genreName,
-                    price = stringResource(home_item_price, price.toString().formatToPriceString()),
+                    price = price.toString(),
                     imgUrl = photo,
                     isLiked = isInterested,
                     isMyItem = isOwnedByCurrentUser,
@@ -38,7 +35,7 @@ fun HomeItemMapper(
                 NapzakSellItem(
                     title = productName,
                     genre = genreName,
-                    price = stringResource(home_item_price, price.toString().formatToPriceString()),
+                    price = price.toString(),
                     imgUrl = photo,
                     isLiked = isInterested,
                     isMyItem = isOwnedByCurrentUser,

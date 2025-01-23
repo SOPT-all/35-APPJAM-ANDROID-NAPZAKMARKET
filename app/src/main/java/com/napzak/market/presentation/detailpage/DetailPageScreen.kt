@@ -23,19 +23,21 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -44,12 +46,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.napzak.market.R
 import com.napzak.market.R.string.profile_image_description
 import com.napzak.market.core.common.extension.formatToPriceString
-import com.napzak.market.core.common.util.NoRippleInteractionSource
+import com.napzak.market.core.common.extension.throttledNoRippleClickable
 import com.napzak.market.core.designsystem.component.button.CommonButton
 import com.napzak.market.core.designsystem.component.chip.TextChip
 import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
@@ -61,8 +65,6 @@ import com.napzak.market.core.type.TradeType
 import com.napzak.market.presentation.detailpage.component.ProductInfoSection
 import com.napzak.market.presentation.detailpage.state.DetailPageUiState
 import com.napzak.market.presentation.detailpage.state.MarketInfoUiState
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun DetailPageRoute(
@@ -71,13 +73,37 @@ fun DetailPageRoute(
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
+    val lifecycle = LocalLifecycleOwner.current
+    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
+    val snackBarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(viewModel.sideEffect, lifecycle) {
+        viewModel.sideEffect.flowWithLifecycle(lifecycle.lifecycle).collect { sideEffect ->
+            when (sideEffect) {
+                DetailPageSideEffect.ShowLikeSnackBar -> {
+                    snackBarHostState.showSnackbar(
+                        message = context.getString(R.string.detail_snackbar_message),
+                        duration = SnackbarDuration.Short,
+                    )
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.loadDetailPageData()
+    }
 
     DetailPageScreen(
         uiState = uiState,
+        snackBarHostState = snackBarHostState,
         onChatNavigate = onItemChatNavigate,
         onBackClick = onNavigateUp,
+        onLikeClick = {
+            viewModel.updateProductInterest()
+            if (uiState.isInterest) snackBarHostState.currentSnackbarData?.dismiss()
+        },
         modifier = modifier,
     )
 }
@@ -85,24 +111,14 @@ fun DetailPageRoute(
 @Composable
 fun DetailPageScreen(
     uiState: DetailPageUiState,
+    snackBarHostState: SnackbarHostState,
     onChatNavigate: () -> Unit,
     onBackClick: () -> Unit,
+    onLikeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val parsedTradeType = TradeType.fromName(uiState.tradeType)
     val conditionEnum = ProductConditionType.fromCondition(uiState.productCondition)
-    var isSnackBarVisible by remember { mutableStateOf(false) }
-    val snackBarMessage = stringResource(id = R.string.detail_snackbar_message)
-
-    val coroutine = rememberCoroutineScope()
-    LaunchedEffect(isSnackBarVisible) {
-        if (isSnackBarVisible) {
-            coroutine.launch {
-                delay(SNACK_BAR_DURATION)
-                isSnackBarVisible = false
-            }
-        }
-    }
 
     Scaffold(
         topBar = {
@@ -112,26 +128,35 @@ fun DetailPageScreen(
             )
         },
         snackbarHost = {
-            if (isSnackBarVisible) {
-                CommonSnackBar(
-                    message = snackBarMessage,
-                    icon = ImageVector.vectorResource(id = R.drawable.ic_heart_toast_18),
-                    backgroundColor = NapzakMarketTheme.colors.black70,
-                    textColor = NapzakMarketTheme.colors.white,
-                    textStyle = NapzakMarketTheme.typography.bodyMedium14,
-                    shape = RoundedCornerShape(12.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                        .padding(bottom = 6.dp),
-                )
-            }
+            SnackbarHost(
+                hostState = snackBarHostState,
+                snackbar = {
+
+                    CommonSnackBar(
+                        message = it.visuals.message,
+                        icon = ImageVector.vectorResource(id = R.drawable.ic_heart_toast_18),
+                        backgroundColor = NapzakMarketTheme.colors.black70,
+                        textColor = NapzakMarketTheme.colors.white,
+                        textStyle = NapzakMarketTheme.typography.bodyMedium14,
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                            .padding(bottom = 6.dp),
+                    )
+                }
+            )
         },
         bottomBar = {
-            BottomBar(
-                onHeartClick = { isSnackBarVisible = true },
-                onChatClick = onChatNavigate,
-            )
+            if (!uiState.isOwnedByCurrentUser) {
+                BottomBar(
+                    onHeartClick = {
+                        onLikeClick()
+                    },
+                    onChatClick = onChatNavigate,
+                    isLiked = uiState.isInterest,
+                )
+            }
         },
         modifier = modifier,
     ) { innerPadding ->
@@ -152,6 +177,7 @@ fun DetailPageScreen(
                     AsyncImage(
                         model = it,
                         contentDescription = stringResource(id = R.string.detail_image_placeholder),
+                        contentScale = ContentScale.FillHeight,
                         modifier = Modifier.fillMaxSize(),
                     )
                 } ?: Text(
@@ -205,6 +231,7 @@ fun DetailPageScreen(
                         modifier = Modifier
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = stringResource(id = R.string.detail_product_status_label),
@@ -253,7 +280,9 @@ fun DetailPageScreen(
                         if (uiState.standardDeliveryFee > 0 || uiState.halfDeliveryFee > 0) {
                             Row {
                                 uiState.standardDeliveryFee.takeIf { it > 0 }?.let {
-                                    Row {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
                                         Text(
                                             text = stringResource(id = R.string.detail_delivery_normal),
                                             style = NapzakMarketTheme.typography.bodySemi14,
@@ -264,8 +293,7 @@ fun DetailPageScreen(
 
                                         Text(
                                             text = stringResource(
-                                                id = R.string.detail_delivery_fee_normal,
-                                                it
+                                                id = R.string.detail_delivery_fee_normal, it
                                             ),
                                             style = NapzakMarketTheme.typography.bodySemi16,
                                             color = NapzakMarketTheme.colors.gray900,
@@ -274,7 +302,9 @@ fun DetailPageScreen(
                                 }
                                 uiState.halfDeliveryFee.takeIf { it > 0 }?.let {
                                     Spacer(modifier = Modifier.width(8.dp))
-                                    Row {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
                                         Text(
                                             text = stringResource(id = R.string.detail_delivery_discounted),
                                             style = NapzakMarketTheme.typography.bodySemi14,
@@ -421,7 +451,15 @@ fun DetailPageScreen(
 fun BottomBar(
     onHeartClick: () -> Unit,
     onChatClick: () -> Unit,
+    isLiked: Boolean,
 ) {
+    val icon = if (isLiked) {
+        R.drawable.ic_heart_filled_detail_24
+    } else {
+        R.drawable.ic_heart_detail_24
+    }
+    val coroutineScope = rememberCoroutineScope()
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -447,19 +485,19 @@ fun BottomBar(
                     color = NapzakMarketTheme.colors.gray200,
                     shape = RoundedCornerShape(12.dp),
                 ),
+
             contentAlignment = Alignment.Center,
         ) {
             Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_heart_24),
+                imageVector = ImageVector.vectorResource(icon),
                 contentDescription = stringResource(id = R.string.detail_like_button_description),
                 tint = Color.Unspecified,
                 modifier = Modifier
-                    .clickable(
-                        indication = null,
-                        interactionSource = NoRippleInteractionSource,
-                    ) {
-                        onHeartClick()
-                    },
+                    .throttledNoRippleClickable(
+                        throttleTime = 100L,
+                        coroutineScope = coroutineScope,
+                        onClick = onHeartClick
+                    ),
             )
         }
 
@@ -479,8 +517,6 @@ fun BottomBar(
         )
     }
 }
-
-private const val SNACK_BAR_DURATION = 3000L
 
 @Preview(showBackground = true)
 @Composable
@@ -507,7 +543,9 @@ fun DetailPageScreenSellPreview() {
         DetailPageScreen(
             uiState = mockUiState,
             onChatNavigate = {},
-            onBackClick = {}
+            onBackClick = {},
+            onLikeClick = {},
+            snackBarHostState = SnackbarHostState(),
         )
     }
 }
@@ -535,7 +573,9 @@ fun DetailPageScreenBuyPreview() {
         DetailPageScreen(
             uiState = mockUiState,
             onChatNavigate = {},
-            onBackClick = {}
+            onBackClick = {},
+            onLikeClick = {},
+            snackBarHostState = SnackbarHostState()
         )
     }
 }

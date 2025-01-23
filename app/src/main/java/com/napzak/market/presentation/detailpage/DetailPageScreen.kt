@@ -287,9 +287,7 @@ fun DetailPageScreen(
                                         Spacer(modifier = Modifier.width(6.dp))
 
                                         Text(
-                                            text = stringResource(
-                                                id = R.string.detail_delivery_fee_normal, it
-                                            ),
+                                            text = "${uiState.standardDeliveryFee.toString().formatToPriceString()}원",
                                             style = NapzakMarketTheme.typography.bodySemi16,
                                             color = NapzakMarketTheme.colors.gray900,
                                         )
@@ -309,10 +307,7 @@ fun DetailPageScreen(
                                         Spacer(modifier = Modifier.width(6.dp))
 
                                         Text(
-                                            text = stringResource(
-                                                id = R.string.detail_delivery_fee_discounted,
-                                                it
-                                            ),
+                                            text = "${uiState.halfDeliveryFee.toString().formatToPriceString()}원",
                                             style = NapzakMarketTheme.typography.bodySemi16,
                                             color = NapzakMarketTheme.colors.gray900,
                                         )

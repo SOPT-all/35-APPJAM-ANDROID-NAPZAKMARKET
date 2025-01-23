@@ -459,10 +459,6 @@ fun BottomBar(
             .fillMaxWidth()
             .height(92.dp)
             .background(Color.White)
-            .border(
-                width = 1.dp,
-                color = NapzakMarketTheme.colors.gray200,
-            )
             .padding(20.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

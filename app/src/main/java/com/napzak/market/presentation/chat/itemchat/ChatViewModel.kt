@@ -2,6 +2,7 @@ package com.napzak.market.presentation.chat.itemchat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.napzak.market.core.common.state.UiState
 import com.napzak.market.domain.chat.repository.ChatRepository
 import com.napzak.market.presentation.chat.itemchat.type.ChatUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,21 +20,16 @@ class ChatViewModel @Inject constructor(
     val uiState: StateFlow<ChatUiState> = _uiState
 
     fun loadChatInfo(productId: Long) {
-        _uiState.value = ChatUiState()
         viewModelScope.launch {
             chatRepository.fetchChatInfo(productId)
                 .onSuccess { chatInfo ->
                     _uiState.value = ChatUiState(
-                        nickname = chatInfo.nickname,
-                        firstPhoto = chatInfo.firstPhoto,
-                        tradeType = chatInfo.tradeType,
-                        title = chatInfo.title,
-                        price = chatInfo.price,
-                        isPriceNegotiable = chatInfo.isPriceNegotiable,
+                        loadState = UiState.Success(chatInfo)
                     )
                 }
                 .onFailure { throwable ->
                     _uiState.value = ChatUiState(
+                        loadState = UiState.Failure(throwable.message.toString())
                     )
                 }
         }

@@ -163,6 +163,7 @@ private fun MainNavHost(
         detailPageGraph(
             onChatNavigate = navigator.navController::navigateToItemChat,
             onNavigateUp = navigator.navController::navigateUp,
+            onMarketInfoNavigate = navigator.navController::navigateToMarketInfo,
         )
 
         itemChatGraph(

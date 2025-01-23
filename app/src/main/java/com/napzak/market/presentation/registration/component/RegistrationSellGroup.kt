@@ -131,7 +131,7 @@ private fun RegistrationSellGroupPreview() {
             salePrice = "",
             salePricePlaceHolder = "100~30,000",
             onSalePriceChange = { },
-            productCondition = ProductConditionType.GOOD,
+            productCondition = ProductConditionType.LIKE_NEW,
             onProductConditionChange = {},
             postFeeType = PostFeeType.INCLUDED,
             onPostFeeChange = {},

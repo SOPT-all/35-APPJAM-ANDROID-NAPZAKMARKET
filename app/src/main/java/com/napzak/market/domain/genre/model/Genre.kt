@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Genre (
+data class Genre(
     val genreId: Long,
     val genreName: String,
     val genreImgUrl: String? = null,

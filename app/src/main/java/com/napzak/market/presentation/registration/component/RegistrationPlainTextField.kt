@@ -87,7 +87,8 @@ private fun TextFieldCounter(
     maxLength: Int,
     modifier: Modifier = Modifier,
 ) {
-    val countColor = if (currentLength > 0) NapzakMarketTheme.colors.gray900 else NapzakMarketTheme.colors.gray400
+    val countColor =
+        if (currentLength > 0) NapzakMarketTheme.colors.gray900 else NapzakMarketTheme.colors.gray400
     val annotatedString = buildAnnotatedString {
         withStyle(SpanStyle(color = countColor)) {
             append(currentLength.toString())

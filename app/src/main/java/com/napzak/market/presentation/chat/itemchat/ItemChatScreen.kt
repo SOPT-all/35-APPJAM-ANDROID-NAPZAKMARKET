@@ -88,9 +88,9 @@ fun ItemChatScreen(
 
 @Composable
 private fun SuccessScreen(
-chatInfo: ChatInfo,
-onBackClick: () -> Unit,
-modifier: Modifier = Modifier,
+    chatInfo: ChatInfo,
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier

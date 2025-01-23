@@ -2,8 +2,8 @@ package com.napzak.market.data.detailpage.repositoryimpl
 
 import com.napzak.market.data.detailpage.datasource.DetailPageDataSource
 import com.napzak.market.data.detailpage.mapper.toDomain
-import com.napzak.market.domain.detailpage.repository.DetailPageRepository
 import com.napzak.market.domain.detailpage.model.ProductDetail
+import com.napzak.market.domain.detailpage.repository.DetailPageRepository
 import javax.inject.Inject
 
 class DetailPageRepositoryImpl @Inject constructor(

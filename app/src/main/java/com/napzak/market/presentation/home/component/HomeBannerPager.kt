@@ -20,7 +20,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.napzak.market.core.designsystem.component.indicator.PageIndicator
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
-import com.napzak.market.domain.home.model.HomeBanner
+import com.napzak.market.domain.banner.model.HomeBanner
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay

@@ -61,11 +61,13 @@ fun BasicChip(
                 color = chipColors.containerColor(),
             )
             .then(  // border가 0이 아닐 때만 border를 적용
-                Modifier.border(
-                    width = borderWidth,
-                    color = chipColors.borderColor(),
-                    shape = shape
-                ).takeIf { borderWidth > 0.dp } ?: Modifier
+                Modifier
+                    .border(
+                        width = borderWidth,
+                        color = chipColors.borderColor(),
+                        shape = shape
+                    )
+                    .takeIf { borderWidth > 0.dp } ?: Modifier
             )
             .clickable { onClick() }
             .padding(innerPaddingValues),

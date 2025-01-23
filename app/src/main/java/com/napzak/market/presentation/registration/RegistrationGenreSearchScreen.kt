@@ -117,7 +117,29 @@ private const val BLANK = ""
 private fun RegistrationGenreSearchScreenPreview() {
     NapzakMarketTheme {
         RegistrationGenreSearchScreen(
-            genreList = listOf("건담", "산리오", "주술회전", "건담", "산리오", "주술회전", "건담", "산리오", "주술회전", "건담", "산리오", "주술회전", "건담", "산리오", "주술회전", "건담", "산리오", "주술회전", "건담", "산리오", "주술회전"),
+            genreList = listOf(
+                "건담",
+                "산리오",
+                "주술회전",
+                "건담",
+                "산리오",
+                "주술회전",
+                "건담",
+                "산리오",
+                "주술회전",
+                "건담",
+                "산리오",
+                "주술회전",
+                "건담",
+                "산리오",
+                "주술회전",
+                "건담",
+                "산리오",
+                "주술회전",
+                "건담",
+                "산리오",
+                "주술회전"
+            ),
             onBackClick = {},
             searchValue = "",
             onSearchValueChange = {},

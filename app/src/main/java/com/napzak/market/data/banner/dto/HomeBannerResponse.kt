@@ -1,4 +1,4 @@
-package com.napzak.market.data.home.dto
+package com.napzak.market.data.banner.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

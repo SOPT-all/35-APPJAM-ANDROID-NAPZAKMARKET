@@ -4,11 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.napzak.market.core.designsystem.component.item.NapzakBuyItem
 import com.napzak.market.core.designsystem.component.item.NapzakSellItem
-import com.napzak.market.domain.home.model.ProductItem
+import com.napzak.market.domain.product.model.Product
 
 @Composable
 fun HomeItemMapper(
-    item: ProductItem,
+    item: Product,
     onLikeClick: () -> Unit,
     onItemClick: () -> Unit,
     modifier: Modifier = Modifier,

@@ -1,7 +1,7 @@
-package com.napzak.market.data.home.di
+package com.napzak.market.data.banner.di
 
-import com.napzak.market.data.home.repositoryimpl.HomeRepositoryImpl
-import com.napzak.market.domain.home.repository.HomeRepository
+import com.napzak.market.data.banner.repositoryimpl.HomeBannerRepositoryImpl
+import com.napzak.market.domain.banner.repository.HomeBannerRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,6 +15,6 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindHomeRepository(
-        homeRepositoryImpl: HomeRepositoryImpl
-    ): HomeRepository
+        homeRepositoryImpl: HomeBannerRepositoryImpl,
+    ): HomeBannerRepository
 }

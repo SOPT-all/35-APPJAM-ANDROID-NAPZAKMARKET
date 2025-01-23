@@ -49,7 +49,7 @@ private fun PageIndicatorPreview() {
     NapzakMarketTheme {
         PageIndicator(
             imageCount = 5,
-            pagerState = rememberPagerState(initialPage = 1, pageCount = {3}),
+            pagerState = rememberPagerState(initialPage = 1, pageCount = { 3 }),
         )
     }
 }

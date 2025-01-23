@@ -1,7 +1,7 @@
-package com.napzak.market.data.home.di
+package com.napzak.market.data.banner.di
 
 import com.napzak.market.core.network.di.JWT
-import com.napzak.market.data.home.service.HomeService
+import com.napzak.market.data.banner.service.HomeBannerService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,8 +16,8 @@ object ServiceModule {
 
     @Provides
     @Singleton
-    fun providesHomeService(
+    fun providesHomeBannerService(
         @JWT retrofit: Retrofit
-    ): HomeService = retrofit.create()
+    ): HomeBannerService = retrofit.create()
 
 }

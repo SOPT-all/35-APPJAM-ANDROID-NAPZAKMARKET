@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor(): ViewModel() {
+class SplashViewModel @Inject constructor() : ViewModel() {
 
     private val _isStartButtonVisible = MutableStateFlow(false)
-    val isStartButtonVisible= _isStartButtonVisible.asStateFlow()
+    val isStartButtonVisible = _isStartButtonVisible.asStateFlow()
 
     fun setIsStartButtonVisible(isVisible: Boolean) {
         _isStartButtonVisible.value = isVisible

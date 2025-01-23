@@ -24,14 +24,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.napzak.market.core.common.state.UiState
-import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
-import com.napzak.market.core.common.extension.noRippleClickable
-import com.napzak.market.core.designsystem.component.textField.SearchBox
-import com.napzak.market.domain.genre.model.Genre
-import com.napzak.market.R.string.left_chevron_button
 import com.napzak.market.R.string.explore_search_box_placeholder
+import com.napzak.market.R.string.left_chevron_button
+import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.common.state.UiState
+import com.napzak.market.core.designsystem.component.textField.SearchBox
+import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
+import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.explore.search.component.SearchGenreListSection
 import com.napzak.market.presentation.explore.search.state.SearchUiState
 

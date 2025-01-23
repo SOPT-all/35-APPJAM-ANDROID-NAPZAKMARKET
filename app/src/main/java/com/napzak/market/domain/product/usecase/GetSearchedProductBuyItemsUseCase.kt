@@ -1,9 +1,9 @@
 package com.napzak.market.domain.product.usecase
 
+import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.domain.product.model.Product
 import com.napzak.market.domain.product.model.ProductListFilterWithSearchTerm
 import com.napzak.market.domain.product.repository.ExploreProductRepository
-import com.napzak.market.domain.genre.model.Genre
 import javax.inject.Inject
 
 class GetSearchedProductBuyItemsUseCase @Inject constructor(

@@ -1,8 +1,8 @@
 package com.napzak.market.data.detailpage.datasource
 
 import com.napzak.market.core.network.BaseResponse
-import com.napzak.market.data.detailpage.service.DetailPageService
 import com.napzak.market.data.detailpage.dto.ProductDetailResponse
+import com.napzak.market.data.detailpage.service.DetailPageService
 import javax.inject.Inject
 
 class DetailPageDataSource @Inject constructor(

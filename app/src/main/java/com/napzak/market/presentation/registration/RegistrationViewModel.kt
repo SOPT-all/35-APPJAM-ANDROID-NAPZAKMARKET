@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.registration.usecase.PresignedUrlUseCase
 import com.napzak.market.domain.registration.usecase.ImageUriUseCase
+import com.napzak.market.domain.registration.usecase.PresignedUrlUseCase
 import com.napzak.market.presentation.registration.state.RegistrationUiState
 import com.napzak.market.presentation.registration.type.NumeralInputType
 import com.napzak.market.presentation.registration.type.PlainTextInputType
@@ -74,7 +74,12 @@ class RegistrationViewModel @Inject constructor(
     ) {
         when (inputType) {
             is NumeralInputType.ProductPurchasePrice -> _uiState.update { currentState ->
-                currentState.copy(productPurchasePrice = formatPriceValue(newValue, MAX_PURCHASE_PRICE))
+                currentState.copy(
+                    productPurchasePrice = formatPriceValue(
+                        newValue,
+                        MAX_PURCHASE_PRICE
+                    )
+                )
             }
 
             is NumeralInputType.ProductSalePrice -> _uiState.update { currentState ->
@@ -117,16 +122,18 @@ class RegistrationViewModel @Inject constructor(
 
     fun searchGenre() = viewModelScope.launch { }
 
-    fun updateProductCondition(newCondition: ProductConditionType) = _uiState.update { currentState ->
-        currentState.copy(productCondition = newCondition)
-    }
+    fun updateProductCondition(newCondition: ProductConditionType) =
+        _uiState.update { currentState ->
+            currentState.copy(productCondition = newCondition)
+        }
 
     fun updatePostFeeType(newPostFeeType: PostFeeType) = _uiState.update { currentState ->
         currentState.copy(isPostFeeIncluded = newPostFeeType == PostFeeType.INCLUDED)
     }
 
     fun updateNormalPostState(newCheckState: Boolean) = _uiState.update { currentState ->
-        currentState.copy(isNormalPostChecked = newCheckState) }
+        currentState.copy(isNormalPostChecked = newCheckState)
+    }
 
     fun updateHalfPostState(newCheckState: Boolean) = _uiState.update { currentState ->
         currentState.copy(isHalfPostChecked = newCheckState)
@@ -158,7 +165,8 @@ class RegistrationViewModel @Inject constructor(
                 && _uiState.value.productCondition != null && _uiState.value.productSalePrice.isNotEmpty()
                 && (_uiState.value.isPostFeeIncluded || isPostFeeValid)
 
-        val isButtonEnabled = isCommonFieldsValid && (isPurchaseConditionValid || isSaleConditionValid)
+        val isButtonEnabled =
+            isCommonFieldsValid && (isPurchaseConditionValid || isSaleConditionValid)
 
         _uiState.update { currentState ->
             currentState.copy(isButtonEnabled = isButtonEnabled)

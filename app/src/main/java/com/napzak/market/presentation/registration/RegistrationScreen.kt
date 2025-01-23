@@ -90,9 +90,12 @@ fun RegistrationRoute(
             val remainImageSize = MAX_ITEMS - uiState.imageUri.size
 
             when {
-                remainImageSize <= ZERO -> { /* TODO: 최대 개수 초과 시 스낵바 처리 */ }
+                remainImageSize <= ZERO -> { /* TODO: 최대 개수 초과 시 스낵바 처리 */
+                }
 
-                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU -> imageStorageLauncher.launch(INPUT_TYPE)
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU -> imageStorageLauncher.launch(
+                    INPUT_TYPE
+                )
 
                 else -> photoPickerLauncher.launch(
                     PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
@@ -102,17 +105,47 @@ fun RegistrationRoute(
         onPhotoPress = viewModel::changeRepresentPhoto,
         onDeleteClick = viewModel::deletePhoto,
         onGenreClick = onGenreSearchNavigate,
-        onTitleChange = { title -> viewModel.updatePlainTextValue(title, PlainTextInputType.Title) },
-        onDescriptionChange = { description -> viewModel.updatePlainTextValue(description, PlainTextInputType.Description) },
-        onSalePriceChange = { salePrice -> viewModel.updateNumericValue(salePrice, NumeralInputType.ProductSalePrice) },
+        onTitleChange = { title ->
+            viewModel.updatePlainTextValue(
+                title,
+                PlainTextInputType.Title
+            )
+        },
+        onDescriptionChange = { description ->
+            viewModel.updatePlainTextValue(
+                description,
+                PlainTextInputType.Description
+            )
+        },
+        onSalePriceChange = { salePrice ->
+            viewModel.updateNumericValue(
+                salePrice,
+                NumeralInputType.ProductSalePrice
+            )
+        },
         onProductConditionChange = viewModel::updateProductCondition,
         onPostFeeChange = viewModel::updatePostFeeType,
         onNormalPostStateChange = viewModel::updateNormalPostState,
-        onNormalPostFeeChange = { normalPostFee -> viewModel.updateNumericValue(normalPostFee, NumeralInputType.NormalPostFee) },
+        onNormalPostFeeChange = { normalPostFee ->
+            viewModel.updateNumericValue(
+                normalPostFee,
+                NumeralInputType.NormalPostFee
+            )
+        },
         onHalfPostStateChange = viewModel::updateHalfPostState,
-        onHalfPostFeeChange = { halfPostFee -> viewModel.updateNumericValue(halfPostFee, NumeralInputType.HalfPostFee) },
+        onHalfPostFeeChange = { halfPostFee ->
+            viewModel.updateNumericValue(
+                halfPostFee,
+                NumeralInputType.HalfPostFee
+            )
+        },
         onOfferCheckChange = viewModel::updateOfferAvailability,
-        onPurchasePriceChange = { purchasePrice -> viewModel.updateNumericValue(purchasePrice, NumeralInputType.ProductPurchasePrice) },
+        onPurchasePriceChange = { purchasePrice ->
+            viewModel.updateNumericValue(
+                purchasePrice,
+                NumeralInputType.ProductPurchasePrice
+            )
+        },
         onButtonStateChange = viewModel::updateButtonState,
         onRegistrationClick = viewModel::getPresignedUrl,
         modifier = modifier,

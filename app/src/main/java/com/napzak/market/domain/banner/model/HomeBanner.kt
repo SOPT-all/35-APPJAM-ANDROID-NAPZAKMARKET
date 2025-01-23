@@ -1,4 +1,4 @@
-package com.napzak.market.domain.home.model
+package com.napzak.market.domain.banner.model
 
 data class HomeBanner(
     val bannerId: Long = 0,

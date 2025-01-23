@@ -6,11 +6,11 @@ import androidx.compose.runtime.Composable
 import com.napzak.market.R
 import com.napzak.market.core.common.navigation.MainTabRoute
 import com.napzak.market.core.common.navigation.Route
+import com.napzak.market.presentation.chat.chat.navigation.Chat
 import com.napzak.market.presentation.dummy.navigation.Dummy
 import com.napzak.market.presentation.explore.explore.navigation.Explore
 import com.napzak.market.presentation.home.navigation.Home
 import com.napzak.market.presentation.mypage.navigation.MyPage
-import com.napzak.market.presentation.chat.chat.navigation.Chat
 
 
 // TODO: 구현 시작 시 수정

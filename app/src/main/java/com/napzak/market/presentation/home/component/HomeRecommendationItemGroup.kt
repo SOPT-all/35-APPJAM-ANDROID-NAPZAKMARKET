@@ -20,13 +20,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.R
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
-import com.napzak.market.domain.home.model.ProductItem
+import com.napzak.market.domain.product.model.Product
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun HomeRecommendationItemGroup(
-    recommendedItems: ImmutableList<ProductItem>,
+    recommendedItems: ImmutableList<Product>,
     onLikeClick: (Long, Boolean) -> Unit,
     onItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
@@ -99,12 +99,12 @@ fun HomeRecommendationItemGroup(
 private fun HomeRecommendationGroupPreview() {
     NapzakMarketTheme {
         HomeRecommendationItemGroup(
-            onLikeClick = {_, _ ->},
+            onLikeClick = { _, _ -> },
             onItemClick = {},
-            recommendedItems = mutableListOf<ProductItem>().apply {
+            recommendedItems = mutableListOf<Product>().apply {
                 repeat(4) {
                     this.add(
-                        ProductItem(
+                        Product(
                             productId = it.toLong(),
                             productName = "딸기 마이멜로디 마스코트 인형",
                             genreName = "산리오",

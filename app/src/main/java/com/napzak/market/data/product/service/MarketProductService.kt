@@ -1,8 +1,8 @@
 package com.napzak.market.data.product.service
 
 import com.napzak.market.core.network.BaseResponse
-import com.napzak.market.data.marketinfo.dto.MarketProductBuyItemsResponse
-import com.napzak.market.data.marketinfo.dto.MarketProductSellItemsResponse
+import com.napzak.market.data.product.dto.response.ProductBuyItemsResponse
+import com.napzak.market.data.product.dto.response.ProductSellItemsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -22,7 +22,7 @@ interface MarketProductService {
         genreIds: List<Long>? = null,
         @Query("cursor")
         cursor: String = "",
-    ): BaseResponse<MarketProductSellItemsResponse>
+    ): BaseResponse<ProductSellItemsResponse>
 
     @GET("products/buy/stores/{storeOwnerId}")
     suspend fun getMarketProductBuyItems(
@@ -38,5 +38,5 @@ interface MarketProductService {
         genreIds: List<Long>? = null,
         @Query("cursor")
         cursor: String = "",
-    ): BaseResponse<MarketProductBuyItemsResponse>
+    ): BaseResponse<ProductBuyItemsResponse>
 }

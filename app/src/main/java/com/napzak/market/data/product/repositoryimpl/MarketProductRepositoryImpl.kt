@@ -6,8 +6,8 @@ import com.napzak.market.data.marketinfo.mapper.toMarketProductSellItems
 import com.napzak.market.data.marketinfo.mapper.toMarketProductSellRequest
 import com.napzak.market.data.product.datasource.MarketProductDataSource
 import com.napzak.market.domain.explore.repository.MarketProductRepository
-import com.napzak.market.domain.marketinfo.model.ProductItem
-import com.napzak.market.domain.marketinfo.model.ProductListFilter
+import com.napzak.market.domain.explore.model.ProductListFilter
+import com.napzak.market.domain.explore.model.ProductItem
 import javax.inject.Inject
 
 class MarketProductRepositoryImpl @Inject constructor(

@@ -1,7 +1,7 @@
 package com.napzak.market.domain.explore.repository
 
-import com.napzak.market.domain.marketinfo.model.ProductItem
-import com.napzak.market.domain.marketinfo.model.ProductListFilter
+import com.napzak.market.domain.explore.model.ProductItem
+import com.napzak.market.domain.explore.model.ProductListFilter
 
 interface MarketProductRepository {
     suspend fun fetchMarketProductSellItems(request: ProductListFilter): Result<List<ProductItem>>

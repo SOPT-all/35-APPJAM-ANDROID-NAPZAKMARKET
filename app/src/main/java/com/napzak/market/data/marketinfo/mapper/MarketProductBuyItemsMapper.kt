@@ -2,8 +2,8 @@ package com.napzak.market.data.marketinfo.mapper
 
 import com.napzak.market.data.marketinfo.dto.MarketProductBuyItemsRequest
 import com.napzak.market.data.marketinfo.dto.MarketProductBuyItemsResponse
-import com.napzak.market.domain.marketinfo.model.ProductItem
-import com.napzak.market.domain.marketinfo.model.ProductListFilter
+import com.napzak.market.domain.explore.model.ProductItem
+import com.napzak.market.domain.explore.model.ProductListFilter
 
 fun ProductListFilter.toMarketProductBuyRequest(): MarketProductBuyItemsRequest =
     MarketProductBuyItemsRequest(

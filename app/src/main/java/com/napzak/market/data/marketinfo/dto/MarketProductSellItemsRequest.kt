@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MarketProductSellItemsRequest(
     @SerialName("storeOwnerId")
-    val storeId: Long,
+    val storeId: Long?,
     @SerialName("sortOption")
     val sortOption: String,
     @SerialName("genreId")

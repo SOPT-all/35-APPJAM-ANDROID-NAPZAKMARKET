@@ -36,7 +36,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -54,9 +53,6 @@ import com.napzak.market.core.common.extension.formatToPriceString
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.common.extension.throttledNoRippleClickable
 import com.napzak.market.core.designsystem.component.button.CommonButton
-import com.napzak.market.core.designsystem.component.chip.BasicChip
-import com.napzak.market.core.designsystem.component.chip.TextChip
-import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.component.snackbar.CommonSnackBar
 import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
@@ -172,7 +168,7 @@ fun DetailPageScreen(
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState()),
 
-        ) {
+            ) {
             ImageBannerPager(
                 bannerImages = uiState.productPhotoUrls.toImmutableList(),
             )
@@ -291,7 +287,10 @@ fun DetailPageScreen(
                                         Spacer(modifier = Modifier.width(6.dp))
 
                                         Text(
-                                            text = "${uiState.standardDeliveryFee.toString().formatToPriceString()}원",
+                                            text = "${
+                                                uiState.standardDeliveryFee.toString()
+                                                    .formatToPriceString()
+                                            }원",
                                             style = NapzakMarketTheme.typography.bodySemi16,
                                             color = NapzakMarketTheme.colors.gray900,
                                         )
@@ -311,7 +310,10 @@ fun DetailPageScreen(
                                         Spacer(modifier = Modifier.width(6.dp))
 
                                         Text(
-                                            text = "${uiState.halfDeliveryFee.toString().formatToPriceString()}원",
+                                            text = "${
+                                                uiState.halfDeliveryFee.toString()
+                                                    .formatToPriceString()
+                                            }원",
                                             style = NapzakMarketTheme.typography.bodySemi16,
                                             color = NapzakMarketTheme.colors.gray900,
                                         )

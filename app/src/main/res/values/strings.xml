@@ -31,6 +31,7 @@
     <string name="splash_button_next">납작마켓 시작하기</string>
 
     <!-- Home Screen -->
+    <string name="home_snack_bar_finish">버튼을 한번 더 누르시면 종료돼요.</string>
     <string name="home_recommendation_title1">납자기님을 위한 맞춤</string>
     <string name="home_recommendation_title2">PICK!</string>
     <string name="home_recommendation_body1">납자기님의 취향에 딱 맞는 아이템들을 모아봤어요.</string>

@@ -124,7 +124,7 @@ private fun ItemImageGroup(
             AsyncImage(
                 model = ImageRequest.Builder(context).data(imgUrl).build(),
                 contentDescription = stringResource(R.string.napzak_item_content_description),
-                contentScale = ContentScale.FillHeight,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier.matchParentSize()
             )
         } else {

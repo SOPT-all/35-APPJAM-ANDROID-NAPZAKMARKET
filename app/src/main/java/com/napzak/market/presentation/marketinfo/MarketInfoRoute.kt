@@ -209,6 +209,8 @@ fun MarketInfoSuccessScreen(
             onTradeTypeClick = onTradeTypeClick,
         )
 
+        Spacer(Modifier.height(1.dp))
+
         if (marketTab != MarketTab.REVIEW) {
             MarketFilterGroup(
                 marketTab = marketTab,

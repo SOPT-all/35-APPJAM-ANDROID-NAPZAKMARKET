@@ -1,7 +1,7 @@
 package com.napzak.market.data.product.di
 
-import com.napzak.market.data.product.repositoryimpl.ExploreRepositoryImpl
-import com.napzak.market.domain.explore.repository.ExploreRepository
+import com.napzak.market.data.product.repositoryimpl.ExploreProductProductRepositoryImpl
+import com.napzak.market.domain.explore.repository.ExploreProductRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,6 +15,6 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindExploreRepository(
-        exploreRepositoryImpl: ExploreRepositoryImpl
-    ): ExploreRepository
+        exploreProductRepositoryImpl: ExploreProductProductRepositoryImpl
+    ): ExploreProductRepository
 }

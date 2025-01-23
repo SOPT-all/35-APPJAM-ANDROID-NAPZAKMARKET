@@ -2,12 +2,12 @@ package com.napzak.market.domain.explore.usecase
 
 import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.domain.explore.model.ProductListFilter
-import com.napzak.market.domain.explore.repository.ExploreRepository
+import com.napzak.market.domain.explore.repository.ExploreProductRepository
 import com.napzak.market.domain.genre.model.Genre
 import javax.inject.Inject
 
 class GetProductSellListUseCase @Inject constructor(
-    private val exploreRepository: ExploreRepository,
+    private val exploreProductRepository: ExploreProductRepository,
 ) {
     suspend operator fun invoke(
         sortType: String,
@@ -21,7 +21,7 @@ class GetProductSellListUseCase @Inject constructor(
             null
         }
 
-        return exploreRepository.fetchSellProductItems(
+        return exploreProductRepository.fetchSellProductItems(
             ProductListFilter(
                 sortOption = sortType,
                 genreId = genreIds,

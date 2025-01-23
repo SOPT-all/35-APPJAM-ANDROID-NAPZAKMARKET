@@ -1,6 +1,6 @@
 package com.napzak.market.data.product.repositoryimpl
 
-import com.napzak.market.data.product.datasource.ExploreDataSource
+import com.napzak.market.data.product.datasource.ExploreProductDataSource
 import com.napzak.market.data.product.mapper.toProductBuyList
 import com.napzak.market.data.product.mapper.toProductBuyRequest
 import com.napzak.market.data.product.mapper.toProductSellList
@@ -10,12 +10,12 @@ import com.napzak.market.data.product.mapper.toSearchedProductSellRequest
 import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.domain.explore.model.ProductListFilter
 import com.napzak.market.domain.explore.model.ProductListFilterWithSearchTerm
-import com.napzak.market.domain.explore.repository.ExploreRepository
+import com.napzak.market.domain.explore.repository.ExploreProductRepository
 import javax.inject.Inject
 
-class ExploreRepositoryImpl @Inject constructor(
-    private val dataSource: ExploreDataSource,
-) : ExploreRepository {
+class ExploreProductProductRepositoryImpl @Inject constructor(
+    private val dataSource: ExploreProductDataSource,
+) : ExploreProductRepository {
     override suspend fun fetchSellProductItems(request: ProductListFilter): Result<List<ProductItem>> =
         runCatching {
             val response = dataSource.getProductSellItems(request.toProductSellRequest())

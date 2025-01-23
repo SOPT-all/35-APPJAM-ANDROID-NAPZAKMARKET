@@ -2,12 +2,12 @@ package com.napzak.market.domain.explore.usecase
 
 import com.napzak.market.domain.explore.model.ProductItem
 import com.napzak.market.domain.explore.model.ProductListFilterWithSearchTerm
-import com.napzak.market.domain.explore.repository.ExploreRepository
+import com.napzak.market.domain.explore.repository.ExploreProductRepository
 import com.napzak.market.domain.genre.model.Genre
 import javax.inject.Inject
 
 class GetSearchedProductSellItemsUseCase @Inject constructor(
-    private val exploreRepository: ExploreRepository,
+    private val exploreProductRepository: ExploreProductRepository,
 ) {
     suspend operator fun invoke(
         searchTerm: String,
@@ -22,7 +22,7 @@ class GetSearchedProductSellItemsUseCase @Inject constructor(
             null
         }
 
-        return exploreRepository.fetchSearchedSellProductItems(
+        return exploreProductRepository.fetchSearchedSellProductItems(
             ProductListFilterWithSearchTerm(
                 searchWord = searchTerm,
                 sortOption = sortType,

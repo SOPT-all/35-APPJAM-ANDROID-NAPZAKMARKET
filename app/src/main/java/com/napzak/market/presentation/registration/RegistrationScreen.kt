@@ -328,7 +328,6 @@ fun RegistrationScreen(
         }
         if (registrationType == TradeType.BUY) {
             item {
-                Spacer(modifier = Modifier.height(35.dp))
                 RegistrationBuyGroup(
                     modifier = paddedModifier,
                     number = uiState.productPurchasePrice,

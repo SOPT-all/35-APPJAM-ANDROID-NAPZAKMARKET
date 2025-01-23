@@ -31,6 +31,7 @@
     <string name="splash_button_next">납작마켓 시작하기</string>
 
     <!-- Home Screen -->
+    <string name="home_snack_bar_finish">버튼을 한번 더 누르시면 종료돼요.</string>
     <string name="home_recommendation_title1">납자기님을 위한 맞춤</string>
     <string name="home_recommendation_title2">PICK!</string>
     <string name="home_recommendation_body1">납자기님의 취향에 딱 맞는 아이템들을 모아봤어요.</string>
@@ -38,7 +39,7 @@
     <string name="home_popular_body1">놓치면 아쉬운 인기 아이템들을 구경해볼까요?</string>
     <string name="home_search_title1">다른 유저들은 뭘 찾고 있을까요?</string>
     <string name="home_search_body1">덕심 가득한 리스트에서 취향을 나눠보세요.</string>
-    <string name="home_item_price">%s원</string>
+    <string name="napzak_item_price">%s원</string>
 
     <!-- ChatScreen-->
     <string name="chat_background_image_description">채팅 화면 배경 캐릭터</string>
@@ -46,12 +47,8 @@
     <string name="chat_buy_title">구해요</string>
     <string name="chat_sell_title">팔아요</string>
     <string name="chat_price_label">가격제시</string>
-    <string name="chat_screen_title_buy">납작한 외계인</string>
-    <string name="chat_screen_description_buy">양스타 토모에 히요리 이츠누이 함께</string>
-    <string name="chat_screen_price_buy">100,000원대</string>
-    <string name="chat_screen_title_sell">딸기 마이멜로디 마스코트 인형</string>
-    <string name="chat_screen_price_sell">35,000원</string>
     <string name="chat_message_placeholder">메시지를 입력하세요.</string>
+    <string name="chat_price_unit">원</string>
 
     <!-- LoadingScreen -->
     <string name="loading_ready_image_description">준비중 상태를 나타내는 캐릭터</string>

@@ -1,20 +1,18 @@
-package com.napzak.market.domain.explore.usecase
+package com.napzak.market.domain.product.usecase
 
-import com.napzak.market.domain.explore.model.Product
-import com.napzak.market.domain.explore.model.ProductListFilterWithSearchTerm
-import com.napzak.market.domain.explore.repository.ExploreProductRepository
+import com.napzak.market.domain.product.model.Product
+import com.napzak.market.domain.product.model.ProductListFilter
+import com.napzak.market.domain.product.repository.ExploreProductRepository
 import com.napzak.market.domain.genre.model.Genre
 import javax.inject.Inject
 
-class GetSearchedProductSellItemsUseCase @Inject constructor(
+class GetProductBuyListUseCase @Inject constructor(
     private val exploreProductRepository: ExploreProductRepository,
 ) {
     suspend operator fun invoke(
-        searchTerm: String,
         sortType: String,
         genreItems: List<Genre>?,
         isOnSale: Boolean,
-        isUnopened: Boolean,
     ): Result<List<Product>> {
         val genreIds = if (genreItems?.isNotEmpty() == true) {
             genreItems.map { it.genreId }
@@ -22,13 +20,12 @@ class GetSearchedProductSellItemsUseCase @Inject constructor(
             null
         }
 
-        return exploreProductRepository.fetchSearchedSellProductItems(
-            ProductListFilterWithSearchTerm(
-                searchWord = searchTerm,
+        return exploreProductRepository.fetchBuyProductItems(
+            ProductListFilter(
                 sortOption = sortType,
                 genreId = genreIds,
                 isOnSale = isOnSale,
-                isUnopened = isUnopened,
+                isUnopened = false,
             )
         )
     }

@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.component.item.NapzakBuyItem
 import com.napzak.market.core.designsystem.component.item.NapzakSellItem
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.explore.model.Product
+import com.napzak.market.domain.product.model.Product
 
 @Composable
 fun ProductListSection(

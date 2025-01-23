@@ -1,7 +1,7 @@
 package com.napzak.market.data.product.mapper
 
 import com.napzak.market.data.product.dto.ProductItem
-import com.napzak.market.domain.explore.model.Product
+import com.napzak.market.domain.product.model.Product
 
 fun List<ProductItem>.toProductItems(): List<Product> =
     map { productItem ->

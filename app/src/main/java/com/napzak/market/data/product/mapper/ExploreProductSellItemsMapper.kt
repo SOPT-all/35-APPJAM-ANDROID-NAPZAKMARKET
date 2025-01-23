@@ -1,7 +1,7 @@
 package com.napzak.market.data.product.mapper
 
 import com.napzak.market.data.product.dto.request.ProductSellItemsRequest
-import com.napzak.market.domain.explore.model.ProductListFilter
+import com.napzak.market.domain.product.model.ProductListFilter
 
 fun ProductListFilter.toProductSellRequest(): ProductSellItemsRequest =
     ProductSellItemsRequest(

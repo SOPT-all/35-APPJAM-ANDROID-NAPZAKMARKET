@@ -32,7 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.component.textField.SearchBox
-import com.napzak.market.domain.explore.model.Product
+import com.napzak.market.domain.product.model.Product
 import com.napzak.market.R
 import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme

@@ -3,7 +3,7 @@ package com.napzak.market.presentation.marketinfo.state
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.MarketTab
-import com.napzak.market.domain.explore.model.Product
+import com.napzak.market.domain.product.model.Product
 import com.napzak.market.domain.genre.model.Genre
 
 data class MarketInfoUiState(

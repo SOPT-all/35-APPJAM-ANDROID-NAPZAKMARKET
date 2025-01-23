@@ -1,4 +1,4 @@
-package com.napzak.market.domain.explore.model
+package com.napzak.market.domain.product.model
 
 data class ProductListFilterWithSearchTerm(
     val searchWord: String,

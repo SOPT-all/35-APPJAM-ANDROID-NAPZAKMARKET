@@ -2,6 +2,7 @@ package com.napzak.market.presentation.registration
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.common.util.priceToNumericTransformation
 import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
@@ -20,6 +21,9 @@ import com.napzak.market.presentation.registration.type.PlainTextInputType
 import com.napzak.market.presentation.registration.type.PostFeeType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -150,8 +154,7 @@ class RegistrationViewModel @Inject constructor(
 
     fun searchGenre() = viewModelScope.launch { }
 
-    fun updateProductCondition(newCondition: ProductConditionType) =
-        _uiState.update { currentState ->
+    fun updateProductCondition(newCondition: ProductConditionType) = _uiState.update { currentState ->
             currentState.copy(productCondition = newCondition)
         }
 
@@ -202,35 +205,36 @@ class RegistrationViewModel @Inject constructor(
 
     fun getPresignedUrl() = viewModelScope.launch {
         val result = presignedUrlUseCase(_uiState.value.imageUri)
+        updateLoadState(UiState.Loading)
 
         result.onSuccess { presignedUrlMap ->
             uploadImageToS3(urlMap = presignedUrlMap)
         }.onFailure {
-            /* TODO: presignedUrl 받아 오기 실패 로직 */
+            /* TODO: 에러 메시지 수정 필요 */
+            updateLoadState(UiState.Failure(ERROR_MESSAGE))
         }
     }
 
     private fun uploadImageToS3(urlMap: LinkedHashMap<String, String>) = viewModelScope.launch {
         val imageUris = _uiState.value.imageUri
         val sortedPresignedUrls = urlMap.entries.sortedBy {
-            it.key.substringAfter("image_").toInt()
+            it.key.substringAfter(KEY_DELIMITER).toInt()
         }
 
-        val urlFilePairs = sortedPresignedUrls.zip(imageUris) { urlEntry, uri ->
-            urlEntry.value to uri
-        }
+        val urlFilePairs = sortedPresignedUrls.zip(imageUris) { urlEntry, uri -> urlEntry.value to uri }
 
-        var count = 0
+        runCatching {
+            coroutineScope {
+                val uploadResults = urlFilePairs.map { (presignedUrl, imageUri) ->
+                    async { imageUriUseCase(presignedUrl, imageUri) }
+                }.awaitAll()
 
-        urlFilePairs.forEach { (presignedUrl, imageUri) ->
-            val result2 = imageUriUseCase(presignedUrl, imageUri)
-            result2.onSuccess {
-                count++
-                if (count == imageUris.size) {
+                if (uploadResults.all { results -> results.isSuccess }) {
                     uploadProduct(sortedPresignedUrls)
+                } else {
+                    /* TODO: 에러 메시지 수정 필요 */
+                    updateLoadState(UiState.Failure(ERROR_MESSAGE))
                 }
-            }.onFailure { error ->
-                Timber.e("이미지 업로드 실패: ${error.message}")
             }
         }
     }
@@ -243,8 +247,8 @@ class RegistrationViewModel @Inject constructor(
                 TradeType.BUY -> BuyProduct(
                     imageUrls = sortedPresignedUrls.map { (key, value) ->
                         ProductImage(
-                            imageUrl = value.substringBefore("?"),
-                            sequence = key.substringAfter("image_").toInt()
+                            imageUrl = value.substringBefore(VALUE_DELIMITER),
+                            sequence = key.substringAfter(KEY_DELIMITER).toInt()
                         )
                     },
                     genreId = genre?.genreId ?: 0L,
@@ -257,8 +261,8 @@ class RegistrationViewModel @Inject constructor(
                 TradeType.SELL -> SellProduct(
                     imageUrls = sortedPresignedUrls.map { (key, value) ->
                         ProductImage(
-                            imageUrl = value.substringBefore("?"),
-                            sequence = key.substringAfter("image_").toInt()
+                            imageUrl = value.substringBefore(VALUE_DELIMITER),
+                            sequence = key.substringAfter(KEY_DELIMITER).toInt()
                         )
                     },
                     genreId = genre?.genreId ?: 0L,
@@ -271,17 +275,22 @@ class RegistrationViewModel @Inject constructor(
                     halfDeliveryFee = halfPostFee.priceToNumericTransformation(),
                 )
 
+                /* TODO: when 문 수정 필요 */
                 else -> throw IllegalArgumentException("Invalid trade type")
             }
             productRegistrationUseCase(product)
                 .onSuccess { productId ->
+                    updateLoadState(UiState.Success(Unit))
                     _sideEffect.emit(RegistrationSideEffect.OnDetailNavigate(productId))
                 }
-                .onFailure { error ->
-                    // 상품 등록 실패 처리
-                    Timber.e("상품 등록 실패: ${error.message} ${product}")
+                .onFailure {
+                    updateLoadState(UiState.Failure(ERROR_MESSAGE))
                 }
         }
+    }
+
+    private fun updateLoadState(newLoadState: UiState<Unit>) = _uiState.update { currentState ->
+        currentState.copy(loadState = newLoadState)
     }
 
     companion object {
@@ -292,5 +301,8 @@ class RegistrationViewModel @Inject constructor(
         private const val MAX_NORMAL_POST_FEE = 30_000
         private const val MAX_HALF_POST_FEE = 5_000
         private const val DEBOUNCE_DELAY = 500L
+        private const val KEY_DELIMITER = "image_"
+        private const val VALUE_DELIMITER = "?"
+        private const val ERROR_MESSAGE = "상품 등록에 실패했습니다."
     }
 }

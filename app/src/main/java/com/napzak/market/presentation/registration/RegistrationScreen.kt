@@ -7,8 +7,10 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -39,6 +41,8 @@ import com.napzak.market.R.string.regi_title
 import com.napzak.market.R.string.regi_title_placeholder
 import com.napzak.market.R.string.regi_topbar_title
 import com.napzak.market.R.string.register
+import com.napzak.market.core.common.state.UiState
+import com.napzak.market.core.designsystem.component.LoadingScreen
 import com.napzak.market.core.designsystem.component.button.CommonButton
 import com.napzak.market.core.designsystem.component.topbar.CloseTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
@@ -110,9 +114,7 @@ fun RegistrationRoute(
                 remainImageSize <= ZERO -> { /* TODO: 최대 개수 초과 시 스낵바 처리 */
                 }
 
-                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU -> imageStorageLauncher.launch(
-                    INPUT_TYPE
-                )
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU -> imageStorageLauncher.launch(INPUT_TYPE)
 
                 else -> photoPickerLauncher.launch(
                     PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
@@ -122,47 +124,17 @@ fun RegistrationRoute(
         onPhotoPress = viewModel::changeRepresentPhoto,
         onDeleteClick = viewModel::deletePhoto,
         onGenreClick = onGenreSearchNavigate,
-        onTitleChange = { title ->
-            viewModel.updatePlainTextValue(
-                title,
-                PlainTextInputType.Title
-            )
-        },
-        onDescriptionChange = { description ->
-            viewModel.updatePlainTextValue(
-                description,
-                PlainTextInputType.Description
-            )
-        },
-        onSalePriceChange = { salePrice ->
-            viewModel.updateNumericValue(
-                salePrice,
-                NumeralInputType.ProductSalePrice
-            )
-        },
+        onTitleChange = { title -> viewModel.updatePlainTextValue(title, PlainTextInputType.Title) },
+        onDescriptionChange = { description -> viewModel.updatePlainTextValue(description, PlainTextInputType.Description) },
+        onSalePriceChange = { salePrice -> viewModel.updateNumericValue(salePrice, NumeralInputType.ProductSalePrice) },
         onProductConditionChange = viewModel::updateProductCondition,
         onPostFeeChange = viewModel::updatePostFeeType,
         onNormalPostStateChange = viewModel::updateNormalPostState,
-        onNormalPostFeeChange = { normalPostFee ->
-            viewModel.updateNumericValue(
-                normalPostFee,
-                NumeralInputType.NormalPostFee
-            )
-        },
+        onNormalPostFeeChange = { normalPostFee -> viewModel.updateNumericValue(normalPostFee, NumeralInputType.NormalPostFee) },
         onHalfPostStateChange = viewModel::updateHalfPostState,
-        onHalfPostFeeChange = { halfPostFee ->
-            viewModel.updateNumericValue(
-                halfPostFee,
-                NumeralInputType.HalfPostFee
-            )
-        },
+        onHalfPostFeeChange = { halfPostFee -> viewModel.updateNumericValue(halfPostFee, NumeralInputType.HalfPostFee,) },
         onOfferCheckChange = viewModel::updateOfferAvailability,
-        onPurchasePriceChange = { purchasePrice ->
-            viewModel.updateNumericValue(
-                purchasePrice,
-                NumeralInputType.ProductPurchasePrice
-            )
-        },
+        onPurchasePriceChange = { purchasePrice -> viewModel.updateNumericValue(purchasePrice, NumeralInputType.ProductPurchasePrice) },
         onButtonStateChange = viewModel::updateButtonState,
         onRegistrationClick = viewModel::getPresignedUrl,
         modifier = modifier,
@@ -219,144 +191,150 @@ fun RegistrationScreen(
 
     LaunchedEffect(uiState) { onButtonStateChange() }
 
-    LazyColumn(
-        modifier = modifier.background(NapzakMarketTheme.colors.white),
-        state = listState,
+    Box(
+        modifier = modifier.fillMaxSize(),
     ) {
-        stickyHeader {
-            CloseTopBar(
-                title = stringResource(regi_topbar_title, registrationType.label),
-                onCloseClick = onCloseClick,
-            )
-        }
-        item {
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                modifier = paddedModifier,
-                text = stringResource(regi_product_image),
-                style = NapzakMarketTheme.typography.bodySemi16,
-                color = NapzakMarketTheme.colors.gray900,
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                modifier = paddedModifier,
-                text = stringResource(regi_product_image_description),
-                style = NapzakMarketTheme.typography.bodyMedium14,
-                color = NapzakMarketTheme.colors.gray600,
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            RegistrationPhotoPicker(
-                modifier = Modifier,
-                imageUrlList = uiState.imageUri,
-                onPhotoClick = onPhotoClick,
-                onPress = onPhotoPress,
-                onDeleteClick = onDeleteClick,
-            )
-        }
-        item {
-            Spacer(modifier = Modifier.height(40.dp))
-            RegistrationGenreButton(
-                modifier = paddedModifier,
-                genre = uiState.genre?.genreName ?: "",
-                onGenreClick = onGenreClick,
-            )
-        }
-        item {
-            Spacer(modifier = Modifier.height(35.dp))
-            Text(
-                modifier = paddedModifier,
-                text = stringResource(regi_title),
-                style = NapzakMarketTheme.typography.bodySemi16,
-                color = NapzakMarketTheme.colors.gray900,
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            RegistrationPlainTextField(
-                modifier = paddedModifier,
-                text = uiState.title,
-                placeholder = stringResource(regi_title_placeholder),
-                onTextChange = onTitleChange,
-                isTitle = true,
-                maxLength = MAX_TITLE_LENGTH,
-            )
-            Spacer(modifier = Modifier.height(35.dp))
-        }
-        item {
-            Text(
-                modifier = paddedModifier,
-                text = stringResource(regi_description),
-                style = NapzakMarketTheme.typography.bodySemi16,
-                color = NapzakMarketTheme.colors.gray900,
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            RegistrationPlainTextField(
-                modifier = paddedModifier,
-                text = uiState.description,
-                placeholder = stringResource(regi_description_placeholder),
-                onTextChange = onDescriptionChange,
-                isTitle = false,
-                maxLength = MAX_DESCRIPTION_LENGTH,
-            )
-        }
-        if (registrationType == TradeType.SELL) {
-            item {
-                Spacer(modifier = Modifier.height(35.dp))
-                RegistrationSellGroup(
-                    modifier = paddedModifier,
-                    salePrice = uiState.productSalePrice,
-                    salePricePlaceHolder = stringResource(regi_price_placeholder),
-                    onSalePriceChange = onSalePriceChange,
-                    productCondition = uiState.productCondition,
-                    onProductConditionChange = onProductConditionChange,
-                    postFeeType = if (uiState.isPostFeeIncluded) PostFeeType.INCLUDED else PostFeeType.EXCLUDED,
-                    onPostFeeChange = onPostFeeChange,
-                    isNormalPostChecked = uiState.isNormalPostChecked,
-                    onNormalPostCheckedChange = { normalCheckState ->
-                        onNormalPostStateChange(normalCheckState)
-                        if (!uiState.isNormalPostChecked) onNormalPostFeeChange(BLANK)
-                    },
-                    normalPostFee = uiState.normalPostFee,
-                    onNormalPostFeeChange = onNormalPostFeeChange,
-                    isHalfPostChecked = uiState.isHalfPostChecked,
-                    onHalfPostCheckedChange = { halfCheckState ->
-                        onHalfPostStateChange(halfCheckState)
-                        if (!uiState.isHalfPostChecked) onHalfPostFeeChange(BLANK)
-                    },
-                    halfPostFee = uiState.halfPostFee,
-                    onHalfPostFeeChange = onHalfPostFeeChange,
+        LazyColumn(
+            modifier = modifier.background(NapzakMarketTheme.colors.white),
+            state = listState,
+        ) {
+            stickyHeader {
+                CloseTopBar(
+                    title = stringResource(regi_topbar_title, registrationType.label),
+                    onCloseClick = onCloseClick,
                 )
             }
-        }
-        if (registrationType == TradeType.BUY) {
             item {
-                Spacer(modifier = Modifier.height(35.dp))
-                RegistrationBuyGroup(
+                Spacer(modifier = Modifier.height(20.dp))
+                Text(
                     modifier = paddedModifier,
-                    number = uiState.productPurchasePrice,
-                    onNumberChange = onPurchasePriceChange,
-                    isOfferAvailable = uiState.isOfferAvailable,
-                    onCheckChange = onOfferCheckChange,
+                    text = stringResource(regi_product_image),
+                    style = NapzakMarketTheme.typography.bodySemi16,
+                    color = NapzakMarketTheme.colors.gray900,
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    modifier = paddedModifier,
+                    text = stringResource(regi_product_image_description),
+                    style = NapzakMarketTheme.typography.bodyMedium14,
+                    color = NapzakMarketTheme.colors.gray600,
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                RegistrationPhotoPicker(
+                    modifier = Modifier,
+                    imageUrlList = uiState.imageUri,
+                    onPhotoClick = onPhotoClick,
+                    onPress = onPhotoPress,
+                    onDeleteClick = onDeleteClick,
                 )
             }
-        }
-        item {
-            CommonButton(
-                modifier = paddedModifier
-                    .fillMaxWidth(),
-                text = stringResource(register),
-                onClick = onRegistrationClick,
-                buttonColors = with(NapzakMarketTheme.colors) {
-                    ButtonDefaults.buttonColors().copy(
-                        containerColor = purple30,
-                        contentColor = white,
-                        disabledContainerColor = gray400,
-                        disabledContentColor = white,
+            item {
+                Spacer(modifier = Modifier.height(40.dp))
+                RegistrationGenreButton(
+                    modifier = paddedModifier,
+                    genre = uiState.genre?.genreName ?: "",
+                    onGenreClick = onGenreClick,
+                )
+            }
+            item {
+                Spacer(modifier = Modifier.height(35.dp))
+                Text(
+                    modifier = paddedModifier,
+                    text = stringResource(regi_title),
+                    style = NapzakMarketTheme.typography.bodySemi16,
+                    color = NapzakMarketTheme.colors.gray900,
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                RegistrationPlainTextField(
+                    modifier = paddedModifier,
+                    text = uiState.title,
+                    placeholder = stringResource(regi_title_placeholder),
+                    onTextChange = onTitleChange,
+                    isTitle = true,
+                    maxLength = MAX_TITLE_LENGTH,
+                )
+                Spacer(modifier = Modifier.height(35.dp))
+            }
+            item {
+                Text(
+                    modifier = paddedModifier,
+                    text = stringResource(regi_description),
+                    style = NapzakMarketTheme.typography.bodySemi16,
+                    color = NapzakMarketTheme.colors.gray900,
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                RegistrationPlainTextField(
+                    modifier = paddedModifier,
+                    text = uiState.description,
+                    placeholder = stringResource(regi_description_placeholder),
+                    onTextChange = onDescriptionChange,
+                    isTitle = false,
+                    maxLength = MAX_DESCRIPTION_LENGTH,
+                )
+            }
+            if (registrationType == TradeType.SELL) {
+                item {
+                    Spacer(modifier = Modifier.height(35.dp))
+                    RegistrationSellGroup(
+                        modifier = paddedModifier,
+                        salePrice = uiState.productSalePrice,
+                        salePricePlaceHolder = stringResource(regi_price_placeholder),
+                        onSalePriceChange = onSalePriceChange,
+                        productCondition = uiState.productCondition,
+                        onProductConditionChange = onProductConditionChange,
+                        postFeeType = if (uiState.isPostFeeIncluded) PostFeeType.INCLUDED else PostFeeType.EXCLUDED,
+                        onPostFeeChange = onPostFeeChange,
+                        isNormalPostChecked = uiState.isNormalPostChecked,
+                        onNormalPostCheckedChange = { normalCheckState ->
+                            onNormalPostStateChange(normalCheckState)
+                            if (!uiState.isNormalPostChecked) onNormalPostFeeChange(BLANK)
+                        },
+                        normalPostFee = uiState.normalPostFee,
+                        onNormalPostFeeChange = onNormalPostFeeChange,
+                        isHalfPostChecked = uiState.isHalfPostChecked,
+                        onHalfPostCheckedChange = { halfCheckState ->
+                            onHalfPostStateChange(halfCheckState)
+                            if (!uiState.isHalfPostChecked) onHalfPostFeeChange(BLANK)
+                        },
+                        halfPostFee = uiState.halfPostFee,
+                        onHalfPostFeeChange = onHalfPostFeeChange,
                     )
-                },
-                shape = RoundedCornerShape(12.dp),
-                textStyle = NapzakMarketTheme.typography.bodyBold16,
-                contentPadding = PaddingValues(vertical = 15.dp),
-                isEnabled = uiState.isButtonEnabled,
-            )
+                }
+            }
+            if (registrationType == TradeType.BUY) {
+                item {
+                    RegistrationBuyGroup(
+                        modifier = paddedModifier,
+                        number = uiState.productPurchasePrice,
+                        onNumberChange = onPurchasePriceChange,
+                        isOfferAvailable = uiState.isOfferAvailable,
+                        onCheckChange = onOfferCheckChange,
+                    )
+                }
+            }
+            item {
+                CommonButton(
+                    modifier = paddedModifier
+                        .fillMaxWidth(),
+                    text = stringResource(register),
+                    onClick = onRegistrationClick,
+                    buttonColors = with(NapzakMarketTheme.colors) {
+                        ButtonDefaults.buttonColors().copy(
+                            containerColor = purple30,
+                            contentColor = white,
+                            disabledContainerColor = gray400,
+                            disabledContentColor = white,
+                        )
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = NapzakMarketTheme.typography.bodyBold16,
+                    contentPadding = PaddingValues(vertical = 15.dp),
+                    isEnabled = uiState.isButtonEnabled,
+                )
+            }
+        }
+        if (uiState.loadState == UiState.Loading) {
+            LoadingScreen()
         }
     }
 }

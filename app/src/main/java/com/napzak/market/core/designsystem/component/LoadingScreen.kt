@@ -1,15 +1,11 @@
 package com.napzak.market.core.designsystem.component
 
-import android.os.Build
-import android.view.View
-import android.view.Window
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -24,60 +20,39 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 @Composable
 fun LoadingScreen(
-    modifier: Modifier = Modifier
+    isLoading: Boolean,
+    modifier: Modifier = Modifier,
+    isLightTheme: Boolean = false,
 ) {
     val view by rememberUpdatedState(LocalView.current)
     val window = remember { (view.context as? ComponentActivity)?.window }
-    val backgroudColor = NapzakMarketTheme.colors.black70
+    val originalColor = NapzakMarketTheme.colors.white
+    val loadingColor = NapzakMarketTheme.colors.black70
 
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(isLoading) {
         window?.let {
-            setSystemBarStyle(
-                window = window,
-                view = view,
-                isLightTheme = false,
-                barColor = backgroudColor.toArgb(),
-            )
+            val statusBarColor = if (isLoading) loadingColor else originalColor
+            val navigationBarColor = if (isLoading) loadingColor else originalColor
+
+            it.statusBarColor = statusBarColor.toArgb()
+            it.navigationBarColor = navigationBarColor.toArgb()
+
+            val controller = WindowCompat.getInsetsController(it, view)
+            controller.isAppearanceLightStatusBars = !isLoading
+            controller.isAppearanceLightNavigationBars = !isLoading
         }
     }
 
-    DisposableEffect(key1 = Unit) {
-        onDispose {
-            setSystemBarStyle(
-                window = window,
-                view = view,
-                isLightTheme = true,
-                barColor = backgroudColor.toArgb(),
+    if (isLoading) {
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .background(loadingColor),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(
+                color = NapzakMarketTheme.colors.purple30
             )
-        }
-    }
-
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(backgroudColor),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            color = NapzakMarketTheme.colors.purple30
-        )
-    }
-}
-
-private fun setSystemBarStyle(
-    window: Window?,
-    view: View,
-    isLightTheme: Boolean,
-    barColor: Int,
-) {
-    window?.let {
-        val controller = WindowCompat.getInsetsController(it, view)
-        controller.isAppearanceLightStatusBars = isLightTheme
-        controller.isAppearanceLightNavigationBars = isLightTheme
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            it.statusBarColor = barColor
-            it.navigationBarColor = barColor
         }
     }
 }
@@ -86,6 +61,9 @@ private fun setSystemBarStyle(
 @Composable
 private fun LoadingScreenPreview() {
     NapzakMarketTheme {
-        LoadingScreen()
+        LoadingScreen(
+            isLoading = true,
+            isLightTheme = true
+        )
     }
 }

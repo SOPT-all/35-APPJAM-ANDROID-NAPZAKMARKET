@@ -335,9 +335,9 @@ fun RegistrationScreen(
                 )
             }
         }
-        if (uiState.loadState == UiState.Loading) {
-            LoadingScreen()
-        }
+        LoadingScreen(
+            isLoading = uiState.loadState == UiState.Loading,
+        )
     }
 }
 

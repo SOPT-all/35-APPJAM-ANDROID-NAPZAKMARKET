@@ -41,6 +41,7 @@ import com.napzak.market.R.string.regi_title
 import com.napzak.market.R.string.regi_title_placeholder
 import com.napzak.market.R.string.regi_topbar_title
 import com.napzak.market.R.string.register
+import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.component.LoadingScreen
 import com.napzak.market.core.designsystem.component.button.CommonButton
@@ -336,6 +337,7 @@ fun RegistrationScreen(
             }
         }
         LoadingScreen(
+            modifier = Modifier.noRippleClickable {  },
             isLoading = uiState.loadState == UiState.Loading,
         )
     }

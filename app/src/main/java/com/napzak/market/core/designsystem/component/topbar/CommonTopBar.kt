@@ -1,10 +1,10 @@
 package com.napzak.market.core.designsystem.component.topbar
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +29,8 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  * @param contentColor 제목 및 아이콘 색상
  * @param navigationIcon 네비게이션 아이콘 이미지
  * @param onNavigationClick 네비게이션 아이콘 클릭 시 수행할 동작
+ * @param showBorder 하단에 경계선을 표시할지 여부
+ * @param borderColor 하단에 경계선 색상
  * @param modifier TopBar에 적용할 Modifier
  */
 
@@ -41,37 +43,33 @@ fun CommonTopBar(
     modifier: Modifier = Modifier,
     navigationIcon: ImageVector? = null,
     onNavigationClick: (() -> Unit)? = null,
+    showBorder: Boolean = true,
     borderColor: Color = NapzakMarketTheme.colors.gray100,
 ) {
-    Box {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(backgroundColor)
-                .then(modifier),
-            contentAlignment = Alignment.Center,
-        ) {
-            if (navigationIcon != null) {
-                Icon(
-                    imageVector = navigationIcon,
-                    contentDescription = stringResource(navigation_icon_description),
-                    tint = contentColor,
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .noRippleClickable { onNavigationClick?.invoke() },
-                )
-            }
-            Text(
-                text = title,
-                style = textStyle,
-                color = contentColor,
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(backgroundColor)
+            .then(
+                if (showBorder) Modifier.border(1.dp, borderColor) else Modifier
+            )
+            .then(modifier),
+        contentAlignment = Alignment.Center,
+    ) {
+        if (navigationIcon != null) {
+            Icon(
+                imageVector = navigationIcon,
+                contentDescription = stringResource(navigation_icon_description),
+                tint = contentColor,
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .noRippleClickable { onNavigationClick?.invoke() },
             )
         }
-        HorizontalDivider(
-            color = borderColor,
-            modifier = Modifier
-                .align(Alignment.BottomCenter),
-            thickness = 1.dp,
+        Text(
+            text = title,
+            style = textStyle,
+            color = contentColor,
         )
     }
 }

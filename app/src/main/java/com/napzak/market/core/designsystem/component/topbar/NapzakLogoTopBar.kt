@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +32,7 @@ fun NapzakLogoTopBar(
         Image(
             painter = painterResource(R.drawable.img_logo_text),
             contentDescription = null,
+            modifier = Modifier.size(width = 100.dp, height = 20.dp)
         )
     }
 }

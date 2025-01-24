@@ -297,6 +297,8 @@ fun ExploreSuccessScreen(
             onTradeTypeClick = onTradeTypeClick,
         )
 
+        Spacer(Modifier.height(1.dp))
+
         ExploreFilterGroup(
             tradeType = tradeType,
             genreList = selectedGenreList,

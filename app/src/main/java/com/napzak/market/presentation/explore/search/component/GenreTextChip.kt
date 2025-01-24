@@ -14,7 +14,9 @@ import com.napzak.market.core.designsystem.component.chip.model.CustomChipColors
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 @Composable
-fun GenreTextChip() {
+fun GenreTextChip(
+    onGenreChipClick: () -> Unit,
+) {
     TextChip(
         text = stringResource(R.string.search_genre),
         textStyle = NapzakMarketTheme.typography.capSemi12,
@@ -24,11 +26,14 @@ fun GenreTextChip() {
             containerColor = NapzakMarketTheme.colors.gray100,
         ),
         innerPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
+        onClick = onGenreChipClick
     )
 }
 
 @Preview
 @Composable
 private fun GenreTextChipPreview() {
-    GenreTextChip()
+    GenreTextChip(
+        onGenreChipClick = {},
+    )
 }

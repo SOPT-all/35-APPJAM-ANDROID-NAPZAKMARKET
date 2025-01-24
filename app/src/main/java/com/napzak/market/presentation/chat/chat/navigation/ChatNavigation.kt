@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.napzak.market.core.common.navigation.MainTabRoute
-import com.napzak.market.presentation.prepare.ChatScreen
+import com.napzak.market.presentation.chat.chat.ChatScreen
 import kotlinx.serialization.Serializable
 
 fun NavController.navigateToChat(navOptions: NavOptions? = null) {

@@ -1,5 +1,7 @@
 package com.napzak.market.presentation.detailpage
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +29,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -108,6 +111,7 @@ fun DetailPageRoute(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailPageScreen(
     uiState: DetailPageUiState,
@@ -161,18 +165,18 @@ fun DetailPageScreen(
         },
         modifier = modifier,
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .background(NapzakMarketTheme.colors.white)
-                .fillMaxSize()
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState()),
-
+        CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
+            Column(
+                modifier = Modifier
+                    .background(NapzakMarketTheme.colors.white)
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .verticalScroll(rememberScrollState()),
             ) {
-            ImageBannerPager(
-                bannerImages = uiState.productPhotoUrls.toImmutableList(),
-            )
-            /*uiState.productPhotoUrls.let {
+                ImageBannerPager(
+                    bannerImages = uiState.productPhotoUrls.toImmutableList(),
+                )
+                /*uiState.productPhotoUrls.let {
                 AsyncImage(
                     model = it,
                     contentDescription = stringResource(id = R.string.detail_image_placeholder),
@@ -182,75 +186,23 @@ fun DetailPageScreen(
             }*/
 
 
-            Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
-            ProductInfoSection(
-                tradeType = parsedTradeType,
-                timeText = uiState.uploadTime,
-                views = uiState.viewCount,
-                likeCount = uiState.interestCount,
-                title = uiState.genreName,
-                subtitle = uiState.productName,
-                price = "${uiState.price.toString().formatToPriceString()}원",
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Column(
-                modifier = Modifier.padding(horizontal = 20.dp),
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                ) {
-                    HorizontalDivider(
-                        color = NapzakMarketTheme.colors.gray100,
-                        thickness = 1.dp,
-                    )
-                }
+                ProductInfoSection(
+                    tradeType = parsedTradeType,
+                    timeText = uiState.uploadTime,
+                    views = uiState.viewCount,
+                    likeCount = uiState.interestCount,
+                    title = uiState.genreName,
+                    subtitle = uiState.productName,
+                    price = "${uiState.price.toString().formatToPriceString()}원",
+                )
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                Text(
-                    text = uiState.description,
-                    style = NapzakMarketTheme.typography.bodyMedium16,
-                    color = NapzakMarketTheme.colors.gray900,
-                    textAlign = TextAlign.Start,
-                )
-
-                if (uiState.tradeType == TradeType.SELL.name) {
-
-                    Spacer(modifier = Modifier.height(35.dp))
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.detail_product_status_label),
-                            style = NapzakMarketTheme.typography.bodySemi16,
-                            color = NapzakMarketTheme.colors.gray800,
-                        )
-                        Row(
-                            modifier = Modifier
-                                .background(
-                                    NapzakMarketTheme.colors.gray100,
-                                    shape = RoundedCornerShape(4.dp)
-                                )
-                                .padding(horizontal = 12.dp, vertical = 6.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = conditionEnum.label,
-                                style = NapzakMarketTheme.typography.bodySemi14,
-                                color = NapzakMarketTheme.colors.gray900
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(20.dp))
-
+                Column(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                ) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -263,289 +215,343 @@ fun DetailPageScreen(
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.detail_delivery_fee_label),
-                            style = NapzakMarketTheme.typography.bodySemi16,
-                            color = NapzakMarketTheme.colors.gray800,
-                        )
-                        if (uiState.standardDeliveryFee > 0 || uiState.halfDeliveryFee > 0) {
-                            Row {
-                                uiState.standardDeliveryFee.takeIf { it > 0 }?.let {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        Text(
-                                            text = stringResource(id = R.string.detail_delivery_normal),
-                                            style = NapzakMarketTheme.typography.bodySemi14,
-                                            color = NapzakMarketTheme.colors.gray700,
-                                        )
+                    Text(
+                        text = uiState.description,
+                        style = NapzakMarketTheme.typography.bodyMedium16,
+                        color = NapzakMarketTheme.colors.gray900,
+                        textAlign = TextAlign.Start,
+                    )
 
-                                        Spacer(modifier = Modifier.width(6.dp))
+                    if (uiState.tradeType == TradeType.SELL.name) {
 
-                                        Text(
-                                            text = "${
-                                                uiState.standardDeliveryFee.toString()
-                                                    .formatToPriceString()
-                                            }원",
-                                            style = NapzakMarketTheme.typography.bodySemi16,
-                                            color = NapzakMarketTheme.colors.gray900,
-                                        )
-                                    }
-                                }
-                                uiState.halfDeliveryFee.takeIf { it > 0 }?.let {
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Text(
-                                            text = stringResource(id = R.string.detail_delivery_discounted),
-                                            style = NapzakMarketTheme.typography.bodySemi14,
-                                            color = NapzakMarketTheme.colors.gray700,
-                                        )
+                        Spacer(modifier = Modifier.height(35.dp))
 
-                                        Spacer(modifier = Modifier.width(6.dp))
-
-                                        Text(
-                                            text = "${
-                                                uiState.halfDeliveryFee.toString()
-                                                    .formatToPriceString()
-                                            }원",
-                                            style = NapzakMarketTheme.typography.bodySemi16,
-                                            color = NapzakMarketTheme.colors.gray900,
-                                        )
-                                    }
-                                }
-                            }
-                        } else {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Text(
-                                text = stringResource(id = R.string.detail_delivery_included),
+                                text = stringResource(id = R.string.detail_product_status_label),
                                 style = NapzakMarketTheme.typography.bodySemi16,
+                                color = NapzakMarketTheme.colors.gray800,
+                            )
+                            Row(
+                                modifier = Modifier
+                                    .background(
+                                        NapzakMarketTheme.colors.gray100,
+                                        shape = RoundedCornerShape(4.dp)
+                                    )
+                                    .padding(horizontal = 12.dp, vertical = 6.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = conditionEnum.label,
+                                    style = NapzakMarketTheme.typography.bodySemi14,
+                                    color = NapzakMarketTheme.colors.gray900
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                        ) {
+                            HorizontalDivider(
+                                color = NapzakMarketTheme.colors.gray100,
+                                thickness = 1.dp,
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.detail_delivery_fee_label),
+                                style = NapzakMarketTheme.typography.bodySemi16,
+                                color = NapzakMarketTheme.colors.gray800,
+                            )
+                            if (uiState.standardDeliveryFee > 0 || uiState.halfDeliveryFee > 0) {
+                                Row {
+                                    uiState.standardDeliveryFee.takeIf { it > 0 }?.let {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                        ) {
+                                            Text(
+                                                text = stringResource(id = R.string.detail_delivery_normal),
+                                                style = NapzakMarketTheme.typography.bodySemi14,
+                                                color = NapzakMarketTheme.colors.gray700,
+                                            )
+
+                                            Spacer(modifier = Modifier.width(6.dp))
+
+                                            Text(
+                                                text = "${
+                                                    uiState.standardDeliveryFee.toString()
+                                                        .formatToPriceString()
+                                                }원",
+                                                style = NapzakMarketTheme.typography.bodySemi16,
+                                                color = NapzakMarketTheme.colors.gray900,
+                                            )
+                                        }
+                                    }
+                                    uiState.halfDeliveryFee.takeIf { it > 0 }?.let {
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                text = stringResource(id = R.string.detail_delivery_discounted),
+                                                style = NapzakMarketTheme.typography.bodySemi14,
+                                                color = NapzakMarketTheme.colors.gray700,
+                                            )
+
+                                            Spacer(modifier = Modifier.width(6.dp))
+
+                                            Text(
+                                                text = "${
+                                                    uiState.halfDeliveryFee.toString()
+                                                        .formatToPriceString()
+                                                }원",
+                                                style = NapzakMarketTheme.typography.bodySemi16,
+                                                color = NapzakMarketTheme.colors.gray900,
+                                            )
+                                        }
+                                    }
+                                }
+                            } else {
+                                Text(
+                                    text = stringResource(id = R.string.detail_delivery_included),
+                                    style = NapzakMarketTheme.typography.bodySemi16,
+                                    color = NapzakMarketTheme.colors.gray900,
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(35.dp))
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                ) {
+                    HorizontalDivider(
+                        color = NapzakMarketTheme.colors.gray50,
+                        thickness = 8.dp,
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(35.dp))
+
+                Column(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.detail_market_info_label),
+                        style = NapzakMarketTheme.typography.bodySemi16,
+                        color = NapzakMarketTheme.colors.gray800,
+                    )
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .noRippleClickable(onMarketInfoClick),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(60.dp)
+                                .background(
+                                    color = NapzakMarketTheme.colors.purple10,
+                                    shape = CircleShape,
+                                ),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            AsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(uiState.profileImageUrl)
+                                    .placeholder(R.drawable.ic_profile_basic_60)
+                                    .error(R.drawable.ic_profile_basic_60)
+                                    .build(),
+                                contentDescription = stringResource(id = profile_image_description),
+                                modifier = Modifier.size(60.dp),
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        Column {
+                            Text(
+                                text = uiState.marketInfo.nickname,
+                                style = NapzakMarketTheme.typography.bodyBold16,
                                 color = NapzakMarketTheme.colors.gray900,
                             )
+
+                            Spacer(modifier = Modifier.height(2.dp))
+
+                            Row {
+                                Text(
+                                    text = stringResource(id = R.string.detail_market_products_label),
+                                    style = NapzakMarketTheme.typography.capMedium12,
+                                    color = NapzakMarketTheme.colors.gray700,
+                                )
+
+                                Spacer(modifier = Modifier.width(2.dp))
+
+                                Text(
+                                    text = stringResource(
+                                        id = R.string.detail_market_products_count,
+                                        uiState.marketInfo.totalProducts,
+                                    ),
+                                    style = NapzakMarketTheme.typography.capSemi12,
+                                    color = NapzakMarketTheme.colors.purple30,
+                                )
+
+                                Spacer(modifier = Modifier.width(4.dp))
+
+                                Text(
+                                    text = stringResource(id = R.string.detail_separator_dot),
+                                    style = NapzakMarketTheme.typography.capMedium12,
+                                    color = NapzakMarketTheme.colors.gray700,
+                                )
+
+                                Spacer(modifier = Modifier.width(4.dp))
+
+                                Text(
+                                    text = stringResource(id = R.string.detail_market_transactions_label),
+                                    style = NapzakMarketTheme.typography.capMedium12,
+                                    color = NapzakMarketTheme.colors.gray700,
+                                )
+
+                                Spacer(modifier = Modifier.width(2.dp))
+
+                                Text(
+                                    text = stringResource(
+                                        id = R.string.detail_market_transactions_count,
+                                        uiState.marketInfo.totalTransactions,
+                                    ),
+                                    style = NapzakMarketTheme.typography.capSemi12,
+                                    color = NapzakMarketTheme.colors.purple30,
+                                )
+                            }
                         }
                     }
                 }
+                Spacer(modifier = Modifier.height(40.dp))
             }
+        }
+    }
+}
 
-            Spacer(modifier = Modifier.height(35.dp))
 
+    @Composable
+    fun BottomBar(
+        onHeartClick: () -> Unit,
+        onChatClick: () -> Unit,
+        isLiked: Boolean,
+    ) {
+        val icon = if (isLiked) {
+            R.drawable.ic_heart_filled_detail_24
+        } else {
+            R.drawable.ic_heart_detail_24
+        }
+        val coroutineScope = rememberCoroutineScope()
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(92.dp)
+                .background(Color.White)
+                .padding(20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(),
-            ) {
-                HorizontalDivider(
-                    color = NapzakMarketTheme.colors.gray50,
-                    thickness = 8.dp,
-                )
-            }
-
-            Spacer(modifier = Modifier.height(35.dp))
-
-            Column(
-                modifier = Modifier.padding(horizontal = 20.dp),
-            ) {
-                Text(
-                    text = stringResource(id = R.string.detail_market_info_label),
-                    style = NapzakMarketTheme.typography.bodySemi16,
-                    color = NapzakMarketTheme.colors.gray800,
-                )
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .noRippleClickable(onMarketInfoClick),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(60.dp)
-                            .background(
-                                color = NapzakMarketTheme.colors.purple10,
-                                shape = CircleShape,
-                            ),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data(uiState.profileImageUrl)
-                                .placeholder(R.drawable.ic_profile_basic_60)
-                                .error(R.drawable.ic_profile_basic_60)
-                                .build(),
-                            contentDescription = stringResource(id = profile_image_description),
-                            modifier = Modifier.size(60.dp),
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    Column {
-                        Text(
-                            text = uiState.marketInfo.nickname,
-                            style = NapzakMarketTheme.typography.bodyBold16,
-                            color = NapzakMarketTheme.colors.gray900,
-                        )
-
-                        Spacer(modifier = Modifier.height(2.dp))
-
-                        Row {
-                            Text(
-                                text = stringResource(id = R.string.detail_market_products_label),
-                                style = NapzakMarketTheme.typography.capMedium12,
-                                color = NapzakMarketTheme.colors.gray700,
-                            )
-
-                            Spacer(modifier = Modifier.width(2.dp))
-
-                            Text(
-                                text = stringResource(
-                                    id = R.string.detail_market_products_count,
-                                    uiState.marketInfo.totalProducts,
-                                ),
-                                style = NapzakMarketTheme.typography.capSemi12,
-                                color = NapzakMarketTheme.colors.purple30,
-                            )
-
-                            Spacer(modifier = Modifier.width(4.dp))
-
-                            Text(
-                                text = stringResource(id = R.string.detail_separator_dot),
-                                style = NapzakMarketTheme.typography.capMedium12,
-                                color = NapzakMarketTheme.colors.gray700,
-                            )
-
-                            Spacer(modifier = Modifier.width(4.dp))
-
-                            Text(
-                                text = stringResource(id = R.string.detail_market_transactions_label),
-                                style = NapzakMarketTheme.typography.capMedium12,
-                                color = NapzakMarketTheme.colors.gray700,
-                            )
-
-                            Spacer(modifier = Modifier.width(2.dp))
-
-                            Text(
-                                text = stringResource(
-                                    id = R.string.detail_market_transactions_count,
-                                    uiState.marketInfo.totalTransactions,
-                                ),
-                                style = NapzakMarketTheme.typography.capSemi12,
-                                color = NapzakMarketTheme.colors.purple30,
-                            )
-                        }
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(40.dp))
-        }
-    }
-}
-
-
-@Composable
-fun BottomBar(
-    onHeartClick: () -> Unit,
-    onChatClick: () -> Unit,
-    isLiked: Boolean,
-) {
-    val icon = if (isLiked) {
-        R.drawable.ic_heart_filled_detail_24
-    } else {
-        R.drawable.ic_heart_detail_24
-    }
-    val coroutineScope = rememberCoroutineScope()
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(92.dp)
-            .background(Color.White)
-            .padding(20.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Box(
-            modifier = Modifier
-                .size(52.dp)
-                .background(
-                    color = Color.White,
-                    shape = RoundedCornerShape(12.dp),
-                )
-                .border(
-                    width = 1.dp,
-                    color = NapzakMarketTheme.colors.gray200,
-                    shape = RoundedCornerShape(12.dp),
-                ),
-
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                imageVector = ImageVector.vectorResource(icon),
-                contentDescription = stringResource(id = R.string.detail_like_button_description),
-                tint = Color.Unspecified,
-                modifier = Modifier
-                    .throttledNoRippleClickable(
-                        throttleTime = 100L,
-                        coroutineScope = coroutineScope,
-                        onClick = onHeartClick
+                    .size(52.dp)
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(12.dp),
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = NapzakMarketTheme.colors.gray200,
+                        shape = RoundedCornerShape(12.dp),
                     ),
+
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(icon),
+                    contentDescription = stringResource(id = R.string.detail_like_button_description),
+                    tint = Color.Unspecified,
+                    modifier = Modifier
+                        .throttledNoRippleClickable(
+                            throttleTime = 100L,
+                            coroutineScope = coroutineScope,
+                            onClick = onHeartClick
+                        ),
+                )
+            }
+
+            Spacer(modifier = Modifier.width(15.dp))
+
+            CommonButton(
+                text = stringResource(id = R.string.detail_chat_button),
+                onClick = onChatClick,
+                buttonColors = ButtonDefaults.buttonColors(
+                    containerColor = NapzakMarketTheme.colors.gray900,
+                ),
+                contentPadding = PaddingValues(vertical = 15.dp),
+                shape = RoundedCornerShape(12.dp),
+                textStyle = NapzakMarketTheme.typography.bodyBold16,
+                modifier = Modifier
+                    .weight(1f),
             )
         }
-
-        Spacer(modifier = Modifier.width(15.dp))
-
-        CommonButton(
-            text = stringResource(id = R.string.detail_chat_button),
-            onClick = onChatClick,
-            buttonColors = ButtonDefaults.buttonColors(
-                containerColor = NapzakMarketTheme.colors.gray900,
-            ),
-            contentPadding = PaddingValues(vertical = 15.dp),
-            shape = RoundedCornerShape(12.dp),
-            textStyle = NapzakMarketTheme.typography.bodyBold16,
-            modifier = Modifier
-                .weight(1f),
-        )
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun DetailPageScreenSellPreview() {
-    val mockUiState = DetailPageUiState(
-        productName = "딸기 마이멜로디 마스코트 인형",
-        price = 35000,
-        uploadTime = "3시간 전",
-        viewCount = 120,
-        interestCount = 45,
-        description = "딸기 마멜 인형 판매합니다!",
-        productCondition = "미개봉",
-        tradeType = TradeType.SELL.name,
-        standardDeliveryFee = 3000,
-        halfDeliveryFee = 1500,
-        marketInfo = MarketInfoUiState(
-            nickname = "판매자1",
-            totalProducts = 15,
-            totalTransactions = 20,
+    @Preview(showBackground = true)
+    @Composable
+    fun DetailPageScreenSellPreview() {
+        val mockUiState = DetailPageUiState(
+            productName = "딸기 마이멜로디 마스코트 인형",
+            price = 35000,
+            uploadTime = "3시간 전",
+            viewCount = 120,
+            interestCount = 45,
+            description = "딸기 마멜 인형 판매합니다!",
+            productCondition = "미개봉",
+            tradeType = TradeType.SELL.name,
+            standardDeliveryFee = 3000,
+            halfDeliveryFee = 1500,
+            marketInfo = MarketInfoUiState(
+                nickname = "판매자1",
+                totalProducts = 15,
+                totalTransactions = 20,
+            )
         )
-    )
 
-    NapzakMarketTheme {
-        DetailPageScreen(
-            uiState = mockUiState,
-            onChatNavigate = {},
-            onBackClick = {},
-            onLikeClick = {},
-            snackBarHostState = SnackbarHostState(),
-            onMarketInfoClick = {}
-        )
+        NapzakMarketTheme {
+            DetailPageScreen(
+                uiState = mockUiState,
+                onChatNavigate = {},
+                onBackClick = {},
+                onLikeClick = {},
+                snackBarHostState = SnackbarHostState(),
+                onMarketInfoClick = {}
+            )
+        }
     }
-}
+
 
 @Preview(showBackground = true)
 @Composable

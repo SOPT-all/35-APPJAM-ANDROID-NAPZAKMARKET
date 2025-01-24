@@ -20,6 +20,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  * @param chipColors 칩의 색상과 테두리 색상을 정의하는 CustomChipColors 객체
  * @param innerPadding 내부 패딩
  * @param shape 칩의 모양
+ * @param onClick 해당 칩 클릭 시 실행되는 콜백
  */
 
 @Composable

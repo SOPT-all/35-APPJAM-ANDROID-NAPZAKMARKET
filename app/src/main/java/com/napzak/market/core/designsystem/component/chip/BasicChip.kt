@@ -39,6 +39,7 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  * @param leadingIcon 왼쪽에 표시할 아이콘, null이면 표시되지 않음
  * @param trailingIcon 오른쪽에 표시할 아이콘, null이면 표시되지 않음
  * @param innerPaddingValues 내부 패딩값
+ * @param onClick 해당 칩 클릭 시 실행되는 콜백
  */
 
 @Composable

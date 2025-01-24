@@ -15,12 +15,10 @@ fun NavController.navigateToChat(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.chatGraph(
     modifier: Modifier = Modifier,
-    navController: NavController,
 ) {
     composable<Chat> {
         ChatScreen(
             modifier = modifier,
-            onBackClick = { navController.popBackStack() },
         )
     }
 }

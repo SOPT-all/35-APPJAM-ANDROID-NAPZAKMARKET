@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.component.image.EmptyImage
-import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**
@@ -23,7 +22,6 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 @Composable
 fun ChatScreen(
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -31,13 +29,6 @@ fun ChatScreen(
             .fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
-        BackTopBar(
-            title = "",
-            onBackClick = onBackClick,
-            modifier = Modifier.align(Alignment.TopCenter),
-            showBorder = false,
-        )
-
         EmptyImage(
             modifier = Modifier.padding(top = 278.dp),
         )
@@ -47,5 +38,5 @@ fun ChatScreen(
 @Preview(showBackground = true)
 @Composable
 private fun ChatScreenBottomBarPreview() {
-    ChatScreen(onBackClick = {})
+    ChatScreen()
 }

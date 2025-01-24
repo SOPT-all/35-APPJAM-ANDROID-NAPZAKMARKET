@@ -142,7 +142,6 @@ private fun MainNavHost(
 
         chatGraph(
             modifier = modifier,
-            navController = navigator.navController,
         )
 
         myPageGraph(

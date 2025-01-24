@@ -1,5 +1,9 @@
 package com.napzak.market.core.designsystem.component.topbar
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,9 +24,10 @@ import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
  * @param textStyle 제목 텍스트 스타일
  * @param backgroundColor TopBar의 배경색
  * @param contentColor 제목 텍스트 색상
+ * @param showBorder 하단에 경계선을 표시할지 여부
+ * @param borderColor 하단에 경계선 색상
  * @param modifier TopBar에 적용할 Modifier
  */
-
 @Composable
 fun BackTopBar(
     title: String,
@@ -31,17 +36,30 @@ fun BackTopBar(
     textStyle: TextStyle = NapzakMarketTheme.typography.titleSemi18,
     backgroundColor: Color = NapzakMarketTheme.colors.white,
     contentColor: Color = NapzakMarketTheme.colors.gray900,
+    showBorder: Boolean = true,
+    borderColor: Color = NapzakMarketTheme.colors.gray100,
 ) {
-    CommonTopBar(
+    Box(
         modifier = modifier
-            .padding(top = 2.dp, bottom = 4.dp),
-        title = title,
-        navigationIcon = ImageVector.vectorResource(R.drawable.ic_back_48),
-        onNavigationClick = onBackClick,
-        textStyle = textStyle,
-        backgroundColor = backgroundColor,
-        contentColor = contentColor,
-    )
+            .background(backgroundColor)
+            .then(
+                if (showBorder) Modifier.border(1.dp, borderColor) else Modifier
+            ),
+    ) {
+        CommonTopBar(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
+            title = title,
+            navigationIcon = ImageVector.vectorResource(R.drawable.ic_back_48),
+            onNavigationClick = onBackClick,
+            textStyle = textStyle,
+            backgroundColor = backgroundColor,
+            contentColor = contentColor,
+            showBorder = showBorder,
+            borderColor = borderColor,
+        )
+    }
 }
 
 @Preview(showBackground = true)

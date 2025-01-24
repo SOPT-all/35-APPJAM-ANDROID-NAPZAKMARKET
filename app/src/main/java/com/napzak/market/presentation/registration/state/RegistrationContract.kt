@@ -1,6 +1,7 @@
 package com.napzak.market.presentation.registration.state
 
 import androidx.compose.runtime.Immutable
+import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.ProductConditionType
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.domain.genre.model.Genre
@@ -27,6 +28,8 @@ class RegistrationContract {
 
         val productPurchasePrice: String = "",
         val isOfferAvailable: Boolean = false,
+
+        val loadState: UiState<Unit> = UiState.Empty,
     )
 
     sealed class RegistrationSideEffect {

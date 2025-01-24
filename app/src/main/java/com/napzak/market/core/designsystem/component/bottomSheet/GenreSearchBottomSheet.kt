@@ -129,12 +129,15 @@ fun GenreSearchBottomSheet(
                                     GenreSearchItem(
                                         genreName = genreItem.genreName,
                                         onGenreItemClick = {
-                                            if (selectedGenreList.size < MAX_GENRE_SELECTION) {
+                                            if (selectedGenreList.size < MAX_GENRE_SELECTION && !selectedGenreList.contains(
+                                                    genreItem
+                                                )
+                                            ) {
                                                 selectedGenreList = selectedGenreList + genreItem
                                             }
                                             focusManager.clearFocus()
                                         },
-                                        isLastItem = index == selectedGenreList.size - 1,
+                                        isLastItem = index == genreItems.data.size - 1,
                                     )
                                 }
 

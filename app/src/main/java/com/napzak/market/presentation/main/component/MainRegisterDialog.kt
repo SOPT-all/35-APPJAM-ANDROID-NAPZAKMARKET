@@ -97,9 +97,7 @@ fun MainRegisterDialog(
         modifier = modifier
             .width(IntrinsicSize.Max)
             .clip(RoundedCornerShape(12.dp))
-            .background(color = NapzakMarketTheme.colors.white)
-            .padding(vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .background(color = NapzakMarketTheme.colors.white),
     ) {
         RegisterTab.entries.forEachIndexed { index, tab ->
             val onClick = when (tab) {
@@ -111,7 +109,6 @@ fun MainRegisterDialog(
                 image = ImageVector.vectorResource(tab.iconRes),
                 label = stringResource(tab.titleRes),
                 onClick = onClick,
-                modifier = Modifier.padding(horizontal = 26.dp)
             )
 
             if (index != RegisterTab.entries.lastIndex) {
@@ -135,6 +132,7 @@ private fun RegisterNavigationButton(
     Row(
         modifier = Modifier
             .noRippleClickable(onClick)
+            .padding(horizontal = 26.dp, vertical = 16.dp)
             .then(modifier),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),

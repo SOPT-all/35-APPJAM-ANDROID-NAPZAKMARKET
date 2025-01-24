@@ -183,11 +183,12 @@ class RegistrationViewModel @Inject constructor(
                 && _uiState.value.productPurchasePrice.isNotEmpty()
 
         val isPostFeeValid = when {
-            _uiState.value.isNormalPostChecked && _uiState.value.normalPostFee.isNotEmpty()
-                    && (!_uiState.value.isHalfPostChecked || _uiState.value.halfPostFee.isNotEmpty()) -> true
+            _uiState.value.isNormalPostChecked && (_uiState.value.normalPostFee.isNotEmpty() &&
+                    _uiState.value.normalPostFee.priceToNumericTransformation() >= MIN_NORMAL_POST_FEE)
+                    && (!_uiState.value.isHalfPostChecked || (_uiState.value.halfPostFee.isNotEmpty() && _uiState.value.halfPostFee != ZERO)) -> true
 
             !_uiState.value.isNormalPostChecked && _uiState.value.isHalfPostChecked
-                    && _uiState.value.halfPostFee.isNotEmpty() -> true
+                    && (_uiState.value.halfPostFee.isNotEmpty() && _uiState.value.halfPostFee != ZERO) -> true
 
             else -> false
         }
@@ -299,7 +300,9 @@ class RegistrationViewModel @Inject constructor(
         private const val MAX_PURCHASE_PRICE = 999
         private const val MAX_SALE_PRICE = 1_000_000
         private const val MAX_NORMAL_POST_FEE = 30_000
+        private const val MIN_NORMAL_POST_FEE = 100
         private const val MAX_HALF_POST_FEE = 5_000
+        private const val ZERO = "0"
         private const val DEBOUNCE_DELAY = 500L
         private const val KEY_DELIMITER = "image_"
         private const val VALUE_DELIMITER = "?"

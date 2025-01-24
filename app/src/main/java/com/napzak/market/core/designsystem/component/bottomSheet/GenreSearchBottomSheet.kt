@@ -136,7 +136,7 @@ fun GenreSearchBottomSheet(
                                             }
                                             focusManager.clearFocus()
                                         },
-                                        isLastItem = index == selectedGenreList.size - 1,
+                                        isLastItem = index == genreItems.data.size - 1,
                                     )
                                 }
                             }

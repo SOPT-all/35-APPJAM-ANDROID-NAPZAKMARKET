@@ -6,17 +6,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +31,8 @@ import com.napzak.market.core.designsystem.component.textField.SearchBox
 import com.napzak.market.core.designsystem.component.topbar.BackTopBar
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.domain.genre.model.Genre
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun RegistrationGenreSearchRoute(
@@ -77,6 +80,8 @@ fun RegistrationGenreSearchScreen(
     modifier: Modifier = Modifier,
 ) {
     val paddedModifier = Modifier.padding(horizontal = 20.dp)
+    var isClickable by remember { mutableStateOf(true) }
+    val coroutineScope = rememberCoroutineScope()
 
     Row(
         modifier = Modifier
@@ -112,7 +117,16 @@ fun RegistrationGenreSearchScreen(
             ) { index, genre ->
                 GenreSearchItem(
                     genreName = genre.genreName,
-                    onGenreItemClick = { onGenreSelect(genre) },
+                    onGenreItemClick = {
+                        if (isClickable) {
+                            isClickable = false
+                            coroutineScope.launch {
+                                delay(200L)
+                                onGenreSelect(genre)
+                                isClickable = true
+                            }
+                        }
+                    },
                     isLastItem = index == genreList.size - 1,
                     modifier = paddedModifier,
                 )

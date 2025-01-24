@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -29,7 +30,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.napzak.market.R
 import com.napzak.market.R.string.profile_image_description
-import com.napzak.market.core.common.extension.noRippleClickable
+import com.napzak.market.core.common.extension.throttledNoRippleClickable
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
@@ -40,6 +41,7 @@ fun MarketInfoTopSection(
     onBackButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val coroutineScope = rememberCoroutineScope()
     Box {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -61,7 +63,10 @@ fun MarketInfoTopSection(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_back_48),
                     contentDescription = stringResource(R.string.left_chevron_button),
                     tint = NapzakMarketTheme.colors.gray900,
-                    modifier = Modifier.noRippleClickable(onBackButtonClick),
+                    modifier = Modifier.throttledNoRippleClickable(
+                        coroutineScope = coroutineScope,
+                        onClick = onBackButtonClick
+                    ),
                 )
 
                 Spacer(Modifier.height(56.dp))

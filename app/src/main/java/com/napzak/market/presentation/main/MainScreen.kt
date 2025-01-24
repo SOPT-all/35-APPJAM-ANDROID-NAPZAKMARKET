@@ -208,7 +208,7 @@ private fun MainNavHost(
 
         marketInfoGraph(
             modifier = modifier,
-            onBackButtonClick = navigator.navController::popBackStack,
+            onBackButtonClick = navigator.navController::navigateUp,
             onDetailPageNavigate = navigator.navController::navigateToDetailPage,
         )
 

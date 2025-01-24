@@ -249,18 +249,18 @@ class ExploreViewModel @Inject constructor(
         }
     }
 
-    fun updateSale() {
+    fun updateSale(newValue: Boolean? = null) {
         _uiState.update { currentState ->
             currentState.copy(
-                isOnSale = !uiState.value.isOnSale
+                isOnSale = newValue ?: !uiState.value.isOnSale
             )
         }
     }
 
-    fun updateUnopen() {
+    fun updateUnopen(newValue: Boolean? = null) {
         _uiState.update { currentState ->
             currentState.copy(
-                isUnopened = !uiState.value.isUnopened
+                isUnopened = newValue ?: !uiState.value.isUnopened
             )
         }
     }

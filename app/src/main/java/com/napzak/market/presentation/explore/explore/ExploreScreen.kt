@@ -17,9 +17,13 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,6 +53,7 @@ import com.napzak.market.presentation.explore.explore.state.ExploreUiState
 import com.napzak.market.presentation.explore.explore.type.ExploreScreenType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @Composable
 fun ExploreRoute(
@@ -60,13 +65,15 @@ fun ExploreRoute(
     modifier: Modifier = Modifier,
     viewModel: ExploreViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    var isDetailClicked by rememberSaveable { mutableStateOf(true) }
+    val uiState: ExploreUiState by viewModel.uiState.collectAsStateWithLifecycle()
     val bottomSheetState by viewModel.bottomSheetState.collectAsStateWithLifecycle()
 
     val gridState = rememberLazyGridState()
     val coroutineScope = rememberCoroutineScope()
 
     BackHandler {
+        isDetailClicked = false
         if (uiState.exploreScreenType == ExploreScreenType.BASIC) {
             onBackButtonClick()
         } else {
@@ -75,7 +82,25 @@ fun ExploreRoute(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.initExploreScreenState(searchTerm, genreId)
+        Timber.tag("Search").d("isDetailClicked: $isDetailClicked")
+
+        if (!isDetailClicked) {
+            viewModel.initExploreScreenState(searchTerm, genreId)
+        } else {
+            isDetailClicked = false
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            if (!isDetailClicked) {
+                with(viewModel) {
+                    updateSelectedGenreList(emptyList())
+                    updateSale(false)
+                    updateUnopen(false)
+                }
+            }
+        }
     }
 
     LaunchedEffect(uiState) {
@@ -106,7 +131,10 @@ fun ExploreRoute(
             updateScrollState(coroutineScope, gridState)
         },
         onSortButtonClick = { viewModel.updateBottomSheetVisibility(BottomSheetType.SORT) },
-        onItemClick = onProductDetailNavigate,
+        onItemClick = {
+            onProductDetailNavigate(it)
+            isDetailClicked = true
+        },
         onLikeClick = viewModel::updateProductInterest,
         onDismissRequest = viewModel::updateBottomSheetVisibility,
         onSortItemClick = {
@@ -200,7 +228,7 @@ fun ExploreSuccessScreen(
     productList: List<Product>,
     sortType: SortType,
     debounce: () -> Unit,
-    onBackButtonClick: (String) -> Unit,
+    onBackButtonClick: (String?) -> Unit,
     onSearchBoxClick: (String?) -> Unit,
     onTradeTypeClick: (TradeType) -> Unit,
     onGenreListClick: () -> Unit,
@@ -270,7 +298,13 @@ fun ExploreSuccessScreen(
                     Box(
                         modifier = Modifier
                             .size(48.dp)
-                            .noRippleClickable { onBackButtonClick(selectedGenreList[0].genreName) },
+                            .noRippleClickable {
+                                try {
+                                    onSearchBoxClick(selectedGenreList[0].genreName)
+                                } catch (e: IndexOutOfBoundsException) {
+                                    onSearchBoxClick(null)
+                                }
+                            },
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(

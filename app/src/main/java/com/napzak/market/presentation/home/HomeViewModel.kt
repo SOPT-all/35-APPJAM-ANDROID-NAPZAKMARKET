@@ -3,10 +3,11 @@ package com.napzak.market.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.napzak.market.core.common.state.UiState
-import com.napzak.market.domain.home.model.HomeBanner
-import com.napzak.market.domain.home.model.ProductItem
-import com.napzak.market.domain.home.repository.HomeRepository
+import com.napzak.market.domain.banner.model.HomeBanner
+import com.napzak.market.domain.banner.repository.HomeBannerRepository
 import com.napzak.market.domain.interest.repository.InterestRepository
+import com.napzak.market.domain.product.model.Product
+import com.napzak.market.domain.product.repository.HomeProductRepository
 import com.napzak.market.presentation.home.state.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,15 +21,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeRepository: HomeRepository,
+    private val bannerRepository: HomeBannerRepository,
+    private val productRepository: HomeProductRepository,
     private val interestRepository: InterestRepository,
 ) : ViewModel() {
     private val _bannerLoadState = MutableStateFlow<UiState<List<HomeBanner>>>(UiState.Loading)
     private val _recommendProductLoadState =
-        MutableStateFlow<UiState<List<ProductItem>>>(UiState.Loading)
+        MutableStateFlow<UiState<List<Product>>>(UiState.Loading)
     private val _popularProductLoadState =
-        MutableStateFlow<UiState<List<ProductItem>>>(UiState.Loading)
-    private val _buyProductLoadState = MutableStateFlow<UiState<List<ProductItem>>>(UiState.Loading)
+        MutableStateFlow<UiState<List<Product>>>(UiState.Loading)
+    private val _buyProductLoadState = MutableStateFlow<UiState<List<Product>>>(UiState.Loading)
 
     val uiState: StateFlow<HomeUiState> = combine(
         _bannerLoadState,
@@ -56,7 +58,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getBannerImages() = viewModelScope.launch {
-        homeRepository.fetchHomeBannerList()
+        bannerRepository.fetchHomeBannerList()
             .onSuccess { response ->
                 if (response.isEmpty()) {
                     _bannerLoadState.update { UiState.Empty }
@@ -70,7 +72,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun getRecommendedItems() {
-        homeRepository.fetchRecommendProductList()
+        productRepository.fetchRecommendProductList()
             .onSuccess { response ->
                 if (response.isEmpty()) {
                     _recommendProductLoadState.update { UiState.Empty }
@@ -84,7 +86,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun getPopularItems() {
-        homeRepository.fetchPopularProductList()
+        productRepository.fetchPopularProductList()
             .onSuccess { response ->
                 if (response.isEmpty()) {
                     _popularProductLoadState.update { UiState.Empty }
@@ -98,7 +100,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun getMostSearchedItems() {
-        homeRepository.fetchBuyProductList()
+        productRepository.fetchBuyProductList()
             .onSuccess { response ->
                 if (response.isEmpty()) {
                     _buyProductLoadState.update { UiState.Empty }

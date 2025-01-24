@@ -1,7 +1,5 @@
 package com.napzak.market.data.registration.di
 
-import android.app.Application
-import android.content.Context
 import com.napzak.market.core.network.di.JWT
 import com.napzak.market.data.registration.service.ImageRegistrationService
 import com.napzak.market.data.registration.service.PostRegistrationService

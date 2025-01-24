@@ -110,7 +110,7 @@ private fun RegistrationNumberTextFieldPreview() {
             number = text.value,
             placeholder = "000",
             onNumberChange = {
-                if(it.length <= 3) text.value = it
+                if (it.length <= 3) text.value = it
             }
         )
     }

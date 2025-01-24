@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.detailpage.repository.DetailPageRepository
 import com.napzak.market.domain.interest.repository.InterestRepository
+import com.napzak.market.domain.product.repository.DetailProductRepository
 import com.napzak.market.presentation.detailpage.navigation.DetailPage
 import com.napzak.market.presentation.detailpage.state.DetailPageUiState
 import com.napzak.market.presentation.detailpage.state.MarketInfoUiState
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailPageViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val detailPageRepository: DetailPageRepository,
+    private val detailProductRepository: DetailProductRepository,
     private val interestRepository: InterestRepository,
 ) : ViewModel() {
     private val productId = savedStateHandle.toRoute<DetailPage>().productId
@@ -36,7 +36,7 @@ class DetailPageViewModel @Inject constructor(
 
     fun loadDetailPageData() {
         viewModelScope.launch {
-            detailPageRepository.getProductDetail(productId)
+            detailProductRepository.getProductDetail(productId)
                 .onSuccess { productDetail ->
                     _uiState.value = DetailPageUiState(
                         profileImageUrl = productDetail.store.storePhoto,

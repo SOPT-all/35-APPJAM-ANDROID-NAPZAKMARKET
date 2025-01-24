@@ -46,7 +46,7 @@ fun CommonSnackBar(
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     shape: Shape = RoundedCornerShape(12.dp),
-    ) {
+) {
     Box(
         modifier = modifier
             .background(
@@ -59,7 +59,7 @@ fun CommonSnackBar(
             ),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            if(icon != null) {
+            if (icon != null) {
                 Icon(
                     imageVector = icon,
                     contentDescription = null,

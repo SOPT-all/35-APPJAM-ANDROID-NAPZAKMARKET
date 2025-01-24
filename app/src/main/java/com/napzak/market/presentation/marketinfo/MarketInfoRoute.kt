@@ -31,10 +31,10 @@ import com.napzak.market.core.common.extension.noRippleClickable
 import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.designsystem.component.image.EmptyImage
 import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
-import com.napzak.market.core.type.SortType
-import com.napzak.market.core.type.MarketTab
-import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.core.type.BottomSheetType
+import com.napzak.market.core.type.MarketTab
+import com.napzak.market.core.type.SortType
+import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.presentation.marketinfo.component.MarketFilterGroup
 import com.napzak.market.presentation.marketinfo.component.MarketInfoBottomSheetScreen
 import com.napzak.market.presentation.marketinfo.component.MarketInfoTopSection
@@ -46,7 +46,6 @@ import com.napzak.market.presentation.marketinfo.state.MarketProductItemsInforma
 import com.napzak.market.presentation.marketinfo.state.MarketUiInformation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlin.String
 
 @Composable
 fun MarketInfoRoute(

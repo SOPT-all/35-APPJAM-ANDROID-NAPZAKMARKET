@@ -6,13 +6,13 @@ import com.napzak.market.core.common.state.UiState
 import com.napzak.market.core.type.BottomSheetType
 import com.napzak.market.core.type.SortType
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.explore.usecase.GetProductBuyListUseCase
-import com.napzak.market.domain.explore.usecase.GetProductSellListUseCase
-import com.napzak.market.domain.explore.usecase.GetSearchedProductBuyItemsUseCase
-import com.napzak.market.domain.explore.usecase.GetSearchedProductSellItemsUseCase
 import com.napzak.market.domain.genre.model.Genre
 import com.napzak.market.domain.genre.usecase.GenreSearchUseCase
 import com.napzak.market.domain.interest.repository.InterestRepository
+import com.napzak.market.domain.product.usecase.GetProductBuyListUseCase
+import com.napzak.market.domain.product.usecase.GetProductSellListUseCase
+import com.napzak.market.domain.product.usecase.GetSearchedProductBuyItemsUseCase
+import com.napzak.market.domain.product.usecase.GetSearchedProductSellItemsUseCase
 import com.napzak.market.presentation.explore.explore.state.ExploreBottomSheetState
 import com.napzak.market.presentation.explore.explore.state.ExploreProductInformation
 import com.napzak.market.presentation.explore.explore.state.ExploreUiState

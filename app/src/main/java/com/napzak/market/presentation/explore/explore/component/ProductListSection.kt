@@ -14,13 +14,13 @@ import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.component.item.NapzakBuyItem
 import com.napzak.market.core.designsystem.component.item.NapzakSellItem
 import com.napzak.market.core.type.TradeType
-import com.napzak.market.domain.explore.model.ProductItem
+import com.napzak.market.domain.product.model.Product
 
 @Composable
 fun ProductListSection(
     gridState: LazyGridState,
     tradeType: TradeType,
-    productList: List<ProductItem>,
+    productList: List<Product>,
     onItemClick: (Long) -> Unit,
     onLikeClick: (Long, Boolean) -> Unit,
     modifier: Modifier = Modifier,

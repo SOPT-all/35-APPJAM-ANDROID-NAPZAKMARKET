@@ -9,8 +9,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.R
+import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 
 /**

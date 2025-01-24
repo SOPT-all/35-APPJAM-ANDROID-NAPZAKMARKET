@@ -3,7 +3,6 @@ package com.napzak.market.core.network.di
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.napzak.market.BuildConfig
 import com.napzak.market.BuildConfig.BASE_URL
-import com.napzak.market.BuildConfig.TEST_BASE_URL
 import com.napzak.market.core.network.AuthInterceptor
 import com.napzak.market.core.network.isJsonArray
 import com.napzak.market.core.network.isJsonObject

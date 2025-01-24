@@ -68,6 +68,8 @@ private fun TradeTypeTabItem(
         if (isSelected) NapzakMarketTheme.colors.purple30 else NapzakMarketTheme.colors.gray300
     val textColor =
         if (isSelected) NapzakMarketTheme.colors.purple30 else NapzakMarketTheme.colors.gray600
+    val textStyle =
+        if (isSelected) NapzakMarketTheme.typography.bodySemi16 else NapzakMarketTheme.typography.bodyMedium16
 
     Column(
         modifier = modifier
@@ -88,7 +90,7 @@ private fun TradeTypeTabItem(
     ) {
         Text(
             text = tradeType,
-            style = NapzakMarketTheme.typography.titleSemi18,
+            style = textStyle,
             color = textColor,
         )
     }

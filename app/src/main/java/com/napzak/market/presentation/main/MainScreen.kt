@@ -228,7 +228,7 @@ private fun MainNavHost(
         )
 
         registrationGraph(
-            modifier = modifier,
+            modifier = Modifier.systemBarsPadding(),
             navigateUp = navigator.navController::navigateUp,
             onGenreSearchNavigate = navigator.navController::navigateToGenreSearch,
             onDetailNavigate = { productId ->

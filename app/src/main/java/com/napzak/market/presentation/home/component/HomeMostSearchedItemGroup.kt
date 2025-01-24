@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -74,6 +75,7 @@ fun HomeMostSearchedItemGroup(
             Image(
                 painter = painterResource(R.drawable.img_home_search),
                 contentDescription = null,
+                modifier = Modifier.size(width = 80.dp, height = 72.dp)
             )
         }
         HomeItemRow(

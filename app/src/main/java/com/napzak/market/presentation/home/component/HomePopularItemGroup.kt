@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -58,7 +59,8 @@ fun HomePopularItemGroup(
                 painter = painterResource(R.drawable.img_home_popular),
                 contentDescription = null,
                 modifier = Modifier
-                    .align(Alignment.TopStart),
+                    .align(Alignment.TopStart)
+                    .size(width = 129.dp, height = 81.dp),
             )
 
             Column(

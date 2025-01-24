@@ -91,7 +91,7 @@ class RegistrationViewModel @Inject constructor(
     ) {
         when (inputType) {
             is NumeralInputType.ProductPurchasePrice -> _uiState.update { currentState ->
-                currentState.copy(productPurchasePrice = formatPriceValue(newValue, MAX_PURCHASE_PRICE))
+                currentState.copy(productPurchasePrice = formatPriceValue(newValue, MAX_PURCHASE_PRICE, MIN_PURCHASE_PRICE))
             }
 
             is NumeralInputType.ProductSalePrice -> _uiState.update { currentState ->
@@ -111,11 +111,12 @@ class RegistrationViewModel @Inject constructor(
     private fun formatPriceValue(
         input: String,
         maxValue: Int,
+        minValue: Int = 0,
     ): String {
         if (input.isEmpty()) return ""
 
         val rawValue = input.replace(",", "").toIntOrNull() ?: 0
-        val limitedValue = rawValue.coerceAtMost(maxValue)
+        val limitedValue = rawValue.coerceIn(minValue, maxValue)
 
         return DecimalFormat("#,###").format(limitedValue)
     }
@@ -298,6 +299,7 @@ class RegistrationViewModel @Inject constructor(
         private const val MAX_TITLE_LENGTH = 48
         private const val MAX_DESCRIPTION_LENGTH = 240
         private const val MAX_PURCHASE_PRICE = 999
+        private const val MIN_PURCHASE_PRICE = 1
         private const val MAX_SALE_PRICE = 1_000_000
         private const val MAX_NORMAL_POST_FEE = 30_000
         private const val MIN_NORMAL_POST_FEE = 100

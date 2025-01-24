@@ -25,6 +25,16 @@
 - 자신만의 독특한 스타일로 마켓의 개성을 드러낼 수 있어요.
 - 관심 장르, 소개글, 프로필 이미지로 직접 커스텀하여 나만의 마켓을 꾸며보세요.
 
+ <br>
+
+| 온보딩 | 홈 | 탐색 | 마이페이지/내마켓보기 | 상세페이지 | 
+|:-------:|:-------:|:-------:|:-------:|:-------:|
+| <video src="https://github.com/user-attachments/assets/0881948b-431e-4cd4-9542-d3dd40f3c96b" width=300/> | <video src="https://github.com/user-attachments/assets/6058aa20-ec9d-48f6-9de5-08a4dafae018" width=300/> | <video src="https://github.com/user-attachments/assets/6d181305-f693-4891-9f32-e947ef6b710b" width=300/> | <video src="https://github.com/user-attachments/assets/24f6bf0a-359e-453d-8ca1-fd1dc993ef01" width=300/> | <video src="https://github.com/user-attachments/assets/00eda027-80a8-4cc2-a5f4-0f0d72ad7660" width=300/> |
+
+
+
+
+
   <br>
 
 ## ⛰️ Issue Tracking

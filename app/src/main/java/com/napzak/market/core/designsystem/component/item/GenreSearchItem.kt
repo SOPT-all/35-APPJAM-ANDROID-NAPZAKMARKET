@@ -57,7 +57,9 @@ fun GenreSearchItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (isGenreChipVisible) {
-            GenreTextChip()
+            GenreTextChip(
+                onGenreChipClick = onGenreItemClick
+            )
 
             Spacer(Modifier.width(8.dp))
         }

@@ -116,7 +116,7 @@ fun RegistrationSellGroup(
                     isChecked = isHalfPostChecked,
                     onCheckedChange = onHalfPostCheckedChange,
                 )
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(30.dp))
             }
         }
         Spacer(modifier = Modifier.height(68.dp))

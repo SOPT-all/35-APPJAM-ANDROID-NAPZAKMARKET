@@ -1,5 +1,6 @@
-package com.napzak.market.presentation.prepare
+package com.napzak.market.presentation.chat.chat
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -9,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.napzak.market.core.designsystem.component.image.EmptyImage
+import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 
 /**
  * 채팅 화면 하단 바를 표시하는 컴포넌트.
@@ -22,7 +24,9 @@ fun ChatScreen(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .background(NapzakMarketTheme.colors.white)
+            .fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
         EmptyImage(

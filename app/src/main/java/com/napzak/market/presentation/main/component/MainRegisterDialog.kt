@@ -1,10 +1,10 @@
 package com.napzak.market.presentation.main.component
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -51,6 +51,10 @@ fun BoxScope.MainRegisterDialog(
     onBuyRegisterClick: () -> Unit,
     onDismissRequest: () -> Unit,
 ) {
+    BackHandler(visibility) {
+        onDismissRequest()
+    }
+
     AnimatedVisibility(
         visible = visibility,
         modifier = Modifier.align(Alignment.BottomCenter),
@@ -69,15 +73,17 @@ fun BoxScope.MainRegisterDialog(
         visible = visibility,
         modifier = Modifier
             .align(Alignment.BottomCenter)
-            .padding(86.dp)
             .navigationBarsPadding(),
         enter = slideInVertically { fullHeight -> fullHeight },
-        exit = slideOutVertically { fullHeight -> fullHeight }
+        exit = fadeOut()
     ) {
-        MainRegisterDialog(
-            onSellRegisterClick = onSellRegisterClick,
-            onBuyRegisterClick = onBuyRegisterClick,
-        )
+        if (visibility) {
+            MainRegisterDialog(
+                onSellRegisterClick = onSellRegisterClick,
+                onBuyRegisterClick = onBuyRegisterClick,
+                modifier = Modifier.padding(bottom = 86.dp)
+            )
+        }
     }
 }
 
@@ -85,9 +91,10 @@ fun BoxScope.MainRegisterDialog(
 fun MainRegisterDialog(
     onSellRegisterClick: () -> Unit,
     onBuyRegisterClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .width(IntrinsicSize.Max)
             .clip(RoundedCornerShape(12.dp))
             .background(color = NapzakMarketTheme.colors.white)

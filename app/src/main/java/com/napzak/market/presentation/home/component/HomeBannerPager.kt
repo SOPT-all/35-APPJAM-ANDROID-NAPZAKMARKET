@@ -10,6 +10,9 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -24,25 +27,32 @@ import com.napzak.market.domain.banner.model.HomeBanner
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeBannerPager(
     bannerImages: ImmutableList<HomeBanner>,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
+    val context by rememberUpdatedState(LocalContext.current)
+    val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
         initialPage = BANNER_INITIAL_PAGE,
+        initialPageOffsetFraction = 0f,
         pageCount = { Int.MAX_VALUE },
     )
 
     LaunchedEffect(Unit) {
+        pagerState.scrollToPage(page = 0, pageOffsetFraction = 0f)
+
         while (true) {
             delay(BANNER_DELAY)
-            pagerState.animateScrollToPage(
-                page = pagerState.currentPage + 1,
-                animationSpec = tween(BANNER_TWEEN),
-            )
+            coroutineScope.launch {
+                pagerState.animateScrollToPage(
+                    page = pagerState.currentPage + 1,
+                    animationSpec = tween(BANNER_TWEEN),
+                )
+            }
         }
     }
 
@@ -71,7 +81,7 @@ fun HomeBannerPager(
     }
 }
 
-private const val BANNER_DELAY = 3000L
+private const val BANNER_DELAY = 5000L
 private const val BANNER_TWEEN = 1000
 private const val BANNER_INITIAL_PAGE = 0
 

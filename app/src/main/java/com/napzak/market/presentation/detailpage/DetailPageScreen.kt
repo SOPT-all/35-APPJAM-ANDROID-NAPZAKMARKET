@@ -196,7 +196,8 @@ fun DetailPageScreen(
                     title = uiState.genreName,
                     subtitle = uiState.productName,
                     price = "${uiState.price.toString().formatToPriceString()}원",
-                )
+                    isPriceSuggested = uiState.isPriceNegotiable,
+                    )
 
                 Spacer(modifier = Modifier.height(20.dp))
 

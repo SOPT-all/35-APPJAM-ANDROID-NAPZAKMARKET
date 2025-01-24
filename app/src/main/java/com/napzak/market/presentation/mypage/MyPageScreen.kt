@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -120,7 +121,7 @@ fun MyPageScreen(
                         Spacer(modifier = Modifier.width(14.dp))
 
                         Text(
-                            text = uiState?.nickname ?: "", // 닉네임 표시
+                            text = uiState?.nickname ?: "",
                             style = NapzakMarketTheme.typography.titleBold20,
                             color = NapzakMarketTheme.colors.gray900,
                         )
@@ -135,6 +136,7 @@ fun MyPageScreen(
                         shape = RoundedCornerShape(12.dp),
                         textStyle = NapzakMarketTheme.typography.bodyBold16,
                         modifier = Modifier.fillMaxWidth(),
+                        contentPadding = PaddingValues(vertical = 11.dp)
                     )
                 }
             }

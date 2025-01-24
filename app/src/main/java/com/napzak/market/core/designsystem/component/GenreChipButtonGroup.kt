@@ -8,12 +8,12 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -68,21 +68,32 @@ fun GenreChipButtonGroup(
                             .fillMaxWidth()
                             .background(color = backgroundColor),
                         contentPadding = contentPaddingValues,
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         stickyHeader {
-                            RoundedIconButton(
-                                icon = ImageVector.vectorResource(id = R.drawable.ic_reset_18),
-                                onClick = onResetClick,
-                                modifier = Modifier.background(
-                                    color = backgroundColor,
-                                    shape = RoundedCornerShape(topEnd = 50.dp, bottomEnd = 50.dp)
+                            Row(
+                                modifier = Modifier
+                                    .background(color = backgroundColor)
+                                    .padding(end = 6.dp)
+                            ) {
+                                RoundedIconButton(
+                                    icon = ImageVector.vectorResource(id = R.drawable.ic_reset_18),
+                                    onClick = onResetClick,
+                                    modifier = Modifier
+                                        .background(
+                                            color = backgroundColor,
+                                            shape = RoundedCornerShape(
+                                                topEnd = 50.dp,
+                                                bottomEnd = 50.dp
+                                            )
+                                        )
                                 )
-                            )
+                            }
                         }
 
-                        items(genreList, key = { it.genreId }) { genre ->
+                        itemsIndexed(
+                            genreList,
+                            key = { _, genre -> genre.genreId }) { index, genre ->
                             RemovableChip(
                                 text = genre.genreName,
                                 onClick = { onGenreClick(genre) },
@@ -91,6 +102,11 @@ fun GenreChipButtonGroup(
                                         fadeInSpec = tween(CHIP_ANIMATION_DURATION),
                                         fadeOutSpec = tween(CHIP_ANIMATION_DURATION),
                                     )
+                                    .let {
+                                        if (index == 0) it.padding(start = 0.dp) else it.padding(
+                                            start = 6.dp
+                                        )
+                                    }
                             )
                         }
                     }

@@ -16,12 +16,12 @@ fun MarketGenreChip(
 ) {
     TextChip(
         text = genreName,
-        textStyle = NapzakMarketTheme.typography.capSemi12,
+        textStyle = NapzakMarketTheme.typography.capMedium12,
         modifier = Modifier.clip(RoundedCornerShape(4.dp)),
         chipColors = CustomChipColors(
             contentColor = NapzakMarketTheme.colors.gray800,
             containerColor = NapzakMarketTheme.colors.gray100,
         ),
-        innerPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
+        innerPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
     )
 }

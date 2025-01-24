@@ -119,7 +119,8 @@ fun GenreSearchBottomSheet(
                     is UiState.Success -> {
                         with(genreItems) {
                             LazyColumn(
-                                modifier = Modifier.padding(horizontal = 20.dp),
+                                modifier = Modifier
+                                    .padding(horizontal = 20.dp),
                             ) {
                                 itemsIndexed(
                                     items = data,
@@ -135,6 +136,12 @@ fun GenreSearchBottomSheet(
                                         },
                                         isLastItem = index == selectedGenreList.size - 1,
                                     )
+                                }
+
+                                item {
+                                    if (selectedGenreList.isNotEmpty()) {
+                                        Spacer(Modifier.height(58.dp))
+                                    }
                                 }
                             }
                         }
@@ -166,9 +173,6 @@ fun GenreSearchBottomSheet(
                     }
                 }
             }
-
-            Spacer(Modifier.height(20.dp))
-
             EnableDisableTextButton(
                 text = stringResource(R.string.genre_search_apply_button),
                 isEnabled = true,
@@ -177,8 +181,6 @@ fun GenreSearchBottomSheet(
                     .fillMaxWidth()
                     .padding(20.dp),
             )
-
-            Spacer(Modifier.height(20.dp))
         }
     }
 }

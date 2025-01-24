@@ -1,5 +1,6 @@
 package com.napzak.market.presentation.main.component
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -50,6 +51,10 @@ fun BoxScope.MainRegisterDialog(
     onBuyRegisterClick: () -> Unit,
     onDismissRequest: () -> Unit,
 ) {
+    BackHandler(visibility) {
+        onDismissRequest()
+    }
+
     AnimatedVisibility(
         visible = visibility,
         modifier = Modifier.align(Alignment.BottomCenter),

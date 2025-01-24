@@ -151,8 +151,9 @@ fun ProductInfoSection(
                     shape = RoundedCornerShape(4.dp),
                 )
             }
+
             Text(
-                text = price,
+                text = price + if(tradeType == TradeType.BUY) "대" else "" ,
                 style = NapzakMarketTheme.typography.titleBold20,
                 color = NapzakMarketTheme.colors.gray900,
             )

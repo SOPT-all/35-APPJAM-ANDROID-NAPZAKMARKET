@@ -195,7 +195,9 @@ fun RegistrationScreen(
         modifier = modifier.fillMaxSize(),
     ) {
         LazyColumn(
-            modifier = modifier.background(NapzakMarketTheme.colors.white),
+            modifier = modifier
+                .fillMaxSize()
+                .background(NapzakMarketTheme.colors.white),
             state = listState,
         ) {
             stickyHeader {
@@ -333,9 +335,9 @@ fun RegistrationScreen(
                 )
             }
         }
-        if (uiState.loadState == UiState.Loading) {
-            LoadingScreen()
-        }
+        LoadingScreen(
+            isLoading = uiState.loadState == UiState.Loading,
+        )
     }
 }
 

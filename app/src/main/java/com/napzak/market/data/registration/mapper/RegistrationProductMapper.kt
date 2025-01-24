@@ -16,16 +16,16 @@ fun ProductImage.toProductPhotoDto() = ProductPhotoDto(
 fun BuyProduct.toBuyRegistrationRequestDto() = ProductBuyRegistrationRequestDto(
     productPhotoDto = imageUrls.map { it.toProductPhotoDto() },
     genreId = genreId,
-    title = title,
+    title = title.trim(),
     description = description,
-    price = price * 1000,
+    price = price * THOUSAND,
     isPriceNegotiable = isPriceNegotiable,
 )
 
 fun SellProduct.toSellRegistrationRequestDto() = ProductSellRegistrationRequestDto(
     productPhotoDto = imageUrls.map { it.toProductPhotoDto() },
     genreId = genreId,
-    title = title,
+    title = title.trim(),
     description = description,
     price = price,
     productCondition = fromCondition(productCondition),
@@ -33,3 +33,5 @@ fun SellProduct.toSellRegistrationRequestDto() = ProductSellRegistrationRequestD
     standardDeliveryFee = standardDeliveryFee,
     halfDeliveryFee = halfDeliveryFee,
 )
+
+private const val THOUSAND = 1_000

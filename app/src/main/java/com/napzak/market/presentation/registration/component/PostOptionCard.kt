@@ -57,7 +57,7 @@ fun PostOptionCard(
             .fillMaxWidth()
             .background(NapzakMarketTheme.colors.white, RoundedCornerShape(12.dp))
             .border(1.dp, NapzakMarketTheme.colors.gray200, RoundedCornerShape(12.dp))
-            .padding(vertical = 10.dp, horizontal = 15.dp),
+            .padding(vertical = 12.dp, horizontal = 15.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

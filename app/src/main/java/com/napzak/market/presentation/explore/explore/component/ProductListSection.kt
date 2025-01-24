@@ -3,6 +3,7 @@ package com.napzak.market.presentation.explore.explore.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -28,7 +29,7 @@ fun ProductListSection(
     LazyVerticalGrid(
         state = gridState,
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(20.dp),
+        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 20.dp),
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(20.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),

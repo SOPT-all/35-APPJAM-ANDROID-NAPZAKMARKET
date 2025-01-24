@@ -225,6 +225,7 @@ private fun MainNavHost(
 
         prepareGraph(
             modifier = modifier,
+            navController = navigator.navController,
         )
 
         registrationGraph(

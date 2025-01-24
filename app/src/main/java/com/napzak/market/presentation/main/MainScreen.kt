@@ -1,5 +1,7 @@
 package com.napzak.market.presentation.main
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
@@ -8,11 +10,25 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
+import com.napzak.market.R.string.home_snack_bar_finish
+import com.napzak.market.core.designsystem.component.snackbar.CommonSnackBar
+import com.napzak.market.core.designsystem.theme.NapzakMarketTheme
 import com.napzak.market.core.type.TradeType
 import com.napzak.market.presentation.chat.chat.navigation.chatGraph
 import com.napzak.market.presentation.chat.itemchat.navigation.itemChatGraph
@@ -41,11 +57,34 @@ import com.napzak.market.presentation.registration.navigation.navigateToRegistra
 import com.napzak.market.presentation.registration.navigation.registrationGraph
 import com.napzak.market.presentation.splash.navigation.splashGraph
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
     navigator: MainNavigator = rememberMainNavigator(),
 ) {
+    val context = LocalContext.current
+    var backPressedState by remember { mutableStateOf(true) }
+    var backPressedTime by remember { mutableLongStateOf(0L) }
+
+    val snackBarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
+    BackHandler(enabled = backPressedState && navigator.currentTab == MainTab.HOME) {
+        if (System.currentTimeMillis() - backPressedTime <= 2000) {
+            (context as Activity).finish()
+        } else {
+            backPressedState = true
+            coroutineScope.launch {
+                snackBarHostState.showSnackbar(
+                    message = context.getString(home_snack_bar_finish),
+                    duration = SnackbarDuration.Short
+                )
+            }
+        }
+        backPressedTime = System.currentTimeMillis()
+    }
+
     Scaffold(
         bottomBar = {
             MainBottomBar(
@@ -54,6 +93,20 @@ fun MainScreen(
                 currentTab = navigator.currentTab,
                 onTabSelected = navigator::navigate,
             )
+        },
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackBarHostState,
+                modifier = Modifier
+                    .padding(bottom = 6.dp),
+            ) { snackBarData ->
+                CommonSnackBar(
+                    message = snackBarData.visuals.message,
+                    backgroundColor = NapzakMarketTheme.colors.black70,
+                    textColor = NapzakMarketTheme.colors.white,
+                    textStyle = NapzakMarketTheme.typography.bodyMedium14,
+                )
+            }
         },
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
@@ -176,10 +229,10 @@ private fun MainNavHost(
         )
 
         registrationGraph(
-            modifier = modifier,
+            modifier = Modifier.systemBarsPadding(),
             navigateUp = navigator.navController::navigateUp,
             onGenreSearchNavigate = navigator.navController::navigateToGenreSearch,
-            onDetailNavigate = {  productId ->
+            onDetailNavigate = { productId ->
                 navigator.navController.navigateToDetailPage(
                     productId = productId,
                     navOptions = navOptions {
@@ -188,7 +241,7 @@ private fun MainNavHost(
                         }
                     },
                 )
-           },
+            },
             getBackStackViewModel = {
                 navigator.navController.previousBackStackEntry?.let { hiltViewModel(it) }
                     ?: hiltViewModel()

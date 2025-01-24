@@ -15,10 +15,12 @@ fun NavController.navigateToPrepare(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.prepareGraph(
     modifier: Modifier = Modifier,
+    navController: NavController,
 ) {
     composable<Prepare> {
         PrepareScreen(
             modifier = modifier,
+            onBackClick = { navController.popBackStack() },
         )
     }
 }
